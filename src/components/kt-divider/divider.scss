@@ -1,3 +1,12 @@
+
 .kt-divider {
-  border: 1px solid #DFDFDF;
+  padding-bottom: 10px;
+}
+
+.kt-divider.faint {
+  border-bottom: 1px solid #DFDFDF;
+}
+
+.kt-divider.thick {
+  border-bottom: 2px solid #D9E2E8;
 }

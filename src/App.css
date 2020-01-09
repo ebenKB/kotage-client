@@ -7,6 +7,7 @@ body {
   font-size: 16px;
   font-family: 'Open Sans', sans-serif;
   background: rgba(235, 238, 235, 0.35);
+  color: var(--kotage-dark);
 }
 /* override font for headings */
 h1,h2,h3,h4,h5,h6 {
@@ -29,6 +30,14 @@ h1,h2,h3,h4,h5,h6 {
 
 .bold {
   font-weight: 900;
+}
+
+.big-caption {
+  font-size: 1.5rem;
+}
+
+.kt-primary {
+  color: var(--kt-blue);
 }
 
 /* .icon-caption {

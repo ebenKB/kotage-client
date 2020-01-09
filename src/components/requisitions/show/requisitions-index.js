@@ -7,8 +7,15 @@ import Divider from '../../kt-divider/divider';
 const Requisitions = () => {
   return (
     <KtWrapper>
+      <Divider title = "Pending" type="thick" display="success"/>
       <RequisitionItem />
-      <Divider/>
+      <Divider type="faint"/>
+      <RequisitionItem />
+      <Divider type="faint"/>
+      <RequisitionItem />
+      <Divider type="faint"/>
+      <RequisitionItem />
+      <Divider type="faint"/>
     </KtWrapper>
   )
 };

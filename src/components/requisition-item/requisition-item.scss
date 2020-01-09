@@ -24,3 +24,7 @@
   right: 17px;
   fill: #FF9A00;
 }
+
+.kt-req__item-content div:not(:last-child) {
+  margin-bottom: 8px;
+}
