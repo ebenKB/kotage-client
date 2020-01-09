@@ -8,9 +8,12 @@ function App() {
   return (
     <div className="App light-theme">
       <Header/>
+      <div className="header-offset"></div>
       <div className="app-container main-layout">
         <div>
-          <Nav />
+          <div className="nav-main__wrappper">
+            <Nav />
+          </div>
         </div>
         <div>
           <AppRouter/>

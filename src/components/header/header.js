@@ -1,11 +1,13 @@
 import React from 'react';
-import { BrowserRouter as Router } from 'react-router';
 import './header.scss';
+import { ReactComponent as Kotage } from '../../svg/kotage.svg';
 
 const header = () => {
   return (
     <div className="header">
-      App Header
+      <div className="content">
+        <Kotage className="kotage-logo"/>
+      </div>
     </div>
   )
 }

@@ -1,5 +1,21 @@
 .header {
   background: var(--kotage-black);
-  padding: 15px;
+  padding: 10px 0;
   color: white;
+  position: fixed;
+  width: 100%;
+}
+
+.header .content {
+  width: 70%;
+  margin: auto;
+}
+
+.header-offset {
+  position: relative;
+  height: 60px;
+}
+
+.kotage-logo {
+  width: 140px;
 }

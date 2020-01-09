@@ -1,3 +1,24 @@
 .menu-option {
   margin-left: 20px;
 }
+
+.nav-wrapper {
+  color: var(--kotage-dark);
+  margin-top: 20px;
+}
+
+.nav-main__wrappper {
+  position: fixed;
+}
+
+
+.ui.accordion .item .active.title {
+  color: var(--kotage-black);
+}
+
+.home-logo {
+  width: 16px;
+  height: 16px;
+  margin-right: 10px;
+  fill: var(--kotage-dark);
+}
