@@ -6,7 +6,11 @@ const header = () => {
   return (
     <div className="header">
       <div className="content">
-        <Kotage className="kotage-logo"/>
+        <div>
+          <Kotage className="kotage-logo"/>
+        </div>
+        <div></div>
+        <div></div>
       </div>
     </div>
   )

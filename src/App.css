@@ -8,18 +8,21 @@ body {
   font-family: 'Open Sans', sans-serif;
   background: rgba(235, 238, 235, 0.35);
 }
+/* override font for headings */
+h1,h2,h3,h4,h5,h6 {
+  font-family: 'Open Sans', sans-serif;
+}
 
 .app-container {
   width: 70%;
   margin: auto;
 }
 
+/* style for the main application layout */
 .main-layout {
   display: grid;
-  /* grid-template-columns: 1fr 4fr 2fr; */
   grid-template-columns: 1.4fr 6fr 2fr;
   grid-column-gap: 20px;
-  /* background: rgba(235, 238, 235, 0.35); */
   padding: 30px 0;
   min-height: 500px;
 }
@@ -27,8 +30,8 @@ body {
 .bold {
   font-weight: 900;
 }
-/* @media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+
+/* .icon-caption {
+  background: rgba(255, 154, 0, 0.79);
+  padding: 10px;
 } */

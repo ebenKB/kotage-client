@@ -9,6 +9,9 @@
 .header .content {
   width: 70%;
   margin: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .header-offset {
@@ -19,3 +22,4 @@
 .kotage-logo {
   width: 140px;
 }
+

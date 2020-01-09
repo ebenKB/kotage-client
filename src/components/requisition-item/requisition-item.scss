@@ -1,0 +1,26 @@
+.kt-req__item {
+  padding: 10px;
+  background: var(--kt-white);
+  display: grid;
+  grid-column-gap: 10px;
+  margin: 10px;
+  grid-template-columns: 10% 90%;
+}
+
+.icon-caption {
+  position: relative;
+  background: rgba(255, 154, 0, 0.79);
+  padding: 10px;
+  border-radius: 100%;
+  width: 60px;
+  height: 60px;
+}
+
+.icon-caption svg {
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  top: 28%;
+  right: 17px;
+  fill: #FF9A00;
+}
