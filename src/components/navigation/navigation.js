@@ -20,8 +20,9 @@ export default class AccordionStandard extends Component {
       <div className="nav-wrapper">
         <div className="m-l-16 m-b-15 content menu-option bold">
           <Link to="/">
-          <Logo className="home-logo"/>
-          Home</Link>
+            <Logo className="home-logo"/>
+            Home
+          </Link>
         </div>
         <Accordion as={Menu} vertical>
           <Menu.Item>

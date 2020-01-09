@@ -15,7 +15,11 @@ const Requisitions = () => {
   ]
   return (
     <MainContent help={help}>
-      <KtWrapper>
+      <KtWrapper
+        header="Requisitions"
+        link="requisitions/new"
+        linkName="New Requisitions"
+      >
         <Divider title = "Pending" type="thick" display=""/>
         <RequisitionItem />
         <Divider type="faint"/>
