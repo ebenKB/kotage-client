@@ -10,7 +10,7 @@ const MainContent = (props) => {
       </div>
       <div>
         {
-          help.map((h) => <div> 
+          help.map((h) => <div key={h.id}> 
             <Divider type='faint' title={h.title}/>
             <div className="m-t-20">{h.content}</div>
           </div> )

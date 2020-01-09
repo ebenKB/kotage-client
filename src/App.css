@@ -41,6 +41,14 @@ h1,h2,h3,h4,h5,h6 {
   color: var(--kt-blue);
 }
 
+.kt-success {
+  color: var(--kt-green);
+}
+
+.kt-danger {
+  color: var(--kt-red);
+}
+
 .kt-main__content {
   display: grid;
   grid-template-columns: 3fr 1fr;

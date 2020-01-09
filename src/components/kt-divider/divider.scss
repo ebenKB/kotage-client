@@ -10,3 +10,11 @@
 .kt-divider.thick {
   border-bottom: 2px solid #D9E2E8;
 }
+
+.kt-divider.thick.kt-success {
+  border-bottom: 2px solid var(--kt-green);
+}
+
+.kt-divider.thick.kt-danger {
+  border-bottom: 2px solid var(--kt-red);
+}

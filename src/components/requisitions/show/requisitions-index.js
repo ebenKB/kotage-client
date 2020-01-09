@@ -8,6 +8,7 @@ import MainContent from '../../kt-main-content/mainContent';
 const Requisitions = () => {
   const help = [
     {
+      id: 1,
       title: 'View Requisitions',
       content: 'This is the content of the help'
     }
@@ -15,7 +16,7 @@ const Requisitions = () => {
   return (
     <MainContent help={help}>
       <KtWrapper>
-        <Divider title = "Pending" type="thick" display="success"/>
+        <Divider title = "Pending" type="thick" display=""/>
         <RequisitionItem />
         <Divider type="faint"/>
         <RequisitionItem />
@@ -29,7 +30,21 @@ const Requisitions = () => {
         <RequisitionItem />
         <Divider type="faint"/>
         <RequisitionItem />
+
+        <Divider title = "Approved" type="thick" display="kt-success m-t-40 m-b-20"/>
+        <RequisitionItem />
         <Divider type="faint"/>
+        <RequisitionItem />
+        <Divider type="faint"/>
+        <RequisitionItem />
+        <Divider type="faint"/>
+        <RequisitionItem />
+        <Divider type="faint"/>
+        <RequisitionItem />
+        <Divider type="faint"/>
+
+
+        <Divider title = "Rejected" type="thick" display="kt-danger m-t-40 m-b-20"/>
         <RequisitionItem />
         <Divider type="faint"/>
         <RequisitionItem />
