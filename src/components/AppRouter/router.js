@@ -17,7 +17,7 @@ const router = () => {
         <PageNotFound />
       </Route>
     </Switch>
-  )
+  );
 }
 
 export default router

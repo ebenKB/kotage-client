@@ -18,7 +18,7 @@ function App() {
         <div>
           <AppRouter/>
         </div>
-        <div>Right</div>
+        {/* <div>Right</div> */}
       </div>
     </div>
   );

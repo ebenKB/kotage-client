@@ -6,7 +6,10 @@ const KtWrapper = (props) => {
     <div className="kt-wrapper">
       <div className="kt-wrapper__header bold">
         <h2>Requisitions</h2>
-        <div className="green ui button">actions</div>
+        <div>
+          <div className="green ui button">actions</div>
+          <div className="default ui button">actions-2</div>
+        </div>
       </div>
       <div className="kt-wrapper__content">
         {props.children}
