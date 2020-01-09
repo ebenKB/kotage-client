@@ -16,6 +16,30 @@ const Requisitions = () => {
       <Divider type="faint"/>
       <RequisitionItem />
       <Divider type="faint"/>
+      <RequisitionItem />
+      <Divider type="faint"/>
+      <RequisitionItem />
+      <Divider type="faint"/>
+      <RequisitionItem />
+      <Divider type="faint"/>
+      <RequisitionItem />
+      <Divider type="faint"/>
+      <RequisitionItem />
+      <Divider type="faint"/>
+      <RequisitionItem />
+      <Divider type="faint"/>
+      <RequisitionItem />
+      <Divider type="faint"/>
+      <RequisitionItem />
+      <Divider type="faint"/>
+      <RequisitionItem />
+      <Divider type="faint"/>
+      <RequisitionItem />
+      <Divider type="faint"/>
+      <RequisitionItem />
+      <Divider type="faint"/>
+      <RequisitionItem />
+      <Divider type="faint"/>
     </KtWrapper>
   )
 };
