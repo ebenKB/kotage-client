@@ -37,10 +37,12 @@ const KtWrapper = (props) => {
       <div className="kt-wrapper__header bold">
         <h2>{header}</h2>
         <div>
-          <Dropdown placeholder="Filter records" selection options={options} onChange={handleChange} className="m-r-20 "/>
-            <Link to={link} className="action-link green ui button">
+          <div>
+            <Dropdown placeholder="Filter records" selection options={options} onChange={handleChange} className="m-r-20 "/>
+            <Link to={link} className="action-link green ui large button">
               {linkName}
             </Link>
+          </div>
         </div>
       </div>
       <div className="kt-wrapper__content">

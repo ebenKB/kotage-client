@@ -9,8 +9,8 @@ const header = () => {
         <div>
           <Kotage className="kotage-logo"/>
         </div>
-        <div></div>
-        <div></div>
+          <div>search input field</div>
+          <div>user icon</div>
       </div>
     </div>
   )
