@@ -21,3 +21,8 @@
   align-items: center;
   border-bottom: 1px solid #D9E2E8;
 }
+
+.kt-wrapper__header .ui.selection.active.dropdown .menu {
+  border: none;
+  border-color: transparent;
+}

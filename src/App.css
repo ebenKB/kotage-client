@@ -56,7 +56,8 @@ h1,h2,h3,h4,h5,h6 {
   grid-column-gap: 20px;
 }
 
-/* .icon-caption {
-  background: rgba(255, 154, 0, 0.79);
-  padding: 10px;
-} */
+ul.custom {
+  list-style: none;
+  padding-inline-start: 0;
+  margin-block-start: 0;
+}

@@ -2,6 +2,7 @@ import React from 'react';
 import './kt-wrapper.scss';
 import { Dropdown } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
+import SearcFilter from '../search-filter/filter';
 
 const KtWrapper = (props) => {
   let {link, linkName, header} = props;
@@ -45,6 +46,7 @@ const KtWrapper = (props) => {
           </div>
         </div>
       </div>
+      <SearcFilter />
       <div className="kt-wrapper__content">
         {props.children}
       </div>
