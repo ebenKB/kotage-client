@@ -9,8 +9,7 @@ const MainContent = (props) => {
         {props.children}
       </div>
       <div>
-        {
-          help.map((h) => <div key={h.id}> 
+        { help && help.map((h) => <div key={h.id}> 
             <Divider type='faint' title={h.title}/>
             <div className="m-t-20">{h.content}</div>
           </div> )
