@@ -1,0 +1,29 @@
+.item-wrapper {
+  display: grid;
+  // grid-template-columns: 1fr 2fr 1fr;
+  grid-template-columns: 90% 10%;
+  grid-column-gap: 10px;
+}
+
+.item-wrapper__content {
+  display : grid;
+  // grid-template-columns: 90% 10%;
+  grid-template-columns : 1fr 2fr 1fr;
+  grid-column-gap : 10px;
+}
+
+.item-wrapper .ui.input {
+  width: 100%;
+}
+
+.item-wrapper input {
+  width: 100%;
+}
+
+.item-wrapper .cta {
+  visibility: hidden;
+}
+
+.item-wrapper:hover .cta {
+  visibility: visible;
+}

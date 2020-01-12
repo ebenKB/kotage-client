@@ -19,6 +19,7 @@ const Requisitions = () => {
         header="Requisitions"
         link="requisitions/new"
         linkName="New Requisitions"
+        canFilter={true}
       >
         <Divider title = "Pending" type="thick" display=""/>
         <RequisitionItem />

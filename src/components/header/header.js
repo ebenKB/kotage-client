@@ -1,6 +1,7 @@
 import React from 'react';
 import './header.scss';
 import { ReactComponent as Kotage } from '../../svg/kotage.svg';
+import Search from '../form-fields/search-input/search-input';
 
 const header = () => {
   return (
@@ -9,7 +10,7 @@ const header = () => {
         <div>
           <Kotage className="kotage-logo"/>
         </div>
-          <div>search input field</div>
+          <Search />
           <div>user icon</div>
       </div>
     </div>

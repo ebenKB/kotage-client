@@ -1,4 +1,5 @@
 .kt-wrapper {
+  position: relative;
   background: #FFFFFF;
   border: 1px solid rgba(212, 212, 213, 0.7);
   box-sizing: border-box;
@@ -25,4 +26,27 @@
 .kt-wrapper__header .ui.selection.active.dropdown .menu {
   border: none;
   border-color: transparent;
+}
+
+.kt-wrapper__body {
+  display: block;
+  min-height: 90%;
+}
+
+.kt-wrapper__footer {
+  // position: absolute;
+  position: relative;
+  bottom: 0;
+  background: rgba(241, 245, 249, 0.31);
+  width: 100%;
+  padding: 15px;
+}
+
+.kt-wrapper__footer .content {
+  width: 80%;
+  margin: auto;
+}
+
+.kt-wrapper__footer .ui.button:not(:last-child) {
+  margin-right: 20px;
 }

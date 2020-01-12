@@ -1,0 +1,15 @@
+.itd-wrapper {
+  // font-size: 14px;
+  padding: 20px;
+}
+
+.itd-wrapper__header {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  grid-column-gap: 10px;
+  width: 90%;
+}
+
+.item-details__wrapper div:not(:last-child) {
+  margin-bottom: 4px;
+}

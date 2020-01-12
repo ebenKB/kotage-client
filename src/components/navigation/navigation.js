@@ -20,7 +20,7 @@ export default class AccordionStandard extends Component {
       <div className="nav-wrapper">
         <div className="m-l-16 m-b-15 content menu-option bold">
           <Link to="/">
-            <Logo className="home-logo"/>
+            <Logo className="kt-logo__small"/>
             Home
           </Link>
         </div>

@@ -61,3 +61,15 @@ ul.custom {
   padding-inline-start: 0;
   margin-block-start: 0;
 }
+
+.clickable {
+  cursor: pointer;
+}
+
+.sm-caption {
+  font-size: 1rem;
+}
+
+.kt-logo__small.kt-primary {
+  fill: var(--kt-blue);
+}

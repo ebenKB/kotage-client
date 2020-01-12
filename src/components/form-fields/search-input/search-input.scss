@@ -1,0 +1,30 @@
+.search-input {
+  position: relative;
+}
+
+.search-input .icon {
+  position: absolute;
+  left: 20px;
+  z-index: 1;
+  top: 25px;
+  fill: var(--kt-dark-grey);
+}
+
+.search-input .ui.input.custom > input::placeholder {
+  color: var(--kt-dark-grey);
+}
+
+.search-input .ui.input.custom {
+  width: 80%;
+  position: relative;
+  color: var(--kotage-white); 
+  padding: 10px;
+}
+
+.search-input .ui.input.custom.focus>input, .search-input .ui.input.custom>input:focus {
+  border-color: var(--kt-off-grey);
+  // background: #fff;
+  box-shadow: none;
+}
+
+  

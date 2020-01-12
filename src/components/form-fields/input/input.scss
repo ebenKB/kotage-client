@@ -1,0 +1,15 @@
+.ui.input > input {
+  background: #FFFFFF;
+  border: 1.2099px solid #DBDEE2;
+  box-sizing: border-box;
+  border-radius: 2.05684px;
+  padding: 0.75em 0.8em;
+}
+
+.ui.input.custom > input {
+  background: black;
+  /* border: 0; */
+  border: 1px solid #575754;
+  color: var(--kt-white);
+  padding-left: 50px;
+}
