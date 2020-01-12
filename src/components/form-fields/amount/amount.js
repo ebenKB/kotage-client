@@ -10,11 +10,11 @@ const options = [
 
 const amount = () => {
   return (
-    <div>
+    <div className="amount-group">
       {/* <Dropdown upward floating options={options} text='File' />
       <Input type="number"/> */}
       <Input
-        label={<Dropdown defaultValue='GHC' options={options} />}
+        label={<Dropdown defaultValue='GHC' options={options} className="custom"/>}
         labelPosition='left'
         placeholder='Find domain'
         type='number'

@@ -3,7 +3,6 @@ import MainContent from '../../kt-main-content/mainContent';
 import KtWrapper from '../../kt-wrapper/kt-wrapper';
 import Divider from '../../kt-divider/divider';
 import FormGroup from '../../form-fields/form-group/form-group';
-import AmountGroup from '../../../components/form-fields/amount-group/amount';
 import ItemDetailsWrapper from '../../snippets/item-details-wrapper/item-details-wrapper';
 
 import './requisition.scss';
