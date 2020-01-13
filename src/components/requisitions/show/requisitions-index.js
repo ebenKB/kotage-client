@@ -21,7 +21,7 @@ const Requisitions = () => {
         linkName="New Requisitions"
         canFilter={true}
       >
-        <Divider title = "Pending" type="thick" display=""/>
+        <Divider title = "Pending" type="thick" classes=""/>
         <RequisitionItem />
         <Divider type="faint"/>
         <RequisitionItem />
@@ -48,8 +48,7 @@ const Requisitions = () => {
         <RequisitionItem />
         <Divider type="faint"/>
 
-
-        <Divider title = "Rejected" type="thick" display="kt-danger m-t-40 m-b-20"/>
+        <Divider title = "Rejected" type="thick" classes="kt-danger m-t-40 m-b-20"/>
         <RequisitionItem />
         <Divider type="faint"/>
         <RequisitionItem />
