@@ -4,6 +4,7 @@ import Home from '../../pages/home';
 import PageNotFound from '../../pages/_404';
 import NewRequisition from '../../components/requisitions/new/new-requisitions';
 import Requisitions from '../../components/requisitions/show/requisitions-index';
+import Newquote from '../quotes/new/new-quote';
 
 const router = () => {
   return (
@@ -13,6 +14,7 @@ const router = () => {
       </Route>
       <Route exact path="/requisitions" component={Requisitions}/>
       <Route path="/requisitions/new" component={NewRequisition}/>
+      <Route path="/quotes/new" component={Newquote}/>
       <Route path="*">
         <PageNotFound />
       </Route>

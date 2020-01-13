@@ -73,3 +73,7 @@ ul.custom {
 .kt-logo__small.kt-primary {
   fill: var(--kt-blue);
 }
+
+.kt-content__wrapper {
+  padding: 20px;
+}

@@ -1,0 +1,12 @@
+.date-time-group {
+  display: grid;
+  grid-template-columns: 30% 70%;
+  grid-column-gap: 10px;
+  align-items: center;
+  width: 80%;
+}
+
+.date-group__content {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+}

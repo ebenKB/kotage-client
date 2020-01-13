@@ -7,7 +7,7 @@ import Amount from '../../../components/form-fields/amount/amount'
 import './form-group.scss';
 import Dropzone from '../dropzone/dropzone';
 
-const FormGroup = ({type, placeholder, label, labelName}) => {
+const FormGroup = ({type, placeholder, label, labelName, ...otherProps}) => {
 
 const options = [
   {
@@ -22,11 +22,12 @@ const options = [
   },
 ]
   
+console.log('These are the othe props', {...otherProps})
   const getElement = () => {
     if(type==="text" || type === 'password' || type === 'number'){
-      return <Input type={type}  placeholder={placeholder}/>
+      return <Input type={type}  placeholder={placeholder} {...otherProps}/>
     } else if(type === 'dropdown') {
-      return <Dropdown placeholder='State' search selection options={options} />
+      return <Dropdown placeholder='State' search selection options={options} className={otherProps.classes}/>
     } else if(type === 'amount') {
       return <Amount />
     } else if(type === 'textarea') {

@@ -29,7 +29,7 @@ const Requisitions = () => {
         canPerform={true}
       >
         <Divider type="thick" title="Request Details" classes="m-t-10"/>
-          <div className="rq-content__wrapper">
+          <div className="kt-content__wrapper">
             <div className="m-t-30">
               <FormGroup 
                 type="text" 
@@ -62,7 +62,7 @@ const Requisitions = () => {
             </div>
           </div>
           <Divider type="thick" title="Supplementary Details"/>
-          <div className="rq-content__wrapper">
+          <div className="kt-content__wrapper">
             <div className="m-t-20">
               <FormGroup 
                 type="amount" 

@@ -34,3 +34,9 @@
   box-sizing: border-box;
   border-radius: 4px;
 }
+
+/* override the defualt size for dropdowns  */
+.ui.search.selection.dropdown.small {
+  width: 30px;
+  /* padding: 20px; */
+}

@@ -14,7 +14,10 @@ const Requisitions = () => {
     }
   ]
   return (
-    <MainContent help={help}>
+    <MainContent 
+      help={help}
+      classes="m-t-20"
+    >
       <KtWrapper
         header="Requisitions"
         link="requisitions/new"
