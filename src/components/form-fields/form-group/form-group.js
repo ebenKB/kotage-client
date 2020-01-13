@@ -22,12 +22,11 @@ const options = [
   },
 ]
   
-console.log('These are the othe props', {...otherProps})
   const getElement = () => {
     if(type==="text" || type === 'password' || type === 'number'){
       return <Input type={type}  placeholder={placeholder} {...otherProps}/>
     } else if(type === 'dropdown') {
-      return <Dropdown placeholder='State' search selection options={options} className={otherProps.classes}/>
+      return <Dropdown placeholder={placeholder} search selection options={options} className={otherProps.classes}/>
     } else if(type === 'amount') {
       return <Amount />
     } else if(type === 'textarea') {
