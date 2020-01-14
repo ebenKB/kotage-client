@@ -37,7 +37,7 @@ export default class AccordionStandard extends Component {
               <Link to="/requisitions">Requistions</Link>
             </Accordion.Content>
             <Accordion.Content active={activeIndex === 0}  className="menu-option">
-              <Link to="/quotes/new">Quotes</Link>
+              <Link to="/quotes/new">RFX</Link>
             </Accordion.Content>
             <Accordion.Content active={activeIndex === 0} className="menu-option">
               <Link to="/dddd">Vendors</Link>
