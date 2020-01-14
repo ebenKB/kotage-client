@@ -1,0 +1,36 @@
+.rfx-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-column-gap: 40px;
+  list-style: none;
+  padding-inline-start: 0;
+}
+
+.rfx-content .wrapper {
+  border: 1px solid var(--kt-light);
+  min-height: 200px;
+}
+
+.rfx-content .content {
+  padding: 20px;
+}
+
+.kt-rfx__icon {
+  width: 70%;
+  margin-left: 15%;
+}
+
+.rfx-content li:active {
+  border: 2px solid var(--kt-green);
+}
+
+.kt-content__wrapper .flex-wrapper {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.ui.form .kt-content__wrapper .field {
+  padding: 20px 40px;
+  border: 1px solid var(--kt-green__light);
+  margin: 0;
+}

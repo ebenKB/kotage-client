@@ -5,6 +5,7 @@ import PageNotFound from '../../pages/_404';
 import NewRequisition from '../../components/requisitions/new/new-requisitions';
 import Requisitions from '../../components/requisitions/show/requisitions-index';
 import Newquote from '../quotes/new/new-quote';
+import RFX from '../rfx/rfx';
 
 const router = () => {
   return (
@@ -15,6 +16,7 @@ const router = () => {
       <Route exact path="/requisitions" component={Requisitions}/>
       <Route path="/requisitions/new" component={NewRequisition}/>
       <Route path="/quotes/new" component={Newquote}/>
+      <Route path="/rfx" component={RFX}/>
       <Route path="*">
         <PageNotFound />
       </Route>

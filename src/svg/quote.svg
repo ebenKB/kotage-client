@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg fill="none" viewBox="0 0 102 135" xmlns="http://www.w3.org/2000/svg">
+<path d="m94.482 0.85648c0-0.47299-0.3848-0.85648-0.8595-0.85648-0.4748 0-0.8596 0.38349-0.8596 0.85648v4.0432c0.6116 0.0101 1.1927 0.14469 1.7191 0.37945v-4.4226z" fill="#9552EF"/>
+<path d="m94.482 13.278c-0.5264 0.2348-1.1075 0.3693-1.7191 0.3795v4.0432c0 0.473 0.3848 0.8565 0.8596 0.8565 0.4747 0 0.8595-0.3835 0.8595-0.8565v-4.4227z" fill="#9552EF"/>
+<path d="m88.18 2.215c-0.3357-0.33449-0.88-0.33449-1.2156 0-0.3357 0.3345-0.3357 0.87677 0 1.2113l2.6988 2.6892c0.3798-0.43688 0.8449-0.798 1.3695-1.0578l-2.8527-2.8426z" fill="#9552EF"/>
+<path d="m96.924 10.928c-0.2608 0.5227-0.6233 0.9862-1.0618 1.3646l3.7474 3.734c0.3357 0.3345 0.8801 0.3345 1.2161 0 0.335-0.3345 0.335-0.8767 0-1.2112l-3.9017-3.8874z" fill="#9552EF"/>
+<path d="m88.592 9.2043c0.0102-0.6094 0.1453-1.1885 0.3808-1.713h-4.7364c-0.4748 0-0.8596 0.3835-0.8596 0.85649 0 0.47298 0.3848 0.85648 0.8596 0.85648h4.3556z" fill="#9552EF"/>
+<path d="m97.381 9.2043h3.7593c0.475 0 0.86-0.3835 0.86-0.85648 0-0.47299-0.385-0.85649-0.86-0.85649h-4.1401c0.2356 0.5245 0.3707 1.1036 0.3808 1.713z" fill="#9552EF"/>
+<path d="m85.152 14.816c-0.3356 0.3345-0.3356 0.8767 0 1.2112 0.3357 0.3345 0.88 0.3345 1.2156 0l3.7374-3.7241c-0.4062-0.4237-0.7279-0.9285-0.9382-1.4876l-4.0148 4.0005z" fill="#9552EF"/>
+<path d="m94.826 5.1764c0.5611 0.20952 1.0677 0.53008 1.493 0.93483l2.6945-2.6849c0.3357-0.33449 0.3357-0.87677 0-1.2113-0.3357-0.33442-0.8799-0.33442-1.2156 0l-2.9719 2.9613z" fill="#9552EF"/>
+<rect x="9.455" y="15.702" width="86.815" height="115.62" rx="2" fill="#4BC587" fill-opacity=".2"/>
+<rect transform="matrix(.99906 .043464 -.043775 .99904 12.388 11.991)" width="86.814" height="119.35" rx="2" fill="#4BC587" fill-opacity=".2"/>
+<rect transform="matrix(.99906 .043464 -.043775 .99904 5.9022 5.9287)" width="86.814" height="119.35" rx="2" fill="#fff"/>
+<rect transform="matrix(.99906 .043464 -.043775 .99904 5.9488 5.8882)" x=".95528" y="1.0425" width="84.814" height="117.35" rx="1" stroke="#4BC587" stroke-opacity=".6" stroke-width="2"/>
+<rect x="4.1517" y="9.2793" width="84.815" height="115.62" rx="1" fill="#fff" stroke="#00AE56" stroke-width="2"/>
+<line x1="49.634" x2="80.443" y1="24.408" y2="24.408" stroke="#4BC587" stroke-linecap="round" stroke-linejoin="round" stroke-opacity=".6" stroke-width="3"/>
+<line transform="matrix(.99994 -.010712 .010789 .99994 55.011 30.263)" x1="1.5" x2="25.148" y1="-1.5" y2="-1.5" stroke="#4BC587" stroke-linecap="round" stroke-linejoin="round" stroke-opacity=".6" stroke-width="3"/>
+<line x1="13.533" x2="80.444" y1="67.849" y2="67.849" stroke="#00AE56" stroke-linecap="round" stroke-width="3"/>
+<line x1="13.247" x2="44.916" y1="44.292" y2="44.292" stroke="#00AE56" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+<line x1="72.843" x2="80.444" y1="44.292" y2="44.292" stroke="#00AE56" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+<line x1="13.247" x2="34.601" y1="49.146" y2="49.146" stroke="#00AE56" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+<line x1="72.843" x2="80.444" y1="49.146" y2="49.146" stroke="#00AE56" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+<line x1="13.247" x2="37.466" y1="54.856" y2="54.856" stroke="#00AE56" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+<line x1="72.843" x2="80.444" y1="54.856" y2="54.856" stroke="#00AE56" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+<line x1="13.247" x2="44.916" y1="60.565" y2="60.565" stroke="#00AE56" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+<line x1="72.843" x2="80.444" y1="60.565" y2="60.565" stroke="#00AE56" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+<line x1="13.247" x2="40.904" y1="72.442" y2="72.442" stroke="#00AE56" stroke-linecap="round" stroke-width="3"/>
+<line x1="43.904" x2="80.444" y1="72.442" y2="72.442" stroke="#4BC587" stroke-linecap="round" stroke-linejoin="round" stroke-opacity=".6" stroke-width="3"/>
+<line x1="13.247" x2="80.444" y1="76.44" y2="76.44" stroke="#4BC587" stroke-linecap="round" stroke-linejoin="round" stroke-opacity=".6" stroke-width="3"/>
+<line x1="13.534" x2="80.444" y1="80.436" y2="80.436" stroke="#4BC587" stroke-linecap="round" stroke-linejoin="round" stroke-opacity=".6" stroke-width="3"/>
+<line x1="12.033" x2="43.265" y1="84.576" y2="84.576" stroke="#4BC587" stroke-opacity=".6" stroke-width="3"/>
+<line x1="17.832" x2="51.506" y1="92.998" y2="92.998" stroke="#4BC587" stroke-linecap="round" stroke-linejoin="round" stroke-opacity=".6" stroke-width="3"/>
+<line x1="13.247" x2="80.444" y1="39.944" y2="39.944" stroke="#4BC587" stroke-linecap="round" stroke-linejoin="round" stroke-opacity=".6" stroke-width="3"/>
+<ellipse cx="71.486" cy="113.2" rx="7.8792" ry="7.8511" fill="#4BC587" fill-opacity=".2"/>
+<line x1="60.522" x2="73.281" y1="112.7" y2="112.7" stroke="#00AE56" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+<line x1="13.534" x2="12.539" y1="92.998" y2="92.998" stroke="#00AE56" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+<line x1="17.545" x2="43.483" y1="97.28" y2="97.28" stroke="#4BC587" stroke-linecap="round" stroke-linejoin="round" stroke-opacity=".6" stroke-width="3"/>
+<line x1="13.247" x2="12.253" y1="97.28" y2="97.28" stroke="#00AE56" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+<line x1="17.545" x2="46.635" y1="101.85" y2="101.85" stroke="#4BC587" stroke-linecap="round" stroke-linejoin="round" stroke-opacity=".6" stroke-width="3"/>
+<line x1="13.247" x2="12.253" y1="101.85" y2="101.85" stroke="#00AE56" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+<line x1="17.545" x2="53.511" y1="105.85" y2="105.85" stroke="#4BC587" stroke-linecap="round" stroke-linejoin="round" stroke-opacity=".6" stroke-width="3"/>
+<line x1="13.247" x2="12.253" y1="105.85" y2="105.85" stroke="#00AE56" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+<rect y="20.73" width="25.373" height="12.64" rx="2" fill="#9552EF"/>
+<path d="m2.8356 30.225v-6.54h2.21c0.34 0 0.65667 0.0333 0.95 0.1 0.29334 0.0667 0.54667 0.1767 0.76 0.33 0.21334 0.1467 0.38001 0.3433 0.50001 0.59 0.12666 0.2467 0.19 0.5533 0.19 0.92 0 0.5-0.12001 0.9033-0.36001 1.21-0.23333 0.3067-0.54666 0.5267-0.93999 0.66l1.56 2.73h-1.3l-1.41-2.56h-1v2.56h-1.16zm1.16-3.48h0.93c0.44667 0 0.78667-0.0933 1.02-0.28 0.24-0.1867 0.36-0.4667 0.36-0.84 0-0.38-0.12-0.6433-0.36-0.79-0.23333-0.1467-0.57333-0.22-1.02-0.22h-0.93v2.13zm5.158 3.48v-6.54h3.95v0.98h-2.79v1.85h2.38v0.98h-2.38v2.73h-1.16zm7.94-0.83c0.26 0 0.4933-0.0567 0.7-0.17 0.2066-0.1133 0.3833-0.2767 0.53-0.49 0.1466-0.2133 0.26-0.4733 0.34-0.78s0.12-0.65 0.12-1.03c0-0.7333-0.1534-1.3067-0.46-1.72-0.3-0.42-0.71-0.63-1.23-0.63s-0.9334 0.21-1.24 0.63c-0.3 0.4133-0.45 0.9867-0.45 1.72 0 0.38 0.04 0.7233 0.12 1.03s0.1933 0.5667 0.34 0.78c0.1466 0.2133 0.3233 0.3767 0.53 0.49 0.2066 0.1133 0.44 0.17 0.7 0.17zm2.08 2.57c-0.6534 0-1.2-0.1567-1.64-0.47s-0.7667-0.7133-0.98-1.2c-0.3534-0.06-0.6734-0.18-0.96-0.36-0.2867-0.1867-0.5334-0.4233-0.74-0.71-0.2067-0.2867-0.3667-0.6233-0.48-1.01-0.1067-0.3867-0.16-0.8167-0.16-1.29 0-0.5267 0.07-0.9967 0.21-1.41 0.14-0.42 0.3366-0.7733 0.59-1.06 0.2533-0.2867 0.5566-0.5067 0.91-0.66 0.3533-0.1533 0.7433-0.23 1.17-0.23 0.4266 0 0.8166 0.0767 1.17 0.23 0.3533 0.1533 0.6566 0.3733 0.91 0.66 0.26 0.2867 0.46 0.64 0.6 1.06 0.14 0.4133 0.21 0.8833 0.21 1.41 0 0.4533-0.0534 0.87-0.16 1.25-0.1 0.3733-0.2467 0.7033-0.44 0.99-0.1934 0.2867-0.4267 0.5233-0.7 0.71-0.2667 0.1867-0.5667 0.3167-0.9 0.39 0.1533 0.26 0.3633 0.45 0.63 0.57 0.2733 0.12 0.57 0.18 0.89 0.18 0.1466 0 0.2766-0.01 0.39-0.03 0.12-0.0133 0.2266-0.0367 0.32-0.07l0.21 0.86c-0.1134 0.0533-0.26 0.0967-0.44 0.13-0.18 0.04-0.3834 0.06-0.61 0.06z" fill="#fff"/>
+<path d="m14.45 15.854v-11.271c0-1.5931 1.332-2.8846 2.975-2.8846 1.6431 0 2.975 1.2916 2.975 2.8846v9.6099m-1.7962 1.659v-9.7472c0-0.64904-0.5278-1.1752-1.1788-1.1752s-1.1787 0.52614-1.1787 1.1752v2.2898m2.3575 7.4058c0 1.1211-0.9299 2.0299-2.0769 2.0299s-2.0769-0.9088-2.0769-2.0299" stroke="#00AE56" stroke-width="2"/>
+</svg>
