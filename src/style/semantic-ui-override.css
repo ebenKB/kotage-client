@@ -40,3 +40,8 @@
   width: 30px;
   /* padding: 20px; */
 }
+
+.ui.selection.dropdown,
+.ui.dropdown {
+  border-radius: 2px;
+}

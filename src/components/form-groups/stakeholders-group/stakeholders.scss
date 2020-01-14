@@ -1,0 +1,21 @@
+.kt-stk__group {
+  display: grid;
+  grid-template-columns: 25% 75%;
+  grid-column-gap: 10px;
+}
+
+.kt-stk-group__header {
+  display: grid;
+  grid-template-columns:  60% 30%;
+  grid-column-gap: 10px;
+}
+
+.kt-stk__content {
+  display: grid;
+  grid-template-columns:  60% 30% 10%;
+  grid-column-gap: 10px;
+}
+
+.kt-stk__content .ui.selection.dropdown {
+  min-width: 8em;
+}

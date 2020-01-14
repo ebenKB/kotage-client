@@ -4,6 +4,8 @@ import KtWrapper from '../../kt-wrapper/kt-wrapper';
 import Divider from '../../kt-divider/divider';
 import FormGroup from '../../form-fields/form-group/form-group';
 import DateTimeGroup from '../../form-fields/date-time-form-group/date-time-group';
+import KtDocs from '../../form-fields/kt-docs-group/kt-docs';
+import Stakeholders from '../../form-groups/stakeholders-group/stakeholders';
 
 const Newquote = () => {
   return (
@@ -24,11 +26,12 @@ const Newquote = () => {
             label="Title"
             labelName="title"
             value="Request for NOC"
+            center={true}
           />
         </div>
         <div className="m-t-30">
           <FormGroup
-            type="textarea" 
+            type="kt-textarea" 
             placeholder="How would you describe the quote?"
             label="Description"
             labelName="decription"
@@ -49,6 +52,7 @@ const Newquote = () => {
             label="Event Type*"
             labelName="event_type"
             classes="small"
+            center={true}
           />
         </div>
         <div className="m-t-30">
@@ -58,15 +62,39 @@ const Newquote = () => {
             label="Budget"
             labelName="budget"
             classes="small"
+            center={true}
+          />
+        </div>
+        <Divider type="thick" title="Timeline" classes="m-t-40"/>
+        <div className="m-t-30">
+          <DateTimeGroup
+            placeholder="Date"
+            label="Bid Deadline *"
+            center={true}
           />
         </div>
         <div className="m-t-30">
           <DateTimeGroup
-            placeholder="dddd"
-            label="Bid Deadlinew*"
+            placeholder="Date"
+            label="RSVP Deadline"
+            center={true}
           />
         </div>
-        <Divider type="thick" title="Timeline" classes="m-t-40"/>
+        <div className="m-t-30">
+          <DateTimeGroup
+            placeholder="Date"
+            label="Question Deadline"
+            center={true}
+          />
+        </div>
+        <Divider type="thick" title="Response Sheet" classes="m-t-40"/>
+        <KtDocs/>
+        <Divider type="thick" title="Invite Vendors" classes="m-t-40"/>
+        <div>invite vendors here</div>
+        <Divider type="thick" title="Invite Stakeholders" classes="m-t-40"/>
+        <div>
+          <Stakeholders />
+        </div>
       </div>
       </KtWrapper>
     </MainContent>

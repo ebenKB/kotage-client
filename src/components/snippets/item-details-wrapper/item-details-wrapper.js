@@ -23,7 +23,7 @@ const ItemDetailsWrapper = () => {
 
   return (
     <div className="itd-wrapper">
-      <div className="itd-wrapper__header bold m-b-12">
+      <div className="itd-wrapper__header bold m-b-12 bold light-caption">
         <div>Product Code</div>
         <div>Description</div>
         <div>Quantity</div>

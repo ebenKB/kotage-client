@@ -1,0 +1,17 @@
+.docs-group {
+  display: grid;
+  grid-template-columns: 25% 75%;
+}
+
+.docs-wrapper__content {
+  display: grid;
+  // grid-template-columns: 40% 50% 10%;
+  grid-template-columns:37% 50% 10%;
+  grid-column-gap: 20px;
+}
+
+.docs-wrapper__header {
+  display: grid;
+  grid-template-columns: 40% 50%;
+  grid-column-gap: 5px;
+}

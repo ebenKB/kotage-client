@@ -6,8 +6,9 @@ import Amount from '../../../components/form-fields/amount/amount'
 
 import './form-group.scss';
 import Dropzone from '../dropzone/dropzone';
+import KtTextArea from '../kt-textarea/kt-textarea';
 
-const FormGroup = ({type, placeholder, label, labelName, ...otherProps}) => {
+const FormGroup = ({type, placeholder, label, labelName, center, classes, ...otherProps}) => {
 
 const options = [
   {
@@ -21,7 +22,7 @@ const options = [
     value: 'Elorm'
   },
 ]
-  
+
   const getElement = () => {
     if(type==="text" || type === 'password' || type === 'number'){
       return <Input type={type}  placeholder={placeholder} {...otherProps}/>
@@ -35,13 +36,21 @@ const options = [
           <TextArea placeholder={placeholder} style={{ minHeight: 100 }} />
         </Form>
       )
+    } else if(type==='kt-textarea') {
+      return (
+        <Form> 
+          <KtTextArea  />
+        </Form>
+      )
     } else if(type === 'dropzone') {
       return <Dropzone/>
+    } else {
+      return otherProps.children
     }
   }
 
   return (
-    <div className="form-group">
+    <div className={`form-group ${center ? 'center' : ''} ${classes}`}>
       <label htmlFor={labelName}> <span className="bold">{label}</span></label>
       {getElement()}
     </div>

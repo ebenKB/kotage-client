@@ -34,6 +34,15 @@ h1,h2,h3,h4,h5,h6 {
   font-weight: 900;
 }
 
+.bold.light-caption {
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: 600;
+  /* font-size: 13px; */
+  line-height: 18px;
+  color: rgba(78, 92, 110, 0.5);
+}
+
 .big-caption {
   font-size: 1.5rem;
 }

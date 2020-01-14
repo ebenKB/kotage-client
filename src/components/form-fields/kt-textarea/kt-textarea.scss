@@ -1,0 +1,14 @@
+.ui.form .text-wrapper__header {
+  height: 40px;
+  width: 100%;
+  background: #FBFCFD;
+  border: 1px solid #DBDEE2;
+  box-sizing: border-box;
+}
+
+.ui.form .kt-textarea__wrapper textarea {
+  min-height: 180px;
+  border-top: none;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}

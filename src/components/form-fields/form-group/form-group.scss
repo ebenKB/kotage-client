@@ -2,7 +2,15 @@
   display: grid;
   grid-template-columns: 30% 70%;
   grid-column-gap: 10px;
-  align-items: center;
+  // align-items: center;
   width: 80%;
   // font-size: 14px;
+}
+
+.form-group.fluid {
+  width: 100%;
+}
+
+.form-group.center {
+  align-items: center;
 }

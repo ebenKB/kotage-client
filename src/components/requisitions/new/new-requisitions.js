@@ -73,7 +73,7 @@ const Requisitions = () => {
             </div>
             <div className="m-t-20">
               <FormGroup 
-                type="textarea"
+                type="kt-textarea"
                 placeholder="Requisition notes"
                 label="Notes"
                 labelName="notes"
