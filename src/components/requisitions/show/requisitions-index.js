@@ -39,28 +39,48 @@ const Requisitions = () => {
         <Divider type="faint"/>
         <RequisitionItem />
 
-        <Divider title = "Approved" type="thick" display="kt-success m-t-40 m-b-20"/>
-        <RequisitionItem />
+        <Divider title = "Approved" type="thick" classes="kt-success m-t-40 m-b-20"/>
+        <RequisitionItem 
+          type='success'
+        />
         <Divider type="faint"/>
-        <RequisitionItem />
+        <RequisitionItem 
+          type='success'
+        />
         <Divider type="faint"/>
-        <RequisitionItem />
+        <RequisitionItem 
+          type='success'
+        />
         <Divider type="faint"/>
-        <RequisitionItem />
+        <RequisitionItem 
+          type='success'
+        />
         <Divider type="faint"/>
-        <RequisitionItem />
+        <RequisitionItem 
+          type='success'
+        />
         <Divider type="faint"/>
 
         <Divider title = "Rejected" type="thick" classes="kt-danger m-t-40 m-b-20"/>
-        <RequisitionItem />
+        <RequisitionItem 
+          type='danger'
+        />
         <Divider type="faint"/>
-        <RequisitionItem />
+        <RequisitionItem 
+          type='danger'
+        />
         <Divider type="faint"/>
-        <RequisitionItem />
+        <RequisitionItem 
+          type='danger'
+        />
         <Divider type="faint"/>
-        <RequisitionItem />
+        <RequisitionItem 
+          type='danger'
+        />
         <Divider type="faint"/>
-        <RequisitionItem />
+        <RequisitionItem 
+          type='danger'
+        />
         <Divider type="faint"/>
       </KtWrapper>
     </MainContent>
