@@ -20,29 +20,41 @@ const Rfx = () => {
         canFilter={false}
         canPerform={true}
       >
-      <Form>
-        <Divider type="thick" title="Select RFX Type" classes="m-t-10"/>
-        <div className="m-t-40 m-b-40 bold light-caption text-center">
-          You can see the types of events you can create. Select the type you want and proceed
-        </div>
+        <Form>
+          <Divider 
+            type="thick" 
+            title="Select RFX Type" 
+            classes="m-t-10"
+          />
+          <div className="m-t-40 m-b-40 bold light-caption text-center">
+            You can see the types of events you can create. Select the type you want and proceed
+          </div>
           <ul className="rfx-content">
             <li className="wrapper">
-              <RfxItem title="Request for Quote">
+              <RfxItem 
+                title="Request for Quote">
                 <QuoteIcon className="kt-rfx__icon"/>
               </RfxItem>
             </li>
             <li className="wrapper">
-              <RfxItem title="Request for Proposal">
+              <RfxItem 
+                title="Request for Proposal"
+              >
                 <ProposalIcon className="kt-rfx__icon"/>
               </RfxItem>
             </li>
             <li className="wrapper">
-              <RfxItem title="Request for Information">
+              <RfxItem 
+                title="Request for Information">
                 <InformationIcon className="kt-rfx__icon"/>
               </RfxItem>
             </li>
           </ul>
-          <Divider type="thick" title="Select Source" classes="m-t-40 m-b-40"/>
+          <Divider 
+            type="thick" 
+            title="Select Source" 
+            classes="m-t-40 m-b-40"
+          />
           <div className="form-group fluid kt-content__wrapper">
             <div className="bold">Source</div>
             <div className="flex-wrapper">

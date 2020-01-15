@@ -1,6 +1,6 @@
 import React from 'react'
 
-const RfxItem = ({props}) => {
+const RfxItem = (props) => {
   return (
     <>
     <div className="content">
