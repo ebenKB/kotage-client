@@ -8,7 +8,7 @@ import './form-group.scss';
 import Dropzone from '../dropzone/dropzone';
 import KtTextArea from '../kt-textarea/kt-textarea';
 
-const FormGroup = ({type, placeholder, label, labelName, center, classes, ...otherProps}) => {
+const FormGroup = ({type, placeholder, label, labelName, center, classes='', ...otherProps}) => {
 
 const options = [
   {
