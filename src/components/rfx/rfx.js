@@ -8,6 +8,7 @@ import { ReactComponent as ProposalIcon } from '../../svg/proposal.svg';
 import { ReactComponent as InformationIcon } from '../../svg/information.svg';
 
 import './rfx.scss';
+import RfxItem from '../rfx-item/rfx-item';
 
 const Rfx = () => {
   return (
@@ -26,22 +27,19 @@ const Rfx = () => {
         </div>
           <ul className="rfx-content">
             <li className="wrapper">
-              <div className="content">
+              <RfxItem title="Request for Quote">
                 <QuoteIcon className="kt-rfx__icon"/>
-                <div className="m-t-20 m-b-20 bold light-caption text-center">Request for Quote</div>
-              </div>
+              </RfxItem>
             </li>
             <li className="wrapper">
-              <div className="content">
+              <RfxItem title="Request for Proposal">
                 <ProposalIcon className="kt-rfx__icon"/>
-                <div className="m-t-20 m-b-20 bold light-caption text-center">Request for Proposal</div>
-              </div>
+              </RfxItem>
             </li>
             <li className="wrapper">
-              <div className="content">
+              <RfxItem title="Request for Information">
                 <InformationIcon className="kt-rfx__icon"/>
-                <div className="m-t-20 m-b-20 bold light-caption text-center">Request for Information</div>
-              </div>
+              </RfxItem>
             </li>
           </ul>
           <Divider type="thick" title="Select Source" classes="m-t-40 m-b-40"/>
