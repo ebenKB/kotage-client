@@ -5,7 +5,7 @@ import { ReactComponent as Logo } from '../../../svg/bin.svg';
 import SimpleQuestion from './simple-question/simple-question';
 import { ReactComponent as Icon } from '../../../svg/plus.svg';
 
-const QuestionCreator = ({type = 'simple'}) => {
+const QuestionCreator = ({type = 'simple', label}) => {
   const getQuestionType = () => {
     if(type === 'simple') {
       return (
@@ -20,14 +20,20 @@ const QuestionCreator = ({type = 'simple'}) => {
 
   return (
     <div>
-      <SimpleQuestion />
-      <SimpleQuestion />
+      <SimpleQuestion
+        label={label}
+        labelName="question"
+      />
+      <SimpleQuestion
+        label={label}
+        labelName="question"
+      />
       <div 
         className="clickable m-t-15 m-b-30 kt-primary bold sm-caption" 
         onClick={addNewQuestion}
       >
         <Icon className="kt-logo__small kt-primary"/>
-        <span>Add New Question</span>
+        <span>Add New</span>
       </div>
     </div>
   )

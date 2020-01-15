@@ -3,7 +3,7 @@ import '../question-creator.scss';
 import FormGroup from '../../../form-fields/form-group/form-group';
 import { ReactComponent as Logo } from '../../../../svg/bin.svg';
 
-const SimpleQuestion = ({type = 'simple'}) => {
+const SimpleQuestion = ({label, labelName}) => {
   return (
     <div className="question-wrapper m-t-20 m-b-20">
       <div className="question">
@@ -11,8 +11,8 @@ const SimpleQuestion = ({type = 'simple'}) => {
           <FormGroup
             type="text" 
             placeholder="Type your question here"
-            label="Your Question"
-            labelName="question"
+            label={label}
+            labelName={labelName}
             center={true}
           />
         </div>

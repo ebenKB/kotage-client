@@ -38,11 +38,25 @@ const Vendors = () => {
               />
             </div>
           </div>
-          <Divider type="thick" title={ <span> <span className="bold">Documents</span> <span> - Request documents from vendor </span>  </span> } classes="m-t-30"/>
           <div className="m-t-30">
-            <Collapsible>
+            <Collapsible
+              title="Documents - Request documents from vendor"
+            >
               <div className="kt-content__wrapper">
-                <QuestionCreator/>
+                <QuestionCreator
+                  label="Your Question"
+                />
+              </div>
+            </Collapsible>
+          </div>
+          <div className="m-t-30">
+            <Collapsible
+              title="Documents - Request custom information from vendor"
+            >
+              <div className="kt-content__wrapper">
+                <QuestionCreator
+                  label="Document name"
+                />
               </div>
             </Collapsible>
           </div>

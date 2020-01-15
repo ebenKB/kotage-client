@@ -13,14 +13,14 @@ const Collapsible = (props) => {
       return (
         <div className="collapse-header">
           <Icon name='angle down'/>
-          <Divider type="thick" title="Documents - Request documents from vendor" classes="m-t-10"/>
+          <Divider type="thick" title={props.title} classes="m-t-10"/>
         </div>
       )
     } else {
       return (
         <div className="collapse-header">
           <Icon name='angle up'/> 
-          <Divider type="thick" title="Documents - Request documents from vendor" classes="m-t-10"/>
+          <Divider type="thick" title={props.title} classes="m-t-10"/>
         </div>
       )
     }
