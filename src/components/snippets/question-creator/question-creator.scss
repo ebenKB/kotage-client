@@ -1,0 +1,20 @@
+.question-wrapper {
+  display: grid;
+  grid-template-columns: 90% 8%;
+  grid-gap: 2%;
+  align-items: center;
+}
+
+.question {
+  background: var(--kt-off-grey);
+  padding: 20px;
+  border-radius: 4px;
+}
+
+.question-wrapper .cta {
+  visibility: hidden;
+}
+
+.question-wrapper:hover .cta {
+  visibility: visible;
+}

@@ -1,0 +1,24 @@
+.collapsibe-btn{
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  border: none;
+  padding: 0;
+}
+
+.collapse-header {
+  position: relative;
+}
+
+.collapse-header i {
+  position: absolute;
+  right: 0;
+}
+
+.collapsibe-btn:focus,
+.collapsibe-btn:active {
+  border: none;
+  border-color: transparent;
+  box-shadow: none;
+}
+

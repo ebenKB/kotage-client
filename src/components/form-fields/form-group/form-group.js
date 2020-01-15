@@ -24,7 +24,7 @@ const options = [
 ]
 
   const getElement = () => {
-    if(type==="text" || type === 'password' || type === 'number'){
+    if(type==="text" || type === 'password' || type === 'number' || type === 'email'){
       return <Input type={type}  placeholder={placeholder} {...otherProps}/>
     } else if(type === 'dropdown') {
       return <Dropdown placeholder={placeholder} search selection options={options} className={otherProps.classes}/>

@@ -1,6 +1,6 @@
 import React from 'react';
 import './stakeholders.scss';
-import Input from '../../../components/form-fields/input/input';
+import Input from '../../form-fields/input/input';
 import { ReactComponent as Trash } from '../../../svg/bin.svg';
 import { ReactComponent as Logo } from '../../../svg/plus.svg';
 import { Dropdown } from 'semantic-ui-react';
