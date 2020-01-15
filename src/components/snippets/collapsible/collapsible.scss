@@ -10,6 +10,10 @@
   position: relative;
 }
 
+.collapse-header {
+  color: var(--kt-dark);
+}
+
 .collapse-header i {
   position: absolute;
   right: 0;
@@ -20,5 +24,6 @@
   border: none;
   border-color: transparent;
   box-shadow: none;
+  outline: none;
 }
 

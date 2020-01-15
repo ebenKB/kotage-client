@@ -2,9 +2,10 @@ import React from 'react';
 import './question-creator.scss';
 import FormGroup from '../../form-fields/form-group/form-group';
 import { ReactComponent as Logo } from '../../../svg/bin.svg';
+import SimpleQuestion from './simple-question/simple-question';
+import { ReactComponent as Icon } from '../../../svg/plus.svg';
 
 const QuestionCreator = ({type = 'simple'}) => {
-
   const getQuestionType = () => {
     if(type === 'simple') {
       return (
@@ -12,20 +13,22 @@ const QuestionCreator = ({type = 'simple'}) => {
       );
     }
   }
+
+  const addNewQuestion = () => {
+    console.log('we want to add a new question')
+  }
+
   return (
-    <div className="question-wrapper">
-      <div className="question">
-        <div className="">
-          <FormGroup
-            type="text" 
-            placeholder="Type your question here"
-            label="Your Question"
-            labelName="question"
-            center={true}
-          />
-        </div>
+    <div>
+      <SimpleQuestion />
+      <SimpleQuestion />
+      <div 
+        className="clickable m-t-15 m-b-30 kt-primary bold sm-caption" 
+        onClick={addNewQuestion}
+      >
+        <Icon className="kt-logo__small kt-primary"/>
+        <span>Add New Question</span>
       </div>
-      <Logo className="kt-logo__small cta"/>
     </div>
   )
 }
