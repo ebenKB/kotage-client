@@ -1,6 +1,6 @@
 import React from 'react';
 import Input from '../input/input';
-import { Form, TextArea } from 'semantic-ui-react';
+import { Form, TextArea, Placeholder } from 'semantic-ui-react';
 import { Dropdown } from 'semantic-ui-react'
 import Amount from '../../../components/form-fields/amount/amount'
 
@@ -39,7 +39,7 @@ const options = [
     } else if(type==='kt-textarea') {
       return (
         <Form> 
-          <KtTextArea  />
+          <KtTextArea  placeholder={Placeholder} {...otherProps}/>
         </Form>
       )
     } else if(type === 'dropzone') {

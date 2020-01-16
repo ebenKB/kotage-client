@@ -3,10 +3,17 @@ import { Input } from 'semantic-ui-react';
 
 import './input.scss';
 
-const input = ({type, value, classes, ...props}) => {
+const CustomInput = ({type, value, name, classes, ...props}) => {
+  
   return (
-    <Input type={type} value={value} className={classes} {...props}/>
+    <Input 
+      type={type} 
+      value={value}
+      name={name}
+      className={classes}
+      { ...props }
+    />
   )
 }
 
-export default input
+export default CustomInput

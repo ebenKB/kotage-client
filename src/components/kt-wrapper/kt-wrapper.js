@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import SearcFilter from '../search-filter/filter';
 
 const KtWrapper = (props) => {
-  let { link, linkName, header, canFilter, canPerform } = props;
+  let { link='', linkName='', header, canFilter, canPerform, handleAction } = props;
 
   // check if there are no defaults
   if(link == null) {
@@ -32,6 +32,10 @@ const KtWrapper = (props) => {
 
   const handleChange =(e, data) => {
     console.log('The selection has chnaged', data)
+  }
+
+  const performAction =(e) => {
+    console.log('we want to perform an action', props.footer);
   }
 
   return (
@@ -60,7 +64,7 @@ const KtWrapper = (props) => {
         <div className="kt-wrapper__footer text-right">
           <div className="content">
             <Button content="Cancel" className="default"/>
-            <Button content="Save" className="green"/>
+            <Button content="Save" className="green" onClick={handleAction}/>
           </div>
         </div>
         )
