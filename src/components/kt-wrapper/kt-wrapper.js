@@ -42,7 +42,7 @@ const KtWrapper = (props) => {
             {
               canFilter && <div>
               <Dropdown placeholder="Filter records" selection options={options} onChange={handleChange} className="m-r-20 "/>
-                <Link to={link} className="action-link green ui large button">
+                <Link to={link} className="action-link green ui button">
                   {linkName}
                 </Link>
               </div>
@@ -57,12 +57,12 @@ const KtWrapper = (props) => {
       </div>
       {
         canPerform && (
-          <div className="kt-wrapper__footer text-right">
-            <div className="content">
-              <Button content="Cancel" className="default"/>
-              <Button content="Save" className="green"/>
-            </div>
+        <div className="kt-wrapper__footer text-right">
+          <div className="content">
+            <Button content="Cancel" className="default"/>
+            <Button content="Save" className="green"/>
           </div>
+        </div>
         )
       }
     </div>

@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
 import './requisition-item.scss';
 import { ReactComponent as Logo } from '../../svg/cart.svg';
 
@@ -10,7 +11,9 @@ const RequisitionItem = ({item, type}) => {
       </div>
       <div className="kt-req__item-content">
         <div>
-          <span className="bold big-caption kt-primary">Cisco Meraki AP</span> by <span className="bold">John Smith</span>
+          <span className="bold big-caption kt-primary clickable">
+            <Link to="/requisitions/id">Cisco Meraki AP</Link>
+          </span> by <span className="bold">John Smith</span>
         </div>
         <div>
           <span className={`bold kt-${type}`}>$900,864</span> 

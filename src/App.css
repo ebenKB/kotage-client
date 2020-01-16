@@ -4,10 +4,15 @@
 @import "./style//semantic-ui-override.css";
 
 body {
-  font-size: 16px;
+  /* font-size: 16px; */
+  font-size: 14px;
   font-family: 'Open Sans', sans-serif;
   background: rgba(235, 238, 235, 0.35);
   color: var(--kotage-dark);
+}
+
+a {
+  color: var(--kt-blue);
 }
 
 /* override font for headings */
