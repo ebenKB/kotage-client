@@ -1,11 +1,11 @@
 import React from 'react'
-import MainContent from '../../kt-main-content/mainContent';
-import KtWrapper from '../../kt-wrapper/kt-wrapper';
-import Divider from '../../kt-divider/divider';
-import FormGroup from '../../form-fields/form-group/form-group';
-import DateTimeGroup from '../../form-fields/date-time-form-group/date-time-group';
-import KtDocs from '../../form-fields/kt-docs-group/kt-docs';
-import Stakeholders from '../../snippets/stakeholders-group/stakeholders';
+import MainContent from '../../../kt-main-content/mainContent';
+import KtWrapper from '../../../kt-wrapper/kt-wrapper';
+import Divider from '../../../kt-divider/divider';
+import FormGroup from '../../../form-fields/form-group/form-group';
+import DateTimeGroup from '../../../form-fields/date-time-form-group/date-time-group';
+import KtDocs from '../../../form-fields/kt-docs-group/kt-docs';
+import Stakeholders from '../../../snippets/stakeholders-group/stakeholders';
 
 const Newquote = () => {
   return (

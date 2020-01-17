@@ -3,6 +3,9 @@ import ItemDetail from '../item-detail/item-detail';
 import { ReactComponent as Logo } from '../../../svg/plus.svg';
 
 import './item-detail-wrapper.scss';
+import Collapsible from '../collapsible/collapsible';
+import AddItem from '../add-item/add-item';
+import  Dropzone from '../../form-fields/dropzone/dropzone';
 
 const ItemDetailsWrapper = () => {
   const [items, setItems] = useState([
@@ -18,7 +21,7 @@ const ItemDetailsWrapper = () => {
   ]);
 
   const handleClick =() => {
-    console.log('you clicked the item');
+    console.log('you want to add an item');
   }
 
   return (
@@ -35,9 +38,24 @@ const ItemDetailsWrapper = () => {
           )
         }
       </div> 
-      <div className="clickable m-t-15 m-b-30 kt-primary bold sm-caption" onClick={handleClick}>
-        <Logo className="kt-logo__small kt-primary"/>
-        <span>Add New Item</span>
+      <AddItem
+        title="Add New Item"
+        classes="m-t-20 m-b-10"
+        handleClick={handleClick}
+      /> 
+      <div className="m-b-30">
+        <Collapsible
+          title={
+            <div className="clickable  kt-primary bold sm-caption">
+              <Logo className="kt-logo__small kt-primary"/>
+              <span>Attach Documents</span>
+            </div>
+          }
+        >
+          <div className="kt-content__wrapper">
+            <Dropzone/>
+          </div>
+        </Collapsible>
       </div>
     </div>
   )

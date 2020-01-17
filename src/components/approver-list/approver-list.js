@@ -2,6 +2,7 @@ import React from 'react';
 import { Dropdown } from 'semantic-ui-react'
 import './approver-list.scss';
 import { ReactComponent as Logo } from '../../svg/plus.svg';
+import AddItem from '../snippets/add-item/add-item';
 
 const ApproverList = ({labelName, label}) => {
   const options = [
@@ -18,8 +19,9 @@ const ApproverList = ({labelName, label}) => {
   ]
 
   const handleClick = () => {
-
+    console.log('we want to add a new approver');
   }
+  
   return (
     <div className="approver-list__wrapper m-t-40">
       <div className="approver-list__content">
@@ -28,10 +30,11 @@ const ApproverList = ({labelName, label}) => {
           <div className="m-t-10 m-b-10">
             <Dropdown placeholder='Select approver' search selection options={options} className="fluid"/>
           </div>
-          <div className="clickable m-t-40 m-b-30 kt-primary bold sm-caption" onClick={handleClick}>
-            <Logo className="kt-logo__small kt-primary"/>
-            <span>Add New Approver</span>
-          </div>
+          <AddItem
+            classes="m-t-40 m-b-30"
+            title="Add New Approver"
+            handleClick={handleClick}
+          />
         </div>
       </div>
     </div>

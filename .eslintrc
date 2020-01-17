@@ -13,6 +13,7 @@
     "airbnb"
   ],
   "rules": {
-    "react/boolean-prop-naming": ["error", { "validateNested": true }]
+    "react/boolean-prop-naming": ["error", { "validateNested": true }],
+    "react/jsx-indent": [<enabled>, 'tab', {"checkAttributes": true, "indentLogicalExpressions": true}]
   }
 }

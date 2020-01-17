@@ -8,6 +8,7 @@ import ItemDetailsWrapper from '../../../snippets/item-details-wrapper/item-deta
 
 import './requisition.scss';
 import ApproverList from '../../../approver-list/approver-list';
+import Collapsible from '../../../snippets/collapsible/collapsible';
 
 const Requisitions = () => {
 
