@@ -64,7 +64,7 @@ const KtWrapper = (props) => {
         <div className="kt-wrapper__footer text-right">
           <div className="content">
             <Button content="Cancel" className="default"/>
-            <Button content="Save" className="green" onClick={handleAction}/>
+            <Button type="submit" content="Save" className="green" onClick={handleAction}/>
           </div>
         </div>
         )

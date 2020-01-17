@@ -7,7 +7,7 @@ const KtTextArea = ({placeholder, ...otherProps}) => {
   return (
     <div className="kt-textarea__wrapper">
       <div className="text-wrapper__header"></div>
-      <TextArea placeholder={placeholder} {...otherProps} />
+      <TextArea {...otherProps} />
     </div>
   )
 }

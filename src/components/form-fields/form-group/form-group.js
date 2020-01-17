@@ -38,9 +38,9 @@ const options = [
       )
     } else if(type==='kt-textarea') {
       return (
-        <Form> 
+
           <KtTextArea  placeholder={Placeholder} {...otherProps}/>
-        </Form>
+
       )
     } else if(type === 'dropzone') {
       return <Dropzone/>
