@@ -4,7 +4,7 @@ import { ReactComponent as Logo } from '../../../svg/bin.svg';
 
 import './item-detail.scss';
 
-const ItemDetail = ({item}) => {
+const ItemDetail = ({item, deleteItem}) => {
   return (
     <div className="item-wrapper">
       <div className="item-wrapper__content">
@@ -19,7 +19,10 @@ const ItemDetail = ({item}) => {
       </div> 
       </div>
       <div>
-        <div className="cta clickable">
+        <div 
+          className="cta clickable"
+          onClick={() => deleteItem(item)}
+        >
           <Logo className="kt-logo__small" />
         </div>
       </div>
