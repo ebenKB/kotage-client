@@ -7,7 +7,7 @@ import Collapsible from '../collapsible/collapsible';
 import AddItem from '../add-item/add-item';
 import  Dropzone from '../../form-fields/dropzone/dropzone';
 
-const ItemDetailsWrapper = () => {
+const ItemDetailsWrapper = ({item_details, handleAction, deleteItem}) => {
   const [items, setItems] = useState([
     {
       key : new Date().getDate(),
@@ -33,15 +33,19 @@ const ItemDetailsWrapper = () => {
       </div>
       <div className="item-details__wrapper">
         {
-          items.map((item, idx) => 
-            <ItemDetail key={ idx } item={item}/>
+          item_details.map((item, idx) => 
+            <ItemDetail 
+              key={ idx } 
+              item={item}
+              deleteItem={deleteItem}
+            />
           )
         }
       </div> 
       <AddItem
         title="Add New Item"
         classes="m-t-20 m-b-10"
-        handleClick={handleClick}
+        handleClick={handleAction}
       /> 
       <div className="m-b-30">
         <Collapsible

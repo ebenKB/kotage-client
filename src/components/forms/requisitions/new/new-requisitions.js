@@ -4,12 +4,14 @@ import MainContent from '../../../kt-main-content/mainContent';
 import KtWrapper from '../../../kt-wrapper/kt-wrapper';
 import Divider from '../../../kt-divider/divider';
 import FormGroup from '../../../form-fields/form-group/form-group';
-import {Form} from 'semantic-ui-react';
 import ItemDetailsWrapper from '../../../snippets/item-details-wrapper/item-details-wrapper';
 import { createRequisition } from '../../../../redux/actions/requisitionActions';
 
 import './requisition.scss';
 import ApproverList from '../../../approver-list/approver-list';
+import './requisition.scss';
+import { ValidatorForm } from 'react-form-validator-core';
+
 
 const Requisitions = ({createRequisition}) => {
 
@@ -21,6 +23,7 @@ const Requisitions = ({createRequisition}) => {
     amount: 0.00,
     warehouse : '',
     notes: '',
+    item_details: [{}]
   });
   const help = [
     {
@@ -46,6 +49,15 @@ const Requisitions = ({createRequisition}) => {
     }));
   }
 
+  const addNewItem  =() => {
+    console.log('we want to add a new item...');
+    alert('hey')
+  }
+
+  const deleteItem  = (item) => {
+    console.log('deleting the item', item);
+  }
+
   return (
     <MainContent
       help={help}
@@ -57,7 +69,10 @@ const Requisitions = ({createRequisition}) => {
         canPerform={true}
         handleAction={newRequisition}
       >
-        <Form>
+      <ValidatorForm
+          
+          onSubmit={createRequisition}
+        >
           <Divider type="thick" title="Request Details" classes="m-t-10"/>
             <div className="kt-content__wrapper">
               <div className="m-t-30">
@@ -70,6 +85,9 @@ const Requisitions = ({createRequisition}) => {
                   onChange={handleInputChange}
                   name="title"
                   center={true}
+                  validators={['required', 'isString']}
+                  errorMessages={['this field is required', 'email is not valid']}
+                  instantValidate={true}
                 />
               </div>
               <div className="m-t-20">
@@ -100,7 +118,11 @@ const Requisitions = ({createRequisition}) => {
             <div className="m-t-20">
               <Divider type="thick" title="Item Details"/>
               <div className="m-t-30">
-                <ItemDetailsWrapper />
+                <ItemDetailsWrapper
+                  item_details={requisition.item_details}
+                  handleAction={addNewItem}
+                  deleteItem={deleteItem}
+                />
               </div>
             </div>
             <Divider type="thick" title="Supplementary Details"/>
@@ -141,7 +163,7 @@ const Requisitions = ({createRequisition}) => {
               labelName="Approvers"
               label="Approvers"
             />
-        </Form>
+          </ValidatorForm>
       </KtWrapper>
     </MainContent>
   )

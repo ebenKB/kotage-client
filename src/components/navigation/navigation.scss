@@ -19,6 +19,15 @@
 .kt-logo__small {
   width: 15px;
   height: 15px;
+}
+
+.kt-logo__very-small {
+  width: auto;
+  height: 10px;
+}
+
+.kt-logo__small,
+.kt-logo__very-small {
   margin-right: 4px;
   fill: var(--kotage-dark);
 }
