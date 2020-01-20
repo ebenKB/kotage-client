@@ -1,11 +1,18 @@
-import React from 'react';
+import React, {useEffect} from 'react';
+import { connect } from 'react-redux';
 import './requisitions-index';
 import KtWrapper from '../../../kt-wrapper/kt-wrapper';
 import RequisitionItem from '../../../requisition-item/requisition-item';
 import Divider from '../../../kt-divider/divider';
 import MainContent from '../../../kt-main-content/mainContent';
+import { getRequisitions } from '../../../../redux/actions/requisitionActions';
 
-const Requisitions = () => {
+const Requisitions = ({requisitionState: { requisitions, loading }, getRequisitions}) => {
+  console.log('it is loading..', loading, requisitions)
+  useEffect(() => {
+    getRequisitions();
+  }, []);
+
   const help = [
     {
       id: 1,
@@ -24,6 +31,9 @@ const Requisitions = () => {
         linkName="New Requisitions"
         canFilter={true}
       >
+      {
+        loading && <div>loading the records</div>
+      }
         <Divider title = "Pending" type="thick" classes=""/>
         <RequisitionItem />
         <Divider type="faint"/>
@@ -87,4 +97,8 @@ const Requisitions = () => {
   )
 };
 
-export default Requisitions;
+const mapSateToProps = (state) => ({
+  requisitionState: state.requisitions
+});
+
+export default connect(mapSateToProps, { getRequisitions })(Requisitions);
