@@ -27,10 +27,12 @@ const options = [
   const getElement = () => {
     if(type==="text" || type === 'password' || type === 'number' || type === 'email'){
       return <InputValidator type={type}  placeholder={placeholder} {...rest} />
+    } else if(type === 'date'){
+      return <Input type={type} {...rest}/>
     } else if(type === 'dropdown') {
       return <Dropdown placeholder={placeholder} search selection options={options} className={rest.classes}/>
     } else if(type === 'amount') {
-      return <Amount />
+      return <Amount {...rest}/>
     } else if(type === 'textarea') {
       return (
         <Form>

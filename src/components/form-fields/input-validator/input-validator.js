@@ -1,11 +1,12 @@
 import React from 'react';
 import {ValidatorComponent} from 'react-form-validator-core';
-import Input from '../input/input';
+import { Input } from 'semantic-ui-react';
+// import Input from '../input/input';
 import FormError from '../../snippets/error-icon/error-icon';
 
 class InputValidator extends ValidatorComponent{
   render() {
-    const { errorMessages, validators, requiredError, validatorListener, instantValidate,  ...rest } = this.props;
+    const { errorMessages, validators, requiredError, validatorListener, instantValidate, ...rest } = this.props;
     return (
       <>
         <Input
