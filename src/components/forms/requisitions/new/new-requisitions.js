@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import MainContent from '../../../kt-main-content/mainContent';
 import KtWrapper from '../../../kt-wrapper/kt-wrapper';
 import Divider from '../../../kt-divider/divider';
@@ -9,18 +9,41 @@ import ApproverList from '../../../approver-list/approver-list';
 import { ValidatorForm } from 'react-form-validator-core';
 
 
-const Requisitions = () => {
+class Requisitions extends React.Component{
+  constructor(props) {
+    super(props);
+    this.state = {
+      title: '',
+      name:'',
+      delivery_date: '',
+      amount: 0.00,
+      warehouse : '',
+      notes: '',
+      item_details: [{
+        product_code: 'SKU-WW-323',
+        description: 'How would would describe the item?',
+        quantity: 0
+      }]
+    }
 
-  // prepare a requisition to be saved
-  const [requisition, updateRequisition] = useState({
-    title: '',
-    name:'',
-    delivery_date: '',
-    amount: 0.00,
-    warehouse : '',
-    notes: '',
-    item_details: [{}]
-  });
+    this.myRef = React.createRef();
+  }
+  render() {
+    const requisition = this.state;
+      // prepare a requisition to be saved
+  // const [requisition, updateRequisition] = useState({
+  //   title: '',
+  //   name:'',
+  //   delivery_date: '',
+  //   amount: 0.00,
+  //   warehouse : '',
+  //   notes: '',
+  //   item_details: [{
+  //     product_code: 'SKU-WW-323',
+  //     description: 'How would would describe the item?',
+  //     quantity: 0
+  //   }]
+  // });
   const help = [
     {
       id: 1,
@@ -32,15 +55,25 @@ const Requisitions = () => {
   // create a new requisition
   const createRequisition = (e) => {
     e.preventDefault();
-    console.log('we want to create a requisition...', requisition)
   }
 
   // handle change when user types in a field
   const handleInputChange = (e) => {
     const { value, name } = e.target;
-    updateRequisition((r) => ({
+    this.setState((r) => ({
       ...r,
       [name]: value
+    }));
+    console.log('Something has changed', requisition)
+  }
+
+  const handleItemDetailsChange = (e) => {
+    const { value, name, id } = e.target;
+    const new_item_details = requisition.item_details;
+    new_item_details[id][name] = value;
+    this.setState((r) => ({
+      ...r,
+      item_details: new_item_details,
     }));
   }
 
@@ -52,7 +85,6 @@ const Requisitions = () => {
   const deleteItem  = (item) => {
     console.log('deleting the item', item);
   }
-
   return (
     <MainContent
       help={help}
@@ -65,7 +97,7 @@ const Requisitions = () => {
         handleAction={createRequisition}
       >
       <ValidatorForm
-          
+          ref={this.myRef}
           onSubmit={createRequisition}
         >
           <Divider type="thick" title="Request Details" classes="m-t-10"/>
@@ -80,14 +112,14 @@ const Requisitions = () => {
                   onChange={handleInputChange}
                   name="title"
                   center={true}
-                  validators={['required', 'isString']}
-                  errorMessages={['this field is required', 'email is not valid']}
+                  validators={['required', 'isString', 'minStringLength:2' ]}
+                  errorMessages={['this field is required', 'email is not valid', 'Text too short']}
                   instantValidate={true}
                 />
               </div>
               <div className="m-t-20">
                 <FormGroup 
-                  type="text" 
+                  type="date" 
                   placeholder="What is the Delivery date?"
                   label="Delivery date"
                   labelName="title"
@@ -117,6 +149,7 @@ const Requisitions = () => {
                   item_details={requisition.item_details}
                   handleAction={addNewItem}
                   deleteItem={deleteItem}
+                  handleChange={handleItemDetailsChange}
                 />
               </div>
             </div>
@@ -162,6 +195,7 @@ const Requisitions = () => {
       </KtWrapper>
     </MainContent>
   )
+}
 }
 
 export default Requisitions;

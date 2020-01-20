@@ -7,7 +7,7 @@ import Collapsible from '../collapsible/collapsible';
 import AddItem from '../add-item/add-item';
 import  Dropzone from '../../form-fields/dropzone/dropzone';
 
-const ItemDetailsWrapper = ({item_details, handleAction, deleteItem}) => {
+const ItemDetailsWrapper = ({item_details, handleAction, handleChange, deleteItem}) => {
   const [items, setItems] = useState([
     {
       key : new Date().getDate(),
@@ -38,6 +38,8 @@ const ItemDetailsWrapper = ({item_details, handleAction, deleteItem}) => {
               key={ idx } 
               item={item}
               deleteItem={deleteItem}
+              handleChange={handleChange}
+              data_id={idx}
             />
           )
         }

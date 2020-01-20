@@ -8,7 +8,7 @@ const options = [
   { key: 'USD', text: 'USD', value: 'USD' },
 ]
 
-const amount = () => {
+const amount = ({name, value, ...rest}) => {
   return (
     <div className="amount-group">
       <Input
@@ -16,7 +16,10 @@ const amount = () => {
         labelPosition='left'
         placeholder='Amount'
         type='number'
+        name={name}
+        value={value}
         min={0}
+        {...rest}
       />
     </div>
   )
