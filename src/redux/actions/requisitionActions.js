@@ -26,11 +26,12 @@ export const getRequisitions = () => async(dispatch) => {
 */
 export const createRequisition = (requisition) => async(dispatch) => {
   try {
-    console.log('TRYING TO CREATE REQUISITIONS...');
+    console.log('IN THE ACTIONS. TRYING TO CREATE REQUISITIONS...', requisition);
   } catch (error) {
     console.log('an error occured while creating a new requisition...');
   }
 }
+
 export const setLoading = (dispatch) => {
   return dispatch ({
     type : SET_LOADING
