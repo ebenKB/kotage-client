@@ -1,80 +1,57 @@
-// import React from 'react'
-// import { Dropdown } from 'semantic-ui-react'
-
-// const UserProfile = ({title}) => (
-//   <Dropdown text={title} pointing='top right'>
-//     <Dropdown.Menu>
-//       <Dropdown.Item text='New' />
-//       <Dropdown.Item text='Open...' description='ctrl + o' />
-//       <Dropdown.Item text='Save as...' description='ctrl + s' />
-//       <Dropdown.Item text='Rename' description='ctrl + r' />
-//       <Dropdown.Item text='Make a copy' />
-//       <Dropdown.Item icon='folder' text='Move to folder' />
-//       <Dropdown.Item icon='trash' text='Move to trash' />
-//       <Dropdown.Divider />
-//       <Dropdown.Item text='Download As...' />
-//       <Dropdown.Item text='Publish To Web' />
-//       <Dropdown.Item text='E-mail Collaborators' />
-//     </Dropdown.Menu>
-//   </Dropdown>
-// )
-
-// export default UserProfile
-
 import React from 'react'
-import { Dropdown, Icon } from 'semantic-ui-react'
+import { Dropdown } from 'semantic-ui-react';
 import './user-profile.scss';
+import { Link } from 'react-router-dom';
 
-const trigger = (
-  <span>
-    <Icon name='user' className="heading "/> John, Smith
-  </span>
-)
-
-const options = [
-  {
-    key: 'user',
-    text: (
-      <span>
-        Signed in as <strong>John Smith</strong>
-      </span>
-    ),
-    disabled: true,
-  },
-  { key: 'profile', text: (
-    <>
-      <Icon name='user' />
-      <span>Your Profile</span>
-    </>
-  )},
-
-  { key: 'help', text: (
-    <>
-      <Icon name='help circle' />
-      <span>Help</span>
-    </>
-  )},
-  { key: 'settings', text: (
-    <div>
-      <Icon name='setting' />
-      <span>Settings</span>
-    </div>
-  )},
-  { key: 'sign-out', text: (
-    <>
-      <Icon name='sign-out' />
-      <span>Sign Out</span>
-    </>
-  )},
-]
-
-const UserDropdown = () => (
-  <Dropdown
-    trigger={trigger} 
-    options={options} 
+const UserProfile = ({title, user}) => {
+  return (
+  <Dropdown 
+    text='John Smith'
     pointing='top right'
-    className="user-profile"
-  />
-)
+    className='user-profile'
+  >
+    <Dropdown.Menu>
+      <Dropdown.Item 
+        text={(
+          <Link to='/user-profile'>
+            Your profile
+          </Link>
+        )}  
+        icon='user' 
+        description='' 
+      />
+      <Dropdown.Item 
+        icon='folder' 
+        text={(
+        <Link to='/user/requisitions'>
+          Your requisitions
+        </Link>
+        )} 
+      />
+      <Dropdown.Item 
+        text={(
+          <Link to='/john/help'>
+            Help
+          </Link>
+        )}  
+        icon='help circle' 
+        description='' 
+      />
+      <Dropdown.Item 
+        icon='sign-out' 
+        text='Sign out' 
+      />
+      <Dropdown.Divider />
+      <Dropdown.Item 
+        text={(
+          <Link to='/user/settings'>
+            Settings
+          </Link>
+        )} 
+        icon='setting' />
+    </Dropdown.Menu>
+  </Dropdown>
+  )
+}
 
-export default UserDropdown
+export default  UserProfile 

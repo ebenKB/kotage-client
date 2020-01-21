@@ -1,6 +1,7 @@
 .user-profile .menu .icon {
-  color: var(--kt-dark-grey)
+  color: var(--kt-dark-grey);
+  opacity: 0.5;
 }
-.user-profile .heading.user.icon {
+.user-profile .user.icon.heading {
   color: var(--kt-dark-grey);
 }
