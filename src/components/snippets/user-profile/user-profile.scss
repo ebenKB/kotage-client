@@ -1,7 +1,19 @@
 .user-profile .menu .icon {
   color: var(--kt-dark-grey);
-  opacity: 0.5;
+  opacity: 0.8;
 }
 .user-profile .user.icon.heading {
   color: var(--kt-dark-grey);
+}
+
+.user-profile a {
+  color: var(--kt-dark-grey);
+}
+
+.user-profile .kt-danger .icon {
+  color: var(--kt-red);
+}
+
+.user-profile .kt-success .icon {
+  color: var(--kt-green);
 }

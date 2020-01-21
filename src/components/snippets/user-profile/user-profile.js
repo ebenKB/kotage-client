@@ -18,7 +18,8 @@ const UserProfile = ({title, user}) => {
           </Link>
         )}  
         icon='user' 
-        description='' 
+        description=''
+        className="kt-success" 
       />
       <Dropdown.Item 
         icon='folder' 
@@ -31,24 +32,26 @@ const UserProfile = ({title, user}) => {
       <Dropdown.Item 
         text={(
           <Link to='/john/help'>
-            Help
+            Help Center
           </Link>
         )}  
         icon='help circle' 
         description='' 
       />
       <Dropdown.Item 
-        icon='sign-out' 
-        text='Sign out' 
-      />
-      <Dropdown.Divider />
-      <Dropdown.Item 
         text={(
           <Link to='/user/settings'>
             Settings
           </Link>
         )} 
-        icon='setting' />
+        icon='setting' 
+      />
+      <Dropdown.Divider />
+      <Dropdown.Item 
+        icon='sign-out' 
+        text='Sign out'
+        className="kt-danger"
+      />
     </Dropdown.Menu>
   </Dropdown>
   )
