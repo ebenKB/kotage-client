@@ -5,11 +5,11 @@ import Divider from '../../../kt-divider/divider';
 import FormGroup from '../../../form-fields/form-group/form-group';
 import ItemDetailsWrapper from '../../../snippets/item-details-wrapper/item-details-wrapper';
 import { createRequisition } from '../../../../redux/actions/requisitionActions';
-
 import './requisition.scss';
 import ApproverList from '../../../approver-list/approver-list';
 import './requisition.scss';
 import { ValidatorForm } from 'react-form-validator-core';
+import { connect } from 'react-redux';
 
 
 class Requisitions extends React.Component{
@@ -82,14 +82,25 @@ class Requisitions extends React.Component{
     }));
   }
 
+  /**
+   * this method is used to add a new item detail to the requistion
+   */
   const addNewItem  =() => {
-    console.log('we want to add a new item...');
-    alert('hey')
+    const items = this.state.item_details;
+    this.setState((req) => ({
+      ...req,
+      item_details:[...items, {
+        product_code: '',
+        description: '',
+        quantity: 0
+      }]
+    }));
   }
 
   const deleteItem  = (item) => {
     console.log('deleting the item', item);
   }
+  
   return (
     <MainContent
       help={help}
