@@ -11,8 +11,11 @@ import './requisition.scss';
 import { ValidatorForm } from 'react-form-validator-core';
 import { connect } from 'react-redux';
 
-
-class Requisitions extends React.Component{
+/**
+ * Use this compomenent to create new sourcing requisitions
+ * It calls several other components and passess the neccessary actions
+ */
+class Requisitions extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -33,27 +36,14 @@ class Requisitions extends React.Component{
   }
   render() {
     const requisition = this.state;
-      // prepare a requisition to be saved
-  // const [requisition, updateRequisition] = useState({
-  //   title: '',
-  //   name:'',
-  //   delivery_date: '',
-  //   amount: 0.00,
-  //   warehouse : '',
-  //   notes: '',
-  //   item_details: [{
-  //     product_code: 'SKU-WW-323',
-  //     description: 'How would would describe the item?',
-  //     quantity: 0
-  //   }]
-  // });
-  const help = [
-    {
-      id: 1,
-      title: 'New Requisition',
-      content: 'Complete the form to create a new requisition'
-    }
-  ]
+
+    const help = [
+      {
+        id: 1,
+        title: 'New Requisition',
+        content: 'Complete the form to create a new requisition'
+      }
+    ]
 
   // create a new requisition
   const newRequisition = (e) => {
@@ -62,16 +52,22 @@ class Requisitions extends React.Component{
     createRequisition(requisition);
   }
 
-  // handle change when user types in a field
+  /**
+   * handle change when user types in a field 
+   * @param {*} e The default Javascript event
+   */
   const handleInputChange = (e) => {
     const { value, name } = e.target;
     this.setState((r) => ({
       ...r,
       [name]: value
     }));
-    console.log('Something has changed', requisition)
   }
 
+  /**
+   * This method listens to any change that occurs in an item detail
+   * @param {*} e the default Javascript event
+   */
   const handleItemDetailsChange = (e) => {
     const { value, name, id } = e.target;
     const new_item_details = requisition.item_details;
@@ -85,7 +81,7 @@ class Requisitions extends React.Component{
   /**
    * this method is used to add a new item detail to the requistion
    */
-  const addNewItem  =() => {
+  const addNewItem = () => {
     const items = this.state.item_details;
     this.setState((req) => ({
       ...req,
@@ -97,6 +93,10 @@ class Requisitions extends React.Component{
     }));
   }
 
+  /**
+   * Remove an item detail from a requisition
+   * @param {*} item the item detail to be removed
+   */
   const deleteItem  = (item) => {
     console.log('deleting the item', item);
   }
