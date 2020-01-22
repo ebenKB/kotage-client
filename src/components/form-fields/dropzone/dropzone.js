@@ -4,6 +4,7 @@ import Dropzone from 'react-dropzone';
 import { ReactComponent as Icon } from '../../../svg/upload.svg';
 
 import './dropzone.scss';
+import DropzoneItem from './dropzone-item/dropzone-item';
 
 function KtDropzone() {
   const [hasEntered, setHasEntered] = useState(false);
@@ -55,11 +56,18 @@ function KtDropzone() {
         {
          files &&
          <>
-          <span className="bold">Files</span>
-          <ul>
+          <span className="bold">{files.length} Files</span>
+          <ul className="dropzone-items">
               {
                 files.map((file) => (
-                <li key={file.name} className="m-b-5 m-t-5"> {file.name}</li>))
+                <li
+                  key={file.name}
+                  className="m-b-5 m-t-5"
+                >
+                  <DropzoneItem
+                    file={file}
+                  />
+                </li>))
               }
           </ul>
          </>

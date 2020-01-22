@@ -31,7 +31,6 @@ class Requisitions extends React.Component {
         quantity: 0
       }]
     }
-
     this.myRef = React.createRef();
   }
   render() {
