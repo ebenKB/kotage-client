@@ -127,7 +127,7 @@ const Requisitions = ({createRequisition}) => {
                   onChange={handleInputChange}
                 />
               </div>
-              <div className="m-t-20">
+              <div className="m-t-20 dropzone">
                 <FormGroup 
                   type="dropzone"
                   placeholder="Do you have any comments?"

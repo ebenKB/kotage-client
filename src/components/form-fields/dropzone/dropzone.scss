@@ -1,6 +1,35 @@
+.dropzone {
+  position: relative;
+}
+
+.dropzone-wrapper {
+  position: relative;
+}
+
 .dropzone div.root {
+  position: relative;
   border: 2px dashed #e0e0e0;
   padding: 30px 20px;
   // margin-top: 40px;
   background: var(--kt-off-grey);
+}
+
+.dropzone.active div.root {
+  // background: var(--kt-dark-grey);
+  border: 2px dashed var(--kt-green);
+}
+
+.dropzone-content {
+  visibility: hidden;
+  margin-top: 10px;
+}
+
+.dropzone-content.active {
+  // position: absolute;
+  width: 100%;
+  height: 10%;
+  background: var(--kt-off-grey);
+  top: 0;
+  visibility: visible;
+  padding: 10px;
 }

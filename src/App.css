@@ -89,5 +89,6 @@ ul.custom {
 }
 
 .kt-content__wrapper {
+  position: relative;
   padding: 20px;
 }
