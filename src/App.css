@@ -1,4 +1,5 @@
 @import "./style//variables.css";
+@import "./style/animation.css";
 @import "./style/semantic//dist/semantic.min.css";
 @import './style/util.css';
 @import "./style//semantic-ui-override.css";

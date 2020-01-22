@@ -2,6 +2,16 @@
   position: relative;
 }
 
+.dropzone.empty {
+  visibility: visible;
+}
+
+.dropzone.full {
+  visibility: hidden;
+  display: none;
+
+}
+
 .dropzone-wrapper {
   position: relative;
 }

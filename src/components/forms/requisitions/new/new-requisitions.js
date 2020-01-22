@@ -18,6 +18,8 @@ import { connect } from 'react-redux';
 class Requisitions extends React.Component {
   constructor(props) {
     super(props);
+    // check if there is a draft for a requisition and load the draft otherwise create a new blank requisition and save as draft
+    
     this.state = {
       title: '',
       name:'',

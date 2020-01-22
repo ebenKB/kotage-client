@@ -2,12 +2,13 @@ import React, {useCallback, useState} from 'react';
 import {useDropzone} from 'react-dropzone';
 import Dropzone from 'react-dropzone';
 import { ReactComponent as Icon } from '../../../svg/upload.svg';
-
 import './dropzone.scss';
 import DropzoneItem from './dropzone-item/dropzone-item';
+import AddItem from '../../snippets/add-item/add-item';
 
 function KtDropzone() {
   const [hasEntered, setHasEntered] = useState(false);
+  const [isEmpty, setIsEmpty] = useState(false);
   const [files, setFiles] = useState([]);
 
   // const onDrop = useCallback(acceptedFiles => {
@@ -19,6 +20,10 @@ function KtDropzone() {
   const handleDrop =(files) => {
     setHasEntered(false);
     setFiles(files)
+    // check if there were files dropped
+    if(files.length > 0) {
+      setIsEmpty(true);
+    }
   }
 
   const handleDragEnter =() => {
@@ -27,6 +32,11 @@ function KtDropzone() {
 
   const handleDragLeave =() => {
     setHasEntered(false);
+  }
+
+  const addMoreFiles = (e) => {
+    e.preventDefault();
+    setIsEmpty(false);
   }
 
   // const { getRootProps, getInputProps, isDragActive } = useDropzone({onDrop})
@@ -38,7 +48,7 @@ function KtDropzone() {
         onDragLeave={handleDragLeave}
       >
         {({getRootProps, getInputProps}) => (
-          <section className={`dropzone text-center ${hasEntered ? 'active' : ''}`}>
+          <section className={`dropzone text-center ${hasEntered ? 'active' : ''} ${!isEmpty ? 'empty' : 'full'}`}>
             <div {...getRootProps()} className="root">
               <input {...getInputProps()} />
               <div>
@@ -55,22 +65,39 @@ function KtDropzone() {
       <div className={`dropzone-content ${files.length > 0 ? 'active' : ''}`}>
         {
          files &&
-         <>
-          <span className="bold">{files.length} Files</span>
-          <ul className="dropzone-items">
-              {
-                files.map((file) => (
-                <li
-                  key={file.name}
-                  className="m-b-5 m-t-5"
-                >
-                  <DropzoneItem
-                    file={file}
-                  />
-                </li>))
-              }
-          </ul>
-         </>
+          <>
+            {
+              files.length == 1 && (
+                <span className="bold">{files.length} File</span>
+              )
+            }
+            {
+              files.length > 1 && (
+                <span className="bold">{files.length} Files</span>
+              )
+            }
+            <ul className="dropzone-items">
+                {
+                  files.map((file) => (
+                  <li
+                    key={file.name}
+                    className="m-b-5 m-t-5"
+                  >
+                    <DropzoneItem
+                      file={file}
+                    />
+                  </li>))
+                }
+            </ul>
+          </>
+        }
+        {
+          isEmpty &&
+          <AddItem 
+            title='Add More File' 
+            classes="green small"
+            handleClick={addMoreFiles}
+          />
         }
       </div>
     </div>
