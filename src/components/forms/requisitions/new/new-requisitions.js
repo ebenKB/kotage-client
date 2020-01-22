@@ -1,16 +1,17 @@
 import React, {useState} from 'react';
+import { connect } from 'react-redux';
 import MainContent from '../../../kt-main-content/mainContent';
 import KtWrapper from '../../../kt-wrapper/kt-wrapper';
 import Divider from '../../../kt-divider/divider';
 import FormGroup from '../../../form-fields/form-group/form-group';
 import {Form} from 'semantic-ui-react';
 import ItemDetailsWrapper from '../../../snippets/item-details-wrapper/item-details-wrapper';
+import { createRequisition } from '../../../../redux/actions/requisitionActions';
 
 import './requisition.scss';
 import ApproverList from '../../../approver-list/approver-list';
-import Collapsible from '../../../snippets/collapsible/collapsible';
 
-const Requisitions = () => {
+const Requisitions = ({createRequisition}) => {
 
   // prepare a requisition to be saved
   const [requisition, updateRequisition] = useState({
@@ -30,9 +31,10 @@ const Requisitions = () => {
   ]
 
   // create a new requisition
-  const createRequisition = (e) => {
+  const newRequisition = (e) => {
     e.preventDefault();
-    console.log('we want to create a requisition...', requisition)
+    // console.log('we want to create a requisition...', requisition)
+    createRequisition(requisition);
   }
 
   // handle change when user types in a field
@@ -41,7 +43,7 @@ const Requisitions = () => {
     updateRequisition((r) => ({
       ...r,
       [name]: value
-    }))
+    }));
   }
 
   return (
@@ -53,7 +55,7 @@ const Requisitions = () => {
         header="New Requisition" 
         canFilter={false} 
         canPerform={true}
-        handleAction={createRequisition}
+        handleAction={newRequisition}
       >
         <Form>
           <Divider type="thick" title="Request Details" classes="m-t-10"/>
@@ -145,4 +147,4 @@ const Requisitions = () => {
   )
 }
 
-export default Requisitions;
+export default connect(null, { createRequisition })(Requisitions);
