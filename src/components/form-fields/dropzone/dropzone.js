@@ -1,29 +1,33 @@
-import React, {useCallback, useState} from 'react';
-import {useDropzone} from 'react-dropzone';
+import React, {useState, useEffect} from 'react';
 import Dropzone from 'react-dropzone';
 import { ReactComponent as Icon } from '../../../svg/upload.svg';
 import './dropzone.scss';
 import DropzoneItem from './dropzone-item/dropzone-item';
 import AddItem from '../../snippets/add-item/add-item';
 
-function KtDropzone() {
+function KtDropzone({onFilesChange}) {
   const [hasEntered, setHasEntered] = useState(false);
   const [isEmpty, setIsEmpty] = useState(false);
   const [files, setFiles] = useState([]);
-
-  // const onDrop = useCallback(acceptedFiles => {
-  //   console.log('we are in the drop')
-  //   // Do something with the files
-  //   setHasEntered(false);
-  // }, [])
-
-  const handleDrop =(files) => {
-    setHasEntered(false);
-    setFiles(files)
-    // check if there were files dropped
+  useEffect(() => {
+    //attach the files to the requisitions
+    if(onFilesChange) {
+      onFilesChange(files);
+    }
+    // check if there is any file
     if(files.length > 0) {
       setIsEmpty(true);
     }
+  }, [files])
+
+  const handleDrop = (newFiles) => {
+    setHasEntered(false);
+    setFiles((oldFiles) => ([...oldFiles, ...newFiles]));
+    
+    // check if there were files dropped
+    // if(files.length > 0) {
+    //   setIsEmpty(true);
+    // }
   }
 
   const handleDragEnter =() => {
@@ -39,9 +43,19 @@ function KtDropzone() {
     setIsEmpty(false);
   }
 
+  const handleDeleteFile = (file) => {
+    setFiles(files.filter( x => ( x.name !== file)));
+    // check if the last item has been deleted and show a form to add more files
+    if(files.length === 1) { 
+      setIsEmpty(false);
+    }
+  }
+
   // const { getRootProps, getInputProps, isDragActive } = useDropzone({onDrop})
   return (
-    <div className="dropzone-wrapper">
+    <div 
+      className="dropzone-wrapper"
+    >
       <Dropzone 
         onDrop={acceptedFiles => handleDrop(acceptedFiles)}
         onDragEnter={handleDragEnter}
@@ -77,27 +91,32 @@ function KtDropzone() {
               )
             }
             <ul className="dropzone-items">
-                {
-                  files.map((file) => (
-                  <li
-                    key={file.name}
-                    className="m-b-5 m-t-5"
-                  >
-                    <DropzoneItem
-                      file={file}
-                    />
-                  </li>))
-                }
+              {
+                files.map((file, idx) => (
+                <li
+                  key={idx}
+                  id={idx}
+                  className="m-b-5 m-t-5"
+                >
+                  <DropzoneItem
+                    file={file}
+                    deleteFile={()=>handleDeleteFile(file.name)}
+                    id={idx}
+                  />
+                </li>))
+              }
             </ul>
           </>
         }
         {
           isEmpty &&
-          <AddItem 
-            title='Add More File' 
-            classes="green small"
-            handleClick={addMoreFiles}
-          />
+          <>
+            <AddItem 
+              title='Add More File' 
+              classes="green small"
+              handleClick={addMoreFiles}
+            />
+          </>
         }
       </div>
     </div>

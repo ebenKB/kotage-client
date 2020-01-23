@@ -37,3 +37,7 @@ export const setLoading = (dispatch) => {
     type : SET_LOADING
   })
 }
+
+export const setFiles = (requisition, files) => {
+  console.log('setting the files to the requisition', requisition, files);
+}

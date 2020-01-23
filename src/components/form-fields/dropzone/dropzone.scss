@@ -33,11 +33,19 @@
   z-index: 2;
 }
 
+.dropzone-item .file-item + .cta {
+  position: absolute;
+  background: transparent;
+  padding: 4px 0;
+  z-index: 2;
+  left: -8px;
+}
+
 .dropzone-item:hover .cta {
   visibility: visible;
 }
 
-.dropzone-item:hover::after {
+.dropzone-item.hoverable:hover::after {
   position: absolute;
   background: black;
   content: "";
@@ -66,8 +74,13 @@
 .dropzone-items li {
   list-style: none;
 }
+
 .dropzone-items li:not(:last-child) {
   margin-right: 10px;
+}
+
+.dropzone-items li .file-item {
+  padding: 4px 8px;
 }
 
 .dropzone.active div.root {

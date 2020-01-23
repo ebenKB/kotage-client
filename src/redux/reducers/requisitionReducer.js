@@ -1,4 +1,4 @@
-import { SET_LOADING, GET_REQUISITIONS, CREATE_REQUISITION } from "../types/requisitionTypes";
+import { SET_LOADING, GET_REQUISITIONS, CREATE_REQUISITION, SET_FILES } from "../types/requisitionTypes";
 
 const initialState = {
   requisitions: null,
@@ -24,6 +24,10 @@ export default (state = initialState, action) => {
           ...state,
           requisitions: [...state, action.payload],
           loading: false
+        }
+      case SET_FILES:
+        return {
+          ...state,
         }
     default:
       return state;

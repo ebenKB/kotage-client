@@ -31,7 +31,8 @@ class Requisitions extends React.Component {
         product_code: 'SKU-WW-323',
         description: 'How would would describe the item?',
         quantity: 0
-      }]
+      }],
+      files: []
     }
     this.myRef = React.createRef();
   }
@@ -91,6 +92,18 @@ class Requisitions extends React.Component {
         description: '',
         quantity: 0
       }]
+    }));
+  }
+
+  /**
+   * 
+   * @param {*} files the files to set to the requisition
+   */
+  const handleFiles = (files) => {
+    // console.log('we want to set files', files)
+    this.setState((req) => ({
+      ...req,
+      files : files
     }));
   }
 
@@ -200,6 +213,7 @@ class Requisitions extends React.Component {
                   placeholder="Do you have any comments?"
                   label="Attachments"
                   labelName="notes"
+                  onFilesChange={(files) => handleFiles(files)}
                 />
               </div>
             </div>

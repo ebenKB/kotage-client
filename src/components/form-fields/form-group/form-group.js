@@ -10,19 +10,18 @@ import KtTextArea from '../kt-textarea/kt-textarea';
 import InputValidator from '../input-validator/input-validator';
 
 const FormGroup = ({type, placeholder, label, labelName, center, classes='', ...rest}) => {
-
-const options = [
-  {
-    key: '1',
-    text: 'Emmanuel',
-    value: 'Emmanuel'
-  },
-  {
-    key: '2',
-    text: 'Elorm',
-    value: 'Elorm'
-  },
-]
+  const options = [
+    {
+      key: '1',
+      text: 'Emmanuel',
+      value: 'Emmanuel'
+    },
+    {
+      key: '2',
+      text: 'Elorm',
+      value: 'Elorm'
+    },
+  ]
 
   const getElement = () => {
     if(type==="text" || type === 'password' || type === 'number' || type === 'email'){
@@ -46,7 +45,7 @@ const options = [
         </div>
       )
     } else if(type === 'dropzone') {
-      return <Dropzone/>
+      return <Dropzone {...rest}/>
     } else {
       return rest.children
     }

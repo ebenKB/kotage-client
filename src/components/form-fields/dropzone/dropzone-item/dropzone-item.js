@@ -1,17 +1,19 @@
 import React from 'react';
 import { ReactComponent as Logo } from '../../../../svg/cancel.svg';
 import { ReactComponent as File } from '../../../../svg/file.svg';
-import { Label } from 'semantic-ui-react'
 
+const DropzoneItem = ({file, deleteFile, idx}) => {
+  const handleDelete = (file) => {
+    deleteFile(file);
+  }
 
-const DropzoneItem = ({file}) => {
   const getItemType =() => {
-    if(file.type === 'image/jpeg') {
+    if((file.type === 'image/jpeg') || (file.type === 'image/jpg') || ( file.type === 'image/png')) {
       return (
-        <div className="dropzone-item">
+        <div className="dropzone-item hoverable">
           <div 
             className="cta clickable"
-            onClick={() => alert('heyy')}
+            onClick={() => handleDelete(idx)}
           >
             <Logo className="kt-logo__small"/>
             <span>Remove</span>
@@ -19,18 +21,19 @@ const DropzoneItem = ({file}) => {
           <img src={URL.createObjectURL(file)} alt="" className="kt-logo__custom"/>
         </div>
       )
-    } else if(file.type === 'application/pdf') {
-      return(
-        <div>
-          <File className="kt-logo__small"/>
-          {file.name}
-        </div>
-      )
     } else {
       return (
-        <div>
-          <File className="kt-logo__small"/>
-          {file.name}
+        <div className="dropzone-item">
+          <div className="file-item">
+            <File className="kt-logo__small"/>
+            {file.name}
+          </div>
+          <span 
+            className="cta clickable"
+            onClick={() => handleDelete(idx)}
+          >
+            <Logo className="kt-logo__small"/>
+          </span>
         </div>
       )
     }
