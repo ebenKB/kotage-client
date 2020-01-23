@@ -6,20 +6,13 @@ import RequisitionItem from '../../../requisition-item/requisition-item';
 import Divider from '../../../kt-divider/divider';
 import MainContent from '../../../kt-main-content/mainContent';
 import { getRequisitions } from '../../../../redux/actions/requisitionActions';
+import help from '../../../../utils/requisitions/index/help';
 
 const Requisitions = ({requisitionState: { requisitions, loading }, getRequisitions}) => {
-  console.log('it is loading..', loading, requisitions)
   useEffect(() => {
     getRequisitions();
   }, []);
 
-  const help = [
-    {
-      id: 1,
-      title: 'View Requisitions',
-      content: 'This is the content of the help'
-    }
-  ]
   return (
     <MainContent 
       help={help}

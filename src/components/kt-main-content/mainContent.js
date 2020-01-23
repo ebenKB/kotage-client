@@ -8,10 +8,14 @@ const MainContent = (props) => {
       <div>
         {props.children}
       </div>
-      <div>
-        { help && help.map((h) => <div key={h.id}> 
-            <Divider type='faint' title={h.title}/>
-            <div className="m-t-20">{h.content}</div>
+      <div className="help">
+        { help && help.map((h, idx) => <div key={idx}> 
+            <Divider 
+              type='faint' 
+              title={h.title}
+              classes="help p-b-4"
+            />
+            <div className="m-t-10 m-b-20">{h.description}</div>
           </div> )
         }
       </div>

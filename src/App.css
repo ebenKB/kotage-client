@@ -50,7 +50,7 @@ h1,h2,h3,h4,h5,h6 {
 }
 
 .big-caption {
-  font-size: 1.5rem;
+  font-size: 1.35rem;
 }
 
 .kt-primary {
@@ -92,4 +92,8 @@ ul.custom {
 .kt-content__wrapper {
   position: relative;
   padding: 20px;
+}
+
+.help {
+  font-size: 0.9em;
 }

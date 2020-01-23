@@ -27,3 +27,7 @@
 .item-wrapper:hover .cta {
   visibility: visible;
 }
+
+ .cta svg:hover {
+  fill: var(--kt-red);
+}

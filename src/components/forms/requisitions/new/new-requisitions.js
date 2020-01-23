@@ -10,6 +10,7 @@ import ApproverList from '../../../approver-list/approver-list';
 import './requisition.scss';
 import { ValidatorForm } from 'react-form-validator-core';
 import { connect } from 'react-redux';
+import help from '../../../../utils/requisitions/new/help';
 
 /**
  * Use this compomenent to create new sourcing requisitions
@@ -38,15 +39,7 @@ class Requisitions extends React.Component {
   }
   render() {
     const requisition = this.state;
-
-    const help = [
-      {
-        id: 1,
-        title: 'New Requisition',
-        content: 'Complete the form to create a new requisition'
-      }
-    ]
-
+    
   // create a new requisition
   const newRequisition = (e) => {
     e.preventDefault();
