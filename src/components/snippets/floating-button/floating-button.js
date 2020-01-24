@@ -1,10 +1,9 @@
 import React from 'react';
 import './floating-button.scss';
 import { ReactComponent as Icon } from '../../../svg/icon-chat.svg';
-import { ReactComponent as CloseIcon } from '../../../svg/close.svg'; 
+import { ReactComponent as CloseIcon } from '../../../svg/close.svg';
 
 const FloatingButton = ({isOpen, ...res}) => {
-  
   const getIcon = () => {
     if(isOpen) {
       return <Icon className="icon"/>
@@ -21,9 +20,9 @@ const FloatingButton = ({isOpen, ...res}) => {
       onClick={res.onClick}
       role="button"
     >
-    {
-      getIcon()
-    }
+      {
+        getIcon()
+      }
     </div>
   )
 }

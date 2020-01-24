@@ -23,7 +23,6 @@ class Requisitions extends React.Component {
     
     this.state = {
       title: '',
-      name:'',
       delivery_date: '',
       amount: 0.00,
       warehouse : '',
@@ -33,7 +32,8 @@ class Requisitions extends React.Component {
         description: 'How would would describe the item?',
         quantity: 0
       }],
-      files: []
+      files: [],
+      approvers: [1]
     }
     this.myRef = React.createRef();
   }
@@ -73,6 +73,18 @@ class Requisitions extends React.Component {
     }));
   }
 
+  const setApprover = (approver) => {
+    const approvers = requisition.approvers;
+    // check if the selected approver is not already set to the requisition
+    const exisitng_approver = approvers.find(x => x == approver);
+    if(exisitng_approver == null) {
+      this.setState((oldState) => ({
+        ...oldState,
+        approvers: [...approvers, approver]
+      }));
+    }
+  }
+
   /**
    * this method is used to add a new item detail to the requistion
    */
@@ -89,11 +101,10 @@ class Requisitions extends React.Component {
   }
 
   /**
-   * 
+   *
    * @param {*} files the files to set to the requisition
    */
   const handleFiles = (files) => {
-    // console.log('we want to set files', files)
     this.setState((req) => ({
       ...req,
       files : files
@@ -214,6 +225,7 @@ class Requisitions extends React.Component {
             <ApproverList
               labelName="Approvers"
               label="Approvers"
+              onChange = {setApprover}
             />
           </ValidatorForm>
       </KtWrapper>

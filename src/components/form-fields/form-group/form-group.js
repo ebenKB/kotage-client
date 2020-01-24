@@ -29,7 +29,16 @@ const FormGroup = ({type, placeholder, label, labelName, center, classes='', ...
     } else if(type === 'date'){
       return <Input type={type} {...rest}/>
     } else if(type === 'dropdown') {
-      return <Dropdown placeholder={placeholder} search selection options={options} className={rest.classes}/>
+      return (
+        <Dropdown 
+          placeholder={placeholder} 
+          search selection 
+          options={options} 
+          className={rest.classes} 
+          onChange ={() => alert('change')}
+          {...rest}
+        />
+      )
     } else if(type === 'amount') {
       return <Amount {...rest}/>
     } else if(type === 'textarea') {

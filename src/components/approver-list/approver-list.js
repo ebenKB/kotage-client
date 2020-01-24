@@ -1,20 +1,19 @@
 import React from 'react';
 import { Dropdown } from 'semantic-ui-react'
 import './approver-list.scss';
-import { ReactComponent as Logo } from '../../svg/plus.svg';
 import AddItem from '../snippets/add-item/add-item';
 
-const ApproverList = ({labelName, label}) => {
+const ApproverList = ({labelName, label, ...rest}) => {
   const options = [
     {
       key: '1',
       text: 'Emmanuel',
-      value: 'Emmanuel'
+      value: '1'
     },
     {
       key: '2',
       text: 'Elorm',
-      value: 'Elorm'
+      value: '2'
     },
   ]
 
@@ -28,7 +27,13 @@ const ApproverList = ({labelName, label}) => {
         <label htmlFor={labelName}> <span className="bold">{label}</span></label>
         <div>
           <div className="m-t-10 m-b-10">
-            <Dropdown placeholder='Select approver' search selection options={options} className="fluid"/>
+            <Dropdown
+              placeholder='Select approver' 
+              search selection 
+              options={options} 
+              className="fluid"
+              onChange={(e, data) =>rest.onChange(data.value)}
+            />
           </div>
           <AddItem
             classes="m-t-40 m-b-30"
