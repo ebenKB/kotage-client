@@ -20,7 +20,6 @@ class Requisitions extends React.Component {
   constructor(props) {
     super(props);
     // check if there is a draft for a requisition and load the draft otherwise create a new blank requisition and save as draft
-    
     this.state = {
       title: '',
       delivery_date: '',
@@ -33,7 +32,8 @@ class Requisitions extends React.Component {
         quantity: 0
       }],
       files: [],
-      approvers: [1]
+      approvers: [1],
+      status: 1,
     }
     this.myRef = React.createRef();
   }
