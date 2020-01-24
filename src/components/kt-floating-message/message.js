@@ -27,7 +27,7 @@ const Message = () => {
             <KtTextArea  value="The content is here"/>
           </div>
           <div className="text-right">
-            <Button className="small green">Send</Button>
+            <Button basic className="tiny small green">Send</Button>
           </div>
         </div>
       </div>

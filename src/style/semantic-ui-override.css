@@ -62,3 +62,7 @@
 .ui.green.button, .ui.green.buttons .button {
   background-color: var(--kt-green);
 }
+
+.ui.basic.green.button, .ui.basic.green.buttons .button {
+  color: var(--kt-green) !important;
+}
