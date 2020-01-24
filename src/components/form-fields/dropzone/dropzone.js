@@ -8,6 +8,7 @@ import AddItem from '../../snippets/add-item/add-item';
 function KtDropzone({onFilesChange}) {
   const [hasEntered, setHasEntered] = useState(false);
   const [isEmpty, setIsEmpty] = useState(false);
+  const [error, setError] = useState(null);
   const [files, setFiles] = useState([]);
   useEffect(() => {
     //attach the files to the requisitions
@@ -20,14 +21,25 @@ function KtDropzone({onFilesChange}) {
     }
   }, [files])
 
+  /**
+   * Listen to filed drop actions on the dropzone
+   * @param {*} newFiles the files that were selected from the file chooser
+   */
   const handleDrop = (newFiles) => {
     setHasEntered(false);
-    setFiles((oldFiles) => ([...oldFiles, ...newFiles]));
+    setError(null);
     
-    // check if there were files dropped
-    // if(files.length > 0) {
-    //   setIsEmpty(true);
-    // }
+    // check if the user tries to upload duplicate files and filter them out
+    let filteredFiles = newFiles;
+    for(let f of files) {
+      filteredFiles = filteredFiles.filter((x) => x.name !== f.name);
+    }
+
+    // check if there were duplicate files found
+    if(newFiles.length - filteredFiles.length > 0) {
+      setError(`${(newFiles.length - filteredFiles.length)} Duplicates rejected`)
+    }
+    setFiles((oldFiles) => ([...oldFiles, ...filteredFiles]));
   }
 
   const handleDragEnter =() => {
@@ -76,6 +88,11 @@ function KtDropzone({onFilesChange}) {
           </section>
         )}
       </Dropzone>
+      {
+        error && (
+          <div className="kt-danger m-t-20">{error}</div>
+        )
+      }
       <div className={`dropzone-content ${files.length > 0 ? 'active' : ''}`}>
         {
          files &&
