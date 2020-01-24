@@ -55,6 +55,10 @@ function KtDropzone({onFilesChange}) {
     setIsEmpty(false);
   }
 
+  /**
+   * Use this method to delete files from the dropzone
+   * @param {*} file the file to be deleted
+   */
   const handleDeleteFile = (file) => {
     setFiles(files.filter( x => ( x.name !== file)));
     // check if the last item has been deleted and show a form to add more files

@@ -7,18 +7,31 @@ import KtTextArea from '../form-fields/kt-textarea/kt-textarea';
 
 const Message = () => {
   const [canShowMsg, setCanShowMsg] = useState(false);
+  const [hasInit, setHasInit] = useState(false);
 
   const handleClick = () => {
     setCanShowMsg(!canShowMsg);
+    setHasInit(true);
   }
 
   const handleInputChange = (e) => {
     e.preventDefault();
     // handle input changes here
   }
+
+  const getClas =() => {
+    if(canShowMsg) {
+      return 'active'
+    } else if(hasInit) {
+      return 'dispose';
+    } else {
+      return 'hide';
+    }
+  }
+  
   return (
     <div>
-      <div className={`kt-message_wrapper ${canShowMsg ? 'active':'dispose'}`}>
+      <div className={`kt-message_wrapper ${getClas()}`}>
         <div className="kt-message__header bold">
           Please leave a comment
         </div>

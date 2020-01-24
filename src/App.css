@@ -98,3 +98,7 @@ ul.custom {
 .help {
   font-size: 0.9em;
 }
+
+.hide {
+  display: none;
+}
