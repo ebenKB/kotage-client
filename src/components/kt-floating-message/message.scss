@@ -3,10 +3,21 @@
   background: var(--kt-white);
   min-height: 180px;
   border-radius: 4px;
-  padding: 15px;
   right: 2.5%;
   bottom: 12.5%;
   box-shadow: 1px 1px 2px 1px #d0d0d0;
+}
+
+.kt-message__header {
+  background: var(--kotage-dark);
+  padding: 10px;
+  color: var(--kt-white);
+  border-bottom-right-radius: 4px;
+  border-bottom-left-radius: 4px;
+}
+
+.kt-message_content {
+  padding: 10px;
 }
 
 .kt-message_wrapper::after {

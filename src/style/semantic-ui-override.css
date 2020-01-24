@@ -27,7 +27,6 @@
   color: var(--kotage-dark);
 }
 
-
 .ui.button {
   background: #FBFCFD;
   border: 1px solid #D9E2E8;
@@ -38,7 +37,6 @@
 /* override the defualt size for dropdowns  */
 .ui.search.selection.dropdown.small {
   width: 30px;
-  /* padding: 20px; */
 }
 
 .ui.selection.dropdown,
@@ -59,4 +57,8 @@
 .ui.form input[type=time], 
 .ui.form input[type=url]{
   padding: 1em;
+}
+
+.ui.green.button, .ui.green.buttons .button {
+  background-color: var(--kt-green);
 }
