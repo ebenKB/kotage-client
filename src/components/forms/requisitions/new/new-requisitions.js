@@ -44,7 +44,7 @@ class Requisitions extends React.Component {
   const newRequisition = (e) => {
     e.preventDefault();
     // console.log('we want to create a requisition...', requisition)
-    createRequisition(requisition);
+    this.props.createRequisition(requisition);
   }
 
   /**

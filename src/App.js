@@ -5,6 +5,7 @@ import Header from './components/header/header';
 import Nav from './components/navigation/navigation';
 import {Provider} from 'react-redux';
 import store from './redux/store';
+import Message from './components/kt-floating-message/message';
 
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
             <AppRouter/>
           </div>
           {/* <div>Right</div> */}
+          <Message/>
         </div>
       </div>
     </Provider>

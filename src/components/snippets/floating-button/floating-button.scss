@@ -1,0 +1,26 @@
+.kt-floating-button {
+  background: var(--kt-green);
+  position: fixed;
+  padding: 25px;
+  width: 30px;
+  height: 40px;
+  z-index: 2;
+  bottom: 5%;
+  right: 5%;
+  border-radius: 100%;
+  content: "";
+  box-shadow: 2px 2px 2px 2px #d0d0d0;
+}
+
+.kt-floating-button:hover{
+  transform: scale(1.05);
+}
+
+.kt-floating-button .icon {
+  position: absolute;
+  top: 16px;
+  left: 14px;
+  z-index: 2;
+  width: 20px;
+  height: auto;
+}
