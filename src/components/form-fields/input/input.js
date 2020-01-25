@@ -8,15 +8,39 @@ class CustomInput extends React.Component {
     super(props);
   }
   render() {
-    const {type, value, name, classes, ...rest} = this.props;
+    const {type, value, name, classes, action='', ...rest} = this.props;
+
+    const getInput = () => {
+      if(type !== '' && type.toLowerCase() == 'search') {
+        return (
+          <Input
+            type={type} 
+            value={value}
+            name={name}
+            className={classes}
+            action="Search"
+            { ...rest }
+          />
+        )
+      } else {
+        return (
+          <Input
+            type={type} 
+            value={value}
+            name={name}
+            className={classes}
+            { ...rest }
+          />
+        )
+      }
+    }
+
     return (
-      <Input 
-        type={type} 
-        value={value}
-        name={name}
-        className={classes}
-        { ...rest }
-      />
+      <>
+        {
+          getInput()
+        }
+      </>
     )
   }
 }

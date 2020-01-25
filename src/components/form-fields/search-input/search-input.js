@@ -1,24 +1,47 @@
 import React, { useState } from 'react';
 import Input from '../input/input';
-import { ReactComponent as Icon} from '../../../svg/search.svg';
+import { ReactComponent as Icon } from '../../../svg/search.svg';
 
 import './search-input.scss';
 
 const SearchInput = () => {
   const [focus, setFocus] = useState(false);
+  const [hasContent, setContent] = useState(false);
 
   const handleChange = (e, data) => {
-    console.log('The input has seen a change', data.value)
+    if (data.value.length > 2) {
+      setContent(true);
+    } else {
+      setContent(false);
+    }
   }
 
   return (
     <div className="search-input">
-      <Icon className="kt-logo__small icon" />
-      <Input classes="custom" placeholder="Enter item to search" focus={focus} onChange = {handleChange}/>
-
-      <div className="search-dropdown">
-        {/* search content is here */}
-      </div>
+      <>
+        <Icon className="kt-logo__small icon" />
+        <Input
+          classes="custom search tiny"
+          placeholder="Enter item to search"
+          type="search"
+          focus={focus}
+          onChange={handleChange}
+        />
+      </>
+      {
+        hasContent && (
+          <div className="search-dropdown">
+            <div className="search-content">
+              <ul>
+                <li>Search option - 1</li>
+                <li>Search option - 2</li>
+                <li>Search option - 3</li>
+                <li>Search option - 4</li>
+              </ul>
+            </div>
+          </div>
+        )
+      }
     </div>
   )
 }

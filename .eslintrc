@@ -1,19 +1,33 @@
 {
-  "parser" : "babel-eslint",
+  "parser": "babel-eslint",
   "parserOptions": {
     "ecmaFeatures": {
       "jsx": true,
       "modules": true
     }
   },
-  
-  "extends" : [
+  "env": {
+    "browser": true,
+    "node": true
+  },
+  "extends": [
+    "react-app",
     "eslint: recommended",
     "plugin:react/recommended",
     "airbnb"
   ],
   "rules": {
-    "react/boolean-prop-naming": ["error", { "validateNested": true }],
-    "react/jsx-indent": [<enabled>, 'tab', {"checkAttributes": true, "indentLogicalExpressions": true}]
+    "react/boolean-prop-naming": [
+      "error",
+      {
+        "validateNested": true
+      }
+    ],
+    "react/jsx-indent": [<enabled>, 'tab',
+      {
+        "checkAttributes": true,
+        "indentLogicalExpressions": true
+      }
+    ]
   }
 }
