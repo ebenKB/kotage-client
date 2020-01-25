@@ -5,20 +5,20 @@ import { ReactComponent as Logo } from '../../../../svg/bin.svg';
 
 const SimpleQuestion = ({label, labelName}) => {
   return (
-    <div className="question-wrapper m-t-20 m-b-20">
-      <div className="question">
-        <div className="">
-          <FormGroup
+	<div className="question-wrapper m-t-20 m-b-20">
+		<div className="question">
+			<div className="">
+				<FormGroup
             type="text" 
             placeholder="Type your question here"
             label={label}
             labelName={labelName}
             center={true}
           />
-        </div>
-      </div>
-      <Logo className="kt-logo__small cta"/>
-    </div>
+			</div>
+		</div>
+		<Logo className="kt-logo__small cta"/>
+	</div>
   )
 }
 

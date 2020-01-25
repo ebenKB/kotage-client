@@ -5,10 +5,10 @@ import './kt-textarea.scss';
 
 const KtTextArea = ({placeholder, ...otherProps}) => {
   return (
-    <div className="kt-textarea__wrapper">
-      <div className="text-wrapper__header"></div>
-      <TextArea {...otherProps} />
-    </div>
+	<div className="kt-textarea__wrapper">
+		<div className="text-wrapper__header"></div>
+		<TextArea {...otherProps} />
+	</div>
   )
 }
 

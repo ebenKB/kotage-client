@@ -10,26 +10,26 @@ import Message from './components/kt-floating-message/message';
 
 function App() {
   return (
-    <Provider
+	<Provider
       store={store}
     >
-      <div className="App light-theme">
-        <Header/>
-        <div className="header-offset"></div>
-        <div className="app-container main-layout">
-          <div>
-            <div className="nav-main__wrappper">
-              <Nav />
-            </div>
-          </div>
-          <div>
-            <AppRouter/>
-          </div>
-          {/* <div>Right</div> */}
-          <Message/>
-        </div>
-      </div>
-    </Provider>
+		<div className="App light-theme">
+			<Header/>
+			<div className="header-offset"></div>
+			<div className="app-container main-layout">
+				<div>
+					<div className="nav-main__wrappper">
+						<Nav />
+					</div>
+				</div>
+				<div>
+					<AppRouter/>
+				</div>
+				{/* <div>Right</div> */}
+				<Message/>
+			</div>
+		</div>
+	</Provider>
   );
 }
 export default App;
