@@ -26,8 +26,9 @@
       1, 'tab',
       {
         "checkAttributes": true,
-        "indentLogicalExpressions": true
+        "indentLogicalExpressions": false
       }
-    ]
+    ],
+    // "allowIndentationTabs": 2
   }
 }

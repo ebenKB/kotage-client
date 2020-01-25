@@ -11,26 +11,23 @@ const RFX = lazy(() => import('../rfx/rfx'));
 const Vendors = lazy(() => import('../forms/vendors/vendors'));
 const SignIn = lazy(() => import('../auth/sign-in/sign-in'));
 
-
-
 const Router = () => {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <Switch>
-        <Route exact path="/auth/signin" component={SignIn}/>
-        <ProtectedRoute path="/" >{Home} </ProtectedRoute>
-          <Route exact path="/jkk" component={Home}/>
-          <Route exact path="/requisitions" component={Requisitions}/>
-          <Route path="/requisitions/new" component={NewRequisition}/>
-          <Route path="/quotes/new" component={Newquote}/>
-          <Route path="/rfx" component={RFX}/>
-          <Route path="/vendors/new" component={Vendors}/>
-          <Route path="*">
-            <PageNotFound />
-          </Route>
-        
-      </Switch>
-    </Suspense>
+	<Suspense fallback={<div>Loading...</div>}>
+		<Switch>
+			<Route exact path="/auth/signin" component={SignIn}/>
+			<ProtectedRoute path="/" >{Home} </ProtectedRoute>
+			<Route exact path="/jkk" component={Home}/>
+			<Route exact path="/requisitions" component={Requisitions}/>
+			<Route path="/requisitions/new" component={NewRequisition}/>
+			<Route path="/quotes/new" component={Newquote}/>
+			<Route path="/rfx" component={RFX}/>
+			<Route path="/vendors/new" component={Vendors}/>
+			<Route path="*">
+				<PageNotFound />
+			</Route>
+		</Switch>
+	</Suspense>
   );
 }
 

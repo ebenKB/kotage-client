@@ -30,7 +30,7 @@ class InputValidator extends ValidatorComponent {
       classes="kt-logo__very-small" 
     />
 	</div>
-    )
+  )
   }
 }
 

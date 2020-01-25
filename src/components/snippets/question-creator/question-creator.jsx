@@ -9,7 +9,7 @@ const QuestionCreator = ({type = 'simple', label}) => {
   const getQuestionType = () => {
     if(type === 'simple') {
       return (
-        <span>Simple question creator</span>
+	<span>Simple question creator</span>
       );
     }
   }
@@ -19,23 +19,23 @@ const QuestionCreator = ({type = 'simple', label}) => {
   }
 
   return (
-    <div>
-      <SimpleQuestion
-        label={label}
-        labelName="question"
-      />
-      <SimpleQuestion
-        label={label}
-        labelName="question"
-      />
-      <div 
-        className="clickable m-t-15 m-b-30 kt-primary bold sm-caption" 
-        onClick={addNewQuestion}
-      >
-        <Icon className="kt-logo__small kt-primary"/>
-        <span>Add New</span>
-      </div>
-    </div>
+	<div>
+		<SimpleQuestion
+      label={label}
+      labelName="question"
+    />
+		<SimpleQuestion
+      label={label}
+      labelName="question"
+    />
+		<div 
+      className="clickable m-t-15 m-b-30 kt-primary bold sm-caption" 
+      onClick={addNewQuestion}
+    >
+			<Icon className="kt-logo__small kt-primary"/>
+			<span>Add New</span>
+		</div>
+	</div>
   )
 }
 

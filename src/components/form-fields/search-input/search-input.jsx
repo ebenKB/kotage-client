@@ -17,32 +17,32 @@ const SearchInput = () => {
   }
 
   return (
-    <div className="search-input">
-      <>
-        <Icon className="kt-logo__small icon" />
-        <Input
+	<div className="search-input">
+		<>
+			<Icon className="kt-logo__small icon" />
+			<Input
           classes="custom search tiny"
           placeholder="Enter item to search"
           type="search"
           focus={focus}
           onChange={handleChange}
         />
-      </>
-      {
-        hasContent && (
-          <div className="search-dropdown">
-            <div className="search-content">
-              <ul>
-                <li>Search option - 1</li>
-                <li>Search option - 2</li>
-                <li>Search option - 3</li>
-                <li>Search option - 4</li>
-              </ul>
-            </div>
-          </div>
-        )
-      }
+		</>
+		{
+    hasContent && (
+    <div className="search-dropdown">
+      <div className="search-content">
+        <ul>
+          <li>Search option - 1</li>
+          <li>Search option - 2</li>
+          <li>Search option - 3</li>
+          <li>Search option - 4</li>
+        </ul>
+      </div>
     </div>
+    )
+    }
+	</div>
   )
 }
 

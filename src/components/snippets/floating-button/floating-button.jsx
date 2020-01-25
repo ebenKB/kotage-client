@@ -9,21 +9,21 @@ const FloatingButton = ({isOpen, ...res}) => {
       return <Icon className="icon"/>
     } else {
       return (
-        <CloseIcon 
+	<CloseIcon 
           className="close icon"
         />
       )
     }
   }
   return (
-    <div className="kt-floating-button"
-      onClick={res.onClick}
-      role="button"
-    >
-      {
-        getIcon()
-      }
-    </div>
+	<div className="kt-floating-button"
+    onClick={res.onClick}
+    role="button"
+  >
+		{
+    getIcon()
+    }
+	</div>
   )
 }
 

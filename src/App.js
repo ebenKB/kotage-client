@@ -7,7 +7,6 @@ import { Switch, Route } from 'react-router-dom';
 import SignIn from './components/auth/sign-in/sign-in';
 import PageNotFound from './pages/_404';
 import UserInvitation from './components/forms/user-invitation/new-invitation/user-invitation.jsx';
-import AcceptInvitation from './components/forms/user-invitation/accept-invitation/accept-invitation';
 import CreateNewTenant from './components/forms/tenant/create-new-tenant';
 import CreateUser from './components/forms/user/create-user/create-user';
 
@@ -68,34 +67,34 @@ function App() {
 	<Provider
     store={store}
     >
-    <Switch>
-      <Route path="/auth/signin">
-        <SignIn />
-      </Route>
-      <Route exact path={`/user/invitation/confirm/:token`}>
-        <CreateUser />
-      </Route>
-      <Route exact path={`/tenant/signup`}>
-        <CreateNewTenant />
-      </Route>
-      <Suspense fallback={<Layout><h1> loading ...</h1> </Layout>} >
-      <Layout>
-      {routes.map((route, index) => (
+		<Switch>
+			<Route path="/auth/signin">
+				<SignIn />
+			</Route>
+			<Route exact path={`/user/invitation/confirm/:token`}>
+				<CreateUser />
+			</Route>
+			<Route exact path={`/tenant/signup`}>
+				<CreateNewTenant />
+			</Route>
+			<Suspense fallback={<Layout><h1> loading ...</h1> </Layout>} >
+				<Layout>
+					{routes.map((route, index) => (
         // Render more <Route>s with the same paths as
         // above, but different components this time.
-        <Route
+						<Route
           key={index}
           path={route.path}
           exact={route.exact}
           component={route.main}
         />
           ))}
-          </Layout>
-        </Suspense>
-        <Route path="*">
-          <PageNotFound />
-        </Route>
-      </Switch>
+				</Layout>
+			</Suspense>
+			<Route path="*">
+				<PageNotFound />
+			</Route>
+		</Switch>
 		{/* <Switch>
 			<Suspense fallback={<Layout><h1> loading ...</h1> </Layout>} >
       <ProtectedRoute exact path="/auth/signin" component= {SignIn} />

@@ -4,9 +4,10 @@ import './filter.scss';
 
 const filter = () => {
   return (
-    <div className="search-filter">
-      search filter <span> <PopupDropdown /></span>
-    </div>
+	<div className="search-filter">
+    search filter 
+		<span> <PopupDropdown /></span>
+	</div>
   )
 }
 

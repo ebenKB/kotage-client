@@ -5,9 +5,9 @@ import './kt-textarea.scss';
 
 const KtTextArea = ({placeholder,hasHeader=false, ...otherProps}) => {
   return (
-    <div className="kt-textarea__wrapper">
-      <TextArea {...otherProps} />
-    </div>
+	<div className="kt-textarea__wrapper">
+		<TextArea {...otherProps} />
+	</div>
   )
 }
 
