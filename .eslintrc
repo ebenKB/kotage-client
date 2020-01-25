@@ -12,9 +12,8 @@
   },
   "extends": [
     "react-app",
-    "eslint: recommended",
-    "plugin:react/recommended",
-    "airbnb"
+    // "plugin:react/recommended",
+    // "airbnb"
   ],
   "rules": {
     "react/boolean-prop-naming": [
@@ -23,7 +22,8 @@
         "validateNested": true
       }
     ],
-    "react/jsx-indent": [<enabled>, 'tab',
+    "react/jsx-indent": [
+      1, 'tab',
       {
         "checkAttributes": true,
         "indentLogicalExpressions": true
