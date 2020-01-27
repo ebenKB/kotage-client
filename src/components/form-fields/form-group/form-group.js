@@ -27,7 +27,7 @@ const FormGroup = ({type, placeholder, label, labelName, center, classes='', ...
     if(type==="text" || type === 'password' || type === 'number' || type === 'email'){
       return <InputValidator type={type}  placeholder={placeholder} {...rest} />
     } else if(type === 'date'){
-      return <Input type={type} {...rest}/>
+      return<InputValidator type={type} {...rest} />
     } else if(type === 'dropdown') {
       return (
         <Dropdown 
@@ -43,9 +43,7 @@ const FormGroup = ({type, placeholder, label, labelName, center, classes='', ...
       return <Amount {...rest}/>
     } else if(type === 'textarea') {
       return (
-        <Form>
-          <TextArea placeholder={placeholder} style={{ minHeight: 100 }} />
-        </Form>
+        <TextArea placeholder={placeholder} style={{ minHeight: 100 }}/>
       )
     } else if(type==='kt-textarea') {
       return (

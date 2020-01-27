@@ -1,5 +1,4 @@
 import React from 'react';
-import Input from '../../form-fields/input/input';
 import { ReactComponent as Logo } from '../../../svg/bin.svg';
 import './item-detail.scss';
 import InputValidator from '../../form-fields/input-validator/input-validator';
@@ -16,7 +15,9 @@ const ItemDetail = ({item, deleteItem, handleChange,data_id, ...rest}) => {
             validators={['required', 'isEmail']}
             errorMessages={['this field is required', 'email is not valid']}
             instantValidate={true}
+            name="product_code"
             onChange={handleChange}
+            id={data_id}
             {...rest} 
           />
         </>
@@ -26,6 +27,10 @@ const ItemDetail = ({item, deleteItem, handleChange,data_id, ...rest}) => {
             placeholder="How would you describe the item?" 
             value={item.description}
             onChange={handleChange}
+            name="description"
+            id={data_id}
+            instantValidate={true}
+            errorMessages={["Please leave a description"]}
             {...rest} 
           />
         </div>
