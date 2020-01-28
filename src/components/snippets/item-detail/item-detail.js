@@ -12,8 +12,8 @@ const ItemDetail = ({item, deleteItem, handleChange,data_id, ...rest}) => {
             type="text"  
             placeholder="Item SKU" 
             value={item.product_code}
-            validators={['required', 'isEmail']}
-            errorMessages={['this field is required', 'email is not valid']}
+            validators={['required', 'String']}
+            errorMessages={['this field is required', 'SKU is required']}
             instantValidate={true}
             name="product_code"
             onChange={handleChange}

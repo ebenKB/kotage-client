@@ -91,8 +91,7 @@ class Requisitions extends React.Component {
      */
     const addNewItem = () => {
       const items = this.state.item_details;
-      this.setState((req) => ({
-        ...req,
+      this.setState( ({
         item_details: [...items, {
           product_code: '',
           description: '',

@@ -7,7 +7,7 @@ import Collapsible from '../collapsible/collapsible';
 import AddItem from '../add-item/add-item';
 import  Dropzone from '../../form-fields/dropzone/dropzone';
 
-const ItemDetailsWrapper = ({item_details, handleAction, handleChange, deleteItem}) => {
+const ItemDetailsWrapper = ({item_details, handleAction, handleChange, deleteItem, ...rest}) => {
   const [items, setItems] = useState([
     {
       key : new Date().getDate(),
@@ -58,7 +58,7 @@ const ItemDetailsWrapper = ({item_details, handleAction, handleChange, deleteIte
             </div>
           }
         >
-          <div className="kt-content__wrapper">
+          <div className="kt-content__wrapper dropzone">
             <Dropzone/>
           </div>
         </Collapsible>
