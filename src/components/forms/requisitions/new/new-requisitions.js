@@ -22,18 +22,19 @@ class Requisitions extends React.Component {
     // check if there is a draft for a requisition and load the draft otherwise create a new blank requisition and save as draft
     this.state = {
       title: '',
-      delivery_date: '',
-      amount: 0.00,
+      deliver_by: '',
+      budget: 0.00,
       warehouse: '',
       notes: '',
-      item_details: [{
+      sourcing_requisition_items: [{
         product_code: 'SKU-WW-323',
         description: 'How would would describe the item?',
         quantity: 0
       }],
-      files: [],
+
+      sourcing_attachments: [],
       approvers: [1],
-      status: 1,
+      status_id: 1,
     }
     this.myRef = React.createRef();
   }
@@ -46,6 +47,7 @@ class Requisitions extends React.Component {
       // console.log('we want to create a requisition...', requisition)
       this.props.createRequisition(requisition);
       this.myRef.current.isFormValid(false).then(value => console.log(value))
+      .catch((err) => console.log());
     }
 
     /**
@@ -65,12 +67,13 @@ class Requisitions extends React.Component {
      * @param {*} e the default Javascript event
      */
     const handleItemDetailsChange = (e) => {
+      console.log('This is the target', e)
       const { value, name, id } = e.target;
-      const new_item_details = requisition.item_details;
+      const new_item_details = requisition.sourcing_requisition_items;
       new_item_details[id][name] = value;
       this.setState((r) => ({
         ...r,
-        item_details: new_item_details,
+        sourcing_requisition_items: new_item_details,
       }));
     }
 
@@ -90,9 +93,9 @@ class Requisitions extends React.Component {
      * this method is used to add a new item detail to the requistion
      */
     const addNewItem = () => {
-      const items = this.state.item_details;
+      const items = this.state.sourcing_requisition_items;
       this.setState( ({
-        item_details: [...items, {
+        sourcing_requisition_items: [...items, {
           product_code: '',
           description: '',
           quantity: 0
@@ -102,12 +105,13 @@ class Requisitions extends React.Component {
 
     /**
      *
-     * @param {*} files the files to set to the requisition
+     * @param {*} sourcing_attachments the sourcing_attachments to set to the requisition
      */
-    const handleFiles = (files) => {
+    const handlesourcing_attachments = (sourcing_attachments) => {
+      console.log('We recienved some files', sourcing_attachments)
       this.setState((req) => ({
         ...req,
-        files: files
+        sourcing_attachments: sourcing_attachments
       }));
     }
 
@@ -157,8 +161,8 @@ class Requisitions extends React.Component {
               placeholder="What is the Delivery date?"
               label="Delivery date"
               labelName="title"
-              name="delivery_date"
-              value={requisition.delivery_date}
+              name="deliver_by"
+              value={requisition.deliver_by}
               onChange={handleInputChange}
               center={true}
               validators={['required', 'isString']}
@@ -177,7 +181,7 @@ class Requisitions extends React.Component {
               onChange={handleInputChange}
               center={true}
               validators={['required', 'isString', 'minStringLength:2']}
-              errorMessages={'this fields is required', 'Text too short'}
+              errorMessages={'this fields is required','jjj', 'Please enter string characters','Text too short'}
               instantValidate={true}
             />
 					</div>
@@ -186,7 +190,7 @@ class Requisitions extends React.Component {
 					<Divider type="thick" title="Item Details" />
 					<div className="m-t-30">
 						<ItemDetailsWrapper
-              item_details={requisition.item_details}
+              item_details={requisition.sourcing_requisition_items}
               handleAction={addNewItem}
               deleteItem={deleteItem}
               handleChange={handleItemDetailsChange}
@@ -200,9 +204,9 @@ class Requisitions extends React.Component {
               type="amount"
               placeholder="Enter the amount"
               label="Budget"
-              labelName="amount"
-              name="amount"
-              value={requisition.amount}
+              labelName="budget"
+              name="budget"
+              value={requisition.budget}
               onChange={handleInputChange}
               center={true}
               />
@@ -220,10 +224,9 @@ class Requisitions extends React.Component {
 					<div className="m-t-20 dropzone">
 						<FormGroup
               type="dropzone"
-              placeholder="Do you have any comments?"
               label="Attachments"
               labelName="notes"
-              onFilesChange={(files) => handleFiles(files)}
+              onFilesChange={(sourcing_attachments) => handlesourcing_attachments(sourcing_attachments)}
             />
 					</div>
 				</div>

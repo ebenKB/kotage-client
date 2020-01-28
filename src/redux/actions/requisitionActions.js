@@ -28,7 +28,7 @@ export const getRequisitions = () => async(dispatch) => {
 export const createRequisition = (requisition) => async(dispatch) => {
   try {
     console.log('IN THE ACTIONS. TRYING TO CREATE REQUISITIONS...', requisition);
-    Axios.get('/1')
+    Axios.post('/1', requisition)
     .then(data => {
       console.log('We reached the server', data);
     })

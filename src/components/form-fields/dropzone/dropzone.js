@@ -13,6 +13,7 @@ function KtDropzone({onFilesChange}) {
   useEffect(() => {
     //attach the files to the requisitions
     if(onFilesChange) {
+      console.log('The files have changed');
       onFilesChange(files);
     }
     // check if there is any file
