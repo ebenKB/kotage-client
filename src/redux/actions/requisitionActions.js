@@ -1,4 +1,5 @@
 import { GET_REQUISITIONS, SET_LOADING } from '../types/requisitionTypes';
+import Axios from '../../utils/axios/axios';
 
 /**
  * get requisitions from the api
@@ -27,6 +28,10 @@ export const getRequisitions = () => async(dispatch) => {
 export const createRequisition = (requisition) => async(dispatch) => {
   try {
     console.log('IN THE ACTIONS. TRYING TO CREATE REQUISITIONS...', requisition);
+    Axios.get('/1')
+    .then(data => {
+      console.log('We reached the server', data);
+    })
   } catch (error) {
     console.log('an error occured while creating a new requisition...');
   }

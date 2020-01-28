@@ -5,10 +5,11 @@ import axios from 'axios';
  * all configurations for axio should be done in this file
  */
 const Axios = axios.create({
-  baseURL: '',
-  timeout: 1000,
+  baseURL: 'https://kotage-ruby-api.herokuapp.com/api/v1',
+  timeout: 3000,
   headers: {
     'content-type' : 'application/json',
+    'mode': 'no-cors'
   }
 });
 
