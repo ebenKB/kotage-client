@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, createRef} from 'react';
 import Dropzone from 'react-dropzone';
 import { ReactComponent as Icon } from '../../../svg/upload.svg';
 import './dropzone.scss';
@@ -6,14 +6,16 @@ import DropzoneItem from './dropzone-item/dropzone-item';
 import AddItem from '../../snippets/add-item/add-item';
 
 function KtDropzone({onFilesChange}) {
+  const dropzoneRef =  createRef();
+
   const [hasEntered, setHasEntered] = useState(false);
   const [isEmpty, setIsEmpty] = useState(false);
   const [error, setError] = useState(null);
   const [files, setFiles] = useState([]);
+  
   useEffect(() => {
     //attach the files to the requisitions
     if(onFilesChange) {
-      console.log('The files have changed');
       onFilesChange(files);
     }
     // check if there is any file
@@ -68,6 +70,13 @@ function KtDropzone({onFilesChange}) {
     }
   }
 
+  // show a dialog box to select files
+  const handleOpenDialog =() => {
+    // check if the ref is not null
+    if(dropzoneRef.current) {
+      dropzoneRef.current.open();
+    }
+  }
   // const { getRootProps, getInputProps, isDragActive } = useDropzone({onDrop})
   return (
     <div 
@@ -77,6 +86,9 @@ function KtDropzone({onFilesChange}) {
         onDrop={acceptedFiles => handleDrop(acceptedFiles)}
         onDragEnter={handleDragEnter}
         onDragLeave={handleDragLeave}
+        ref={dropzoneRef}
+        noClick
+        noKeyboard
       >
         {({getRootProps, getInputProps}) => (
           <section className={`dropzone text-center ${hasEntered ? 'active' : ''} ${!isEmpty ? 'empty' : 'full'}`}>
@@ -86,7 +98,7 @@ function KtDropzone({onFilesChange}) {
                 <Icon className="kt-logo__medium"/>
                 <p>
                   <span className="bold">Drag & drop</span> your documents here, or 
-                  <span className="bold kt-primary"> browse</span> 
+                  <span className="clickable bold kt-primary" role="button" onClick={handleOpenDialog}> browse</span> 
                 </p>
               </div>
             </div>
