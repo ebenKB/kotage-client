@@ -28,14 +28,11 @@ export default class AccordionStandard extends Component {
           <Menu.Item>
             <Accordion.Title
               active={activeIndex === 0}
-              content='Sourcing'
+              content='Source'
               index={0}
               onClick={this.handleClick}
               className="m-b-10 bold"
             />
-            <Accordion.Content active={activeIndex === 0}  className="menu-option">
-              <Link to="/requisitions">Requisitions</Link>
-            </Accordion.Content>
             <Accordion.Content active={activeIndex === 0}  className="menu-option">
               <Link to="/rfx">RFX</Link>
             </Accordion.Content>
@@ -51,18 +48,21 @@ export default class AccordionStandard extends Component {
           <Menu.Item>
             <Accordion.Title
               active={activeIndex === 1}
-              content='Orders'
-              index={0}
+              content='Procure'
+              index={1}
               onClick={this.handleClick}
               className="m-b-10 bold"
             />
+            <Accordion.Content active={activeIndex === 1}  className="menu-option">
+              <Link to="/requisitions">Requisitions</Link>
+            </Accordion.Content>
           </Menu.Item>
         </Accordion>
         <Accordion as={Menu} vertical>
           <Menu.Item>
             <Accordion.Title
               active={activeIndex === 2}
-              content='Finance'
+              content='Pay'
               index={0}
               onClick={this.handleClick}
               className="m-b-10 bold"
