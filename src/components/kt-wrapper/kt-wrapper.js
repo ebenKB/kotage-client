@@ -7,7 +7,7 @@ import SearcFilter from '../search-filter/filter';
 
 class KtWrapper extends React.Component {
   render() {
-    let { link='', linkName='', header, canFilter, canPerform, handleAction } = this.props;
+    let { link='', linkName='', header, canFilter, canPerform, actionName='Save',handleAction } = this.props;
 
     // check if there are no defaults
     if(link == null) {
@@ -65,7 +65,7 @@ class KtWrapper extends React.Component {
             <div className="kt-wrapper__footer text-right">
               <div className="content">
                 <Button content="Cancel" className="default"/>
-                <Button type="submit" content="Save" className="green" onClick={handleAction}/>
+                <Button type="submit" content={actionName} className="green" onClick={handleAction}/>
               </div>
             </div>
             )

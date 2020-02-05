@@ -11,16 +11,14 @@ import Layout from './components/Layout/layout';
 import { Switch, Route } from 'react-router-dom';
 import SignIn from './components/auth/sign-in/sign-in';
 import PageNotFound from './pages/_404';
+import UserInvitation from './components/forms/user-invitation/user-invitation';
 
-// const Layout = lazy(() => import('./components/Layout/layout'));
 const Home = lazy(() => import  ('./pages/home'));
 const NewRequisition = lazy(() => import('./components//forms/requisitions/new/new-requisitions'));
 const Requisitions = lazy(() => import('./components/forms/requisitions/show/requisitions-index'));
 const Newquote = lazy(() => import('./components/forms/quotes/new/new-quote'));
 const RFX = lazy(() => import('./components/rfx/rfx'));
 const Vendors = lazy(() => import('./components/forms/vendors/vendors'));
-// const SignIn = lazy(() => import('./components/auth/sign-in/sign-in'));
-// const PageNotFound = lazy(() => import('./pages/_404'))
 
 const routes = [
   {
@@ -72,6 +70,9 @@ function App() {
     <Route path="/auth/signin">
       <SignIn />
     </Route>
+    <Route path="/user/invitation">
+      <UserInvitation />
+    </Route>
     <Suspense fallback={<Layout><h1> loading ...</h1> </Layout>} >
     <Layout>
     {routes.map((route, index) => (
@@ -108,12 +109,6 @@ function App() {
 			
 		</Switch>
   */}
-
-
-
-
-
-
 
 		{/* <Switch>
 			<Route  path="/auth/signin" component={SignIn}/>
