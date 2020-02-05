@@ -12,3 +12,8 @@
 .user-invitation .kt-textarea__wrapper textarea {
  min-height: 80px !important;
 }
+
+.user-invitation .label.kt-success {
+  background: var(--kt-green);
+  color: var(--kt-white);
+}

@@ -41,7 +41,10 @@
   padding: 15px;
   border: 1.2099px solid #DBDEE2;
   box-sizing: border-box;
-  border-radius: 2.05684px;
+  // border-radius: 2.05684px;
+  border-radius: 0;
+  border-bottom-left-radius: 2px;
+  border-bottom-right-radius: 2px;
 }
 
 .kt-wrapper__footer .content {
