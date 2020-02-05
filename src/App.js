@@ -1,17 +1,12 @@
 import React, {lazy, Suspense} from 'react';
 import './App.css';
-import AppRouter from './components/AppRouter/router';
-import Header from './components/header/header';
-import Nav from './components/navigation/navigation';
 import {Provider} from 'react-redux';
 import store from './redux/store';
-import Message from './components/kt-floating-message/message';
-import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 import Layout from './components/Layout/layout';
 import { Switch, Route } from 'react-router-dom';
 import SignIn from './components/auth/sign-in/sign-in';
 import PageNotFound from './pages/_404';
-import UserInvitation from './components/forms/user-invitation/user-invitation';
+import UserInvitation from './components/forms/user-invitation/new-invitation/user-invitation.jsx';
 
 const Home = lazy(() => import  ('./pages/home'));
 const NewRequisition = lazy(() => import('./components//forms/requisitions/new/new-requisitions'));
@@ -70,8 +65,11 @@ function App() {
     <Route path="/auth/signin">
       <SignIn />
     </Route>
-    <Route path="/user/invitation">
+    <Route exact path="/user/invitation">
       <UserInvitation />
+    </Route>
+    <Route exact path="/user/invitation/accept">
+      <h1>Accept Invitation Here...</h1>
     </Route>
     <Suspense fallback={<Layout><h1> loading ...</h1> </Layout>} >
     <Layout>

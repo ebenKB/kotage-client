@@ -1,13 +1,13 @@
 import React from 'react'
-import KtWrapper from '../../kt-wrapper/kt-wrapper';
+import KtWrapper from '../../../kt-wrapper/kt-wrapper';
 import {Form} from 'semantic-ui-react';
-import FormGroup from '../../form-fields/form-group/form-group';
+import FormGroup from '../../../form-fields/form-group/form-group';
 import { ValidatorForm } from 'react-form-validator-core';
 
 
-import './user-invitation.scss';
-import Divider from '../../kt-divider/divider';
-import KtTextArea from '../../form-fields/kt-textarea/kt-textarea';
+import '../user-invitation.scss';
+import Divider from '../../../kt-divider/divider';
+import KtTextArea from '../../../form-fields/kt-textarea/kt-textarea';
 
 
 class UserInvitation extends React.Component{
@@ -39,41 +39,39 @@ class UserInvitation extends React.Component{
             <span>Enter contact info for the person you want to invite</span>
           </div>
           <div className="m-t-30">
-              <FormGroup
-                type="text"
-                placeholder="Enter title"
-                label="First name"
-                labelName="title"
-                value=""
-  
-                name="title"
-                center={true}
-              />
-            </div>
-            <div className="m-t-30">
-              <FormGroup
-                type="text"
-                placeholder="Enter title"
-                label="Last name"
-                labelName="title"
-                value=""
-  
-                name="title"
-                center={true}
-              />
-            </div>
-            <div className="m-t-30">
-              <FormGroup
-                type="email"
-                placeholder="Enter title"
-                label="Email Address"
-                labelName="title"
-                value=""
-  
-                name="title"
-                center={true}
-              />
-            </div>
+            <FormGroup
+              type="text"
+              placeholder="Enter title"
+              label="First name"
+              labelName="title"
+              value=""
+              name="title"
+              center={true}
+            />
+          </div>
+          <div className="m-t-30">
+            <FormGroup
+              type="text"
+              placeholder="Enter title"
+              label="Last name"
+              labelName="title"
+              value=""
+              name="title"
+              center={true}
+            />
+          </div>
+          <div className="m-t-30">
+            <FormGroup
+              type="email"
+              placeholder="Enter title"
+              label="Email Address"
+              labelName="title"
+              value=""
+
+              name="title"
+              center={true}
+            />
+          </div>
             <Divider type="faint" title="Add a personal message" classes="m-b-30 m-t-30"/>
             <div className="ui form m-t-20">
               <KtTextArea className="fluid"/>
