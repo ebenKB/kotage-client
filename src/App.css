@@ -95,6 +95,18 @@ ul.custom {
   padding: 20px;
 }
 
+.logo.small {
+  width: 14px;
+}
+
+.logo.very.small {
+  width: 10px;
+}
+
+svg.faint {
+  fill : #6f6f6f;
+}
+
 .help {
   font-size: 0.9em;
 }
