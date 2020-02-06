@@ -7,6 +7,7 @@ import { Switch, Route } from 'react-router-dom';
 import SignIn from './components/auth/sign-in/sign-in';
 import PageNotFound from './pages/_404';
 import UserInvitation from './components/forms/user-invitation/new-invitation/user-invitation.jsx';
+import AcceptInvitation from './components/forms/user-invitation/accept-invitation/accept-invitation';
 
 const Home = lazy(() => import  ('./pages/home'));
 const NewRequisition = lazy(() => import('./components//forms/requisitions/new/new-requisitions'));
@@ -62,32 +63,32 @@ function App() {
     store={store}
     >
     <Switch>
-    <Route path="/auth/signin">
-      <SignIn />
-    </Route>
-    <Route exact path="/user/invitation">
-      <UserInvitation />
-    </Route>
-    <Route exact path="/user/invitation/accept">
-      <h1>Accept Invitation Here...</h1>
-    </Route>
-    <Suspense fallback={<Layout><h1> loading ...</h1> </Layout>} >
-    <Layout>
-    {routes.map((route, index) => (
-      // Render more <Route>s with the same paths as
-      // above, but different components this time.
-      <Route
-        key={index}
-        path={route.path}
-        exact={route.exact}
-        component={route.main}
-      />
-        ))}
-        </Layout>
-      </Suspense>
-      <Route path="*">
-        <PageNotFound />
+      <Route path="/auth/signin">
+        <SignIn />
       </Route>
+      <Route exact path="/user/invitation">
+        <UserInvitation />
+      </Route>
+      <Route exact path="/user/invitation/confirm">
+        <AcceptInvitation />
+      </Route>
+      <Suspense fallback={<Layout><h1> loading ...</h1> </Layout>} >
+      <Layout>
+      {routes.map((route, index) => (
+        // Render more <Route>s with the same paths as
+        // above, but different components this time.
+        <Route
+          key={index}
+          path={route.path}
+          exact={route.exact}
+          component={route.main}
+        />
+          ))}
+          </Layout>
+        </Suspense>
+        <Route path="*">
+          <PageNotFound />
+        </Route>
       </Switch>
 		{/* <Switch>
 			<Suspense fallback={<Layout><h1> loading ...</h1> </Layout>} >

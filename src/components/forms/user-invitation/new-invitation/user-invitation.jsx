@@ -8,8 +8,7 @@ import KtTextArea from '../../../form-fields/kt-textarea/kt-textarea';
 import { connect } from 'react-redux';
 import { inviteUser } from '../../../../redux/actions/userActions';
 
-
-class UserInvitation extends React.Component{
+class UserInvitation extends React.Component {
   constructor(props) {
     super(props);
     this.myRef = React.createRef();
@@ -121,6 +120,7 @@ class UserInvitation extends React.Component{
     )
   }
 }
+
 const mapDispatchToProps = {
  inviteUser
 }

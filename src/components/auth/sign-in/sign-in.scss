@@ -15,7 +15,7 @@
   display: block;
   width: 350px;
   height: 100%;
-  border: 1px solid #e8e9e9;
+  border: 2px solid #e8e9e9;
   margin: auto;
   border-radius: 2px;
 }
@@ -50,4 +50,54 @@
 .signin__wrapper .ui.button,
 .signin__wrapper .ui.form input  {
   border-radius: 2px;
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+  body {
+    // background: red !important;
+  }
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+  body {
+    // background: blue !important;
+  }
+}
+
+@media only screen and (min-width: 1024px) {
+  body {
+    // background: green !important;
+  }
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1280px) {
+  body {
+    // background: green !important;
+  }
+}
+
+@media only screen and (min-width: 1440px) {
+  body {
+    // background: indianred !important;
+  }
+}
+
+@media only screen and (min-width: 1680px) {
+  body {
+    // background: blue !important;
+  }
+}
+
+@media only screen and (min-width: 1920px) {
+  .signin__content {
+    width: 400px;
+  }
+
+  .signin__wrapper {
+    padding-top: 15%;
+  
+  }
 }
