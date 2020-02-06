@@ -1,18 +1,16 @@
 import React, {useState} from 'react';
-import './sign-in.scss';
+import {connect} from 'react-redux';
 import { Form, Button } from 'semantic-ui-react';
 import Input from '../../form-fields/input/input';
 import {ReactComponent as Logo} from '.././../../svg/padlock.svg';
 import { ReactComponent as BackArrow } from '../../../svg/back.svg';
 import KotageLogo from '../../../png/kotage-logo__colour.png';
-import {
-  useHistory,
-  useLocation, 
-  Link
-} from "react-router-dom";
+import {useHistory, useLocation, Link} from "react-router-dom";
+import {login} from '../../../redux/actions/userActions';
+import './sign-in.scss';
 
 
-const SignIn = () => {
+const SignIn = ({login, loading}) => {
   let history = useHistory();
   let location = useLocation();
   let { from } = location.state || { from: { pathname: "/" } };
@@ -26,17 +24,6 @@ const SignIn = () => {
       fakeAuth.isAuthenticated = true;
       setTimeout(cb, 100); // fake async
     },
-
-    signout(cb) {
-      fakeAuth.isAuthenticated = false;
-      setTimeout(cb, 100);
-    }
-  };
-
-  let login = () => {
-    fakeAuth.authenticate(() => {
-      history.replace(from);
-    });
   };
 
   /**
@@ -65,15 +52,25 @@ const SignIn = () => {
     ))
   }
 
-  const handClickChange = (e) => {
+  /**
+   * 
+   * @param {*} e defualt javascript event
+  */
+  const handleChange = (e) => {
     e.preventDefault();
     const { value, name } = e.target;
-    console.log(value, name)
     setUser((u) => ({
       ...u,
       [name]: value
     }));
   }
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    login(user.email, user.password)
+    console.log('LOADING: ', loading);
+  }
+
 /**
  * get the appropriate page to show to the user
  */
@@ -86,7 +83,7 @@ const SignIn = () => {
         type="text" 
         className="fluid"
         placeholder="Enter your email"
-        onChange={handClickChange}
+        onChange={handleChange}
         value={user.email}
         name="email"
       />
@@ -107,28 +104,28 @@ const SignIn = () => {
     } else {
       return (
         <Form className="kt__wrapper_active">
-        {
-          user.email && page.page === 2 && (
-          <div className="m-t-10 m-b-10" role="button" onClick={goBack}>
-            <BackArrow className="logo very small"/>
-            <span className="m-l-5">{user.email}</span>
-          </div>
-          )
-        }
+          {
+            user.email && page.page === 2 && (
+            <div className="m-t-10 m-b-10" role="button" onClick={goBack}>
+              <BackArrow className="logo very small"/>
+              <span className="m-l-5">{user.email}</span>
+            </div>
+            )
+          }
           <div className="m-t-5 m-b-5">
             <Input 
               type="text" 
               className="fluid"
               placeholder="Enter your passowrd"
-              onChange= {handClickChange}
+              onChange= {handleChange}
               value={user.password}
               name="password"
             />
           </div>
           <div>
             <Button 
-              onClick={goToNextPage} 
-              className="tiny"
+              onClick={handleSubmit} 
+              className={`tiny ${loading ? 'loading': ''}`}
               disabled={user.password===""}
             >
               {
@@ -159,7 +156,7 @@ const SignIn = () => {
         <span>Reset Password</span>
         <span> | </span>
         <span>
-        <Link to="/about">Request a Demo</Link>
+          <Link to="/about">Request a Demo</Link>
         </span>
 			</div>
 		</div>
@@ -170,4 +167,12 @@ const SignIn = () => {
   )
 }
 
-export default SignIn
+const mapDispatchToProps = {
+  login
+}
+
+const mapStateToProps = (state) => ({
+  loading: state.user.loading
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignIn)

@@ -3,20 +3,39 @@ import KtWrapper from '../../../kt-wrapper/kt-wrapper';
 import { Label } from 'semantic-ui-react'
 import FormGroup from '../../../form-fields/form-group/form-group';
 import { ValidatorForm } from 'react-form-validator-core';
-
-
 import '../user-invitation.scss';
-import Divider from '../../../kt-divider/divider';
 import KtTextArea from '../../../form-fields/kt-textarea/kt-textarea';
+import { connect } from 'react-redux';
+import { inviteUser } from '../../../../redux/actions/userActions';
 
 
 class UserInvitation extends React.Component{
   constructor(props) {
     super(props);
     this.myRef = React.createRef();
+
+    this.state = {
+      firstname:  '',
+      lastname:  '',
+      email:  '',
+      message:  '',
+    }
+  }
+
+  handleChange =(e) => {
+    const { value, name } = e.target;
+    this.setState((s) => ({
+      ...s,
+      [name]: value
+    }));
+  }
+
+  handleSubmit = () => {
+    this.props.inviteUser(this.state);
   }
 
   render() {
+    const {firstname, lastname, email, message} = this.state;
     return (
       <div className="user-invitation">
         <KtWrapper
@@ -24,6 +43,7 @@ class UserInvitation extends React.Component{
           canFilter={false}
           canPerform={true}
           actionName="Send Invitation"
+          handleAction ={this.handleSubmit}
         >
           <p className="">
             The person you invite will receive an email with an invitation link. 
@@ -32,7 +52,7 @@ class UserInvitation extends React.Component{
           </p>
           <ValidatorForm
             ref={this.myRef}
-            onSubmit={() => console.log("submit")}
+            onSubmit={this.handleSubmit}
           >
           <div className="m-t-20 m-b-20">
             <span className="p-r-8">
@@ -48,9 +68,10 @@ class UserInvitation extends React.Component{
               placeholder="Enter title"
               label="First name"
               labelName="title"
-              value=""
-              name="title"
+              value={firstname}
+              name="firstname"
               center={true}
+              onChange={this.handleChange}
             />
           </div>
           <div className="m-t-30">
@@ -59,9 +80,10 @@ class UserInvitation extends React.Component{
               placeholder="Enter title"
               label="Last name"
               labelName="title"
-              value=""
-              name="title"
+              value={lastname}
+              name="lastname"
               center={true}
+              onChange={this.handleChange}
             />
           </div>
           <div className="m-t-30">
@@ -70,9 +92,9 @@ class UserInvitation extends React.Component{
               placeholder="Enter title"
               label="Email Address"
               labelName="title"
-              value=""
-
-              name="title"
+              value={email}
+              onChange={this.handleChange}
+              name="email"
               center={true}
             />
           </div>
@@ -82,10 +104,16 @@ class UserInvitation extends React.Component{
                 2
               </Label>
             </span>
-            <span className="bold">Add a personal  message</span>
+            {firstname.length> 0 && (
+              <span className="bold">Add a personal message</span>
+            )}
           </div>
             <div className="ui form m-t-20">
-              <KtTextArea className="fluid"/>
+              <KtTextArea 
+                className="fluid"
+                value={message}
+                name="message"
+              />
 					  </div>
           </ValidatorForm>
         </KtWrapper>
@@ -93,5 +121,12 @@ class UserInvitation extends React.Component{
     )
   }
 }
+const mapDispatchToProps = {
+ inviteUser
+}
 
-export default UserInvitation;
+const mapStateToProps = (state) => ({
+  loading: state.user.loading
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(UserInvitation);
