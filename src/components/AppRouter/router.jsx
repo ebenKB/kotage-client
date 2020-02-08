@@ -1,5 +1,5 @@
-import React, {Suspense, lazy} from 'react';
-import {Switch, Route} from 'react-router-dom';
+import React, { Suspense, lazy } from 'react';
+import { Switch, Route } from 'react-router-dom';
 
 const Home = lazy(() => import  ('../../pages/home'));
 const PageNotFound = lazy(() => import('../../pages/_404'));

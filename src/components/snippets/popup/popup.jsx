@@ -1,13 +1,13 @@
-import React from 'react'
-import { Button, Popup } from 'semantic-ui-react'
+import React from 'react';
+import { Popup } from 'semantic-ui-react';
 
 const PopupDropdown = () => (
-	<React.Fragment>
+	<>
 		<Popup
-      trigger={<span>Click me</span>}
-      on='click'
-      hideOnScroll
-    >
+			trigger={<span>Click me</span>}
+			on="click"
+			hideOnScroll
+		>
 			<div>
 				<ul className="custom">
 					<li>item one</li>
@@ -17,7 +17,7 @@ const PopupDropdown = () => (
 				</ul>
 			</div>
 		</Popup>
-	</React.Fragment>
-)
+	</>
+);
 
-export default PopupDropdown
+export default PopupDropdown;
