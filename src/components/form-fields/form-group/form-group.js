@@ -24,23 +24,23 @@ const FormGroup = ({type, placeholder, label, labelName, center, classes='', ...
   ]
 
   const getElement = () => {
-    if(type==="text" || type === 'password' || type === 'number' || type === 'email'){
+    if(type==="text" || type === 'password' || type === 'number' || type === 'email') {
       return <InputValidator type={type}  placeholder={placeholder} {...rest} />
     } else if(type === 'date'){
-      return <Input type={type} {...rest}/>
+      return <Input type={type} {...rest} />
     } else if(type === 'dropdown') {
-      return (
-        <Dropdown 
-          placeholder={placeholder} 
-          search selection 
-          options={options} 
-          className={rest.classes} 
-          onChange ={() => alert('change')}
-          {...rest}
-        />
-      )
+    return (
+      <Dropdown 
+        placeholder={placeholder} 
+        search selection
+        options={options}
+        className={rest.classes}
+        onChange ={() => alert('change')}
+        {...rest}
+      />
+    )
     } else if(type === 'amount') {
-      return <Amount {...rest}/>
+      return <Amount {...rest} />
     } else if(type === 'textarea') {
       return (
         <Form>
@@ -54,7 +54,7 @@ const FormGroup = ({type, placeholder, label, labelName, center, classes='', ...
         </div>
       )
     } else if(type === 'dropzone') {
-      return <Dropzone {...rest}/>
+      return <Dropzone {...rest} />
     } else {
       return rest.children
     }
