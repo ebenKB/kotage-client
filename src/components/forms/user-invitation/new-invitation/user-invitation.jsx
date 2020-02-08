@@ -1,6 +1,6 @@
 import React from 'react'
 import KtWrapper from '../../../kt-wrapper/kt-wrapper';
-import { Label } from 'semantic-ui-react'
+import { Label } from 'semantic-ui-react';
 import FormGroup from '../../../form-fields/form-group/form-group';
 import { ValidatorForm } from 'react-form-validator-core';
 import '../user-invitation.scss';
@@ -103,9 +103,7 @@ class UserInvitation extends React.Component {
                 2
               </Label>
             </span>
-            {firstname.length> 0 && (
-              <span className="bold">Add a personal message</span>
-            )}
+            <span className="bold">Add a personal message</span>
           </div>
             <div className="ui form m-t-20">
               <KtTextArea 

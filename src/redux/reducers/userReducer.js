@@ -1,4 +1,4 @@
-import { INVITE_USER, LOGIN , SET_USER_LOADING, DONE_LOADING, GET_USERS} from '../types/userTypes';
+import { INVITE_USER, LOGIN , SET_USER_LOADING, DONE_LOADING, GET_USERS, GET_INVIATION, CREATE_USER} from '../types/userTypes';
 
 const initialState = {
   users: null,
@@ -7,6 +7,7 @@ const initialState = {
   auth_token:null,
   error: false,
   loading: false,
+  invitation: null,
 }
 
 export default (state= initialState, action) => {
@@ -22,6 +23,13 @@ export default (state= initialState, action) => {
       ...state,
     }
 
+    case CREATE_USER : {
+      return {
+        ...state,
+        users: [...state.users, action.payload]
+      }
+    }
+
     case LOGIN :
       return {
         ...state,
@@ -31,7 +39,7 @@ export default (state= initialState, action) => {
         tenant: action.payload.tenant_id,
       }
 
-    case SET_USER_LOADING : 
+    case SET_USER_LOADING :
     return {
       ...state,
       loading: true
@@ -41,6 +49,13 @@ export default (state= initialState, action) => {
       return {
         ...state,
         loading: false,
+      }
+    }
+
+    case GET_INVIATION : {
+      return {
+        ...state,
+        invitation: action.payload
       }
     }
 

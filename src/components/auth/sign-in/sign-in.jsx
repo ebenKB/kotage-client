@@ -65,10 +65,14 @@ const SignIn = ({login, loading}) => {
     }));
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
-    login(user.email, user.password)
-    console.log('LOADING: ', loading);
+    try {
+      await login(user.email, user.password)
+      history.push('/');
+    } catch (error) {
+      
+    }
   }
 
 /**
@@ -90,7 +94,7 @@ const SignIn = ({login, loading}) => {
 			<div className="m-t-10">
 				<Button 
           onClick={goToNextPage} 
-          className="tiny"
+          className="m-t-20 fluid tiny green"
           disabled={user.email===""}
         >
 					{
@@ -106,8 +110,8 @@ const SignIn = ({login, loading}) => {
         <Form className="kt__wrapper_active">
           {
             user.email && page.page === 2 && (
-            <div className="m-t-10 m-b-10" role="button" onClick={goBack}>
-              <BackArrow className="logo very small"/>
+            <div className="kt__wrapper_active_cta m-t-10 m-b-10">
+              <BackArrow className="logo very small" role="button" onClick={goBack}/>
               <span className="m-l-5">{user.email}</span>
             </div>
             )
@@ -116,7 +120,7 @@ const SignIn = ({login, loading}) => {
             <Input 
               type="text" 
               className="fluid"
-              placeholder="Enter your passowrd"
+              placeholder="Enter your password"
               onChange= {handleChange}
               value={user.password}
               name="password"
@@ -125,7 +129,7 @@ const SignIn = ({login, loading}) => {
           <div>
             <Button 
               onClick={handleSubmit} 
-              className={`tiny ${loading ? 'loading': ''}`}
+              className={`m-t-20 fluid tiny ${loading ? 'loading': ''} green`}
               disabled={user.password===""}
             >
               {
@@ -146,22 +150,32 @@ const SignIn = ({login, loading}) => {
 			<div className="signin__body ">
 				<div className="m-b-10"> 
 					<Logo className="small logo faint"/> 
-					<span className="m-l-5 sm-caption bold">Login</span>
+					<span className="m-l-5 sm-caption bold">Buyer Login</span>
 				</div>
 				{
           getPage()
         }
 			</div>
 			<div className="signin__footer">
-        <span>Reset Password</span>
-        <span> | </span>
+      <p>New to Kotage? 
+      <span>
+        <Link to="/about"> Signup</Link>
+      </span>
+      </p>
+        {/* <span>Reset Password</span> */}
+        {/* <span> | </span> */}
         <span>
-          <Link to="/about">Request a Demo</Link>
+          {/* <Link to="/about">New to Kotage? Signup</Link> */}
         </span>
 			</div>
 		</div>
     <div className="text-center m-t-15 faint-caption">
-      If you are new to Kotage ask your administrator to invite you
+      {/* If you are new to Kotage ask your administrator to invite you */}
+      {/* <p>New to Kotage? 
+      <span>
+        <Link to="/about"> Signup</Link>
+      </span>
+      </p> */}
     </div>
 	</div>
   )

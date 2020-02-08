@@ -9,7 +9,7 @@ import Dropzone from '../dropzone/dropzone';
 import KtTextArea from '../kt-textarea/kt-textarea';
 import InputValidator from '../input-validator/input-validator';
 
-const FormGroup = ({type, placeholder, label, labelName, center, classes='', ...rest}) => {
+const FormGroup = ({inline=true, type, placeholder, label, labelName, center, classes='', ...rest}) => {
   const options = [
     {
       key: '1',
@@ -58,11 +58,25 @@ const FormGroup = ({type, placeholder, label, labelName, center, classes='', ...
     }
   }
 
+  const getForm =() => {
+    if(inline) {
+      return (
+        <div className={`form-group ${center ? 'center' : ''} ${classes}`}>
+          <label htmlFor={labelName}> <span className="bold">{label}</span></label>
+          <div>{getElement()}</div>
+        </div>
+      )
+    } else {
+      return (
+        <div className={`form-group block ${center ? 'center' : ''} ${classes}`}>
+          <label htmlFor={labelName}> <span className="bold">{label}</span></label>
+          <div>{getElement()}</div>
+        </div>
+      )
+    }
+  }
   return (
-    <div className={`form-group ${center ? 'center' : ''} ${classes}`}>
-      <label htmlFor={labelName}> <span className="bold">{label}</span></label>
-      <div>{getElement()}</div>
-    </div>
+    getForm()
   )
 }
 

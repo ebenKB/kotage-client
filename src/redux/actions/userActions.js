@@ -1,5 +1,5 @@
 import Axios from '../../utils/axios/axios';
-import { SET_USER_LOADING, DONE_LOADING, LOGIN } from '../types/userTypes';
+import { SET_USER_LOADING, DONE_LOADING, LOGIN, GET_INVIATION } from '../types/userTypes';
 
 export const inviteUser = (invitation) => async(dispatch) => {
   try {
@@ -9,20 +9,39 @@ export const inviteUser = (invitation) => async(dispatch) => {
   }
 }
 
-export const login = (email,password) => async(dispatch) => {
+export const createUser = (user, token, acess_token) => async(dispatch) => {
   try {
+    console.log('We want to create a new user', user)
     dispatch(setLoading());
-    const data = await Axios.post('/1/users/login', {email, password});
+    const data = await Axios.post(`/1/users?token=${token}&access_token=${acess_token}`, user);
+    console.log("We are done posting", data);
     dispatch(doneLoading());
-    const {access_token} = data.data;
-    dispatch(setAuthUser(access_token[0]));
-
-    // save the user to session storage
-    console.log(access_token[0])
-    sessionStorage.setItem('kotage-auth', access_token[0].token)
+    // authenticate the user after the account is created successfully
+    dispatch(login(user.email, user.password));
   } catch (error) {
-    console.log('an error occured while trying to login', error);
+    dispatch(doneLoading());
   }
+}
+
+export const login = (email,password) => async(dispatch) => {
+  return new Promise(async(resolve, reject) => {
+    try {
+      dispatch(setLoading());
+      const data = await Axios.post('/1/users/login', {email, password});
+      dispatch(doneLoading());
+      const {access_token} = data.data;
+      dispatch(setAuthUser(access_token[0]));
+  
+      // save the user to session storage
+      sessionStorage.setItem('kotage-auth', access_token[0].token);
+      resolve(data);
+      // return data;
+    } catch (error) {
+      console.log('an error occured while trying to login', error);
+      dispatch(doneLoading());
+      reject(error);
+    }
+  })
 }
 
 export const setToken =(token) => async(dispatch) => {
@@ -57,3 +76,20 @@ export const getUsers = () => async(dispatch) => {
     console.log('an error occurred');
   }
 }
+
+export const getInvitation= (token) => async(dispatch) => {
+  try {
+    console.log('getting the invitation', token);
+    const data = await Axios.get(`/1/invitations?token=${token}`);
+    const {invitation} = data.data;
+    console.log('We are done getting the invation', invitation);
+    return dispatch({
+      type: GET_INVIATION,
+      payload: invitation
+    })
+    
+  } catch (err) {
+    console.log('an error occured while trying to fetch the user');
+  }
+}
+

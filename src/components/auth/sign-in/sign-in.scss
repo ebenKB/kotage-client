@@ -6,8 +6,8 @@
   min-height: 320px;
   width: 40%;
   margin: auto;
-  padding-top: 10%;
-  font-size: 0.85rem;
+  padding-top: 13%;
+  font-size: 0.95rem;
 }
 
 .signin__content {
@@ -50,6 +50,23 @@
 .signin__wrapper .ui.button,
 .signin__wrapper .ui.form input  {
   border-radius: 2px;
+}
+
+.kt__wrapper_active .logo.very.small {
+  width: 18px;
+  padding: 4px;
+}
+
+.kt__wrapper_active .logo.very.small:hover {
+  background: #d1d1d1;
+  border-radius: 50%;
+}
+
+.kt__wrapper_active_cta {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  
 }
 
 /* Medium devices (landscape tablets, 768px and up) */
