@@ -1,5 +1,5 @@
 {
-  "parser": "babel-eslint",
+  "parser" : "babel-eslint",
   "parserOptions": {
     "ecmaFeatures": {
       "jsx": true,
@@ -11,24 +11,25 @@
     "node": true
   },
   "extends": [
-    "react-app",
+    // "react-app",
     // "plugin:react/recommended",
-    // "airbnb"
+    "airbnb"
   ],
-  "rules": {
-    "react/boolean-prop-naming": [
+  "rules" : {
+    "react/boolean-prop-naming" : [
       "error",
       {
         "validateNested": true
       }
     ],
-    "react/jsx-indent": [
+    "react/jsx-indent" : [
       1, 'tab',
       {
         "checkAttributes": true,
-        "indentLogicalExpressions": false
+        "indentLogicalExpressions": true
       }
     ],
-    // "allowIndentationTabs": 2
+    "no-tabs": 0,
+    "react/jsx-indent-props": [1, 'tab']
   }
 }

@@ -8,7 +8,7 @@ import './kt-docs.scss';
 const KtDocs = () => {
   const handleClick = () => {
 
-  }
+  };
   return (
 	<div className="docs-group m-t-30">
 		<div className="bold">Documents</div>
@@ -20,28 +20,28 @@ const KtDocs = () => {
 			<div className="docs-wrapper__content m-t-20">
 				<div>
 					<Input
-            type='text'
-            placeholder='Document name'
-          />
+            type="text"
+            placeholder="Document name"
+					/>
 				</div>
 				<div>
 					<Input
-            type='text'
-            placeholder='Document Description'
+            type="text"
+            placeholder="Document Description"
             classes="fluid"
-          />
+					/>
 				</div>
 				<div>
-					<Trash className="kt-logo__small"/>
+					<Trash className="kt-logo__small" />
 				</div>
 			</div>
-			<div className="clickable m-t-20 kt-primary bold sm-caption" onClick={handleClick}>
-				<Logo className="kt-logo__small kt-primary"/>
+			<div className="clickable m-t-20 kt-primary bold sm-caption" role="button" onClick={handleClick} onKeyDown={handleClick}>
+				<Logo className="kt-logo__small kt-primary" />
 				<span>Request New Document</span>
 			</div>
 		</div>
 	</div>
-  )
-}
+  );
+};
 
 export default KtDocs;
