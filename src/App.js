@@ -65,7 +65,7 @@ const routes = [
 function App() {
   return (
 	<Provider
-    store={store}
+		store={store}
     >
 		<Switch>
 			<Route path="/auth/signin">
@@ -83,10 +83,10 @@ function App() {
         // Render more <Route>s with the same paths as
         // above, but different components this time.
 						<Route
-          key={index}
-          path={route.path}
-          exact={route.exact}
-          component={route.main}
+							key={index}
+							path={route.path}
+							exact={route.exact}
+							component={route.main}
         />
           ))}
 				</Layout>
