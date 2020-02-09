@@ -55,51 +55,53 @@ class UserInvitation extends React.Component {
           >
           <div className="m-t-20 m-b-20">
             <span className="p-r-8">
-              <Label circular className="kt-success">
+              <Label size="big" circular className="kt-success">
                 1
               </Label>
             </span>
             <span className="bold">Enter contact info for the person you want to invite</span>
           </div>
-          <div className="m-t-30">
-            <FormGroup
-              type="text"
-              placeholder="Enter title"
-              label="First name"
-              labelName="title"
-              value={firstname}
-              name="firstname"
-              center={true}
-              onChange={this.handleChange}
-            />
-          </div>
-          <div className="m-t-30">
-            <FormGroup
-              type="text"
-              placeholder="Enter title"
-              label="Last name"
-              labelName="title"
-              value={lastname}
-              name="lastname"
-              center={true}
-              onChange={this.handleChange}
-            />
-          </div>
-          <div className="m-t-30">
-            <FormGroup
-              type="email"
-              placeholder="Enter title"
-              label="Email Address"
-              labelName="title"
-              value={email}
-              onChange={this.handleChange}
-              name="email"
-              center={true}
-            />
+          <div className="p-l-30">
+            <div className="m-t-30">
+              <FormGroup
+                type="text"
+                placeholder="Enter title"
+                label="First name"
+                labelName="title"
+                value={firstname}
+                name="firstname"
+                center={true}
+                onChange={this.handleChange}
+              />
+            </div>
+            <div className="m-t-30">
+              <FormGroup
+                type="text"
+                placeholder="Enter title"
+                label="Last name"
+                labelName="title"
+                value={lastname}
+                name="lastname"
+                center={true}
+                onChange={this.handleChange}
+              />
+            </div>
+            <div className="m-t-30">
+              <FormGroup
+                type="email"
+                placeholder="Enter title"
+                label="Email Address"
+                labelName="title"
+                value={email}
+                onChange={this.handleChange}
+                name="email"
+                center={true}
+              />
+            </div>
           </div>
           <div className="m-t-20 m-b-20">
             <span className="p-r-8">
-              <Label circular className="kt-success">
+              <Label circular size="big" className="kt-success">
                 2
               </Label>
             </span>

@@ -1,7 +1,8 @@
 :root {
-  --kotage-black: #0b0b08;
+  --kotage-black: #000;
   /* --kotage-dark: #292929; */
   --kotage-dark:#4E5C6E;
+  --kotage-pure-black: #000;
   --kt-white: #fff;
   --kt-blue: #0666D0;
   --kt-green: #00996B;
