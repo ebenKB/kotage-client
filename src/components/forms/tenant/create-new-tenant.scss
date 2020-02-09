@@ -1,0 +1,28 @@
+.tenant.small-form__wrapper {
+  border-top: 4px solid var(--kt-green);
+  background: var(--kt-white);
+}
+
+.tenant.small-form__wrapper .input>input::placeholder {
+  color: var(--black);
+}
+
+.tenant.small-form__wrapper .form-details {
+  // display: none;
+}
+
+.tenant.small-form__wrapper.slideOutUp {
+  animation: slideOutUp 1s ease-in-out 0s 1 forwards normal;
+}
+
+.tenant.small-form__wrapper.slideInLeft {
+  // animation: slideInLeft .8s ease-in-out 0s 1 forwards normal;
+}
+
+.tenant.small-form__wrapper .ui.fluid.dropdown .text{
+  color: #000;
+}
+
+.tenant.small-form__wrapper .sm-caption .ui.checkbox label {
+  font-size: 0.85em;
+}

@@ -15,9 +15,10 @@
   display: block;
   width: 350px;
   height: 100%;
-  border: 2px solid #e8e9e9;
+  border: 1px solid #e8e9e9;
   margin: auto;
   border-radius: 2px;
+  background: var(--kt-white);
 }
 
 .signin__body {
@@ -35,7 +36,7 @@
 
 .signin__footer {
   text-align: center;
-  padding: 10px;
+  padding-bottom: 10px;
 }
 
 .kt__wrapper_active {
@@ -66,7 +67,14 @@
   display: flex;
   align-items: center;
   flex-direction: row;
-  
+}
+
+.signin__wrapper .ui.small.button.transparent {
+  background: var(--kt-white);
+  border: none;
+  margin: 0;
+  padding: 0;
+  color: var(--kt-blue)
 }
 
 /* Medium devices (landscape tablets, 768px and up) */
@@ -110,7 +118,7 @@
 
 @media only screen and (min-width: 1920px) {
   .signin__content {
-    width: 400px;
+    width: 360px;
   }
 
   .signin__wrapper {

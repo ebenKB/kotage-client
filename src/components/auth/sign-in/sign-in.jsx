@@ -17,6 +17,8 @@ const SignIn = ({login, loading}) => {
 
   const [page, setPage] = useState({page: 1, max: 2});
   const [user, setUser] = useState({email: '', password: ''})
+  const [loginType, setLoginType] = useState("Buyer");
+  const [altLoginType, setAltLoginType] = useState("Supplier");
 
   const fakeAuth = {
     isAuthenticated: false,
@@ -25,6 +27,16 @@ const SignIn = ({login, loading}) => {
       setTimeout(cb, 100); // fake async
     },
   };
+
+  const toggleLogin = () => {
+    if(loginType === "Buyer") {
+      setLoginType("Supplier");
+      setAltLoginType("Buyer");
+    } else {
+      setLoginType("Buyer");
+      setAltLoginType("Supplier");
+    }
+  }
 
   /**
    * move from the current page to the next page
@@ -102,6 +114,7 @@ const SignIn = ({login, loading}) => {
           }
 				</Button>
 			</div>
+      <div className="m-t-10">Login in as <Button size="small" className="transparent" onClick={toggleLogin}>{altLoginType}</Button> instead.</div>
 		</Form>
 	</>
       )
@@ -150,33 +163,20 @@ const SignIn = ({login, loading}) => {
 			<div className="signin__body ">
 				<div className="m-b-10"> 
 					<Logo className="small logo faint"/> 
-					<span className="m-l-5 sm-caption bold">Buyer Login</span>
+					<span className="m-l-5 sm-caption bold">{loginType} Login</span>
 				</div>
 				{
           getPage()
         }
 			</div>
 			<div className="signin__footer">
-      <p>New to Kotage? 
-      <span>
-        <Link to="/about"> Signup</Link>
-      </span>
-      </p>
-        {/* <span>Reset Password</span> */}
-        {/* <span> | </span> */}
-        <span>
-          {/* <Link to="/about">New to Kotage? Signup</Link> */}
-        </span>
+        <p>New to Kotage? 
+          <span>
+            <Link to="/tenant/signup"> Signup</Link>
+          </span>
+        </p>
 			</div>
 		</div>
-    <div className="text-center m-t-15 faint-caption">
-      {/* If you are new to Kotage ask your administrator to invite you */}
-      {/* <p>New to Kotage? 
-      <span>
-        <Link to="/about"> Signup</Link>
-      </span>
-      </p> */}
-    </div>
 	</div>
   )
 }

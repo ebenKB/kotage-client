@@ -9,15 +9,13 @@ export const inviteUser = (invitation) => async(dispatch) => {
   }
 }
 
-export const createUser = (user, token, acess_token) => async(dispatch) => {
+export const createUser = (user, token) => async(dispatch) => {
   try {
     console.log('We want to create a new user', user)
     dispatch(setLoading());
-    const data = await Axios.post(`/1/users?token=${token}&access_token=${acess_token}`, user);
+    const data = await Axios.post(`/1/users?token=${token}`, user);
     console.log("We are done posting", data);
     dispatch(doneLoading());
-    // authenticate the user after the account is created successfully
-    dispatch(login(user.email, user.password));
   } catch (error) {
     dispatch(doneLoading());
   }

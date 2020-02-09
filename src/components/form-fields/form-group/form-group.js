@@ -1,6 +1,5 @@
 import React from 'react';
-import Input from '../input/input';
-import { Form, TextArea, Placeholder } from 'semantic-ui-react';
+import {  TextArea, Placeholder } from 'semantic-ui-react';
 import { Dropdown } from 'semantic-ui-react'
 import Amount from '../../../components/form-fields/amount/amount'
 

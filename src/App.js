@@ -8,6 +8,7 @@ import SignIn from './components/auth/sign-in/sign-in';
 import PageNotFound from './pages/_404';
 import UserInvitation from './components/forms/user-invitation/new-invitation/user-invitation.jsx';
 import AcceptInvitation from './components/forms/user-invitation/accept-invitation/accept-invitation';
+import CreateNewTenant from './components/forms/tenant/create-new-tenant';
 import CreateUser from './components/forms/user/create-user/create-user';
 
 const Home = lazy(() => import  ('./pages/home'));
@@ -72,6 +73,9 @@ function App() {
       </Route>
       <Route exact path={`/user/invitation/confirm/:token`}>
         <CreateUser />
+      </Route>
+      <Route exact path={`/tenant/signup`}>
+        <CreateNewTenant />
       </Route>
       <Suspense fallback={<Layout><h1> loading ...</h1> </Layout>} >
       <Layout>
