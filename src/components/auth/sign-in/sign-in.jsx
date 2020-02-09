@@ -114,7 +114,7 @@ const SignIn = ({login, loading}) => {
           }
 				</Button>
 			</div>
-      <div className="m-t-10">Login in as <Button size="small" className="transparent" onClick={toggleLogin}>{altLoginType}</Button> instead.</div>
+      <div className="m-t-10">Login as <Button size="small" className="transparent" onClick={toggleLogin}>{altLoginType}</Button> instead.</div>
 		</Form>
 	</>
       )

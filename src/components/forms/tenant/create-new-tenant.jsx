@@ -9,6 +9,7 @@ const CreateNewTenant = () => {
   // const [isValidDomain, setDomain] = useState(false);
   const [isValidDomain, setValidDomain] = useState(false);
   const [validating, setValidating] = useState(false);
+  const [hasConsented, setHasConsented] = useState(true);
   
 
   const validateEmail = () => {
@@ -50,7 +51,9 @@ const CreateNewTenant = () => {
       </div>
       )}
       {isValidDomain && (
-          <CreateTenantSecondaryForm />
+          <CreateTenantSecondaryForm
+            consent={hasConsented}
+          />
         )}
     </div>
   )

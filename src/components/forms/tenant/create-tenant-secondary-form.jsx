@@ -3,7 +3,7 @@ import {Form, Button, Dropdown, Checkbox} from 'semantic-ui-react';
 import Input from '../../form-fields/input/input';
 import { Link } from 'react-router-dom';
 
-const createTenantSecondaryForm = () => {
+const createTenantSecondaryForm = ({consent}) => {
   return (
     <div className="p-t-130">
       <div className="tenant small-form__wrapper fit-auto slideInLeft">
@@ -68,7 +68,7 @@ const createTenantSecondaryForm = () => {
             <div className="m-b-20 sm-caption">
               <Checkbox label='I accept the Privacy Policy and Terms of Service' />
             </div>
-            <Button color="green" fluid>Signup</Button>
+            <Button disabled={!consent} color="green" fluid>Signup</Button>
           </Form>
           <div className="m-t-10">
             Have an account? 
