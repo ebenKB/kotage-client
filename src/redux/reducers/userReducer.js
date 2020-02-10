@@ -10,7 +10,7 @@ const initialState = {
   invitation: null,
 }
 
-export default (state= initialState, action) => {
+export default (state = initialState, action) => {
   switch(action.type) {
     case GET_USERS : 
     return {
