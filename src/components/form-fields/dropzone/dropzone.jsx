@@ -1,4 +1,10 @@
-import React, { useState, useEffect } from 'react';
+/* eslint-disable react/prop-types */
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable react/jsx-props-no-spreading */
+/* eslint-disable react/jsx-fragments */
+/* eslint-disable react/no-array-index-key */
+/* eslint-disable react/jsx-no-undef */
+import React, { useState, useEffect, Fragment } from 'react';
 import Dropzone from 'react-dropzone';
 import { ReactComponent as Icon } from '../../../svg/upload.svg';
 import './dropzone.scss';
@@ -98,8 +104,8 @@ function KtDropzone({ onFilesChange }) {
 		)}
 		<div className={`dropzone-content ${files.length > 0 ? 'active' : ''}`}>
 			{files && (
-				<>
-					{files.length == 1 && (
+				<Fragment>
+					{files.length === 1 && (
 						<span className="bold">
 							{files.length}
 							{' '}
@@ -128,16 +134,16 @@ function KtDropzone({ onFilesChange }) {
 							</li>
 						))}
 					</ul>
-				</>
+				</Fragment>
 			)}
 			{isEmpty && (
-				<>
+				<Fragment>
 					<AddItem
 						title="Add More File"
 						classes="green small"
 						handleClick={addMoreFiles}
 					/>
-				</>
+				</Fragment>
 			)}
 		</div>
 	</div>

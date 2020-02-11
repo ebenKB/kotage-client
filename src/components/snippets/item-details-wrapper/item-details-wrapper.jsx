@@ -1,3 +1,9 @@
+/* eslint-disable react/no-array-index-key */
+/* eslint-disable react/prop-types */
+/* eslint-disable arrow-body-style */
+/* eslint-disable object-curly-newline */
+/* eslint-disable padded-blocks */
+/* eslint-disable camelcase */
 import React from 'react';
 import ItemDetail from '../item-detail/item-detail';
 import { ReactComponent as Logo } from '../../../svg/plus.svg';
@@ -7,7 +13,7 @@ import AddItem from '../add-item/add-item';
 import Dropzone from '../../form-fields/dropzone/dropzone';
 
 // eslint-disable-next-line react/prop-types
-const ItemDetailsWrapper = ({ item_details, handleAction, handleChange, deleteItem}) => {
+const ItemDetailsWrapper = ({ item_details, handleAction, handleChange, deleteItem }) => {
 
 <<<<<<< HEAD
 const ItemDetailsWrapper = ({item_details, handleAction, handleChange, deleteItem, ...rest}) => {
@@ -93,7 +99,6 @@ const ItemDetailsWrapper = ({item_details, handleAction, handleChange, deleteIte
 		<div className="item-details__wrapper">
 			{item_details.map((item, idx) => (
 				<ItemDetail
-					// eslint-disable-next-line react/no-array-index-key
 					key={idx}
 					item={item}
 					deleteItem={deleteItem}

@@ -2,7 +2,7 @@ import React, {Suspense, lazy} from 'react';
 import {Switch, Route} from 'react-router-dom';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 
-const Home = lazy(() => import  ('../../pages/home'));
+const Home = lazy(() => import('../../pages/home'));
 const PageNotFound = lazy(() => import('../../pages/_404'));
 const NewRequisition = lazy(() => import('../forms/requisitions/new/new-requisitions'));
 const Requisitions = lazy(() => import('../forms/requisitions/show/requisitions-index'));
@@ -11,11 +11,10 @@ const RFX = lazy(() => import('../rfx/rfx'));
 const Vendors = lazy(() => import('../forms/vendors/vendors'));
 const SignIn = lazy(() => import('../auth/sign-in/sign-in'));
 
-const Router = () => {
-  return (
+const Router = () => (
 	<Suspense fallback={<div>Loading...</div>}>
 		<Switch>
-			<Route exact path="/auth/signin" component={SignIn}/>
+	    <Route exact path="/auth/signin" component={SignIn}/>
 			<ProtectedRoute path="/" >{Home} </ProtectedRoute>
 			<Route exact path="/jkk" component={Home}/>
 			<Route exact path="/requisitions" component={Requisitions}/>
@@ -28,7 +27,7 @@ const Router = () => {
 			</Route>
 		</Switch>
 	</Suspense>
-  );
-}
+);
 
-export default Router
+
+export default Router;

@@ -1,18 +1,17 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
 import Input from '../input/input';
 
-const DatePicker = ({placeholder}) => {
-  return (
+const DatePicker = ({ placeholder }) => (
 	<div>
 		<Input
-      type="date"
-      placeholder={placeholder}
-    />
-		<span class="open-button">
+			type="date"
+			placeholder={placeholder}
+		/>
+		<span className="open-button">
       icon here
 		</span>
 	</div>
-  )
-}
+);
 
 export default DatePicker;

@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/interactive-supports-focus */
 import React from 'react';
 import Input from '../input/input';
 import { ReactComponent as Logo } from '../../../svg/plus.svg';
@@ -20,15 +21,15 @@ const KtDocs = () => {
 			<div className="docs-wrapper__content m-t-20">
 				<div>
 					<Input
-            type="text"
-            placeholder="Document name"
+						type="text"
+						placeholder="Document name"
 					/>
 				</div>
 				<div>
 					<Input
-            type="text"
-            placeholder="Document Description"
-            classes="fluid"
+						type="text"
+						placeholder="Document Description"
+						classes="fluid"
 					/>
 				</div>
 				<div>

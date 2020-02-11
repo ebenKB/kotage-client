@@ -1,8 +1,9 @@
-import React from 'react';
+/* eslint-disable react/jsx-fragments */
+import React, { Fragment } from 'react';
 import { Popup } from 'semantic-ui-react';
 
 const PopupDropdown = () => (
-	<>
+	<Fragment>
 		<Popup
 			trigger={<span>Click me</span>}
 			on="click"
@@ -17,7 +18,7 @@ const PopupDropdown = () => (
 				</ul>
 			</div>
 		</Popup>
-	</>
+	</Fragment>
 );
 
 export default PopupDropdown;

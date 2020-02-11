@@ -1,9 +1,12 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable no-else-return */
 import React from 'react';
+import {
+  Form, TextArea, Placeholder, Dropdown,
+} from 'semantic-ui-react';
+
 import Input from '../input/input';
-import { Form, TextArea, Placeholder } from 'semantic-ui-react';
-import { Dropdown } from 'semantic-ui-react';
 import Amount from '../amount/amount';
 
 import './form-group.scss';
@@ -11,7 +14,9 @@ import Dropzone from '../dropzone/dropzone';
 import KtTextArea from '../kt-textarea/kt-textarea';
 import InputValidator from '../input-validator/input-validator';
 
-const FormGroup = ({type, placeholder, label, labelName, center, classes = '', ...rest}) => {
+const FormGroup = ({
+  type, placeholder, label, labelName, center, classes = '', ...rest
+}) => {
   const options = [
     {
       key: '1',
@@ -28,9 +33,9 @@ const FormGroup = ({type, placeholder, label, labelName, center, classes = '', .
   const getElement = () => {
     if (type === 'text' || type === 'password' || type === 'number' || type === 'email') {
       return <InputValidator type={type} placeholder={placeholder} {...rest} />;
-    } else if(type === 'date') {
+    } else if (type === 'date') {
       return <Input type={type} {...rest} />;
-    } else if(type === 'dropdown') {
+    } else if (type === 'dropdown') {
       return (
 	<Dropdown
 		placeholder={placeholder}
@@ -42,18 +47,18 @@ const FormGroup = ({type, placeholder, label, labelName, center, classes = '', .
 		{...rest}
 	/>
       );
-    } else if(type === 'amount') {
+    } else if (type === 'amount') {
       return <Amount {...rest} />;
-    } else if(type === 'textarea') {
+    } else if (type === 'textarea') {
       return (
 	<Form>
 		<TextArea placeholder={placeholder} style={{ minHeight: 100 }} />
 	</Form>
       );
-    } else if(type === 'kt-textarea') {
+    } else if (type === 'kt-textarea') {
       return (
 	<div className="ui form">
-		<KtTextArea placeholder={Placeholder} {...rest}/>
+		<KtTextArea placeholder={Placeholder} {...rest} />
 	</div>
       );
     } else if (type === 'dropzone') {
