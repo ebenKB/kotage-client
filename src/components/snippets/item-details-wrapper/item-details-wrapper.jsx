@@ -15,20 +15,6 @@ import Dropzone from '../../form-fields/dropzone/dropzone';
 // eslint-disable-next-line react/prop-types
 const ItemDetailsWrapper = ({ item_details, handleAction, handleChange, deleteItem }) => {
 
-<<<<<<< HEAD
-const ItemDetailsWrapper = ({item_details, handleAction, handleChange, deleteItem, ...rest}) => {
-  const [items, setItems] = useState([
-    {
-      key : new Date().getDate(),
-      code : 'SKU000-1',
-      description : 'React 16 ',
-      qyt : '100'
-    },
-    {
-      key : new Date().getDate(),
-    }
-  ]);
-=======
   // const [items, setItems] = useState([
   //   {
   //     key: new Date().getDate(),
@@ -40,56 +26,12 @@ const ItemDetailsWrapper = ({item_details, handleAction, handleChange, deleteIte
   //     key: new Date().getDate(),
   //   },
   // ]);
->>>>>>> resolve more linter violations
 
   // const handleClick =() => {
   //   console.log('you want to add an item');
   // }
 
   return (
-<<<<<<< HEAD
-    <div className="itd-wrapper">
-      <div className="itd-wrapper__header bold m-b-12 bold light-caption">
-        <div>Product Code</div>
-        <div>Description</div>
-        <div>Quantity</div>
-      </div>
-      <div className="item-details__wrapper">
-        {
-          item_details.map((item, idx) => 
-            <ItemDetail 
-              key={ idx } 
-              item={item}
-              deleteItem={deleteItem}
-              handleChange={handleChange}
-              data_id={idx}
-            />
-          )
-        }
-      </div> 
-      <AddItem
-        title="Add New Item"
-        classes="m-t-20 m-b-10"
-        handleClick={handleAction}
-      /> 
-      <div className="m-b-30">
-        <Collapsible
-          title={
-            <div className="clickable  kt-primary bold sm-caption">
-              <Logo className="kt-logo__small kt-primary"/>
-              <span>Attach Documents</span>
-            </div>
-          }
-        >
-          <div className="kt-content__wrapper dropzone">
-            <Dropzone/>
-          </div>
-        </Collapsible>
-      </div>
-    </div>
-  )
-}
-=======
 	<div className="itd-wrapper">
 		<div className="itd-wrapper__header bold m-b-12 bold light-caption">
 			<div>Product Code</div>
@@ -129,6 +71,5 @@ const ItemDetailsWrapper = ({item_details, handleAction, handleChange, deleteIte
 	</div>
   );
 };
->>>>>>> resolve more linter violations
 
 export default ItemDetailsWrapper;

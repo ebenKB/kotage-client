@@ -1,5 +1,6 @@
-import React, {Suspense, lazy} from 'react';
-import {Switch, Route} from 'react-router-dom';
+/* eslint-disable import/no-cycle */
+import React, { Suspense, lazy } from 'react';
+import { Switch, Route } from 'react-router-dom';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 
 const Home = lazy(() => import('../../pages/home'));
@@ -11,17 +12,20 @@ const RFX = lazy(() => import('../rfx/rfx'));
 const Vendors = lazy(() => import('../forms/vendors/vendors'));
 const SignIn = lazy(() => import('../auth/sign-in/sign-in'));
 
+
 const Router = () => (
 	<Suspense fallback={<div>Loading...</div>}>
 		<Switch>
-	    <Route exact path="/auth/signin" component={SignIn}/>
-			<ProtectedRoute path="/" >{Home} </ProtectedRoute>
-			<Route exact path="/jkk" component={Home}/>
-			<Route exact path="/requisitions" component={Requisitions}/>
-			<Route path="/requisitions/new" component={NewRequisition}/>
-			<Route path="/quotes/new" component={Newquote}/>
-			<Route path="/rfx" component={RFX}/>
-			<Route path="/vendors/new" component={Vendors}/>
+			<Route exact path="/auth/signin" component={SignIn} />
+			<ProtectedRoute path="/">
+				{ Home }
+			</ProtectedRoute>
+			<Route exact path="/jkk" component={Home} />
+			<Route exact path="/requisitions" component={Requisitions} />
+			<Route path="/requisitions/new" component={NewRequisition} />
+			<Route path="/quotes/new" component={Newquote} />
+			<Route path="/rfx" component={RFX} />
+			<Route path="/vendors/new" component={Vendors} />
 			<Route path="*">
 				<PageNotFound />
 			</Route>

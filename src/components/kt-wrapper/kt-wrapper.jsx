@@ -12,13 +12,9 @@ import SearcFilter from '../search-filter/filter';
 
 class KtWrapper extends React.Component {
   render() {
-<<<<<<< HEAD
-    let { link='', linkName='', header, canFilter, canPerform, actionName='Save',handleAction } = this.props;
-=======
     let {
       link = '', linkName = '', header, canFilter, canPerform, handleAction,
     } = this.props;
->>>>>>> resolve more linter violations
 
     // check if there are no defaults
     if (link == null) {
@@ -51,40 +47,6 @@ class KtWrapper extends React.Component {
     };
 
     return (
-<<<<<<< HEAD
-      <div className="kt-wrapper">
-        <div className="kt-wrapper__header bold">
-          <h2>{header}</h2>
-          <div>
-              {
-                canFilter && <div>
-                <Dropdown placeholder="Filter records" selection options={options} onChange={handleChange} className="m-r-20 "/>
-                  <Link to={link} className="action-link green ui button">
-                    {linkName}
-                  </Link>
-                </div>
-              }
-          </div>
-        </div>
-          <div className="kt-wrapper__body">
-            { canFilter && <SearcFilter /> }
-            <div className="kt-wrapper__content">
-              {this.props.children}
-            </div>
-          </div>
-          {
-            canPerform && (
-            <div className="kt-wrapper__footer text-right">
-              <div className="content">
-                <Button content="Cancel" className="default"/>
-                <Button type="submit" content={actionName} className="green" onClick={handleAction}/>
-              </div>
-            </div>
-            )
-          }
-      </div>
-    )
-=======
 	<div className="kt-wrapper">
 		<div className="kt-wrapper__header bold">
 			<h2>{header}</h2>
@@ -115,7 +77,6 @@ class KtWrapper extends React.Component {
 		)}
 	</div>
     );
->>>>>>> resolve more linter violations
   }
 }
 

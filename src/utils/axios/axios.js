@@ -9,10 +9,10 @@ const Axios = axios.create({
   baseURL: 'https://kotage-ruby-api.herokuapp.com/api/v1',
   timeout: 3000,
   headers: {
-    'content-type' : 'application/json',
-    'mode': 'no-cors',
-    'Authorization': `Bearer ${sessionStorage.getItem("kotage-auth")}`
-  }
+    'content-type': 'application/json',
+    mode: 'no-cors',
+    Authorization: `Bearer ${sessionStorage.getItem('kotage-auth')}`,
+  },
 });
 
 

@@ -1,15 +1,15 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable react/destructuring-assignment */
 import React from 'react';
 import '../../App.css';
-import AppRouter from '../../components/AppRouter/router';
-import Header from '../../components/header/header';
-import SideBar from '../../components/navigation/navigation';
-import Message from '../../components/kt-floating-message/message';
+import Header from '../header/header';
+import SideBar from '../navigation/navigation';
+import Message from '../kt-floating-message/message';
 
-const Layout = (props) => {
-  return (
+const Layout = (props) => (
 	<div className="App light-theme">
-		<Header/>
-		<div className="header-offset"></div>
+		<Header />
+		<div className="header-offset" />
 		<div className="app-container main-layout">
 			<div>
 				<div className="nav-main__wrappper">
@@ -19,10 +19,9 @@ const Layout = (props) => {
 			<div>
 				{props.children}
 			</div>
-			<Message/>
+			<Message />
 		</div>
 	</div>
-  )
-}
+);
 
-export default Layout
+export default Layout;
