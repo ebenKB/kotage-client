@@ -37,7 +37,10 @@ const CreateNewTenant = ({
   };
 
   const setTimezone = (timezone) => {
-    console.log('this is the timezone we want to set', timezone);
+    setTenant((old) => ({
+      ...old,
+      timezone,
+    }));
   };
 
   const handleChange = (e) => {
