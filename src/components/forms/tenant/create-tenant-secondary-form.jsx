@@ -4,7 +4,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import {
-  Form, Button, Dropdown, Checkbox,
+  Form, Button, Checkbox,
 } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import Input from '../../form-fields/input/input';
@@ -12,13 +12,6 @@ import { getCountries } from '../../../redux/actions/countryActions';
 
 
 class CreateTenantSecondaryForm extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      timezones: null,
-    };
-  }
-
   componentDidMount() {
     const { countries, findCountries } = this.props;
 
@@ -30,25 +23,25 @@ class CreateTenantSecondaryForm extends React.Component {
 
   render() {
     const {
-      consent, tenant, onChange, setCountry, handleSubmit, countries, setTimezone,
+      consent, tenant, onChange, handleSubmit,
     } = this.props;
 
-    const handleChange = (data) => {
-      setCountry(data.value);
-      // get the timezone that matches the selected country
-      const country = countries.find((c) => c.value === data);
-      const newTimezones = country.timezones.map((t) => ({
-        text: t,
-        value: t,
-      }));
-      this.setState((oldState) => ({
-        ...oldState,
-        timezones: newTimezones,
-      }));
-    };
+    // const handleChange = (data) => {
+    //   setCountry(data.value);
+    //   // get the timezone that matches the selected country
+    //   const country = countries.find((c) => c.value === data);
+    //   const newTimezones = country.timezones.map((t) => ({
+    //     text: t,
+    //     value: t,
+    //   }));
+    //   this.setState((oldState) => ({
+    //     ...oldState,
+    //     timezones: newTimezones,
+    //   }));
+    // };
 
     return (
-	<div className="p-t-80">
+	<div className="p-t-180">
 		<div className="tenant small-form__wrapper fit-auto slideInLeft">
 			<h3>Sign up for a free Kotage trial</h3>
 			<div className="m-t-30">
@@ -57,7 +50,7 @@ class CreateTenantSecondaryForm extends React.Component {
 						<Input
 							type="text"
 							placeholder="Email Address"
-							className="fluid"
+							className="fluid disabled"
 							disabled
 							name="email"
 							value={tenant.email}
@@ -96,64 +89,12 @@ class CreateTenantSecondaryForm extends React.Component {
 						</div>
 						<div className="m-t-20 m-b-20">
 							<Input
-								type="password"
-								placeholder="Password"
-								className="fluid"
-								name="password_confirmation"
-								value={tenant.password_confirmation}
-								onChange={onChange}
-							/>
-						</div>
-						<div className="m-t-20 m-b-20">
-							<Input
 								type="phone"
 								placeholder="Phone Number"
 								className="fluid"
 								value={tenant.phone}
 								name="phone"
 								onChange={onChange}
-							/>
-						</div>
-						<div className="m-t-20 m-b-20">
-							<Input
-								type="text"
-								placeholder="Company Name"
-								className="fluid"
-								name="company_name"
-								value={tenant.company_name}
-								onChange={onChange}
-							/>
-						</div>
-						<div className="m-t-20 m-b-20">
-							<Input
-								type="text"
-								placeholder="Job Function"
-								className="fluid"
-								name="job_function"
-								value={tenant.job_function}
-								onChange={onChange}
-							/>
-						</div>
-						<div className="m-t-20 m-b-20">
-							<Dropdown
-								fluid
-								placeholder="Select your country"
-								search
-								selection
-								options={countries}
-								onChange={(e, data) => handleChange(data.value)}
-								autoComplete="on"
-							/>
-						</div>
-						<div className="m-t-20 m-b-20">
-							<Dropdown
-								fluid
-								placeholder="Select Timezone"
-								search
-								selection
-								options={this.state.timezones}
-								onChange={(e, data) => setTimezone(data.value)}
-								autoComplete="on"
 							/>
 						</div>
 					</div>
@@ -169,7 +110,7 @@ class CreateTenantSecondaryForm extends React.Component {
             Signup
 					</Button>
 				</Form>
-				<div className="m-t-10">
+				<div className="m-t-10 sm-caption">
             Have an account?
 					<Link to="/auth/signin"> Login now</Link>
 				</div>

@@ -7,8 +7,9 @@
   color: var(--black);
 }
 
-.tenant.small-form__wrapper .form-details {
-  // display: none;
+.tenant.small-form__wrapper .input.disabled input{
+  color: var(--kt-dark);
+  font-weight: 600;
 }
 
 .tenant.small-form__wrapper.slideOutUp {
