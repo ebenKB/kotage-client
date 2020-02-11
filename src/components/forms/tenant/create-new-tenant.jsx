@@ -67,9 +67,9 @@ const CreateNewTenant = ({
     }
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (tenant.password === tenant.password_confirmation) {
-      createTenant(tenant);
+      await createTenant(tenant);
     }
   };
 
