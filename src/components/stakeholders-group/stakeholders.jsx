@@ -1,27 +1,30 @@
+/* eslint-disable import/no-unresolved */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import React from 'react';
 import './stakeholders.scss';
+import { Dropdown } from 'semantic-ui-react';
 import Input from '../../form-fields/input/input';
 import { ReactComponent as Trash } from '../../../svg/bin.svg';
 import { ReactComponent as Logo } from '../../../svg/plus.svg';
-import { Dropdown } from 'semantic-ui-react';
 
 const Stakeholders = () => {
   const options = [
     {
       key: '1',
       text: 'Emmanuel',
-      value: 'Emmanuel'
+      value: 'Emmanuel',
     },
     {
       key: '2',
       text: 'Elorm',
-      value: 'Elorm'
+      value: 'Elorm',
     },
-  ]
+  ];
 
   const handleClick = () => {
 
-  }
+  };
 
   return (
 	<div className="kt-stk__group m-t-30">
@@ -34,25 +37,25 @@ const Stakeholders = () => {
 			<div className="kt-stk__content m-t-20">
 				<div>
 					<Input
-            classes="fluid"
-            placeholder="John Smith"
-            type="text"
-          />
+						classes="fluid"
+						placeholder="John Smith"
+						type="text"
+					/>
 				</div>
 				<div>
-					<Dropdown selection options={options} placeholder="Event owner"/>
+					<Dropdown selection options={options} placeholder="Event owner" />
 				</div>
 				<div>
-					<Trash className="kt-logo__small"/>
+					<Trash className="kt-logo__small" />
 				</div>
 			</div>
 			<div className="clickable m-t-20 kt-primary bold sm-caption" onClick={handleClick}>
-				<Logo className="kt-logo__small kt-primary"/>
+				<Logo className="kt-logo__small kt-primary" />
 				<span>Invite Stakeholder</span>
 			</div>
 		</div>
 	</div>
-  )
-}
+  );
+};
 
-export default Stakeholders
+export default Stakeholders;

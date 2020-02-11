@@ -13,10 +13,10 @@ const Message = () => {
     setHasInit(true);
   };
 
-  const handleInputChange = (e) => {
-    e.preventDefault();
-    // handle input changes here
-  };
+  // const handleInputChange = (e) => {
+  //   e.preventDefault();
+  //   // handle input changes here
+  // };
 
   const toggle = () => {
     if (hasInit && canShowMsg) {

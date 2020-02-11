@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable consistent-return */
 /* eslint-disable react/prop-types */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
@@ -9,12 +10,12 @@ import SimpleQuestion from './simple-question/simple-question';
 import { ReactComponent as Icon } from '../../../svg/plus.svg';
 
 const QuestionCreator = ({ type = 'simple', label }) => {
-  const getQuestionType = () => {
-    if (type === 'simple') {
-      return (<span>Simple question creator</span>
-      );
-    }
-  };
+  // const getQuestionType = () => {
+  //   if (type === 'simple') {
+  //     return (<span>Simple question creator</span>
+  //     );
+  //   }
+  // };
 
   const addNewQuestion = () => {
     console.log('we want to add a new question');
