@@ -8,7 +8,7 @@ import './navigation.scss';
 export default class AccordionStandard extends Component {
   constructor(props) {
     super(props);
-    this.setState = { activeIndex: 0 };
+    this.state = { activeIndex: 0 };
   }
 
   handleClick = (e, titleProps) => {
