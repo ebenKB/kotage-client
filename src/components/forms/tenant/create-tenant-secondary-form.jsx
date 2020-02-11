@@ -1,34 +1,54 @@
+/* eslint-disable react/destructuring-assignment */
+/* eslint-disable react/prefer-stateless-function */
 /* eslint-disable react/prop-types */
 import React from 'react';
+import { connect } from 'react-redux';
 import {
   Form, Button, Dropdown, Checkbox,
 } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import Input from '../../form-fields/input/input';
+import { getCountries } from '../../../redux/actions/countryActions';
 
-const createTenantSecondaryForm = ({
-  consent, tenant, onChange, setCountry, handleSubmit,
-}) => {
-  const opt = [
-    {
-      text: 'Ghana',
-      value: 'Ghana',
-    },
-    {
-      text: 'Togo',
-      value: 'Togo',
-    },
-    {
-      text: 'Benin',
-      value: 'Benin',
-    },
-    {
-      text: 'Nigeria',
-      value: 'Nigeria',
-    },
-  ];
-  return (
-	<div className="p-t-130">
+
+class CreateTenantSecondaryForm extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      timezones: [],
+    };
+  }
+
+  componentDidMount() {
+    const { countries, findCountries } = this.props;
+
+    if (countries.length === 0) {
+      // fetching the countries
+      findCountries();
+    }
+  }
+
+  render() {
+    const {
+      consent, tenant, onChange, setCountry, handleSubmit, countries, setTimezone,
+    } = this.props;
+
+    const handleChange = (data) => {
+      setCountry(data.value);
+      // get the timezone that matches the selected country
+      const country = countries.find((c) => c.value === data);
+      const newTimezones = country.timezones.map((t) => ({
+        text: t,
+        value: t,
+      }));
+      this.setState((oldState) => ({
+        ...oldState,
+        timezones: newTimezones,
+      }));
+    };
+
+    return (
+	<div className="p-t-80">
 		<div className="tenant small-form__wrapper fit-auto slideInLeft">
 			<h3>Sign up for a free Kotage trial</h3>
 			<div className="m-t-30">
@@ -117,11 +137,22 @@ const createTenantSecondaryForm = ({
 						<div className="m-t-20 m-b-20">
 							<Dropdown
 								fluid
-								placeholder="Country"
+								placeholder="Select your country"
 								search
 								selection
-								options={opt}
-								onChange={(e, data) => setCountry(data.value)}
+								options={countries}
+								onChange={(e, data) => handleChange(data.value)}
+								autoComplete="on"
+							/>
+						</div>
+						<div className="m-t-20 m-b-20">
+							<Dropdown
+								fluid
+								placeholder="Select Timezone"
+								search
+								selection
+								options={this.state.timezones}
+								onChange={(e, data) => setTimezone(data.value)}
 								autoComplete="on"
 							/>
 						</div>
@@ -145,7 +176,16 @@ const createTenantSecondaryForm = ({
 			</div>
 		</div>
 	</div>
-  );
+    );
+  }
+}
+
+const mapStateToProps = (state) => ({
+  countries: state.countries.countries,
+});
+
+const mapDispatchToProps = {
+  findCountries: getCountries,
 };
 
-export default createTenantSecondaryForm;
+export default connect(mapStateToProps, mapDispatchToProps)(CreateTenantSecondaryForm);

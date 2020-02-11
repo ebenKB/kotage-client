@@ -9,10 +9,9 @@ import './create-new-tenant.scss';
 import CreateTenantSecondaryForm from './create-tenant-secondary-form';
 import { createTenant, validateDomain } from '../../../redux/actions/tenantActions';
 import { isValidEmail } from '../../../utils/app/index';
-import { getCountries } from '../../../redux/actions/countryActions';
 
 const CreateNewTenant = ({
-  createTenant, validateDomain, loading, error, getCountries,
+  createTenant, validateDomain, loading, error,
 }) => {
   const [isValidDomain, setValidDomain] = useState(false);
   const [hasConsented] = useState(true);
@@ -37,6 +36,10 @@ const CreateNewTenant = ({
     }));
   };
 
+  const setTimezone = (timezone) => {
+    console.log('this is the timezone we want to set', timezone);
+  };
+
   const handleChange = (e) => {
     e.preventDefault();
     const { name, value } = e.target;
@@ -48,7 +51,6 @@ const CreateNewTenant = ({
   };
 
   const validateEmail = async () => {
-    getCountries();
     // check if the email is valid
     if (isValidEmail(tenant.email)) {
       try {
@@ -115,6 +117,7 @@ const CreateNewTenant = ({
 				consent={hasConsented}
 				onChange={handleChange}
 				setCountry={(country) => setCountry(country)}
+				setTimezone={(timezone) => setTimezone(timezone)}
 				handleSubmit={handleSubmit}
 			/>
 		)}
@@ -130,7 +133,6 @@ const mapStateToProps = (state) => ({
 const mapActionsToProps = {
   createTenant,
   validateDomain,
-  getCountries,
 };
 
 export default connect(mapStateToProps, mapActionsToProps)(CreateNewTenant);

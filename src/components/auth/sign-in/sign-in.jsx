@@ -127,13 +127,12 @@ const SignIn = ({ loading }) => {
 				<span>
           &nbsp;
 					<Button size="small" className="transparent" onClick={toggleLogin}>
-						{' '}
 						{altLoginType}
 					</Button>
 				</span>
 				<span> | </span>
 				<Link to="/tenant/signup">
-          Create an account
+          create an account
 				</Link>
 			</div>
 		</Form>
@@ -143,13 +142,13 @@ const SignIn = ({ loading }) => {
     return (
 	<Form className="kt__wrapper_active">
 		{
-            user.email && page.page === 2 && (
+      user.email && page.page === 2 && (
 	<div className="kt__wrapper_active_cta m-t-10 m-b-10">
 		<BackArrow className="logo very small" role="button" onClick={goBack} />
 		<span className="m-l-5">{user.email}</span>
 	</div>
-            )
-          }
+      )
+    }
 		<div className="m-t-5 m-b-5">
 			<Input
 				type="text"
@@ -167,8 +166,8 @@ const SignIn = ({ loading }) => {
 				disabled={user.password === ''}
 			>
 				{
-                page.page <= page.max && <div>Login</div>
-              }
+          page.page <= page.max && <div>Login</div>
+        }
 			</Button>
 		</div>
 	</Form>
@@ -185,8 +184,7 @@ const SignIn = ({ loading }) => {
 					<Logo className="small logo faint" />
 					<span className="m-l-5 sm-caption bold">
 						{loginType}
-						{' '}
-Login
+            Login
 					</span>
 				</div>
 				{
