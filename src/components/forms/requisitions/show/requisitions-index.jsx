@@ -1,3 +1,4 @@
+/* eslint-disable import/no-self-import */
 import React, {useEffect} from 'react';
 import { connect } from 'react-redux';
 import './requisitions-index';
@@ -14,16 +15,16 @@ const Requisitions = ({requisitionState: { requisitions, loading }, getRequisiti
   }, []);
 
   return (
-    <MainContent 
-      help={help}
-      classes="m-t-20"
+	<MainContent
+    help={help}
+    classes="m-t-20"
+  >
+    <KtWrapper
+      header="Requisitions"
+      link="requisitions/new"
+      linkName="New Requisitions"
+      canFilter={true}
     >
-      <KtWrapper
-        header="Requisitions"
-        link="requisitions/new"
-        linkName="New Requisitions"
-        canFilter={true}
-      >
       {
         loading && <div>loading the records</div>
       }

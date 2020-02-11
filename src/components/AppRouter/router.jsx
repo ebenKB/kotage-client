@@ -1,6 +1,11 @@
+<<<<<<< HEAD
 import React, {Suspense, lazy} from 'react';
 import {Switch, Route} from 'react-router-dom';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
+=======
+import React, { Suspense, lazy } from 'react';
+import { Switch, Route } from 'react-router-dom';
+>>>>>>> resolve more linter violations
 
 const Home = lazy(() => import  ('../../pages/home'));
 const PageNotFound = lazy(() => import('../../pages/_404'));
