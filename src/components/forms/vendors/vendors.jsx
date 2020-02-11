@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unresolved */
 import React from 'react';
 import './vendors.scss';
 import { ValidatorForm } from 'react-form-validator-core';
