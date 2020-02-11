@@ -7,7 +7,6 @@ import {Provider} from 'react-redux';
 import store from './redux/store';
 import Message from './components/kt-floating-message/message';
 
-
 function App() {
   return (
 	<Provider

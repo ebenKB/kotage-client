@@ -1,4 +1,5 @@
-import {createStore, applyMiddleware } from 'redux';
+/* eslint-disable function-paren-newline */
+import { createStore, applyMiddleware } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk from 'redux-thunk';
 import rootReducer from './reducers/root';
@@ -8,9 +9,8 @@ const initialState = {};
 
 const middleware = [thunk];
 
-const store = createStore(rootReducer, 
-  initialState, 
+const store = createStore(rootReducer,
+  initialState,
   composeWithDevTools(applyMiddleware(...middleware)),
 );
-
 export default store;

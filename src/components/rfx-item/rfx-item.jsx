@@ -1,14 +1,14 @@
-import React from 'react'
+/* eslint-disable react/prop-types */
+/* eslint-disable react/jsx-fragments */
+import React, { Fragment } from 'react';
 
-const RfxItem = (props) => {
-  return (
-	<>
+const RfxItem = ({ children, title }) => (
+	<Fragment>
 		<div className="content">
-			{props.children}
-			<div className="m-t-20 m-b-20 bold light-caption text-center">{props.title}</div>
+			{children}
+			<div className="m-t-20 m-b-20 bold light-caption text-center">{title}</div>
 		</div>
-	</>
-  )
-}
+	</Fragment>
+);
 
 export default RfxItem;
