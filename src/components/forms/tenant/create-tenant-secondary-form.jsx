@@ -15,7 +15,7 @@ class CreateTenantSecondaryForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      timezones: [],
+      timezones: null,
     };
   }
 

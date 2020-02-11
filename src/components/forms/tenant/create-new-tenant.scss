@@ -24,5 +24,11 @@
 }
 
 .tenant.small-form__wrapper .sm-caption .ui.checkbox label {
-  font-size: 0.7em;
+  font-size: 0.8em;
+}
+
+.tenant.small-form__wrapper .ui.checkbox .box:before, .ui.checkbox label:before {
+  top: 2px;
+  width: 12px;
+  height: 12px;
 }
