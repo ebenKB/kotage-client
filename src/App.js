@@ -29,8 +29,12 @@ const routes = [
     main: () => <SignIn />
   },
   {
+    path: "/user/invitation",
+    main: () => <UserInvitation />
+  },
+  {
     exact: true,
-    path: "/requisitions/",
+    path: "/requisitions",
     main: () => <Requisitions />
   },
   {
@@ -67,9 +71,6 @@ function App() {
     <Switch>
       <Route path="/auth/signin">
         <SignIn />
-      </Route>
-      <Route exact path="/user/invitation">
-        <UserInvitation />
       </Route>
       <Route exact path={`/user/invitation/confirm/:token`}>
         <CreateUser />

@@ -104,8 +104,8 @@ const createTenantSecondaryForm = ({consent, tenant, onChange, setCountry, handl
                 type="text"
                 placeholder="Job Function"
                 className="fluid"
-                name="role"
-                value={tenant.role}
+                name="job_function"
+                value={tenant.job_function}
                 onChange={onChange}
               />
             </div>

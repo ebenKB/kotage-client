@@ -7,6 +7,7 @@ import '../user-invitation.scss';
 import KtTextArea from '../../../form-fields/kt-textarea/kt-textarea';
 import { connect } from 'react-redux';
 import { inviteUser } from '../../../../redux/actions/userActions';
+import MainContent from '../../../kt-main-content/mainContent';
 
 class UserInvitation extends React.Component {
   constructor(props) {
@@ -36,7 +37,9 @@ class UserInvitation extends React.Component {
   render() {
     const {firstname, lastname, email, message} = this.state;
     return (
-      <div className="user-invitation">
+      <MainContent
+        classes="user-invitation"
+      >
         <KtWrapper
           header="Invite New User"
           canFilter={false}
@@ -116,7 +119,7 @@ class UserInvitation extends React.Component {
 					  </div>
           </ValidatorForm>
         </KtWrapper>
-      </div>
+      </MainContent>
     )
   }
 }

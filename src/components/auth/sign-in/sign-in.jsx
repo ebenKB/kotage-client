@@ -28,6 +28,9 @@ const SignIn = ({login, loading}) => {
     },
   };
 
+  /**
+   * Switch between buyer login and supplier login
+   */
   const toggleLogin = () => {
     if(loginType === "Buyer") {
       setLoginType("Supplier");
@@ -53,6 +56,9 @@ const SignIn = ({login, loading}) => {
     }
   }
 
+  /**
+   * Go Back and to previous page
+   */
   const goBack = () => {
     const oldPage = page.page;
     let newPage = (oldPage - 1);
@@ -76,7 +82,10 @@ const SignIn = ({login, loading}) => {
       [name]: value
     }));
   }
-
+/**
+ * 
+ * @param {*} e defualt javascript event
+ */
   const handleSubmit = async(e) => {
     e.preventDefault();
     try {
@@ -114,7 +123,13 @@ const SignIn = ({login, loading}) => {
           }
 				</Button>
 			</div>
-      <div className="m-t-10">Login as <Button size="small" className="transparent" onClick={toggleLogin}>{altLoginType}</Button> instead.</div>
+      <div className="m-t-10">Login as 
+        <span>&nbsp;
+          <Button size="small" className="transparent" onClick={toggleLogin}> {altLoginType}</Button>
+        </span>
+        <span> | </span>
+        <Link to="/tenant/signup" children="Create an account"/>
+      </div>
 		</Form>
 	</>
       )
@@ -168,13 +183,6 @@ const SignIn = ({login, loading}) => {
 				{
           getPage()
         }
-			</div>
-			<div className="signin__footer">
-        <p>New to Kotage? 
-          <span>
-            <Link to="/tenant/signup"> Signup</Link>
-          </span>
-        </p>
 			</div>
 		</div>
 	</div>

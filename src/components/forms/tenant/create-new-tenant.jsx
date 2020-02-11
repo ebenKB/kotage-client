@@ -7,9 +7,9 @@ import { Link } from 'react-router-dom';
 import { createTenant, validateDomain } from '../../../redux/actions/tenantActions';
 import { connect } from 'react-redux';
 import { isValidEmail } from '../../../utils/app/index';
+import { getCountries } from '../../../redux/actions/countryActions';
 
-const CreateNewTenant = ({createTenant, validateDomain, loading, error}) => {
-  // const [isValidDomain, setDomain] = useState(false);
+const CreateNewTenant = ({createTenant, validateDomain, loading, error, getCountries}) => {
   const [isValidDomain, setValidDomain] = useState(false);
   const [hasConsented, setHasConsented] = useState(true);
   const [tenant, setTenant] = useState({
@@ -17,16 +17,16 @@ const CreateNewTenant = ({createTenant, validateDomain, loading, error}) => {
     lastname: '',
     email: '',
     password: '',
-    password_confirmation: '1111',
+    password_confirmation: '',
     phone: '',
-    role: '',
+    job_function: '',
     company_name: '',
     "website_url": 'www.aspotica.com',
     country: '',
+    timezone: '',
   })
   
   const setCountry = (country) => {
-    console.log('This is the country', country)
     setTenant((old) => ({
       ...old,
       country: country
@@ -44,15 +44,13 @@ const CreateNewTenant = ({createTenant, validateDomain, loading, error}) => {
   }
 
   const validateEmail = async() => {
+    getCountries();
     // check if the email is valid
     if(isValidEmail(tenant.email)) {
       try {
         const status = await validateDomain(tenant.email.split('@')[1]);
         if(!status) {
           setValidDomain(true);
-          console.log('The domain does not exist...')
-        } else{
-          console.log('The domain is EXISTING...')
         }
       } catch (error) {
         console.log('an error occured whle trying to get the data', error);
@@ -126,6 +124,7 @@ const mapStateToProps = (state) => ({
 const mapActionsToProps =  {
   createTenant,
   validateDomain,
+  getCountries
 }
 
 export default connect(mapStateToProps, mapActionsToProps)(CreateNewTenant);
