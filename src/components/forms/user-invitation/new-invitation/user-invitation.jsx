@@ -5,8 +5,9 @@ import { Label } from 'semantic-ui-react';
 import { ValidatorForm } from 'react-form-validator-core';
 import { connect } from 'react-redux';
 import KtWrapper from '../../../kt-wrapper/kt-wrapper';
-import KtTextArea from '../../../form-fields/kt-textarea/kt-textarea';
+import KtTextArea from '../../../form-fields/textarea/textarea';
 import FormGroup from '../../../form-fields/form-group/form-group';
+
 import '../user-invitation.scss';
 
 import { inviteUser } from '../../../../redux/actions/userActions';

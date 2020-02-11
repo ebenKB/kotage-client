@@ -6,5 +6,5 @@ import tenantReducer from './tenantReducer';
 export default combineReducers({
   requisitions: requisitionReducer,
   user: userReducer,
-  tenant: tenantReducer
+  tenant: tenantReducer,
 });

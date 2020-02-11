@@ -11,7 +11,7 @@ import Amount from '../amount/amount';
 
 import './form-group.scss';
 import Dropzone from '../dropzone/dropzone';
-import KtTextArea from '../kt-textarea/kt-textarea';
+import KtTextArea from '../textarea/textarea';
 import InputValidator from '../input-validator/input-validator';
 
 const FormGroup = ({
