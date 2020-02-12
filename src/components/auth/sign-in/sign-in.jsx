@@ -89,7 +89,6 @@ const SignIn = ({ loading, userLogin }) => {
     e.preventDefault();
     try {
       const data = await userLogin(user.email, user.password);
-      console.log(data);
       if (data.data.error) {
         alert(data.data.error);
       } else {
