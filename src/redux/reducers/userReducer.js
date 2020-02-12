@@ -1,5 +1,6 @@
 import {
-  INVITE_USER, LOGIN, SET_USER_LOADING, DONE_LOADING, GET_USERS, GET_INVIATION, CREATE_USER,
+  INVITE_USER, LOGIN, SET_USER_LOADING, DONE_LOADING,
+  GET_USERS, GET_INVIATION, CREATE_USER, GET_TENANT_ID,
 } from '../types/userTypes';
 
 const initialState = {
@@ -10,6 +11,7 @@ const initialState = {
   error: false,
   loading: false,
   invitation: null,
+  tenant_id: null,
 };
 
 export default (state = initialState, action) => {
@@ -61,6 +63,12 @@ export default (state = initialState, action) => {
       };
     }
 
+    case GET_TENANT_ID: {
+      return {
+        ...state,
+        tenant_id: action.payload,
+      };
+    }
     default:
       return {
         ...state,

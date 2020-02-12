@@ -5,22 +5,23 @@
 /* eslint-disable max-len */
 import Axios from '../../utils/axios/axios';
 import {
-  SET_USER_LOADING, DONE_LOADING, LOGIN, GET_INVIATION,
+  SET_USER_LOADING, DONE_LOADING, LOGIN, GET_INVIATION, GET_TENANT_ID,
 } from '../types/userTypes';
 
-export const inviteUser = (invitation) => async () => {
+export const inviteUser = (invitation) => async (dispatch, getState) => {
   try {
-    Axios.post('/1/invitations', invitation);
+    const { user } = getState();
+    Axios.post(`/${user.tenant_id}/invitations`, invitation);
   } catch (error) {
-    console.log('an error occurred while inviting the user...');
+    console.log('an error occurred while inviting the user...', error);
   }
 };
 
-export const createUser = (user, token) => async (dispatch) => {
+export const createUser = (newUser, token) => async (dispatch, getState) => {
   try {
-    console.log('We want to create a new user', user);
+    const { user } = getState();
     dispatch(setLoading());
-    const data = await Axios.post(`/1/users?token=${token}`, user);
+    const data = await Axios.post(`/${user.tenant_id}/users?token=${token}`, newUser);
     console.log('We are done posting', data);
     dispatch(doneLoading());
   } catch (error) {
@@ -28,18 +29,33 @@ export const createUser = (user, token) => async (dispatch) => {
   }
 };
 
-export const login = (email, password) => async (dispatch) => new Promise(async (resolve, reject) => {
+/**
+ * This functions checks if the user belongs to a tenat and then logs in the user
+ * If successful, the user is saved in the state for later use
+ * The token of the user is also saved in localstorage/session storage for later use
+ * @param {*} email the email of the user
+ * @param {*} password  the password of the user
+ */
+export const login = (email, password) => async (dispatch, getState) => new Promise(async (resolve, reject) => {
   try {
     dispatch(setLoading());
-    const data = await Axios.post('/6/users/login', { email, password });
-    dispatch(doneLoading());
-    const { access_token } = data.data;
-    if (access_token && access_token.length > 0) {
-      dispatch(setAuthUser(access_token[0]));
-      // save the user to session storage
-      sessionStorage.setItem('kotage-auth', access_token[0].token);
+    // get the tenant that the user belongs to
+    const { user } = getState();
+    if (user.tenant_id) {
+      const data = await Axios.post(`/${user.tenant_id}/users/login`, { email, password });
+      dispatch(doneLoading());
+      const { access_token } = data.data;
+      if (access_token && access_token.length > 0) {
+        dispatch(setAuthUser(access_token[0]));
+        // save the user to session storage
+        sessionStorage.setItem('kotage-auth', access_token[0].token);
+      }
+      resolve(data);
+    } else {
+      // There was no tenant found for the user so the user cannot login
+      reject(new Error({ err: 'Tenant does exist for this user' }));
+      dispatch(doneLoading());
     }
-    resolve(data);
   } catch (error) {
     dispatch(doneLoading());
     reject(error);
@@ -73,17 +89,28 @@ export const getUsers = () => async () => {
   }
 };
 
-export const getInvitation = (token) => async (dispatch) => {
+export const getInvitation = (token) => async (dispatch, getState) => {
   try {
-    console.log('getting the invitation', token);
-    const data = await Axios.get(`/1/invitations?token=${token}`);
+    const { user } = getState();
+    const data = await Axios.get(`/${user.tenant_id}/invitations?token=${token}`);
     const { invitation } = data.data;
-    console.log('We are done getting the invation', invitation);
     return dispatch({
       type: GET_INVIATION,
       payload: invitation,
     });
   } catch (err) {
     console.log('an error occured while trying to fetch the user');
+  }
+};
+
+export const getTenantID = (email) => async (dispatch) => {
+  try {
+    const { data } = await Axios.get(`/users/check_tenant?email=${email}`);
+    return dispatch({
+      type: GET_TENANT_ID,
+      payload: data.tenant,
+    });
+  } catch (error) {
+    console.log('an error occured');
   }
 };

@@ -8,10 +8,12 @@ import Input from '../../form-fields/input/input';
 import { ReactComponent as Logo } from '../../../svg/padlock.svg';
 import { ReactComponent as BackArrow } from '../../../svg/back.svg';
 import KotageLogo from '../../../png/kotage-logo__colour.png';
-import { login } from '../../../redux/actions/userActions';
+import { login, getTenantID } from '../../../redux/actions/userActions';
 import './sign-in.scss';
 
-const SignIn = ({ loading, userLogin }) => {
+const SignIn = ({
+  loading, userLogin, checkUserTenant, tenant,
+}) => {
   const history = useHistory();
   const [page, setPage] = useState({ page: 1, max: 2 });
   const [user, setUser] = useState({ email: '', password: '' });
@@ -52,6 +54,10 @@ const SignIn = ({ loading, userLogin }) => {
           page: newPage,
         }
       ));
+    }
+    // check the tenant that the user belongs to
+    if (tenant === null) {
+      checkUserTenant(user.email);
     }
   };
 
@@ -204,10 +210,12 @@ const SignIn = ({ loading, userLogin }) => {
 
 const mapDispatchToProps = {
   userLogin: login,
+  checkUserTenant: getTenantID,
 };
 
 const mapStateToProps = (state) => ({
   loading: state.user.loading,
+  tenant: state.user.tenant_id,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignIn);
