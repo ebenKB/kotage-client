@@ -23,24 +23,25 @@ class CreateUser extends React.Component {
       password_confirmation: '',
       access_token: '',
       token: '',
+      tenant_id: '',
     };
   }
 
+  /**
+   * Get the the url parameters and filter out the token and the tenant_id
+   */
   componentDidMount() {
     const { token } = this.props.match.params;
-    this.props.getInvitation(token);
-    this.setState((oldState) => ({
-      ...oldState,
-      token,
-    }
-    ));
-
     const { search } = this.props.location;
-    const access_token = search.split('=')[1];
+    const access_token = search.split('&')[0].split('=')[1];
+    const tenant_id = search.split('&')[1].split('=')[1];
     this.setState((oldSate) => ({
       ...oldSate,
       access_token,
+      tenant_id,
+      token,
     }));
+    this.props.getInvitation(token, tenant_id);
   }
 
   handleChange =(e) => {
@@ -52,21 +53,17 @@ class CreateUser extends React.Component {
   }
 
   handleSubmit = async () => {
-    // check if the password
-    if (this.state.password === this.state.password_confirmation) {
-      // create the data
-      await this.props.createUser({
-        firstname: this.props.invitation.firstname,
-        lastname: this.props.invitation.lastname,
-        email: this.props.invitation.email,
-        password: this.state.password,
-        password_confirmation: this.state.password_confirmation,
-        access_token: this.state.access_token,
-      }, this.state.token);
+    await this.props.createUser({
+      firstname: this.props.invitation.firstname,
+      lastname: this.props.invitation.lastname,
+      email: this.props.invitation.email,
+      password: this.state.password,
+      password_confirmation: this.state.password_confirmation,
+      access_token: this.state.access_token,
+    }, this.state.token);
 
-      // await login(this.props.invitation.email,this.state.password,)
-      this.props.history.push('/auth/signin');
-    }
+    // await login(this.props.invitation.email,this.state.password,)
+    this.props.history.push('/auth/signin');
   }
 
   render() {
@@ -77,7 +74,6 @@ class CreateUser extends React.Component {
 		{invitation && (
 			<div className="p-t-150 ">
 				<p className="text-center">
-					{' '}
           Used Kotage before?
 					<Link to="/auth/signin"> Login</Link>
 				</p>

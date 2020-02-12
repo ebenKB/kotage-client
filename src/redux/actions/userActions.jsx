@@ -89,10 +89,10 @@ export const getUsers = () => async () => {
   }
 };
 
-export const getInvitation = (token) => async (dispatch, getState) => {
+export const getInvitation = (token, tenant_id) => async (dispatch) => {
+  console.log('We are getting invitation', token, tenant_id);
   try {
-    const { user } = getState();
-    const data = await Axios.get(`/${user.tenant_id}/invitations?token=${token}`);
+    const data = await Axios.get(`/${tenant_id}/invitations?token=${token}`);
     const { invitation } = data.data;
     return dispatch({
       type: GET_INVIATION,
