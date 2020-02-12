@@ -10,6 +10,7 @@ import './create-new-tenant.scss';
 import CreateTenantSecondaryForm from './create-tenant-secondary-form';
 import { createTenant, validateDomain } from '../../../redux/actions/tenantActions';
 import { isValidEmail } from '../../../utils/app/index';
+import KtLogo from '../../KtLogo/kt-logo';
 
 const CreateNewTenant = ({
   createTenant, validateDomain, loading, error, history,
@@ -90,9 +91,14 @@ const CreateNewTenant = ({
   return (
 	<div>
 		{!isValidDomain && (
-			<div className="p-t-280">
+			<div className="p-t-280 tenant-form__content">
+				<div className="text-center m-b-20">
+					<KtLogo
+						classes="medium"
+					/>
+				</div>
 				<div className="tenant small-form__wrapper fit-auto">
-					<h3>Sign up for a free Kotage trial</h3>
+					<h4>Sign up for a free Kotage trial</h4>
 					<div className="m-t-10">
 						<span className="error">{error}</span>
 					</div>

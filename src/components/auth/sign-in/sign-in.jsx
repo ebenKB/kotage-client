@@ -7,9 +7,9 @@ import { Link, useHistory } from 'react-router-dom';
 import Input from '../../form-fields/input/input';
 import { ReactComponent as Logo } from '../../../svg/padlock.svg';
 import { ReactComponent as BackArrow } from '../../../svg/back.svg';
-import KotageLogo from '../../../png/kotage-logo__colour.png';
 import { login, getTenantID } from '../../../redux/actions/userActions';
 import './sign-in.scss';
+import KtLogo from '../../KtLogo/kt-logo';
 
 const SignIn = ({
   loading, userLogin, checkUserTenant,
@@ -183,8 +183,10 @@ const SignIn = ({
   };
   return (
 	<div className="signin__wrapper">
-		<div className="sigin__content-logo ">
-			<img src={KotageLogo} alt="" className="small logo" />
+		<div className="text-center m-b-20">
+			<KtLogo
+				classes="medium"
+			/>
 		</div>
 		<div className="signin__content">
 			<div className="signin__body ">
@@ -193,6 +195,7 @@ const SignIn = ({
 					<span className="m-l-5 sm-caption bold">
 						{/* show the right login type to the user */}
 						{loginType}
+						{ ' ' }
             Login
 					</span>
 				</div>
