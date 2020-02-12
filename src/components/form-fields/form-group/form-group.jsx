@@ -15,7 +15,7 @@ import KtTextArea from '../textarea/textarea';
 import InputValidator from '../input-validator/input-validator';
 
 const FormGroup = ({
-  type, placeholder, label, labelName, center, classes = '', ...rest
+  type, placeholder, label, labelName, center, classes = '', inline = true, ...rest
 }) => {
   const options = [
     {
@@ -69,7 +69,7 @@ const FormGroup = ({
   };
 
   return (
-	<div className={`form-group ${center ? 'center' : ''} ${classes}`}>
+	<div className={`form-group ${inline ? 'inline' : 'block'} ${center ? 'center' : ''} ${classes}`}>
 		<label htmlFor={labelName}>
 			<span className="bold">{label}</span>
 		</label>

@@ -81,7 +81,7 @@ class CreateUser extends React.Component {
 					<div className="kt-header caption bold text-center big-caption m-t-10 m-b-30">
 						<span>Join</span>
 						<span className="big"> Apotica</span>
-						<span> on highrise</span>
+						<span> on Kotage</span>
 					</div>
 					<ValidatorForm
 						ref={this.myRef}
