@@ -31,7 +31,7 @@ export const createUser = (user, token) => async (dispatch) => {
 export const login = (email, password) => async (dispatch) => new Promise(async (resolve, reject) => {
   try {
     dispatch(setLoading());
-    const data = await Axios.post('/1/users/login', { email, password });
+    const data = await Axios.post('/6/users/login', { email, password });
     dispatch(doneLoading());
     const { access_token } = data.data;
     if (access_token && access_token.length > 0) {

@@ -15,7 +15,7 @@ const CreateNewTenant = ({
   createTenant, validateDomain, loading, error, history,
 }) => {
   const [isValidDomain, setValidDomain] = useState(false);
-  const [hasConsented] = useState(true);
+  const [hasConsented, setConsent] = useState(false);
   const [tenant, setTenant] = useState({
     firstname: '',
     lastname: '',
@@ -73,9 +73,10 @@ const CreateNewTenant = ({
   };
 
   const handleSubmit = async () => {
-    setTenant((oldTenant) => ({
-      ...oldTenant,
-      password_confirmation: oldTenant.password,
+    const newTenant = tenant;
+    newTenant.password_confirmation = tenant.password;
+    await setTenant(() => ({
+      newTenant,
     }));
     try {
       const data = await createTenant(tenant);
@@ -132,6 +133,7 @@ const CreateNewTenant = ({
 			<CreateTenantSecondaryForm
 				tenant={tenant}
 				consent={hasConsented}
+				setConsent={(data) => setConsent(data.checked)}
 				onChange={handleChange}
 				setCountry={(country) => setCountry(country)}
 				setTimezone={(timezone) => setTimezone(timezone)}

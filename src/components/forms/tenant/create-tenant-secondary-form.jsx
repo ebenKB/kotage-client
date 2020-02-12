@@ -2,43 +2,17 @@
 /* eslint-disable react/prefer-stateless-function */
 /* eslint-disable react/prop-types */
 import React from 'react';
-import { connect } from 'react-redux';
 import {
   Form, Button, Checkbox,
 } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import Input from '../../form-fields/input/input';
-import { getCountries } from '../../../redux/actions/countryActions';
-
 
 class CreateTenantSecondaryForm extends React.Component {
-  componentDidMount() {
-    const { countries, findCountries } = this.props;
-
-    if (countries.length === 0) {
-      // fetching the countries
-      findCountries();
-    }
-  }
-
   render() {
     const {
-      consent, tenant, onChange, handleSubmit,
+      consent, tenant, onChange, handleSubmit, setConsent,
     } = this.props;
-
-    // const handleChange = (data) => {
-    //   setCountry(data.value);
-    //   // get the timezone that matches the selected country
-    //   const country = countries.find((c) => c.value === data);
-    //   const newTimezones = country.timezones.map((t) => ({
-    //     text: t,
-    //     value: t,
-    //   }));
-    //   this.setState((oldState) => ({
-    //     ...oldState,
-    //     timezones: newTimezones,
-    //   }));
-    // };
 
     return (
 	<div className="p-t-180">
@@ -81,17 +55,6 @@ class CreateTenantSecondaryForm extends React.Component {
 						</div>
 						<div className="m-t-20 m-b-20">
 							<Input
-								type="password"
-								placeholder="Password"
-								className="fluid"
-								name="password"
-								value={tenant.password}
-								onChange={onChange}
-								required
-							/>
-						</div>
-						<div className="m-t-20 m-b-20">
-							<Input
 								type="phone"
 								placeholder="Phone Number"
 								className="fluid"
@@ -112,9 +75,23 @@ class CreateTenantSecondaryForm extends React.Component {
 								required
 							/>
 						</div>
+						<div className="m-t-20 m-b-20">
+							<Input
+								type="password"
+								placeholder="Password"
+								className="fluid"
+								name="password"
+								value={tenant.password}
+								onChange={onChange}
+								required
+							/>
+						</div>
 					</div>
 					<div className="m-b-20 sm-caption">
-						<Checkbox label="I accept the Privacy Policy and Terms of Service" />
+						<Checkbox
+							label="I accept the Privacy Policy and Terms of Service"
+							onChange={(e, data) => setConsent(data)}
+						/>
 					</div>
 					<Button
 						type="submit"
@@ -137,12 +114,4 @@ class CreateTenantSecondaryForm extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => ({
-  countries: state.countries.countries,
-});
-
-const mapDispatchToProps = {
-  findCountries: getCountries,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(CreateTenantSecondaryForm);
+export default CreateTenantSecondaryForm;
