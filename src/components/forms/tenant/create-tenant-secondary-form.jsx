@@ -101,6 +101,17 @@ class CreateTenantSecondaryForm extends React.Component {
 								required
 							/>
 						</div>
+						<div className="m-t-20 m-b-20">
+							<Input
+								type="text"
+								placeholder="Compnay Name"
+								className="fluid"
+								value={tenant.company_name}
+								name="company_name"
+								onChange={onChange}
+								required
+							/>
+						</div>
 					</div>
 					<div className="m-b-20 sm-caption">
 						<Checkbox label="I accept the Privacy Policy and Terms of Service" />
