@@ -3,7 +3,7 @@
 import React, { useState, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { Form, Button } from 'semantic-ui-react';
-import { useHistory, Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import Input from '../../form-fields/input/input';
 import { ReactComponent as Logo } from '../../../svg/padlock.svg';
 import { ReactComponent as BackArrow } from '../../../svg/back.svg';
@@ -11,7 +11,7 @@ import KotageLogo from '../../../png/kotage-logo__colour.png';
 import { login } from '../../../redux/actions/userActions';
 import './sign-in.scss';
 
-const SignIn = ({ loading }) => {
+const SignIn = ({ loading, userLogin }) => {
   const history = useHistory();
   const [page, setPage] = useState({ page: 1, max: 2 });
   const [user, setUser] = useState({ email: '', password: '' });
@@ -56,7 +56,7 @@ const SignIn = ({ loading }) => {
   };
 
   /**
-   * Go Back and to previous page
+   * Go Back to previous page
    */
   const goBack = () => {
     const oldPage = page.page;
@@ -88,10 +88,15 @@ const SignIn = ({ loading }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await login(user.email, user.password);
-      history.push('/');
+      const data = await userLogin(user.email, user.password);
+      console.log(data);
+      if (data.data.error) {
+        alert(data.data.error);
+      } else {
+        history.push('/');
+      }
     } catch (error) {
-      console.log(error);
+      alert('an error occurred');
     }
   };
 
@@ -151,7 +156,7 @@ const SignIn = ({ loading }) => {
     }
 		<div className="m-t-5 m-b-5">
 			<Input
-				type="text"
+				type="password"
 				className="fluid"
 				placeholder="Enter your password"
 				onChange={handleChange}
@@ -165,8 +170,9 @@ const SignIn = ({ loading }) => {
 				className={`m-t-20 fluid tiny ${loading ? 'loading' : ''} green`}
 				disabled={user.password === ''}
 			>
+				{/* check  if the current page is the last page */}
 				{
-          page.page <= page.max && <div>Login</div>
+          page.page === page.max && <div>Login</div>
         }
 			</Button>
 		</div>
@@ -183,6 +189,7 @@ const SignIn = ({ loading }) => {
 				<div className="m-b-10">
 					<Logo className="small logo faint" />
 					<span className="m-l-5 sm-caption bold">
+						{/* show the right login type to the user */}
 						{loginType}
             Login
 					</span>
@@ -197,7 +204,7 @@ const SignIn = ({ loading }) => {
 };
 
 const mapDispatchToProps = {
-  login,
+  userLogin: login,
 };
 
 const mapStateToProps = (state) => ({

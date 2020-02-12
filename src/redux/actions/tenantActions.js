@@ -3,10 +3,14 @@
 import Axios from '../../utils/axios/axios';
 import { SET_LOADING, DONE_LOADING, SET_ERROR } from '../types/tenantTypes';
 
-export const createTenant = (tenant) => async () => {
-  const data = Axios.post('tenants', tenant);
-  console.log('We are done posting the data', data);
-};
+export const createTenant = (tenant) => async () => new Promise((resolve, reject) => {
+  try {
+    const data = Axios.post('tenants', tenant);
+    resolve(data);
+  } catch (error) {
+    reject(error);
+  }
+});
 
 export const validateDomain = (domain) => async (dispatch) => (
   new Promise(async (resolve, reject) => {

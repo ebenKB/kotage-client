@@ -65,6 +65,7 @@ class CreateTenantSecondaryForm extends React.Component {
 								value={tenant.firstname}
 								name="firstname"
 								onChange={onChange}
+								required
 							/>
 						</div>
 						<div className="m-t-20 m-b-20">
@@ -75,6 +76,7 @@ class CreateTenantSecondaryForm extends React.Component {
 								name="lastname"
 								value={tenant.lastname}
 								onChange={onChange}
+								required
 							/>
 						</div>
 						<div className="m-t-20 m-b-20">
@@ -85,6 +87,7 @@ class CreateTenantSecondaryForm extends React.Component {
 								name="password"
 								value={tenant.password}
 								onChange={onChange}
+								required
 							/>
 						</div>
 						<div className="m-t-20 m-b-20">
@@ -95,6 +98,7 @@ class CreateTenantSecondaryForm extends React.Component {
 								value={tenant.phone}
 								name="phone"
 								onChange={onChange}
+								required
 							/>
 						</div>
 					</div>
@@ -102,6 +106,7 @@ class CreateTenantSecondaryForm extends React.Component {
 						<Checkbox label="I accept the Privacy Policy and Terms of Service" />
 					</div>
 					<Button
+						type="submit"
 						disabled={!consent}
 						color="green"
 						fluid

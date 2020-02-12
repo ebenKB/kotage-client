@@ -1,6 +1,7 @@
 /* eslint-disable no-shadow */
 /* eslint-disable react/prop-types */
 import React, { useState } from 'react';
+import { withRouter } from 'react-router';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Form, Button } from 'semantic-ui-react';
@@ -11,7 +12,7 @@ import { createTenant, validateDomain } from '../../../redux/actions/tenantActio
 import { isValidEmail } from '../../../utils/app/index';
 
 const CreateNewTenant = ({
-  createTenant, validateDomain, loading, error,
+  createTenant, validateDomain, loading, error, history,
 }) => {
   const [isValidDomain, setValidDomain] = useState(false);
   const [hasConsented] = useState(true);
@@ -62,14 +63,26 @@ const CreateNewTenant = ({
           setValidDomain(true);
         }
       } catch (err) {
-        console.log('an error occured whle trying to get the data', err);
+        if (err.message.toLowerCase().trim() === 'network error') {
+          alert('Please check your internet connection');
+        } else {
+          alert('an error occured while processing your request');
+        }
       }
     }
   };
 
   const handleSubmit = async () => {
-    if (tenant.password === tenant.password_confirmation) {
-      await createTenant(tenant);
+    setTenant((oldTenant) => ({
+      ...oldTenant,
+      password_confirmation: oldTenant.password,
+    }));
+    try {
+      const data = await createTenant(tenant);
+      console.log('Done fetching ', data);
+      history.push('/auth/signin');
+    } catch (error) {
+      console.log('an error occurred');
     }
   };
 
@@ -94,6 +107,7 @@ const CreateNewTenant = ({
 									value={tenant.email}
 									onChange={handleChange}
 									name="email"
+									required
 								/>
 							</div>
 							<div className="m-t-20 m-b-20">
@@ -138,4 +152,4 @@ const mapActionsToProps = {
   validateDomain,
 };
 
-export default connect(mapStateToProps, mapActionsToProps)(CreateNewTenant);
+export default connect(mapStateToProps, mapActionsToProps)(withRouter(CreateNewTenant));

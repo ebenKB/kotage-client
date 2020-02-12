@@ -34,14 +34,13 @@ export const login = (email, password) => async (dispatch) => new Promise(async 
     const data = await Axios.post('/1/users/login', { email, password });
     dispatch(doneLoading());
     const { access_token } = data.data;
-    dispatch(setAuthUser(access_token[0]));
-
-    // save the user to session storage
-    sessionStorage.setItem('kotage-auth', access_token[0].token);
+    if (access_token && access_token.length > 0) {
+      dispatch(setAuthUser(access_token[0]));
+      // save the user to session storage
+      sessionStorage.setItem('kotage-auth', access_token[0].token);
+    }
     resolve(data);
-    // return data;
   } catch (error) {
-    console.log('an error occured while trying to login', error);
     dispatch(doneLoading());
     reject(error);
   }
