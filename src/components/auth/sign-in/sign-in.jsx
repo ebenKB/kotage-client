@@ -12,7 +12,7 @@ import { login, getTenantID } from '../../../redux/actions/userActions';
 import './sign-in.scss';
 
 const SignIn = ({
-  loading, userLogin, checkUserTenant, tenant,
+  loading, userLogin, checkUserTenant,
 }) => {
   const history = useHistory();
   const [page, setPage] = useState({ page: 1, max: 2 });
@@ -55,10 +55,7 @@ const SignIn = ({
         }
       ));
     }
-    // check the tenant that the user belongs to
-    if (tenant === null) {
-      checkUserTenant(user.email);
-    }
+    checkUserTenant(user.email);
   };
 
   /**

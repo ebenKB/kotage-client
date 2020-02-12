@@ -17,11 +17,10 @@ export const inviteUser = (invitation) => async (dispatch, getState) => {
   }
 };
 
-export const createUser = (newUser, token) => async (dispatch, getState) => {
+export const createUser = (newUser, token, tenant_id) => async (dispatch) => {
   try {
-    const { user } = getState();
     dispatch(setLoading());
-    const data = await Axios.post(`/${user.tenant_id}/users?token=${token}`, newUser);
+    const data = await Axios.post(`/${tenant_id}/users?token=${token}`, newUser);
     console.log('We are done posting', data);
     dispatch(doneLoading());
   } catch (error) {

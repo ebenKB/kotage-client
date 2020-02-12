@@ -57,10 +57,11 @@ class CreateUser extends React.Component {
       firstname: this.props.invitation.firstname,
       lastname: this.props.invitation.lastname,
       email: this.props.invitation.email,
+      is_admin: false,
       password: this.state.password,
       password_confirmation: this.state.password_confirmation,
       access_token: this.state.access_token,
-    }, this.state.token);
+    }, this.state.token, this.state.tenant_id);
 
     // await login(this.props.invitation.email,this.state.password,)
     this.props.history.push('/auth/signin');
