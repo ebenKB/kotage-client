@@ -1,21 +1,23 @@
+/* eslint-disable import/no-unresolved */
+/* eslint-disable react/prop-types */
 /* eslint-disable react/jsx-fragments */
 import React, { Fragment } from 'react';
 import { Popup } from 'semantic-ui-react';
+import './popup.scss';
 
-const PopupDropdown = () => (
+const PopupDropdown = ({
+  children, position, trigger = 'Click me', classes = '',
+}) => (
 	<Fragment>
 		<Popup
-			trigger={<span>Click me</span>}
+			trigger={<span className="clickable">{ trigger }</span>}
+			position={position}
 			on="click"
 			hideOnScroll
+			className={classes}
 		>
 			<div>
-				<ul className="custom">
-					<li>item one</li>
-					<li>item option 2</li>
-					<li>item option 3</li>
-					<li>item option 4</li>
-				</ul>
+				{ children }
 			</div>
 		</Popup>
 	</Fragment>

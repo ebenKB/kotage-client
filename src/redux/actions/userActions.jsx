@@ -6,7 +6,7 @@
 import Axios from '../../utils/axios/axios';
 import {
   SET_USER_LOADING, DONE_LOADING, LOGIN, GET_INVIATION, GET_USERS,
-  GET_TENANT_ID, CREATE_USER, MAKE_ADMIN, REVOKE_ADMIN,
+  GET_TENANT_ID, CREATE_USER, MAKE_ADMIN,
 } from '../types/userTypes';
 
 /**
@@ -32,12 +32,11 @@ export const inviteUser = (invitation) => async (dispatch, getState) => {
 export const createUser = (newUser, token, tenant_id) => async (dispatch) => {
   try {
     dispatch(setLoading());
-    const data = await Axios.post(`/${tenant_id}/users?token=${token}`, newUser);
-    console.log('we are done creating a user', data);
+    const { data } = await Axios.post(`/${tenant_id}/users?token=${token}`, newUser);
     dispatch(doneLoading());
     return dispatch({
       type: CREATE_USER,
-      payload: data,
+      payload: data.user,
     });
   } catch (error) {
     dispatch(doneLoading());
@@ -99,6 +98,7 @@ export const getUsers = () => async (dispatch, getState) => {
     const { user } = getState();
     if (user.tenant_id) {
       const { data } = await Axios.get(`/${user.tenant_id}/users`);
+      console.log(data.users);
       return dispatch({
         type: GET_USERS,
         payload: data.users,
@@ -147,11 +147,10 @@ export const getTenantID = (email) => async (dispatch) => {
  * This function sets a user as an admin
  * @param {*} user the user to set as admin
  */
-export const makeAdmin = (newUser) => async (dispatch, getState) => {
+export const setAdminStatus = (newUser) => async (dispatch, getState) => {
   try {
     const { user } = getState();
     const { data } = await Axios.put(`/${user.tenant_id}/users/${newUser.id}`, newUser);
-    console.log('We want to update a user', data.user);
     if (data) {
       return dispatch({
         type: MAKE_ADMIN,
@@ -160,24 +159,5 @@ export const makeAdmin = (newUser) => async (dispatch, getState) => {
     }
   } catch (error) {
     console.log('an error occured while updating a user', error);
-  }
-};
-
-/**
- * The function revokes admin from a user
- * @param {*} newUser the user to revoke admin from
- */
-export const revokeAdmin = (newUser) => async (dispatch, getState) => {
-  console.log('In the function to revoke admin');
-  try {
-    const { user } = getState();
-    const data = Axios.put(`/${user.tenant_id}/${newUser.id}`, newUser);
-    console.log('we want to update a user', data);
-    return dispatch({
-      type: REVOKE_ADMIN,
-      payload: data,
-    });
-  } catch (error) {
-    console.log('an error occured while updating the user');
   }
 };
