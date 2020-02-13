@@ -34,6 +34,14 @@ class UserInvitation extends React.Component {
     }));
   }
 
+  setMessage = (message) => {
+    console.log('we want to set the message', message);
+    this.setState((s) => ({
+      ...s,
+      message,
+    }));
+  }
+
   handleSubmit = () => {
     this.props.inviteUser(this.state);
   }
@@ -120,7 +128,8 @@ class UserInvitation extends React.Component {
 					<KtTextArea
 						className="fluid"
 						value={message}
-						name="message"
+						placeholder="Enter a message for this user"
+						onChange={(msg) => this.setMessage(msg)}
 					/>
 				</div>
 			</ValidatorForm>
