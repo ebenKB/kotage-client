@@ -7,11 +7,10 @@ import { connect } from 'react-redux';
 import KtWrapper from '../../../kt-wrapper/kt-wrapper';
 import KtTextArea from '../../../form-fields/textarea/textarea';
 import FormGroup from '../../../form-fields/form-group/form-group';
-
 import '../user-invitation.scss';
-
 import { inviteUser } from '../../../../redux/actions/userActions';
 import MainContent from '../../../kt-main-content/mainContent';
+
 
 class UserInvitation extends React.Component {
   constructor(props) {
@@ -35,7 +34,6 @@ class UserInvitation extends React.Component {
   }
 
   setMessage = (message) => {
-    console.log('we want to set the message', message);
     this.setState((s) => ({
       ...s,
       message,
@@ -62,9 +60,9 @@ class UserInvitation extends React.Component {
 			handleAction={this.handleSubmit}
 		>
 			<p className="">
-            The person you invite will receive an email with an invitation link.
-            When they click the link they can choose their own username and password.
-            Then they will be part of your account!
+        The person you invite will receive an email with an invitation link.
+        When they click the link they can choose their own username and password.
+        Then they will be part of your account!
 			</p>
 			<ValidatorForm
 				ref={this.myRef}
@@ -73,7 +71,7 @@ class UserInvitation extends React.Component {
 				<div className="m-t-20 m-b-20">
 					<span className="p-r-8">
 						<Label size="big" circular className="kt-success">
-                1
+              1
 						</Label>
 					</span>
 					<span className="bold">Enter contact info for the person you want to invite</span>
@@ -119,7 +117,7 @@ class UserInvitation extends React.Component {
 				<div className="m-t-20 m-b-20">
 					<span className="p-r-8">
 						<Label circular size="big" className="kt-success">
-                2
+              2
 						</Label>
 					</span>
 					<span className="bold">Add a personal message</span>
