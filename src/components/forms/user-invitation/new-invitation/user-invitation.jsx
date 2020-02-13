@@ -54,9 +54,9 @@ class UserInvitation extends React.Component {
 			handleAction={this.handleSubmit}
 		>
 			<p className="">
-            The person you invite will receive an email with an invitation link.
-            When they click the link they can choose their own username and password.
-            Then they will be part of your account!
+        The person you invite will receive an email with an invitation link.
+        When they click the link they can choose their own username and password.
+        Then they will be part of your account!
 			</p>
 			<ValidatorForm
 				ref={this.myRef}

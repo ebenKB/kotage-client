@@ -1,0 +1,12 @@
+.user-details__wrapper {
+  padding: 20px;
+  border-top: 2px solid var(--kotage-dark);
+  display: grid;
+  grid-template-columns: 1fr 6fr 2fr;
+}
+
+.user-details__wrapper .ui.circular.label, .ui.circular.labels .label {
+  min-width: 3em;
+  min-height: 3em;
+  padding: 0.95em .85em !important;
+}

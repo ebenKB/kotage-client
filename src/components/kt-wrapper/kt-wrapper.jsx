@@ -51,14 +51,17 @@ class KtWrapper extends React.Component {
 		<div className="kt-wrapper__header bold">
 			<h2>{header}</h2>
 			<div>
-				{canFilter && (
-					<div>
+				<div>
+					{canFilter && (
 						<Dropdown placeholder="Filter records" selection options={options} onChange={handleChange} className="m-r-20 " />
+					)}
+					{linkName.length > 0 && (
 						<Link to={link} className="action-link green ui button">
 							{linkName}
 						</Link>
-					</div>
-				)}
+					)}
+				</div>
+
 			</div>
 		</div>
 		<div className="kt-wrapper__body">

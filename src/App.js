@@ -18,6 +18,7 @@ const Requisitions = lazy(() => import('./components/forms/requisitions/show/req
 const Newquote = lazy(() => import('./components/forms/quotes/new/new-quote'));
 const RFX = lazy(() => import('./components/rfx/rfx'));
 const Vendors = lazy(() => import('./components/forms/vendors/vendors'));
+const Users = lazy(() => import('./components/forms/user/show-users/show-users'));
 
 const routes = [
   {
@@ -28,6 +29,10 @@ const routes = [
   {
     path: '/auth/signin',
     main: () => <SignIn />,
+  },
+  {
+    path: '/users',
+    main: () => <Users />,
   },
   {
     path: '/user/invitation',
