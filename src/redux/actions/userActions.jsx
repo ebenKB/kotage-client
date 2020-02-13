@@ -5,9 +5,13 @@
 /* eslint-disable max-len */
 import Axios from '../../utils/axios/axios';
 import {
-  SET_USER_LOADING, DONE_LOADING, LOGIN, GET_INVIATION, GET_TENANT_ID,
+  SET_USER_LOADING, DONE_LOADING, LOGIN, GET_INVIATION, GET_TENANT_ID, CREATE_USER, MAKE_ADMIN, REVOKE_ADMIN,
 } from '../types/userTypes';
 
+/**
+ * This function is used to send a new invitation to a user
+ * @param {*} invitation the invitation to send to the user
+ */
 export const inviteUser = (invitation) => async (dispatch, getState) => {
   try {
     const { user } = getState();
@@ -17,12 +21,23 @@ export const inviteUser = (invitation) => async (dispatch, getState) => {
   }
 };
 
+/**
+ * This function creates a new user for a tenant
+ * The user gets created after clicking on an invitation link
+ * @param {*} newUser the user to create
+ * @param {*} token the token that was sent with the invitation
+ * @param {*} tenant_id the tenant who sent the invitation to the user
+ */
 export const createUser = (newUser, token, tenant_id) => async (dispatch) => {
   try {
     dispatch(setLoading());
     const data = await Axios.post(`/${tenant_id}/users?token=${token}`, newUser);
-    console.log('We are done posting', data);
+    console.log('we are done creating a user', data);
     dispatch(doneLoading());
+    return dispatch({
+      type: CREATE_USER,
+      payload: data,
+    });
   } catch (error) {
     dispatch(doneLoading());
   }
@@ -88,8 +103,12 @@ export const getUsers = () => async () => {
   }
 };
 
+/**
+ * This function retrieves an existing invitation from the api
+ * @param {*} token the token that comes with the invitation
+ * @param {*} tenant_id the tenant who requested the invitation
+ */
 export const getInvitation = (token, tenant_id) => async (dispatch) => {
-  console.log('We are getting invitation', token, tenant_id);
   try {
     const data = await Axios.get(`/${tenant_id}/invitations?token=${token}`);
     const { invitation } = data.data;
@@ -102,6 +121,10 @@ export const getInvitation = (token, tenant_id) => async (dispatch) => {
   }
 };
 
+/**
+ * This function retrieves the tenant that a user belongs to using the user email
+ * @param {*} email the email of the user
+ */
 export const getTenantID = (email) => async (dispatch) => {
   try {
     const { data } = await Axios.get(`/users/check_tenant?email=${email}`);
@@ -111,5 +134,43 @@ export const getTenantID = (email) => async (dispatch) => {
     });
   } catch (error) {
     console.log('an error occured');
+  }
+};
+
+/**
+ * This function sets a user as an admin
+ * @param {*} user the user to set as admin
+ */
+export const makeAdmin = (newUser) => async (dispatch, getState) => {
+  console.log('In the function to make Admin');
+  try {
+    const { user } = getState();
+    const data = Axios.put(`/${user.tenant_id}/${newUser.id}`, newUser);
+    console.log('We want to update a user', data);
+    return dispatch({
+      type: MAKE_ADMIN,
+      payload: data,
+    });
+  } catch (error) {
+    console.log('an error occured while updating a user');
+  }
+};
+
+/**
+ * The function revokes admin from a user
+ * @param {*} newUser the user to revoke admin from
+ */
+export const revokeAdmin = (newUser) => async (dispatch, getState) => {
+  console.log('In the function to revoke admin');
+  try {
+    const { user } = getState();
+    const data = Axios.put(`/${user.tenant_id}/${newUser.id}`, newUser);
+    console.log('we want to update a user', data);
+    return dispatch({
+      type: REVOKE_ADMIN,
+      payload: data,
+    });
+  } catch (error) {
+    console.log('an error occured while updating the user');
   }
 };

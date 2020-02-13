@@ -1,6 +1,6 @@
 import {
   INVITE_USER, LOGIN, SET_USER_LOADING, DONE_LOADING,
-  GET_USERS, GET_INVIATION, CREATE_USER, GET_TENANT_ID,
+  GET_USERS, GET_INVIATION, CREATE_USER, GET_TENANT_ID, MAKE_ADMIN, REVOKE_ADMIN,
 } from '../types/userTypes';
 
 const initialState = {
@@ -69,6 +69,25 @@ export default (state = initialState, action) => {
         tenant_id: action.payload,
       };
     }
+
+    case MAKE_ADMIN: {
+      const user = action.payload;
+      const newUsers = state.users.filter((u) => u.id !== user.id);
+      return {
+        ...state,
+        users: [...newUsers, user],
+      };
+    }
+
+    case REVOKE_ADMIN: {
+      const user = action.payload;
+      const newUsers = state.users.filter((u) => u.id !== user.id);
+      return {
+        ...state,
+        users: [...newUsers, user],
+      };
+    }
+
     default:
       return {
         ...state,

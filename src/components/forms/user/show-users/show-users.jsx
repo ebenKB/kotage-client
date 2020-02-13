@@ -12,6 +12,9 @@ const showUsers = () => (
 				linkName="Invite User"
 			>
 				<UserDetails />
+				<UserDetails />
+				<UserDetails />
+				<UserDetails />
 			</KtWrapper>
 		</MainContent>
 	</div>
