@@ -23,6 +23,14 @@ const UserProfile = () => (
 			<Dropdown.Item
 				icon="folder"
 				text={(
+					<Link to="/users">
+          Users
+					</Link>
+				)}
+			/>
+			<Dropdown.Item
+				icon="folder"
+				text={(
 					<Link to="/user/invitation">
           Invite user
 					</Link>

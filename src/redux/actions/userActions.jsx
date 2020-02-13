@@ -5,7 +5,8 @@
 /* eslint-disable max-len */
 import Axios from '../../utils/axios/axios';
 import {
-  SET_USER_LOADING, DONE_LOADING, LOGIN, GET_INVIATION, GET_TENANT_ID, CREATE_USER, MAKE_ADMIN, REVOKE_ADMIN,
+  SET_USER_LOADING, DONE_LOADING, LOGIN, GET_INVIATION, GET_USERS,
+  GET_TENANT_ID, CREATE_USER, MAKE_ADMIN, REVOKE_ADMIN,
 } from '../types/userTypes';
 
 /**
@@ -93,11 +94,16 @@ const setAuthUser = (user) => async (dispatch) => dispatch({
   payload: user,
 });
 
-export const getUsers = () => async () => {
+export const getUsers = () => async (dispatch, getState) => {
   try {
-    console.log('We are getting all the users from the server');
-    const data = await Axios.get('/1/users');
-    console.log('We are done getting the RECORDS', data);
+    const { user } = getState();
+    if (user.tenant_id) {
+      const { data } = await Axios.get(`/${user.tenant_id}/users`);
+      return dispatch({
+        type: GET_USERS,
+        payload: data.users,
+      });
+    }
   } catch (error) {
     console.log('an error occurred');
   }
@@ -142,17 +148,18 @@ export const getTenantID = (email) => async (dispatch) => {
  * @param {*} user the user to set as admin
  */
 export const makeAdmin = (newUser) => async (dispatch, getState) => {
-  console.log('In the function to make Admin');
   try {
     const { user } = getState();
-    const data = Axios.put(`/${user.tenant_id}/${newUser.id}`, newUser);
-    console.log('We want to update a user', data);
-    return dispatch({
-      type: MAKE_ADMIN,
-      payload: data,
-    });
+    const { data } = await Axios.put(`/${user.tenant_id}/users/${newUser.id}`, newUser);
+    console.log('We want to update a user', data.user);
+    if (data) {
+      return dispatch({
+        type: MAKE_ADMIN,
+        payload: data.user,
+      });
+    }
   } catch (error) {
-    console.log('an error occured while updating a user');
+    console.log('an error occured while updating a user', error);
   }
 };
 

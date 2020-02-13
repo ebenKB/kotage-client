@@ -72,6 +72,7 @@ export default (state = initialState, action) => {
 
     case MAKE_ADMIN: {
       const user = action.payload;
+      console.log('Users in the state', { state });
       const newUsers = state.users.filter((u) => u.id !== user.id);
       return {
         ...state,

@@ -1,13 +1,12 @@
 /* eslint-disable react/prop-types */
-import React, { useState } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { Label, Checkbox } from 'semantic-ui-react';
 import './user-details.scss';
 import { makeAdmin, revokeAdmin } from '../../../redux/actions/userActions';
 
 
-const UserDetails = ({ user = { isAdmin: true } }) => {
-  const [tempUser, setTempUser] = useState({ isAdmin: null });
+const UserDetails = ({ user, setUserAsAdmin }) => {
   // const user = {
   //   id: 999,
   //   name: 'Dorcas Dashie',
@@ -15,16 +14,9 @@ const UserDetails = ({ user = { isAdmin: true } }) => {
   // };
 
   const setAdminStatus = (value) => {
-    setTempUser(() => ({
-      isAdmin: value,
-    }));
-
-    console.log('This is the value that we wnat to set as admin', value);
-    setTimeout(() => {
-      if (tempUser.isAdmin !== user.isAdmin) {
-        console.log('There is still a change, so let us persis the change');
-      }
-    }, 500);
+    const newUser = user;
+    newUser.is_admin = value;
+    setUserAsAdmin(newUser);
   };
 
   return (
@@ -35,13 +27,13 @@ const UserDetails = ({ user = { isAdmin: true } }) => {
 			</Label>
 		</div>
 		<div>
-			<h2>Dorcas Dashie</h2>
-			<div>blendy031@gmail.com</div>
-			<div>dropbox@28323.apotica.net</div>
+			<h2>{`${user.firstname} ${user.lastname}`}</h2>
+			<div>{user.email}</div>
+			<div>{user.email}</div>
 		</div>
 		<div>
 			<div>
-				<Checkbox label="Admin" onChange={(e, data) => setAdminStatus(data.checked)} />
+				<Checkbox label="Admin" onChange={(e, data) => setAdminStatus(data.checked)} checked={user.is_admin} />
 			</div>
 			<div className="m-t-10">Reset Password</div>
 		</div>
@@ -50,7 +42,7 @@ const UserDetails = ({ user = { isAdmin: true } }) => {
 };
 
 const mapDisptachToProps = {
-  makeAdmin,
+  setUserAsAdmin: makeAdmin,
   revokeAdmin,
 };
 
