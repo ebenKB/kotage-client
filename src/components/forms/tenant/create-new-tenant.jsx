@@ -66,8 +66,10 @@ const CreateNewTenant = ({
       } catch (err) {
         if (err.message.toLowerCase().trim() === 'network error') {
           alert('Please check your internet connection');
+        } else if (err.response.status === 409) {
+          alert('This company has already been provisioned');
         } else {
-          alert('an error occured while processing your request');
+          alert('an error occured... make sure you have active internet connection');
         }
       }
     }
