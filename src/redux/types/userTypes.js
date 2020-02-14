@@ -9,3 +9,4 @@ export const GET_TENANT_ID = 'GET_TENANT_ID';
 export const MAKE_ADMIN = 'MAKE_ADMIN';
 export const REVOKE_ADMIN = 'REVOKE_ADMIN';
 export const REQUEST_PASS_REQUEST = 'REQUEST_PASS_REQUEST';
+export const RESET_PASSWORD = 'RESET_PASSWORD';

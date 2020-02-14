@@ -32,7 +32,7 @@ export const inviteUser = (invitation) => async (dispatch, getState) => {
 export const createUser = (newUser, token, tenant_id) => async (dispatch) => {
   try {
     dispatch(setLoading());
-    const { data } = await Axios.post(`/${tenant_id}/users?token=${token}`, newUser);
+    const { data } = await Axios.post(`/${tenant_id}/users`, newUser);
     dispatch(doneLoading());
     return dispatch({
       type: CREATE_USER,
@@ -171,6 +171,22 @@ export const sendPasswordResetToken = (email) => async (dispatch, getState) => {
   const { data } = await Axios.post(`/${user.currentUser.tenant_id}/users/password_reset`, { email });
   console.log('We are done posting the data', data);
 };
+
+/**
+ * Reset password
+ * @param {*} password the new password
+ * @param {*} password_confirmation the new password confirmation
+ * @param {*} token the token to be used to reset the password
+ * @param {*} tenant_id the tenant that the user belongs to
+ */
+export const resetUserPassword = (password, password_confirmation, token, tenant_id) => async () => new Promise(async (resolve, reject) => {
+  try {
+    const data = await Axios.put(`/${tenant_id}/users/password_update`, { password, password_confirmation, token });
+    resolve(data);
+  } catch (error) {
+    reject(error);
+  }
+});
 
 export const refreshAuthToken = (token) => {
   // check if token is not expired, log the user in
