@@ -55,7 +55,7 @@ export const login = (email, password) => async (dispatch, getState) => new Prom
     dispatch(setLoading());
     // get the tenant that the user belongs to
     const { user } = getState();
-    if (user.currentUser.tenant_id) {
+    if (user.currentUser) {
       const { data } = await Axios.post(`/${user.currentUser.tenant_id}/users/login`, { email, password });
       dispatch(doneLoading());
       const { access_token } = data;
@@ -72,7 +72,7 @@ export const login = (email, password) => async (dispatch, getState) => new Prom
       resolve(data);
     } else {
       // There was no tenant found for the user so the user cannot login
-      reject(new Error({ err: 'Tenant does exist for this user' }));
+      reject(new Error('Tenant does exist for this user'));
       dispatch(doneLoading());
     }
   } catch (error) {
@@ -143,7 +143,7 @@ export const getTenantID = (email) => async (dispatch) => {
       payload: data.tenant,
     });
   } catch (error) {
-    console.log('an error occured');
+    // console.log('an error occured');
   }
 };
 

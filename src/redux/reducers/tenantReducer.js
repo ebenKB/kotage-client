@@ -4,6 +4,7 @@ import {
 
 const initialState = {
   tenants: null,
+  currentTenant: null,
   loading: false,
   error: '',
 };
@@ -15,6 +16,7 @@ export default (state = initialState, action) => {
         ...state,
       };
     }
+
     case SET_LOADING: {
       return {
         ...state,

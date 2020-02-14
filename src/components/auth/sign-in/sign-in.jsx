@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 /* eslint-disable react/jsx-fragments */
 /* eslint-disable react/prop-types */
 import React, { useState, Fragment } from 'react';
@@ -8,25 +9,18 @@ import Input from '../../form-fields/input/input';
 import { ReactComponent as Logo } from '../../../svg/padlock.svg';
 import { ReactComponent as BackArrow } from '../../../svg/back.svg';
 import { login, getTenantID } from '../../../redux/actions/userActions';
+import { getTenant } from '../../../redux/actions/tenantActions';
 import './sign-in.scss';
 import KtLogo from '../../KtLogo/kt-logo';
 
 const SignIn = ({
-  loading, userLogin, checkUserTenant,
+  loading, userLogin, checkUserTenant, currentUser, getCurrentTenant,
 }) => {
   const history = useHistory();
   const [page, setPage] = useState({ page: 1, max: 2 });
   const [user, setUser] = useState({ email: '', password: '' });
   const [loginType, setLoginType] = useState('Buyer');
   const [altLoginType, setAltLoginType] = useState('Supplier');
-
-  const fakeAuth = {
-    isAuthenticated: false,
-    authenticate(cb) {
-      fakeAuth.isAuthenticated = true;
-      setTimeout(cb, 100); // fake async
-    },
-  };
 
   /**
    * Switch between buyer login and supplier login
@@ -91,15 +85,19 @@ const SignIn = ({
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      // check if the tenant details have been found
+      if (currentUser == null) {
+        checkUserTenant(user.email);
+      }
       const data = await userLogin(user.email, user.password);
       if (data.error) {
         alert(data.data.error);
       } else {
         history.push('/');
+        getCurrentTenant(currentUser.tenant_id);
       }
     } catch (error) {
-      console.log(error);
-      // alert(error);
+      console.log(error.message);
     }
   };
 
@@ -212,11 +210,12 @@ const SignIn = ({
 const mapDispatchToProps = {
   userLogin: login,
   checkUserTenant: getTenantID,
+  getCurrentTenant: getTenant,
 };
 
 const mapStateToProps = (state) => ({
   loading: state.user.loading,
-  tenant: state.user.tenant_id,
+  currentUser: state.user.currentUser,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignIn);
