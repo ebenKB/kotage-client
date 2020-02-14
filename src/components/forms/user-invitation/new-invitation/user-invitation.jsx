@@ -38,6 +38,13 @@ class UserInvitation extends React.Component {
     this.props.inviteUser(this.state);
   }
 
+  setMessage = (message) => {
+    this.setState((oldState) => ({
+      ...oldState,
+      message,
+    }));
+  }
+
   render() {
     const {
       firstname, lastname, email, message,
@@ -49,6 +56,7 @@ class UserInvitation extends React.Component {
 		<KtWrapper
 			header="Invite New User"
 			canFilter={false}
+			cancelUrl="/users"
 			canPerform
 			actionName="Send Invitation"
 			handleAction={this.handleSubmit}
@@ -111,7 +119,7 @@ class UserInvitation extends React.Component {
 				<div className="m-t-20 m-b-20">
 					<span className="p-r-8">
 						<Label circular size="big" className="kt-success">
-                2
+              2
 						</Label>
 					</span>
 					<span className="bold">Add a personal message</span>
@@ -121,6 +129,7 @@ class UserInvitation extends React.Component {
 						className="fluid"
 						value={message}
 						name="message"
+						onChange={(e, data) => { this.setMessage(data.value); }}
 					/>
 				</div>
 			</ValidatorForm>

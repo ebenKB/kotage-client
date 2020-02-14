@@ -16,7 +16,7 @@ import {
 export const inviteUser = (invitation) => async (dispatch, getState) => {
   try {
     const { user } = getState();
-    Axios.post(`/${user.tenant_id}/invitations`, invitation);
+    Axios.post(`/${user.currentUser.tenant_id}/invitations`, invitation);
   } catch (error) {
     console.log('an error occurred while inviting the user...', error);
   }
@@ -55,14 +55,19 @@ export const login = (email, password) => async (dispatch, getState) => new Prom
     dispatch(setLoading());
     // get the tenant that the user belongs to
     const { user } = getState();
-    if (user.tenant_id) {
-      const data = await Axios.post(`/${user.tenant_id}/users/login`, { email, password });
+    if (user.currentUser.tenant_id) {
+      const { data } = await Axios.post(`/${user.currentUser.tenant_id}/users/login`, { email, password });
       dispatch(doneLoading());
-      const { access_token } = data.data;
+      const { access_token } = data;
       if (access_token && access_token.length > 0) {
         dispatch(setAuthUser(access_token[0]));
-        // save the user to session storage
-        sessionStorage.setItem('kotage-auth', access_token[0].token);
+
+        // save the user to local storage
+        localStorage.setItem('kotage-auth',
+          JSON.stringify({
+            token: access_token[0].token,
+            user: access_token[0].user_id,
+          }));
       }
       resolve(data);
     } else {
@@ -96,9 +101,8 @@ const setAuthUser = (user) => async (dispatch) => dispatch({
 export const getUsers = () => async (dispatch, getState) => {
   try {
     const { user } = getState();
-    if (user.tenant_id) {
-      const { data } = await Axios.get(`/${user.tenant_id}/users`);
-      console.log(data.users);
+    if (user.currentUser.tenant_id) {
+      const { data } = await Axios.get(`/${user.currentUser.tenant_id}/users`);
       return dispatch({
         type: GET_USERS,
         payload: data.users,
@@ -150,7 +154,7 @@ export const getTenantID = (email) => async (dispatch) => {
 export const setAdminStatus = (newUser) => async (dispatch, getState) => {
   try {
     const { user } = getState();
-    const { data } = await Axios.put(`/${user.tenant_id}/users/${newUser.id}`, newUser);
+    const { data } = await Axios.put(`/${user.currentUser.tenant_id}/users/${newUser.id}`, newUser);
     if (data) {
       return dispatch({
         type: MAKE_ADMIN,
@@ -160,4 +164,17 @@ export const setAdminStatus = (newUser) => async (dispatch, getState) => {
   } catch (error) {
     console.log('an error occured while updating a user', error);
   }
+};
+
+export const sendPasswordResetToken = (email) => async (dispatch, getState) => {
+  const { user } = getState();
+  const { data } = await Axios.post(`/${user.currentUser.tenant_id}/users/password_reset`, { email });
+  console.log('We are done posting the data', data);
+};
+
+export const refreshAuthToken = (token) => {
+  // check if token is not expired, log the user in
+  // if token is expired, redirect to the login
+  // const { token } = localStorage.getItem('kotage-auth');
+  console.log(token);
 };

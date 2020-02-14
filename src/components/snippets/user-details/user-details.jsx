@@ -3,11 +3,11 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Label, Checkbox, Button } from 'semantic-ui-react';
 import './user-details.scss';
-import { setAdminStatus } from '../../../redux/actions/userActions';
+import { setAdminStatus, sendPasswordResetToken } from '../../../redux/actions/userActions';
 import Popup from '../popup/popup';
 
 
-const UserDetails = ({ user, setUserAsAdmin }) => {
+const UserDetails = ({ user, setUserAsAdmin, resetPass }) => {
   // const user = {
   //   id: 999,
   //   name: 'Dorcas Dashie',
@@ -21,6 +21,7 @@ const UserDetails = ({ user, setUserAsAdmin }) => {
   };
 
   const sendResetPassInstructions = () => {
+    resetPass(user.email);
     console.log('we are send the instructions to', user);
   };
 
@@ -36,7 +37,7 @@ const UserDetails = ({ user, setUserAsAdmin }) => {
 			<div>{user.email}</div>
 			<div>{user.email}</div>
 		</div>
-		<div>
+		<div className="sm-caption">
 			<div>
 				<Checkbox label="Admin" onChange={(e, data) => handleSetAdminStatus(data.checked)} checked={user.is_admin} />
 			</div>
@@ -59,7 +60,7 @@ const UserDetails = ({ user, setUserAsAdmin }) => {
 								onClick={sendResetPassInstructions}
 							>
 								{' '}
-                Send signin instructions
+                Send reset instructions
 							</Button>
 						</div>
 					</div>
@@ -72,7 +73,7 @@ const UserDetails = ({ user, setUserAsAdmin }) => {
 
 const mapDisptachToProps = {
   setUserAsAdmin: setAdminStatus,
-
+  resetPass: sendPasswordResetToken,
 };
 
 export default connect(null, mapDisptachToProps)(UserDetails);

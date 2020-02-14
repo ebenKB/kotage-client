@@ -4,16 +4,15 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable react/prefer-stateless-function */
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Button, Dropdown } from 'semantic-ui-react';
 import './kt-wrapper.scss';
-
-import { Link } from 'react-router-dom';
 import SearcFilter from '../search-filter/filter';
 
 class KtWrapper extends React.Component {
   render() {
     let {
-      link = '', linkName = '', header, canFilter, canPerform, handleAction,
+      link = '', linkName = '', header, canFilter, canPerform, handleAction, cancelUrl = '/',
     } = this.props;
 
     // check if there are no defaults
@@ -73,7 +72,9 @@ class KtWrapper extends React.Component {
 		{canPerform && (
 			<div className="kt-wrapper__footer text-right">
 				<div className="content">
-					<Button content="Cancel" className="default" />
+					<Link to={cancelUrl}>
+						<Button content="Cancel" className="default" />
+					</Link>
 					<Button type="submit" content="Save" className="green" onClick={handleAction} />
 				</div>
 			</div>

@@ -1,17 +1,16 @@
 import {
   INVITE_USER, LOGIN, SET_USER_LOADING, DONE_LOADING,
-  GET_USERS, GET_INVIATION, CREATE_USER, GET_TENANT_ID, MAKE_ADMIN, REVOKE_ADMIN,
+  GET_USERS, GET_INVIATION, CREATE_USER, GET_TENANT_ID,
+  MAKE_ADMIN, REVOKE_ADMIN, REQUEST_PASS_REQUEST,
 } from '../types/userTypes';
 
 const initialState = {
   users: null,
   currentUser: null,
   isAuthenticated: false,
-  auth_token: null,
   error: false,
   loading: false,
   invitation: null,
-  tenant_id: null,
 };
 
 export default (state = initialState, action) => {
@@ -38,9 +37,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         isAuthenticated: true,
-        currentUser: action.payload.user_id,
-        auth_token: action.payload.token,
-        tenant: action.payload.tenant_id,
+        currentUser: action.payload,
       };
 
     case SET_USER_LOADING:
@@ -64,15 +61,15 @@ export default (state = initialState, action) => {
     }
 
     case GET_TENANT_ID: {
+      const currentUser = { tenant_id: action.payload };
       return {
         ...state,
-        tenant_id: action.payload,
+        currentUser,
       };
     }
 
     case MAKE_ADMIN: {
       const user = action.payload;
-      console.log('Users in the state', { state });
       const newUsers = state.users.filter((u) => u.id !== user.id);
       return {
         ...state,
@@ -89,6 +86,11 @@ export default (state = initialState, action) => {
       };
     }
 
+    case REQUEST_PASS_REQUEST: {
+      return {
+        ...state,
+      };
+    }
     default:
       return {
         ...state,
