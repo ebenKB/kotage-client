@@ -53,7 +53,7 @@ class UserInvitation extends React.Component {
 
   render() {
     const {
-      firstname, lastname, email, message,
+      firstname, lastname, email,
     } = this.state;
     return (
 	<MainContent
@@ -133,10 +133,9 @@ class UserInvitation extends React.Component {
 				<div className="ui form m-t-20">
 					<KtTextArea
 						className="fluid"
-						value={message}
 						placeholder="Enter a message for this user"
 						name="message"
-						onChange={(e, data) => { this.setMessage(data.value); }}
+						onChange={(data) => { this.setMessage(data); }}
 					/>
 				</div>
 			</ValidatorForm>
