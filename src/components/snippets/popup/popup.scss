@@ -1,0 +1,21 @@
+.ui.popup.user-details {
+  padding: 0;
+  font-size: 0.9rem;
+}
+
+.ui.popup .popup-wrapper .popup-header {
+  // background: var(--kotage-light);
+  border-bottom: 1px solid #DFDFDF;
+  color: var(--kt-dark);
+  padding: 12px 8px;
+  font-weight: 600;
+}
+
+.ui.popup .popup-body {
+  background: var(--kt-white);
+  padding: 20px;
+}
+
+.ui.popup .popup-body p {
+  margin-bottom: 20px;
+}

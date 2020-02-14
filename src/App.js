@@ -11,6 +11,8 @@ import PageNotFound from './pages/_404';
 import UserInvitation from './components/forms/user-invitation/new-invitation/user-invitation';
 import CreateNewTenant from './components/forms/tenant/create-new-tenant';
 import CreateUser from './components/forms/user/create-user/create-user';
+import ResetPassword from './components/forms/user/reset-password/reset-password';
+import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 
 const Home = lazy(() => import('./pages/home'));
 const NewRequisition = lazy(() => import('./components/forms/requisitions/new/new-requisitions'));
@@ -18,6 +20,7 @@ const Requisitions = lazy(() => import('./components/forms/requisitions/show/req
 const Newquote = lazy(() => import('./components/forms/quotes/new/new-quote'));
 const RFX = lazy(() => import('./components/rfx/rfx'));
 const Vendors = lazy(() => import('./components/forms/vendors/vendors'));
+const Users = lazy(() => import('./components/forms/user/show-users/show-users'));
 
 const routes = [
   {
@@ -28,6 +31,14 @@ const routes = [
   {
     path: '/auth/signin',
     main: () => <SignIn />,
+  },
+  {
+    path: '/auth/password/:token',
+    main: () => <ResetPassword />,
+  },
+  {
+    path: '/users',
+    main: () => <Users />,
   },
   {
     path: '/user/invitation',
@@ -73,6 +84,9 @@ function App() {
 			<Route path="/auth/signin">
 				<SignIn />
 			</Route>
+			<Route path="/auth/password/:token">
+				<ResetPassword />
+			</Route>
 			<Route exact path="/user/invitation/confirm/:token">
 				<CreateUser />
 			</Route>
@@ -90,12 +104,13 @@ function App() {
 					{routes.map((route, index) => (
 					// Render more <Route>s with the same paths as
 					// above, but different components this time.
-						<Route
+						<ProtectedRoute
 							key={index}
 							path={route.path}
 							exact={route.exact}
-							component={route.main}
-						/>
+						>
+							<route.main />
+						</ProtectedRoute>
 					))}
 				</Layout>
 			</Suspense>

@@ -44,6 +44,13 @@ class UserInvitation extends React.Component {
     this.props.inviteUser(this.state);
   }
 
+  setMessage = (message) => {
+    this.setState((oldState) => ({
+      ...oldState,
+      message,
+    }));
+  }
+
   render() {
     const {
       firstname, lastname, email, message,
@@ -55,6 +62,7 @@ class UserInvitation extends React.Component {
 		<KtWrapper
 			header="Invite New User"
 			canFilter={false}
+			cancelUrl="/users"
 			canPerform
 			actionName="Send Invitation"
 			handleAction={this.handleSubmit}
@@ -127,7 +135,8 @@ class UserInvitation extends React.Component {
 						className="fluid"
 						value={message}
 						placeholder="Enter a message for this user"
-						onChange={(msg) => this.setMessage(msg)}
+						name="message"
+						onChange={(e, data) => { this.setMessage(data.value); }}
 					/>
 				</div>
 			</ValidatorForm>

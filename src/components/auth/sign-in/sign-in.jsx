@@ -92,13 +92,14 @@ const SignIn = ({
     e.preventDefault();
     try {
       const data = await userLogin(user.email, user.password);
-      if (data.data.error) {
+      if (data.error) {
         alert(data.data.error);
       } else {
         history.push('/');
       }
     } catch (error) {
-      alert('an error occurred');
+      console.log(error);
+      // alert(error);
     }
   };
 

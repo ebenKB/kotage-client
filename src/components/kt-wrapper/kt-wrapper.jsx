@@ -4,16 +4,15 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable react/prefer-stateless-function */
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Button, Dropdown } from 'semantic-ui-react';
 import './kt-wrapper.scss';
-
-import { Link } from 'react-router-dom';
 import SearcFilter from '../search-filter/filter';
 
 class KtWrapper extends React.Component {
   render() {
     let {
-      link = '', linkName = '', header, canFilter, canPerform, handleAction,
+      link = '', linkName = '', header, canFilter, canPerform, handleAction, cancelUrl = '/',
     } = this.props;
 
     // check if there are no defaults
@@ -51,14 +50,17 @@ class KtWrapper extends React.Component {
 		<div className="kt-wrapper__header bold">
 			<h2>{header}</h2>
 			<div>
-				{canFilter && (
-					<div>
+				<div>
+					{canFilter && (
 						<Dropdown placeholder="Filter records" selection options={options} onChange={handleChange} className="m-r-20 " />
+					)}
+					{linkName.length > 0 && (
 						<Link to={link} className="action-link green ui button">
 							{linkName}
 						</Link>
-					</div>
-				)}
+					)}
+				</div>
+
 			</div>
 		</div>
 		<div className="kt-wrapper__body">
@@ -70,7 +72,9 @@ class KtWrapper extends React.Component {
 		{canPerform && (
 			<div className="kt-wrapper__footer text-right">
 				<div className="content">
-					<Button content="Cancel" className="default" />
+					<Link to={cancelUrl}>
+						<Button content="Cancel" className="default" />
+					</Link>
 					<Button type="submit" content="Save" className="green" onClick={handleAction} />
 				</div>
 			</div>
