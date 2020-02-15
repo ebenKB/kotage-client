@@ -122,39 +122,6 @@ function App() {
 				<PageNotFound />
 			</Route>
 		</Switch>
-		{/* <Switch>
-			<Suspense fallback={<Layout><h1> loading ...</h1> </Layout>} >
-      <ProtectedRoute exact path="/auth/signin" component= {SignIn} />
-      <Layout >
-				<ProtectedRoute exact path="/" component={Home}/>
-
-
-				<ProtectedRoute exact path="/rfx" component={<RFX/>}/>
-        <ProtectedRoute exact path="/requisitions" component={Requisitions}/>
-				<ProtectedRoute exact path="/requisitions/new" component={NewRequisition}/>
-				<ProtectedRoute exact path="/quotes/new" component={Newquote}/>
-				<ProtectedRoute exact path="/vendors/new" component={Vendors}/>
-        </Layout>
-        <ProtectedRoute  path="*" component={PageNotFound}   />
-			</Suspense>
-
-		</Switch>
-  */}
-
-		{/* <Switch>
-			<Route  path="/auth/signin" component={SignIn}/>
-			<Layout>
-				<Suspense fallback={<h1> loading ...</h1>}>
-					<ProtectedRoute exact path="/"> <Home /> </ProtectedRoute>
-					<ProtectedRoute exact path="/requisitions" > <Requisitions/> </ProtectedRoute>
-					<ProtectedRoute exact path="/requisitions/new" >  <NewRequisition/> </ProtectedRoute>
-					<ProtectedRoute exact path="/quotes/new" > <Newquote/> </ProtectedRoute>
-					<ProtectedRoute exact path="/rfx"> <RFX/> </ProtectedRoute>
-					<ProtectedRoute exact path="/vendors/new" > <Vendors/> </ProtectedRoute>
-				</Suspense>
-				<Route > <PageNotFound/> </Route>
-			</Layout>
-		</Switch> */}
 	</Provider>
   );
 }

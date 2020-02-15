@@ -93,8 +93,8 @@ const SignIn = ({
       if (data.error) {
         alert(data.data.error);
       } else {
-        history.push('/');
         getCurrentTenant(currentUser.tenant_id);
+        history.push('/');
       }
     } catch (error) {
       console.log(error.message);

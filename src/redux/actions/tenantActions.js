@@ -7,6 +7,10 @@ import {
   SET_LOADING, DONE_LOADING, SET_ERROR, GET_TENANT,
 } from '../types/tenantTypes';
 
+/**
+ * this function creates a new tenant
+ * @param {*} tenant the tenant to create
+ */
 export const createTenant = (tenant) => async () => new Promise((resolve, reject) => {
   try {
     const data = Axios.post('tenants', tenant);
@@ -16,6 +20,10 @@ export const createTenant = (tenant) => async () => new Promise((resolve, reject
   }
 });
 
+/**
+ * this function retrieves one tenant from the databse
+ * @param {*} tenant_id the id of the tenant to fetch
+ */
 export const getTenant = (tenant_id) => async (dispatch) => {
   try {
     const { data } = await Axios.get(`/${tenant_id}`);
@@ -31,6 +39,10 @@ export const getTenant = (tenant_id) => async (dispatch) => {
   }
 };
 
+/**
+ * This function checks whether a tenant domain is already registered or not
+ * @param {*} domain the tenat domain to validate
+ */
 export const validateDomain = (domain) => async (dispatch) => (
   new Promise(async (resolve, reject) => {
     try {
