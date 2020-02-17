@@ -71,8 +71,12 @@
 // mobile devices
 @media only screen and (max-width: 600px){
   .signin__wrapper {
-    width: 100%;
+    width: 90%;
     padding-top: 40%;
+  }
+
+  .signin__content {
+    width: 100%;
   }
 }
 /* Medium devices (landscape tablets, 768px and up) */
