@@ -130,7 +130,6 @@ class Requisitions extends React.Component {
     return (
 	<MainContent
 		help={help}
-		classes="m-t-20"
 	>
 		<KtWrapper
 			header="New Requisition"
