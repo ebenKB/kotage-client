@@ -118,7 +118,7 @@ svg.faint {
 
 .small-form__wrapper {
   width: 360px;
-  border: 1px solid rgba(212, 212, 213, 0.7);
+  border: 1px solid #e8e9e9;
   box-sizing: border-box;
   box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.1);
   border-radius: 4px;
@@ -128,4 +128,12 @@ svg.faint {
 
 .fit-auto {
   margin: auto;
+}
+
+
+/* media queries  */
+@media only screen and (max-width: 600px) {
+  .small-form__wrapper {
+    width: 96%;
+  }
 }

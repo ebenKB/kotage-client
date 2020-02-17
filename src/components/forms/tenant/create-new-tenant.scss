@@ -3,6 +3,7 @@
   width: 360px;
   margin: auto;
 }
+
 .tenant.small-form__wrapper {
   // border-top: 4px solid var(--kt-green);
   background: var(--kt-white);
@@ -37,4 +38,15 @@
   top: 2px;
   width: 12px;
   height: 12px;
+}
+
+// media queries 
+@media only screen and (max-width: 600px) {
+  .tenant-form__content {
+    width: 90%;
+  }
+
+  .tenant-form__content.p-t-280 {
+    padding-top: 180px;
+  }
 }
