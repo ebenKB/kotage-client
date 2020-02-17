@@ -29,11 +29,6 @@
   font-size: 0.85rem;
 }
 
-// .sigin__content-logo {
-//   text-align: center;
-//   padding: 20px;
-// }
-
 .signin__footer {
   text-align: center;
   padding-bottom: 10px;
@@ -43,10 +38,6 @@
   animation: slideInRight 0.3s ease-in-out 0s 1 forwards normal;
   background: var(--white);
 }
-
-// .signin__wrapper img.small.logo {
-//   width: 120px;
-// }
 
 .signin__wrapper .ui.button,
 .signin__wrapper .ui.form input  {
@@ -77,11 +68,16 @@
   color: var(--kt-blue)
 }
 
+// mobile devices
+@media only screen and (max-width: 600px){
+  .signin__wrapper {
+    width: 100%;
+    padding-top: 40%;
+  }
+}
 /* Medium devices (landscape tablets, 768px and up) */
 @media only screen and (min-width: 768px) {
-  body {
-    // background: red !important;
-  }
+
 }
 
 /* Large devices (laptops/desktops, 992px and up) */
