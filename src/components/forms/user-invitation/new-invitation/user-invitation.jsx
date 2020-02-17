@@ -57,7 +57,7 @@ class UserInvitation extends React.Component {
     } = this.state;
     return (
 	<MainContent
-		classes="user-invitation"
+		classes="user-invitation m-t-20"
 	>
 		<KtWrapper
 			header="Invite New User"

@@ -19,7 +19,9 @@ class showUsers extends React.Component {
     const { users } = this.props;
     return (
 	<div>
-		<MainContent>
+		<MainContent
+			classes="m-t-20"
+		>
 			<KtWrapper
 				header="Users"
 				link="user/invitation"
