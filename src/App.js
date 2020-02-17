@@ -29,18 +29,22 @@ const routes = [
     main: () => <Home />,
   },
   {
+    exact: true,
     path: '/auth/signin',
     main: () => <SignIn />,
   },
   {
+    exact: true,
     path: '/auth/password/:token',
     main: () => <ResetPassword />,
   },
   {
+    exact: true,
     path: '/users',
     main: () => <Users />,
   },
   {
+    exact: true,
     path: '/user/invitation',
     main: () => <UserInvitation />,
   },
