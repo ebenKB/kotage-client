@@ -1,8 +1,16 @@
 /* eslint-disable import/prefer-default-export */
 export const isValidEmail = (email) => (/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(email));
 
+/**
+ * This function takes a string and changes the first letter to Capital
+ * @param {*} text The text to titleize
+*/
 export const titleize = (text) => {
-  const data = text.split('');
-  const newdata = data[0].toUpperCase();
-  return `${newdata}${data.splice(1).join('')}`;
+  try {
+    const data = text.split('');
+    const newdata = data[0].toUpperCase();
+    return `${newdata}${data.splice(1).join('')}`;
+  } catch (err) {
+    return text;
+  }
 };
