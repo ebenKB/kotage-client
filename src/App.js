@@ -50,12 +50,12 @@ const routes = [
   },
   {
     exact: true,
-    path: '/requisitions',
+    path: '/:company_id/requisitions',
     main: () => <Requisitions />,
   },
   {
     exact: true,
-    path: '/requisitions/new',
+    path: '/:company_id/requisitions/new',
     main: () => <NewRequisition />,
   },
 
@@ -125,4 +125,5 @@ function App() {
 	</Provider>
   );
 }
+
 export default App;

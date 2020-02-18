@@ -1,10 +1,13 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable react/destructuring-assignment */
 import React from 'react';
+import { connect } from 'react-redux';
 import '../../App.css';
 import Header from '../header/header';
 import SideBar from '../navigation/navigation';
 import Message from '../kt-floating-message/message';
+import Notification from '../Notification/notification';
+
 
 const Layout = (props) => (
 	<div className="App light-theme">
@@ -17,6 +20,9 @@ const Layout = (props) => (
 				</div>
 			</div>
 			<div>
+				{props.notification && (
+					<Notification />
+				)}
 				{props.children}
 			</div>
 			<Message />
@@ -24,4 +30,8 @@ const Layout = (props) => (
 	</div>
 );
 
-export default Layout;
+const mapStateToProps = (state) => ({
+  notification: state.app.error,
+});
+
+export default connect(mapStateToProps, null)(Layout);

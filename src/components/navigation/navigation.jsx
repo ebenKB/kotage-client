@@ -1,11 +1,13 @@
+/* eslint-disable react/prop-types */
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Accordion, Menu } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import { ReactComponent as Logo } from '../../svg/home.svg';
 
 import './navigation.scss';
 
-export default class AccordionStandard extends Component {
+class AccordionStandard extends Component {
   constructor(props) {
     super(props);
     this.state = { activeIndex: 0 };
@@ -20,12 +22,13 @@ export default class AccordionStandard extends Component {
 
   render() {
     const { activeIndex } = this.state;
+    const { currentTenant } = this.props;
     return (
 	<div className="nav-wrapper">
 		<div className="m-l-16 m-b-15 content menu-option bold">
 			<Link to="/">
 				<Logo className="kt-logo__small" />
-            Home
+          Home
 			</Link>
 		</div>
 		<Accordion as={Menu} vertical>
@@ -57,9 +60,11 @@ export default class AccordionStandard extends Component {
 					onClick={this.handleClick}
 					className="m-b-10 bold"
 				/>
-				<Accordion.Content active={activeIndex === 1} className="menu-option">
-					<Link to="/requisitions">Requisitions</Link>
-				</Accordion.Content>
+				{currentTenant && (
+					<Accordion.Content active={activeIndex === 1} className="menu-option">
+						<Link to={`/${currentTenant.account_id}/requisitions`}>Requisitions</Link>
+					</Accordion.Content>
+				)}
 			</Menu.Item>
 		</Accordion>
 		<Accordion as={Menu} vertical>
@@ -88,3 +93,11 @@ export default class AccordionStandard extends Component {
     );
   }
 }
+
+const mapStateToProps = (state) => (
+  {
+    currentTenant: state.tenant.currentTenant,
+  }
+);
+
+export default connect(mapStateToProps, null)(AccordionStandard);

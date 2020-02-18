@@ -130,6 +130,9 @@ svg.faint {
   margin: auto;
 }
 
+.fadeOut {
+  animation: fadeOut 1s ease-in-out 0s 1 forwards normal;
+}
 
 /* media queries  */
 @media only screen and (max-width: 600px) {

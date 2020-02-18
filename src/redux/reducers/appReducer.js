@@ -1,7 +1,10 @@
 import { SET_APP_ERROR } from '../types/appTypes';
 
 const initialState = {
-  error: '',
+  error: {
+    type: 'error',
+    message: 'Sorry! an error occured',
+  },
 };
 
 export default (state = initialState, action) => {
