@@ -13,6 +13,9 @@ import { Link } from 'react-router-dom';
 import FormGroup from '../../../form-fields/form-group/form-group';
 import { getInvitation, login, createUser } from '../../../../redux/actions/userActions';
 
+/**
+ * This component is used to create a new user from an invitation
+ */
 class CreateUser extends React.Component {
   constructor(props) {
     super(props);
@@ -73,7 +76,7 @@ class CreateUser extends React.Component {
     return (
 	<div>
 		{invitation && (
-			<div className="p-t-150 ">
+			<div className="p-t-150 user-form">
 				<p className="text-center">
           Used Kotage before?
 					<Link to="/auth/signin"> Login</Link>

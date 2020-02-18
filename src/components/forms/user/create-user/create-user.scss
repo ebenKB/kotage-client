@@ -2,6 +2,8 @@
   background: var(--kt-white);
 }
 
-// .user .small-form__wrapper div {
-//   display: inline;
-// }
+@media only screen and (max-width: 600px) {
+  .p-t-150.user-form {
+    padding-top: 50px;
+  }
+}
