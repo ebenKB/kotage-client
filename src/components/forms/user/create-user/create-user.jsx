@@ -153,7 +153,7 @@ class CreateUser extends React.Component {
 						<div className="m-t-18">
 							<FormGroup
 								type="password"
-								placeholder="Enter password"
+								placeholder="Confirm your password"
 								label="Password Confirmation"
 								labelName="password"
 								value={password_confirmation}
