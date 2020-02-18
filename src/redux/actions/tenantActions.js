@@ -24,18 +24,23 @@ export const createTenant = (tenant) => async () => new Promise((resolve, reject
  * this function retrieves one tenant from the databse
  * @param {*} tenant_id the id of the tenant to fetch
  */
-export const getTenant = (tenant_id) => async (dispatch) => {
-  try {
-    const { data } = await Axios.get(`/${tenant_id}`);
-    return dispatch({
-      type: GET_TENANT,
-      payload: data,
-    });
-  } catch (error) {
-    return dispatch({
-      type: SET_APP_ERROR,
-      payload: error,
-    });
+export const getTenant = (tenant_id) => async (dispatch, getState) => {
+  const { tenant } = getState();
+  if (tenant.currentTenant == null) {
+    try {
+      const { data } = await Axios.get(`/${tenant_id}`);
+      return dispatch({
+        type: GET_TENANT,
+        payload: data.tenant,
+      });
+    } catch (error) {
+      return dispatch({
+        type: SET_APP_ERROR,
+        payload: error,
+      });
+    }
+  } else {
+    return null;
   }
 };
 

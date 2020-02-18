@@ -12,6 +12,8 @@ import './create-user.scss';
 import { Link } from 'react-router-dom';
 import FormGroup from '../../../form-fields/form-group/form-group';
 import { getInvitation, login, createUser } from '../../../../redux/actions/userActions';
+import { getTenant } from '../../../../redux/actions/tenantActions';
+import { titleize } from '../../../../utils/app';
 
 /**
  * This component is used to create a new user from an invitation
@@ -36,8 +38,13 @@ class CreateUser extends React.Component {
   componentDidMount() {
     const { token } = this.props.match.params;
     const { search } = this.props.location;
+    const { getCurrentTenant } = this.props;
     const access_token = search.split('&')[0].split('=')[1];
     const tenant_id = search.split('&')[1].split('=')[1];
+    // retrieve the tenant that the invitation belons to
+    getCurrentTenant(tenant_id);
+
+    // update the current state
     this.setState((oldSate) => ({
       ...oldSate,
       access_token,
@@ -71,11 +78,11 @@ class CreateUser extends React.Component {
   }
 
   render() {
-    const { invitation } = this.props;
+    const { invitation, currentTenant } = this.props;
     const { password, password_confirmation } = this.state;
     return (
 	<div>
-		{invitation && (
+		{invitation && currentTenant && (
 			<div className="p-t-150 user-form">
 				<p className="text-center">
           Used Kotage before?
@@ -84,7 +91,10 @@ class CreateUser extends React.Component {
 				<div className="user small-form__wrapper fit-auto">
 					<div className="kt-header caption bold text-center big-caption m-t-10 m-b-30">
 						<span>Join</span>
-						<span className="big"> Apotica</span>
+						<span className="big">
+							{' '}
+							{ titleize(currentTenant.company_name) }
+						</span>
 						<span> on Kotage</span>
 					</div>
 					<ValidatorForm
@@ -183,12 +193,14 @@ class CreateUser extends React.Component {
 }
 
 const mapDispatchToProps = {
+  getCurrentTenant: getTenant,
   getInvitation,
   createUser,
   login,
 };
 
 const mapStateToProps = (state) => ({
+  currentTenant: state.tenant.currentTenant,
   loading: state.user.loading,
   invitation: state.user.invitation,
 });
