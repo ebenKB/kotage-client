@@ -1,5 +1,5 @@
 import {
-  CREATE_TENANT, SET_LOADING, DONE_LOADING, SET_ERROR,
+  CREATE_TENANT, SET_LOADING, DONE_LOADING, SET_ERROR, GET_TENANT,
 } from '../types/tenantTypes';
 
 const initialState = {
@@ -36,6 +36,12 @@ export default (state = initialState, action) => {
       };
     }
 
+    case GET_TENANT: {
+      return {
+        ...state,
+        currentTenant: action.payload,
+      };
+    }
     default: {
       return {
         ...state,

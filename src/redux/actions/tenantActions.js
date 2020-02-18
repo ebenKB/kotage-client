@@ -1,7 +1,11 @@
+/* eslint-disable camelcase */
 /* eslint-disable no-use-before-define */
 /* eslint-disable no-async-promise-executor */
 import Axios from '../../utils/axios/axios';
-import { SET_LOADING, DONE_LOADING, SET_ERROR } from '../types/tenantTypes';
+import {
+  SET_LOADING, DONE_LOADING, SET_ERROR, GET_TENANT,
+} from '../types/tenantTypes';
+import { SET_APP_ERROR } from '../types/appTypes';
 
 export const createTenant = (tenant) => async () => new Promise((resolve, reject) => {
   try {
@@ -11,6 +15,21 @@ export const createTenant = (tenant) => async () => new Promise((resolve, reject
     reject(error);
   }
 });
+
+export const getTenant = (tenant_id) => async (dispatch) => {
+  try {
+    const { data } = await Axios.get(`/${tenant_id}`);
+    return dispatch({
+      type: GET_TENANT,
+      payload: data,
+    });
+  } catch (error) {
+    return dispatch({
+      type: SET_APP_ERROR,
+      payload: error,
+    });
+  }
+};
 
 export const validateDomain = (domain) => async (dispatch) => (
   new Promise(async (resolve, reject) => {
