@@ -1,3 +1,4 @@
+/* eslint-disable no-mixed-operators */
 /* eslint-disable react/prop-types */
 import React from 'react';
 import { connect } from 'react-redux';
@@ -7,7 +8,9 @@ import { setAdminStatus, sendPasswordResetToken } from '../../../redux/actions/u
 import Popup from '../popup/popup';
 
 
-const UserDetails = ({ user, setUserAsAdmin, resetPass }) => {
+const UserDetails = ({
+  user, setUserAsAdmin, resetPass, currentTenant, currentUser,
+}) => {
   // const user = {
   //   id: 999,
   //   name: 'Dorcas Dashie',
@@ -22,7 +25,6 @@ const UserDetails = ({ user, setUserAsAdmin, resetPass }) => {
 
   const sendResetPassInstructions = () => {
     resetPass(user.email);
-    console.log('we are send the instructions to', user);
   };
 
   return (
@@ -33,39 +35,47 @@ const UserDetails = ({ user, setUserAsAdmin, resetPass }) => {
 			</Label>
 		</div>
 		<div>
-			<h2>{`${user.firstname} ${user.lastname}`}</h2>
-			<div>{user.email}</div>
-			<div>{user.email}</div>
+			<div className="name-caption">
+				<h3>{`${user.firstname} ${user.lastname}`}</h3>
+				{!user.tenant_id && (<span className="xsm-caption">Invited</span>)}
+			</div>
+			<div className="sm-caption">{user.email}</div>
+			<div className="sm-caption">{user.email}</div>
 		</div>
-		<div className="sm-caption">
+		<div className="xsm-caption">
+			{currentTenant.email === user.email && (
+				<div>Account owner</div>
+			)}
 			<div>
-				<Checkbox label="Admin" onChange={(e, data) => handleSetAdminStatus(data.checked)} checked={user.is_admin} />
+				{user.id !== currentUser.user_id && currentUser.is_admin && (
+					<Checkbox className="xsm-caption" label="Admin" onChange={(e, data) => handleSetAdminStatus(data.checked)} checked={user.is_admin} />
+				)}
 			</div>
-			<div className="m-t-10">
-				<Popup
-					position="top center"
-					trigger="Reset password"
-					classes="user-details"
-				>
-					<div className="popup-wrapper">
-						{/* <div className="popup-header">
-							<p>Did nameOfUser forget how to login?</p>
-						</div> */}
-						<div className="popup-body">
-							<p>Send an email to this user that explains how to set a new password</p>
-							<Button
-								size="tiny"
-								fluid
-								color="green"
-								onClick={sendResetPassInstructions}
-							>
-								{' '}
-                Send reset instructions
-							</Button>
+			{currentTenant.email !== user.email && (
+				<div className="m-t-10">
+					<Popup
+						position="top center"
+						trigger="Reset password"
+						classes="user-details"
+					>
+
+						<div className="popup-wrapper">
+							<div className="popup-body">
+								<p>Send an email to this user that explains how to set a new password</p>
+								<Button
+									size="tiny"
+									fluid
+									color="green"
+									onClick={sendResetPassInstructions}
+								>
+									{' '}
+                    Send reset instructions
+								</Button>
+							</div>
 						</div>
-					</div>
-				</Popup>
-			</div>
+					</Popup>
+				</div>
+			)}
 		</div>
 	</div>
   );
@@ -76,4 +86,9 @@ const mapDisptachToProps = {
   resetPass: sendPasswordResetToken,
 };
 
-export default connect(null, mapDisptachToProps)(UserDetails);
+const mapStateToProps = (state) => ({
+  currentTenant: state.tenant.currentTenant,
+  currentUser: state.user.currentUser,
+});
+
+export default connect(mapStateToProps, mapDisptachToProps)(UserDetails);

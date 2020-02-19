@@ -1,8 +1,6 @@
 import axios from 'axios';
-import State from '../../redux/store';
 
 const getToken = () => {
-  console.log('This is the state', State.getState());
   const ktToken = localStorage.getItem('kotage-auth');
   if (ktToken != null) {
     const { token } = JSON.parse(ktToken);

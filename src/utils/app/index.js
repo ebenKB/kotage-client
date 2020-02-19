@@ -14,3 +14,12 @@ export const titleize = (text) => {
     return text;
   }
 };
+
+export const pretifyMessage = (message) => {
+  if (message.toLowerCase() === 'network error') {
+    return 'Please check your internet connection';
+  } if (message.toLowerCase() === 'tenant not found') {
+    return 'The tenant you are looking for could not be  found';
+  }
+  return message;
+};

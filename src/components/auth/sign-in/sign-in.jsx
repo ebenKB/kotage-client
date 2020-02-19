@@ -12,9 +12,10 @@ import { login, getTenantID } from '../../../redux/actions/userActions';
 import { getTenant } from '../../../redux/actions/tenantActions';
 import './sign-in.scss';
 import KtLogo from '../../KtLogo/kt-logo';
+import Notification from '../../Notification/notification';
 
 const SignIn = ({
-  loading, userLogin, checkUserTenant, currentUser, getCurrentTenant,
+  loading, userLogin, checkUserTenant, currentUser, getCurrentTenant, notification,
 }) => {
   const history = useHistory();
   const [page, setPage] = useState({ page: 1, max: 2 });
@@ -198,6 +199,16 @@ const SignIn = ({
             Login
 					</span>
 				</div>
+				<div className="m-b-10 m-t-5">
+					{notification && (
+						<Notification
+							type="minimal"
+						/>
+					)}
+					{/* { notification && (
+						<span className="kt-danger">{pretifyMessage(notification.message)}</span>
+					) } */}
+				</div>
 				{
           getPage()
         }
@@ -216,6 +227,7 @@ const mapDispatchToProps = {
 const mapStateToProps = (state) => ({
   loading: state.user.loading,
   currentUser: state.user.currentUser,
+  notification: state.app.notification,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignIn);

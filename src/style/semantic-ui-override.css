@@ -66,3 +66,7 @@
 .ui.basic.green.button, .ui.basic.green.buttons .button {
   color: var(--kt-green) !important;
 }
+
+.xsm-caption .ui.checkbox label {
+  font-size: 0.85rem;
+}

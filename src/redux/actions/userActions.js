@@ -6,8 +6,9 @@
 import Axios from '../../utils/axios/axios';
 import {
   SET_USER_LOADING, DONE_LOADING, LOGIN, GET_INVIATION, GET_USERS,
-  GET_TENANT_ID, CREATE_USER, MAKE_ADMIN,
+  GET_TENANT_ID, CREATE_USER, MAKE_ADMIN, GET_INVIATIONS,
 } from '../types/userTypes';
+import { SET_APP_NOTIFICATION } from '../types/appTypes';
 
 /**
  * This function is used to send a new invitation to a user
@@ -103,13 +104,30 @@ export const getUsers = () => async (dispatch, getState) => {
     const { user } = getState();
     if (user.currentUser.tenant_id) {
       const { data } = await Axios.get(`/${user.currentUser.tenant_id}/users`);
+      const { users } = data;
+
       return dispatch({
         type: GET_USERS,
-        payload: data.users,
+        payload: users,
       });
     }
   } catch (error) {
-    console.log('an error occurred');
+    console.log('an error occurred', error);
+  }
+};
+
+export const getInvitations = () => async (dispatch, getState) => {
+  try {
+    const { user } = getState();
+    if (user.currentUser.tenant_id) {
+      const { data } = await Axios.get(`/${user.currentUser.tenant_id}/invitations`);
+      return dispatch({
+        type: GET_INVIATIONS,
+        payload: data.invitations,
+      });
+    }
+  } catch (error) {
+    console.log('an error occured', error);
   }
 };
 
@@ -143,7 +161,22 @@ export const getTenantID = (email) => async (dispatch) => {
       payload: data.tenant,
     });
   } catch (error) {
-    // console.log('an error occured');
+    if (error && error.response.status === 404) {
+      return dispatch({
+        type: SET_APP_NOTIFICATION,
+        payload: {
+          type: 'error',
+          message: 'No company found with this domain',
+        },
+      });
+    }
+    return dispatch({
+      type: SET_APP_NOTIFICATION,
+      payload: {
+        type: 'error',
+        message: error.message,
+      },
+    });
   }
 };
 

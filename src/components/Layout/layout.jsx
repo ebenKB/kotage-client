@@ -31,7 +31,7 @@ const Layout = (props) => (
 );
 
 const mapStateToProps = (state) => ({
-  notification: state.app.error,
+  notification: state.app.notification,
 });
 
 export default connect(mapStateToProps, null)(Layout);

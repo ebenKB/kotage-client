@@ -6,7 +6,7 @@
 
 body {
   /* font-size: 16px; */
-  font-size: 14px;
+  font-size: 100%;
   font-family: 'Open Sans', sans-serif;
   background: rgba(235, 238, 235, 0.35);
   color: var(--kotage-dark);
@@ -85,6 +85,10 @@ ul.custom {
 
 .sm-caption {
   font-size: 0.9rem;
+}
+
+.xsm-caption {
+  font-size: 0.85rem;
 }
 
 .kt-logo__small.kt-primary {

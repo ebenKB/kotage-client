@@ -1,9 +1,12 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable import/no-unresolved */
 import React from 'react';
+import { Button } from 'semantic-ui-react';
 import './notification.scss';
 import { connect } from 'react-redux';
 import { ReactComponent as Icon } from '../../svg/cancel-white.svg';
+import { clearNotification } from '../../redux/actions/appActions';
+import { pretifyMessage } from '../../utils/app/index';
 
 class Notification extends React.Component {
   constructor(props) {
@@ -14,21 +17,31 @@ class Notification extends React.Component {
   }
 
   componentDidMount() {
-    // this.disAbleNotification();
-    // call a function to clear app errors
+    setTimeout(() => {
+      const { clearAppNotification } = this.props;
+      clearAppNotification();
+    }, 10000);
   }
 
+ clearNotification = () => {
+   const { clearAppNotification } = this.props;
+   clearAppNotification();
+ }
+
   getNotification = () => {
+    const { type } = this.props;
     const { appError } = this.props;
     if (appError.type === 'error') {
       return (
-	<div className="notification error">
+	<div className={`${type !== 'minimal' ? 'notification' : 'minimal'} kt-danger`}>
 		<span>
-			{ appError.message }
+			{ pretifyMessage(appError.message) }
 		</span>
-		<span>
-			<Icon className="small logo" />
-		</span>
+		{type !== 'minimal' && (
+			<Button size="tiny" onClick={this.clearNotification}>
+				<Icon className="small logo" />
+			</Button>
+		)}
 	</div>
       );
     }
@@ -36,7 +49,7 @@ class Notification extends React.Component {
   };
 
   disAbleNotification = () => {
-    setTimeout(() => { this.setState({ isActive: false }); }, 5000);
+    setTimeout(() => { this.setState({ isActive: false }); }, 4000);
   };
 
   render() {
@@ -50,7 +63,11 @@ class Notification extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  appError: state.app.error,
+  appError: state.app.notification,
 });
 
-export default connect(mapStateToProps, null)(Notification);
+const mapDispatchToProps = {
+  clearAppNotification: clearNotification,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Notification);

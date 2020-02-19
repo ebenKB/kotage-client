@@ -5,18 +5,20 @@ import { connect } from 'react-redux';
 import KtWrapper from '../../../kt-wrapper/kt-wrapper';
 import MainContent from '../../../kt-main-content/mainContent';
 import UserDetails from '../../../snippets/user-details/user-details';
-import { getUsers } from '../../../../redux/actions/userActions';
+import { getUsers, getInvitations } from '../../../../redux/actions/userActions';
+
 import './show-users.scss';
 
 class showUsers extends React.Component {
   componentDidMount() {
-    const { getAllUsers } = this.props;
+    const { getAllUsers, getAllInvitations } = this.props;
     // fetch all users from here
     getAllUsers();
+    getAllInvitations();
   }
 
   render() {
-    const { users } = this.props;
+    const { users, invitations } = this.props;
     return (
 	<div>
 		<MainContent
@@ -34,6 +36,12 @@ class showUsers extends React.Component {
 							user={u}
 						/>
 					))}
+					{invitations && invitations.map((u) => (
+						<UserDetails
+							key={u.id}
+							user={u}
+						/>
+					))}
 				</div>
 			</KtWrapper>
 		</MainContent>
@@ -44,10 +52,12 @@ class showUsers extends React.Component {
 
 const mapStateToProps = (state) => ({
   users: state.user.users,
+  invitations: state.user.userInvitations,
 });
 
 const mapDispatchToProps = {
   getAllUsers: getUsers,
+  getAllInvitations: getInvitations,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(showUsers);

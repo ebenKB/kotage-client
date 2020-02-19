@@ -1,3 +1,3 @@
 /* eslint-disable import/prefer-default-export */
-export const SET_APP_ERROR = 'SET_APP_ERROR';
-export const CLEAR_ERRORS = 'CLEAR_ERRORS';
+export const SET_APP_NOTIFICATION = 'SET_APP_NOTIFICATION';
+export const CLEAR_NOTIFICATION = 'CLEAR_NOTIFICATION';

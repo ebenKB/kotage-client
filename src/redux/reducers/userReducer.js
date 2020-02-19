@@ -1,11 +1,12 @@
 import {
   INVITE_USER, LOGIN, SET_USER_LOADING, DONE_LOADING,
-  GET_USERS, GET_INVIATION, CREATE_USER, GET_TENANT_ID,
+  GET_USERS, GET_INVIATION, GET_INVIATIONS, CREATE_USER, GET_TENANT_ID,
   MAKE_ADMIN, REVOKE_ADMIN, REQUEST_PASS_REQUEST, RESET_PASSWORD,
 } from '../types/userTypes';
 
 const initialState = {
   users: null,
+  userInvitations: null,
   currentUser: null,
   isAuthenticated: false,
   error: false,
@@ -60,6 +61,12 @@ export default (state = initialState, action) => {
       };
     }
 
+    case GET_INVIATIONS: {
+      return {
+        ...state,
+        userInvitations: action.payload,
+      };
+    }
     case GET_TENANT_ID: {
       const currentUser = { tenant_id: action.payload };
       return {

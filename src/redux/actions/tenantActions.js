@@ -2,7 +2,7 @@
 /* eslint-disable no-use-before-define */
 /* eslint-disable no-async-promise-executor */
 import Axios from '../../utils/axios/axios';
-import { SET_APP_ERROR } from '../types/appTypes';
+import { SET_APP_NOTIFICATION } from '../types/appTypes';
 import {
   SET_LOADING, DONE_LOADING, SET_ERROR, GET_TENANT,
 } from '../types/tenantTypes';
@@ -35,8 +35,11 @@ export const getTenant = (tenant_id) => async (dispatch, getState) => {
       });
     } catch (error) {
       return dispatch({
-        type: SET_APP_ERROR,
-        payload: error,
+        type: SET_APP_NOTIFICATION,
+        payload: {
+          type: 'error',
+          message: 'Sorry! an notification occured',
+        },
       });
     }
   } else {

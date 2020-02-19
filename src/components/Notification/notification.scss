@@ -1,13 +1,19 @@
-.error {
+.notification.kt-danger {
     background: var(--kt-error);
     padding: 10px;
-    width: 60%;
+    width: 73.5%;
     border-radius: 4px;
     color: white;
     font-weight: 600;
 }
 
-.notification{
+.notification {
   display: flex;
   justify-content: space-between;
+}
+
+.notification .ui.button {
+  background: transparent;
+  border: none;
+  padding: 4px 10px;
 }

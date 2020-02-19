@@ -6,13 +6,13 @@ import './user-profile.scss';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-const UserProfile = () => {
+const UserProfile = ({ title }) => {
   const logout = () => {
     console.log('we want to logout');
   };
   return (
 	<Dropdown
-		text="John Smith"
+		text={title}
 		pointing="top right"
 		className="user-profile"
 	>
