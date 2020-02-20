@@ -24,7 +24,7 @@
 .nav-wrapper .ui.menu .item,
 .nav-wrapper .content.menu-option a {
   font-family: 'Open Sans', sans-serif;
-  color: var(--kotage-dark);
+  color: var(--kt-dark);
 }
 
 .ui.button {

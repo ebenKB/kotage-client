@@ -9,7 +9,7 @@ body {
   font-size: 100%;
   font-family: 'Open Sans', sans-serif;
   background: rgba(235, 238, 235, 0.35);
-  color: var(--kotage-dark);
+  color: var(--kt-dark);
 }
 
 a {
@@ -62,7 +62,8 @@ h2 {
   color: var(--kt-green);
 }
 
-.kt-danger {
+.kt-danger,
+.kt-danger.ui.button {
   color: var(--kt-red);
   /* animation: fadeOut 3s ease-in-out 1 forwards normal; */
 }
@@ -87,7 +88,8 @@ ul.custom {
   font-size: 0.9rem;
 }
 
-.xsm-caption {
+.xsm-caption,
+.xsm-caption .ui.button {
   font-size: 0.85rem;
 }
 
@@ -137,6 +139,17 @@ svg.faint {
 .fadeOut {
   animation: fadeOut 1s ease-in-out 0s 1 forwards normal;
 }
+
+.kt-transparent.ui.button {
+  background: transparent;
+  border: none;
+  padding: 0;
+}
+
+.kt-transparent.block.ui.button {
+  display: block;
+}
+
 
 /* media queries  */
 @media only screen and (max-width: 600px) {

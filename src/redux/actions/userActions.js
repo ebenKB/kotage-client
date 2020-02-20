@@ -161,12 +161,22 @@ export const getTenantID = (email) => async (dispatch) => {
       payload: data.tenant,
     });
   } catch (error) {
-    if (error && error.response.status === 404) {
+    console.log('this is the error', { error });
+    if (error && error.response && error.response.status === 404) {
       return dispatch({
         type: SET_APP_NOTIFICATION,
         payload: {
           type: 'error',
           message: 'No company found with this domain',
+        },
+      });
+    }
+    if (error.isAxiosError) {
+      return dispatch({
+        type: SET_APP_NOTIFICATION,
+        payload: {
+          type: 'error',
+          message: error.code,
         },
       });
     }

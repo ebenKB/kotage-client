@@ -40,6 +40,7 @@ class showUsers extends React.Component {
 						<UserDetails
 							key={u.id}
 							user={u}
+							type="invitation"
 						/>
 					))}
 				</div>

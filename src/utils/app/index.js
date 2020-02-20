@@ -21,5 +21,8 @@ export const pretifyMessage = (message) => {
   } if (message.toLowerCase() === 'tenant not found') {
     return 'The tenant you are looking for could not be  found';
   }
+  if (message.toUpperCase() === 'ECONNABORTED') {
+    return 'Please try again shortly';
+  }
   return message;
 };

@@ -13,6 +13,7 @@ import { getTenant } from '../../../redux/actions/tenantActions';
 import './sign-in.scss';
 import KtLogo from '../../KtLogo/kt-logo';
 import Notification from '../../Notification/notification';
+import { isValidEmail } from '../../../utils/app';
 
 const SignIn = ({
   loading, userLogin, checkUserTenant, currentUser, getCurrentTenant, notification,
@@ -40,17 +41,21 @@ const SignIn = ({
    * move from the current page to the next page
    */
   const goToNextPage = () => {
-    const oldPage = page.page;
-    if (oldPage < page.max) {
-      const newPage = (oldPage + 1);
-      setPage((p) => (
-        {
-          ...p,
-          page: newPage,
-        }
-      ));
+    if (user.email !== '' && isValidEmail(user.email)) {
+      const oldPage = page.page;
+      if (oldPage < page.max) {
+        const newPage = (oldPage + 1);
+        setPage((p) => (
+          {
+            ...p,
+            page: newPage,
+          }
+        ));
+      }
+      checkUserTenant(user.email);
+    } else {
+      // set login error
     }
-    checkUserTenant(user.email);
   };
 
   /**
@@ -122,7 +127,6 @@ const SignIn = ({
 				<Button
 					onClick={goToNextPage}
 					className="m-t-20 fluid tiny green"
-					disabled={user.email === ''}
 				>
 					{
             page.page <= page.max && <div>Next</div>

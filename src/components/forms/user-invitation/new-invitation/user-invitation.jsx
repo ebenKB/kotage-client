@@ -22,6 +22,7 @@ class UserInvitation extends React.Component {
       lastname: '',
       email: '',
       message: '',
+      is_admin: false,
     };
   }
 

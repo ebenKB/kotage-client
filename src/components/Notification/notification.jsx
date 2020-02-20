@@ -38,7 +38,7 @@ class Notification extends React.Component {
 			{ pretifyMessage(appError.message) }
 		</span>
 		{type !== 'minimal' && (
-			<Button size="tiny" onClick={this.clearNotification}>
+			<Button size="tiny" onClick={this.clearNotification} className="kt-transparent">
 				<Icon className="small logo" />
 			</Button>
 		)}

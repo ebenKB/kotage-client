@@ -10,13 +10,13 @@
 }
 
 .user-details__wrapper h3 {
-  color: var(--kotage-black);
+  color: var(--kt-black);
   margin-block-end: 0.45em;
   // font-size: 1.5rem;
 }
 
 .user-details__wrapper div:nth-child(2) > div:nth-child(3) {
-  color: var(--kotage-black);
+  color: var(--kt-black);
 }
 
 .user-details__wrapper .ui.circular.label, .ui.circular.labels .label {
@@ -30,12 +30,16 @@
 }
 
 .name-caption h3 + span {
-  background: var(--kt-green);
+  background: var(--kt-green__light);
   padding: 0 2px;
   color: var(--kt-white);
   border-radius: 4px;
   margin-left: 8px;
   display: inline-block;
+}
+
+.user-details__wrapper .xsm-caption .ui.button {
+  margin: 8px 0;
 }
 
 .user-details__wrapper .ui.checkbox input:checked~.box:before, .ui.checkbox input:checked~label:before {
