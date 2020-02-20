@@ -171,7 +171,7 @@ export const getTenantID = (email) => async (dispatch) => {
         },
       });
     }
-    if (error.isAxiosError) {
+    if (error.isAxiosError && error.code) {
       return dispatch({
         type: SET_APP_NOTIFICATION,
         payload: {

@@ -10,6 +10,7 @@ import FormGroup from '../../../form-fields/form-group/form-group';
 import '../user-invitation.scss';
 import { inviteUser } from '../../../../redux/actions/userActions';
 import MainContent from '../../../kt-main-content/mainContent';
+import Help from '../../../../utils/requisitions/new/help';
 
 
 class UserInvitation extends React.Component {
@@ -59,8 +60,10 @@ class UserInvitation extends React.Component {
     return (
 	<MainContent
 		classes="user-invitation m-t-20"
+		help={Help}
 	>
 		<KtWrapper
+			help={Help}
 			header="Invite New User"
 			canFilter={false}
 			cancelUrl="/users"
