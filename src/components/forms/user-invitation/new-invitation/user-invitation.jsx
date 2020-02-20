@@ -86,7 +86,7 @@ class UserInvitation extends React.Component {
               1
 						</Label>
 					</span>
-					<span className="bold">Enter contact info for the person you want to invite</span>
+					<span className="bold kt-black">Enter contact info for the person you want to invite</span>
 				</div>
 				<div className="p-l-30">
 					<div className="m-t-30">
@@ -132,7 +132,7 @@ class UserInvitation extends React.Component {
               2
 						</Label>
 					</span>
-					<span className="bold">Add a personal message</span>
+					<span className="bold kt-black">Add a personal message</span>
 				</div>
 				<div className="ui form m-t-20">
 					<KtTextArea

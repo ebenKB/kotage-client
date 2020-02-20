@@ -71,7 +71,7 @@ const FormGroup = ({
   return (
 	<div className={`form-group ${inline ? 'inline' : 'block'} ${center ? 'center' : ''} ${classes}`}>
 		<label htmlFor={labelName}>
-			<span className="bold">{label}</span>
+			<span className="">{label}</span>
 		</label>
 		<div>{getElement()}</div>
 	</div>

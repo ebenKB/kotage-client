@@ -14,9 +14,11 @@ import './sign-in.scss';
 import KtLogo from '../../KtLogo/kt-logo';
 import Notification from '../../Notification/notification';
 import { isValidEmail } from '../../../utils/app';
+import { clearNotification } from '../../../redux/actions/appActions';
 
 const SignIn = ({
-  loading, userLogin, checkUserTenant, currentUser, getCurrentTenant, notification,
+  loading, userLogin, checkUserTenant, currentUser, getCurrentTenant,
+  notification, clearAppNotifications,
 }) => {
   const history = useHistory();
   const [page, setPage] = useState({ page: 1, max: 2 });
@@ -100,6 +102,8 @@ const SignIn = ({
         alert(data.data.error);
       } else {
         getCurrentTenant(currentUser.tenant_id);
+        // clear any errors or notifications that were caught before successful login
+        clearAppNotifications();
         history.push('/');
       }
     } catch (error) {
@@ -226,6 +230,7 @@ const mapDispatchToProps = {
   userLogin: login,
   checkUserTenant: getTenantID,
   getCurrentTenant: getTenant,
+  clearAppNotifications: clearNotification,
 };
 
 const mapStateToProps = (state) => ({

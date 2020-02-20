@@ -11,7 +11,7 @@ const MainContent = (props) => {
 		<div>
 			{props.children}
 		</div>
-		<div className="help">
+		<div className="help kt-black">
 			{ help && help.map((h, idx) => (
 				<div key={idx}>
 					<Divider

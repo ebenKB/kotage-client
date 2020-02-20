@@ -62,6 +62,14 @@ h2 {
   color: var(--kt-green);
 }
 
+.kt-dark {
+  color: var(--kt-dark);
+}
+
+.kt-black {
+  color: var(--kt-black);
+}
+
 .kt-danger,
 .kt-danger.ui.button {
   color: var(--kt-red);
