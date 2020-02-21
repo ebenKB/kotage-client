@@ -184,6 +184,12 @@ svg.faint {
 
 /* for large screens */
 @media only screen and (min-width: 1680px) {
+
 }
 
+
+/* very large screens */
+@media only screen and (min-width: 1920px) {
+
+}
 /* 6048226911-ubc */

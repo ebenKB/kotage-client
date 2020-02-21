@@ -44,6 +44,10 @@ class UserInvitation extends React.Component {
 
   handleSubmit = () => {
     this.props.inviteUser(this.state);
+    // this.props.inviteUser(this.state)
+    //   .then(() => {
+    //     this.props.history.push('/');
+    //   });
   }
 
   setMessage = (message) => {
@@ -57,6 +61,7 @@ class UserInvitation extends React.Component {
     const {
       firstname, lastname, email,
     } = this.state;
+    const { loading } = this.props;
     return (
 	<MainContent
 		classes="user-invitation m-t-20"
@@ -70,6 +75,7 @@ class UserInvitation extends React.Component {
 			canPerform
 			actionName="Send Invitation"
 			handleAction={this.handleSubmit}
+			loading={loading}
 		>
 			<p className="">
         The person you invite will receive an email with an invitation link.

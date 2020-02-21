@@ -5,12 +5,12 @@ import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import { Label, Checkbox, Button } from 'semantic-ui-react';
 import './user-details.scss';
-import { setAdminStatus, sendPasswordResetToken } from '../../../redux/actions/userActions';
+import { setAdminStatus, sendPasswordResetToken, softDeleteUser } from '../../../redux/actions/userActions';
 import Popup from '../popup/popup';
 
 
 const UserDetails = ({
-  user, setUserAsAdmin, resetPass, currentTenant, currentUser, type = 'user',
+  user, setUserAsAdmin, resetPass, currentTenant, currentUser, type = 'user', deleteUser,
 }) => {
   /**
    * this function toggles the admin status of the user
@@ -30,6 +30,14 @@ const UserDetails = ({
    */
   const sendResetPassInstructions = () => {
     resetPass(user.email);
+  };
+
+  /**
+ * This function sends a delete request to the api
+ * When successful, the user will be deleted from the database
+ */
+  const removeUser = () => {
+    deleteUser(user.id);
   };
 
   return (
@@ -60,7 +68,12 @@ const UserDetails = ({
 							onChange={(e, data) => handleSetAdminStatus(data.checked)}
 							checked={user.is_admin}
 						/>
-						<Button className="kt-transparent block kt-danger">Delete user</Button>
+						<Button
+							className="kt-transparent block kt-danger"
+							onClick={removeUser}
+						>
+              Delete user
+						</Button>
 					</Fragment>
 				)}
 			</div>
@@ -97,6 +110,7 @@ const UserDetails = ({
 const mapDisptachToProps = {
   setUserAsAdmin: setAdminStatus,
   resetPass: sendPasswordResetToken,
+  deleteUser: softDeleteUser,
 };
 
 // call app state from redux

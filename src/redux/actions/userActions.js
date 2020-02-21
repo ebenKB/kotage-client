@@ -6,7 +6,7 @@
 import Axios from '../../utils/axios/axios';
 import {
   SET_USER_LOADING, DONE_LOADING, LOGIN, GET_INVIATION, GET_USERS,
-  GET_TENANT_ID, CREATE_USER, MAKE_ADMIN, GET_INVIATIONS,
+  GET_TENANT_ID, CREATE_USER, MAKE_ADMIN, GET_INVIATIONS, INVITE_USER, DELETE_USER,
 } from '../types/userTypes';
 import { SET_APP_NOTIFICATION } from '../types/appTypes';
 
@@ -14,14 +14,30 @@ import { SET_APP_NOTIFICATION } from '../types/appTypes';
  * This function is used to send a new invitation to a user
  * @param {*} invitation the invitation to send to the user
  */
-export const inviteUser = (invitation) => async (dispatch, getState) => {
+export const inviteUser = (invitation) => async (dispatch, getState) => new Promise(async (resolve) => {
+  dispatch(setLoading());
   try {
     const { user } = getState();
-    Axios.post(`/${user.currentUser.tenant_id}/invitations`, invitation);
+    const { data } = await Axios.post(`/${user.currentUser.tenant_id}/invitations`, invitation);
+    console.log('this is the data', data.invitation);
+    dispatch(doneLoading());
+    dispatch({
+      type: INVITE_USER,
+      payload: data.invitation,
+    });
+    resolve(data);
   } catch (error) {
-    console.log('an error occurred while inviting the user...', error);
+    console.log('This is the error that occurred', { error });
+    dispatch(doneLoading());
+    return dispatch({
+      type: SET_APP_NOTIFICATION,
+      payload: {
+        type: 'error',
+        error,
+      },
+    });
   }
-};
+});
 
 /**
  * This function creates a new user for a tenant
@@ -62,7 +78,6 @@ export const login = (email, password) => async (dispatch, getState) => new Prom
       const { access_token } = data;
       if (access_token && access_token.length > 0) {
         dispatch(setAuthUser(access_token[0]));
-
         // save the user to local storage
         localStorage.setItem('kotage-auth',
           JSON.stringify({
@@ -99,6 +114,9 @@ const setAuthUser = (user) => async (dispatch) => dispatch({
   payload: user,
 });
 
+/**
+ * This function retrieves users
+ */
 export const getUsers = () => async (dispatch, getState) => {
   try {
     const { user } = getState();
@@ -116,6 +134,9 @@ export const getUsers = () => async (dispatch, getState) => {
   }
 };
 
+/**
+ * This function retrieves invitations
+ */
 export const getInvitations = () => async (dispatch, getState) => {
   try {
     const { user } = getState();
@@ -138,8 +159,9 @@ export const getInvitations = () => async (dispatch, getState) => {
  */
 export const getInvitation = (token, tenant_id) => async (dispatch) => {
   try {
-    const data = await Axios.get(`/${tenant_id}/invitations?token=${token}`);
-    const { invitation } = data.data;
+    const { data } = await Axios.get(`/${tenant_id}/invitations?token=${token}`);
+    console.log('This is the inviation we got back', data);
+    const { invitation } = data;
     return dispatch({
       type: GET_INVIATION,
       payload: invitation,
@@ -161,30 +183,11 @@ export const getTenantID = (email) => async (dispatch) => {
       payload: data.tenant,
     });
   } catch (error) {
-    console.log('this is the error', { error });
-    if (error && error.response && error.response.status === 404) {
-      return dispatch({
-        type: SET_APP_NOTIFICATION,
-        payload: {
-          type: 'error',
-          message: 'No company found with this domain',
-        },
-      });
-    }
-    if (error.isAxiosError && error.code) {
-      return dispatch({
-        type: SET_APP_NOTIFICATION,
-        payload: {
-          type: 'error',
-          message: error.code,
-        },
-      });
-    }
     return dispatch({
       type: SET_APP_NOTIFICATION,
       payload: {
         type: 'error',
-        message: error.message,
+        error,
       },
     });
   }
@@ -192,7 +195,7 @@ export const getTenantID = (email) => async (dispatch) => {
 
 /**
  * This function sets a user as an admin
- * @param {*} user the user to set as admin
+ * @param {*} newUser the user to set as admin
  */
 export const setAdminStatus = (newUser) => async (dispatch, getState) => {
   try {
@@ -230,6 +233,27 @@ export const resetUserPassword = (password, password_confirmation, token, tenant
     reject(error);
   }
 });
+
+/**
+ * This function deletes a user from the database
+ * Depending on the type of delete, the user may either be deleted
+ * permanently or temporarily from the database.\
+ * @param {*} user_id the user to delete
+ * @param {*} type the type of delete action to perform on the user defaulst fo 'normal'
+ */
+export const softDeleteUser = (user_id, type = 'normal') => async (dispatch, getState) => {
+  try {
+    const { user } = getState();
+    const data = await Axios.delete(`/${user.currentUser.tenant_id}/users/${user_id}?type=${type}`);
+    console.log('We have delete a user and this is id: ', data);
+    return dispatch({
+      type: DELETE_USER,
+      payload: user_id,
+    });
+  } catch (error) {
+    console.log('an error occured', { error });
+  }
+};
 
 export const refreshAuthToken = (token) => {
   // check if token is not expired, log the user in

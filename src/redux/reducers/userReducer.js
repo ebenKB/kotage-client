@@ -1,7 +1,7 @@
 import {
   INVITE_USER, LOGIN, SET_USER_LOADING, DONE_LOADING,
   GET_USERS, GET_INVIATION, GET_INVIATIONS, CREATE_USER, GET_TENANT_ID,
-  MAKE_ADMIN, REVOKE_ADMIN, REQUEST_PASS_REQUEST, RESET_PASSWORD,
+  MAKE_ADMIN, REVOKE_ADMIN, REQUEST_PASS_REQUEST, RESET_PASSWORD, DELETE_USER,
 } from '../types/userTypes';
 
 const initialState = {
@@ -22,10 +22,19 @@ export default (state = initialState, action) => {
         users: action.payload,
       };
 
-    case INVITE_USER:
+    case INVITE_USER: {
+      const { userInvitations } = state;
+      let newInvitations = [];
+      if (userInvitations) {
+        newInvitations = [...userInvitations, action.payload];
+      } else {
+        newInvitations = [action.payload];
+      }
       return {
         ...state,
+        userInvitations: newInvitations,
       };
+    }
 
     case CREATE_USER: {
       return {
@@ -102,6 +111,16 @@ export default (state = initialState, action) => {
     case RESET_PASSWORD: {
       return {
         ...state,
+      };
+    }
+
+    case DELETE_USER: {
+      console.log('This is the state', state);
+      const users = state.users.filter((u) => u.id !== action.payload);
+      console.log('These are the users', users);
+      return {
+        ...state,
+        users,
       };
     }
 
