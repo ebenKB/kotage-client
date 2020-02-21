@@ -24,6 +24,11 @@ h1,h2,h3,h4,h5,h6 {
 h2 {
   font-size: 1.4rem;
 }
+
+p{
+  font-size: 1rem;
+}
+
 .app-container {
   width: 70%;
   margin: auto;
@@ -123,7 +128,7 @@ svg.faint {
 }
 
 .help {
-  font-size: 0.9em;
+  font-size: 0.86em;
 }
 
 .hide {
@@ -165,3 +170,20 @@ svg.faint {
     width: 90%;
   }
 }
+
+
+@media only screen and (max-width: 1440px) {
+  /* body {
+    font-size: 90%;
+  } */
+  .app-container,
+  .header .content {
+    width: 76%;
+  }
+}
+
+/* for large screens */
+@media only screen and (min-width: 1680px) {
+}
+
+/* 6048226911-ubc */
