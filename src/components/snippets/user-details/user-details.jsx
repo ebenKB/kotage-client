@@ -70,7 +70,7 @@ const UserDetails = ({
 				<div>Account owner</div>
 			)}
 			<div>
-				{getUserStatus && (
+				{getUserStatus() && (
 					<Fragment>
 						<Checkbox
 							className="xsm-caption"
