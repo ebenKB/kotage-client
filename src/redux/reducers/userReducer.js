@@ -1,7 +1,7 @@
 import {
   INVITE_USER, LOGIN, SET_USER_LOADING, DONE_LOADING,
   GET_USERS, GET_INVIATION, GET_INVIATIONS, CREATE_USER, GET_TENANT_ID,
-  MAKE_ADMIN, REVOKE_ADMIN, REQUEST_PASS_REQUEST, RESET_PASSWORD, DELETE_USER,
+  MAKE_ADMIN, REVOKE_ADMIN, REQUEST_PASS_REQUEST, RESET_PASSWORD, DELETE_USER, RESEND_INVITATION,
 } from '../types/userTypes';
 
 const initialState = {
@@ -33,6 +33,12 @@ export default (state = initialState, action) => {
       return {
         ...state,
         userInvitations: newInvitations,
+      };
+    }
+
+    case RESEND_INVITATION: {
+      return {
+        ...state,
       };
     }
 

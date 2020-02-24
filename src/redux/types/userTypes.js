@@ -1,4 +1,5 @@
 export const INVITE_USER = 'INVITE_USER';
+export const RESEND_INVITATION = 'RESEND_INVITATION';
 export const LOGIN = 'LOGIN';
 export const SET_USER_LOADING = 'SET_USER_LOADING';
 export const DONE_LOADING = 'DONE_LOADING';

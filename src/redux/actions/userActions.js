@@ -6,7 +6,7 @@
 import Axios from '../../utils/axios/axios';
 import {
   SET_USER_LOADING, DONE_LOADING, LOGIN, GET_INVIATION, GET_USERS,
-  GET_TENANT_ID, CREATE_USER, MAKE_ADMIN, GET_INVIATIONS, INVITE_USER, DELETE_USER,
+  GET_TENANT_ID, CREATE_USER, MAKE_ADMIN, GET_INVIATIONS, INVITE_USER, DELETE_USER, RESEND_INVITATION,
 } from '../types/userTypes';
 import { SET_APP_NOTIFICATION } from '../types/appTypes';
 
@@ -38,6 +38,26 @@ export const inviteUser = (invitation) => async (dispatch, getState) => new Prom
     });
   }
 });
+
+export const resendUserInvitation = (invitation) => async (dispatch, getState) => {
+  console.log('we want to resend this invitation', invitation);
+  const { user } = getState();
+  const { data } = await Axios.post(`/${user.currentUser.tenant_id}/invitations?type=resend`, invitation);
+  console.log('we are done RESENDING AN INVITATION AND THIS IS THE FEEDBACK', data);
+  dispatch({
+    type: RESEND_INVITATION,
+  });
+
+  return dispatch({
+    type: SET_APP_NOTIFICATION,
+    payload: {
+      type: 'success',
+      notification: {
+        message: 'Invitation has been sent to this user',
+      },
+    },
+  });
+};
 
 /**
  * This function creates a new user for a tenant
@@ -188,7 +208,7 @@ export const getTenantID = (email) => async (dispatch) => {
       type: SET_APP_NOTIFICATION,
       payload: {
         type: 'error',
-        error,
+        notification: error,
       },
     });
   }

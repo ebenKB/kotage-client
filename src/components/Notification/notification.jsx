@@ -31,9 +31,8 @@ class Notification extends React.Component {
   getNotification = () => {
     const { type } = this.props;
     const { appError } = this.props;
-    if (appError.type === 'error') {
-      return (
-	<div className={`${type !== 'minimal' ? 'notification' : 'minimal'} kt-danger`}>
+    return (
+	<div className={`${type !== 'minimal' ? 'notification' : 'minimal'} ${appError.type === 'error' ? 'kt-danger' : 'kt-success'}`}>
 		<span>
 			{ pretifyMessage(appError.message) }
 		</span>
@@ -43,9 +42,7 @@ class Notification extends React.Component {
 			</Button>
 		)}
 	</div>
-      );
-    }
-    return (<div>Error is here</div>);
+    );
   };
 
   disAbleNotification = () => {

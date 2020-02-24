@@ -1,10 +1,18 @@
-.notification.kt-danger {
-    background: var(--kt-error);
+.notification.kt-danger,
+.notification.kt-success {
     padding: 10px;
     width: 73.5%;
     border-radius: 4px;
     color: white;
     font-weight: 600;
+}
+
+.notification.kt-danger {
+  background: var(--kt-error);
+}
+
+.notification.kt-success {
+  background: var(--kt-green);
 }
 
 .notification {

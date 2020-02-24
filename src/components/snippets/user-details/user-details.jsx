@@ -5,13 +5,15 @@ import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import { Label, Checkbox, Button } from 'semantic-ui-react';
 import './user-details.scss';
-import { setAdminStatus, sendPasswordResetToken, softDeleteUser } from '../../../redux/actions/userActions';
+import {
+  setAdminStatus, sendPasswordResetToken, softDeleteUser, resendUserInvitation,
+} from '../../../redux/actions/userActions';
 import Popup from '../popup/popup';
 import { getInitialNames } from '../../../utils/app';
 
 
 const UserDetails = ({
-  user, setUserAsAdmin, resetPass, currentTenant, currentUser, type = 'user', deleteUser,
+  user, setUserAsAdmin, resetPass, currentTenant, currentUser, type = 'user', deleteUser, resendInvitation,
 }) => {
   /**
    * this function toggles the admin status of the user
@@ -113,7 +115,10 @@ const UserDetails = ({
 			)}
 			{type === 'invitation' && (
 				<div className="">
-					<Button className="kt-transparent light-text">
+					<Button
+						className="kt-transparent light-text"
+						onClick={() => resendInvitation(user)}
+					>
 						<span className="kt-primary"> Resend invitation</span>
 					</Button>
 				</div>
@@ -128,6 +133,7 @@ const mapDisptachToProps = {
   setUserAsAdmin: setAdminStatus,
   resetPass: sendPasswordResetToken,
   deleteUser: softDeleteUser,
+  resendInvitation: resendUserInvitation,
 };
 
 // call app state from redux

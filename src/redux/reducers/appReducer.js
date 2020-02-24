@@ -9,17 +9,18 @@ export default (state = initialState, action) => {
     case SET_APP_NOTIFICATION: {
       // check the type of error
       let errorMessage = '';
-      const { error } = action.payload;
-      if (error.isAxiosError && error.code) {
+      const { notification } = action.payload;
+      if (notification.isAxiosError && notification.code) {
         errorMessage = 'No record found for this domain';
-      } else if (error.isAxiosError && error.code === 'ECONNABORTED') {
+      } else if (notification.isAxiosError && notification.code === 'ECONNABORTED') {
         errorMessage = 'Please try again after some time.';
-      } else if (error.isAxiosError && error.code) {
-        errorMessage = error.code;
-      } else if (error.response.status === 409) {
+      } else if (notification.isAxiosError && notification.code) {
+        errorMessage = notification.code;
+      } else if (notification.response && notification.response.status
+        && notification.response.status === 409) {
         errorMessage = 'The record already exists';
       } else {
-        errorMessage = error.message;
+        errorMessage = notification.message;
       }
       return {
         ...state,
