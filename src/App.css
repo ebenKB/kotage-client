@@ -163,6 +163,10 @@ svg.faint {
   display: block;
 }
 
+.light-text,
+.kt-transparent.ui.button.light-text {
+  font-weight: 300;
+}
 
 /* media queries  */
 @media only screen and (max-width: 600px) {

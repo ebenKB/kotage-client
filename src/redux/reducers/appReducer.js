@@ -12,6 +12,8 @@ export default (state = initialState, action) => {
       const { error } = action.payload;
       if (error.isAxiosError && error.code) {
         errorMessage = 'No record found for this domain';
+      } else if (error.isAxiosError && error.code === 'ECONNABORTED') {
+        errorMessage = 'Please try again after some time.';
       } else if (error.isAxiosError && error.code) {
         errorMessage = error.code;
       } else if (error.response.status === 409) {

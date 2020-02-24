@@ -7,6 +7,7 @@ import { Label, Checkbox, Button } from 'semantic-ui-react';
 import './user-details.scss';
 import { setAdminStatus, sendPasswordResetToken, softDeleteUser } from '../../../redux/actions/userActions';
 import Popup from '../popup/popup';
+import { getInitialNames } from '../../../utils/app';
 
 
 const UserDetails = ({
@@ -37,14 +38,23 @@ const UserDetails = ({
  * When successful, the user will be deleted from the database
  */
   const removeUser = () => {
-    deleteUser(user.id);
+    // check if it is user or it is an invitation
+    if (type === 'user') {
+      deleteUser(user.id);
+    } else {
+      // deleteInvitation(user.id);
+    }
   };
+
+  // return the nature and type of user whose details is showing
+  const getUserStatus = () => (((type === 'user' && user.id !== currentUser.user_id) && (currentUser.is_admin))
+    || ((type === 'invitation') && (currentUser.is_admin)));
 
   return (
 	<div className="user-details__wrapper">
 		<div>
 			<Label circular color="grey" size="big">
-        EA
+				{getInitialNames(`${user.firstname} ${user.lastname}`)}
 			</Label>
 		</div>
 		<div>
@@ -60,7 +70,7 @@ const UserDetails = ({
 				<div>Account owner</div>
 			)}
 			<div>
-				{user.id !== currentUser.user_id && currentUser.is_admin && (
+				{getUserStatus && (
 					<Fragment>
 						<Checkbox
 							className="xsm-caption"
@@ -77,7 +87,7 @@ const UserDetails = ({
 					</Fragment>
 				)}
 			</div>
-			{currentTenant.email !== user.email && (
+			{ type === 'user' && currentTenant.email !== user.email && (
 				<div className="m-t-10">
 					<Popup
 						position="top center"
@@ -94,11 +104,18 @@ const UserDetails = ({
 									onClick={sendResetPassInstructions}
 								>
 									{' '}
-                    Send reset instructions
+                  Send reset instructions
 								</Button>
 							</div>
 						</div>
 					</Popup>
+				</div>
+			)}
+			{type === 'invitation' && (
+				<div className="">
+					<Button className="kt-transparent light-text">
+						<span className="kt-primary"> Resend invitation</span>
+					</Button>
 				</div>
 			)}
 		</div>

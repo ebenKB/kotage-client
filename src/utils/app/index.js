@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-syntax */
 /* eslint-disable import/prefer-default-export */
 export const isValidEmail = (email) => (/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(email));
 
@@ -24,5 +25,15 @@ export const pretifyMessage = (message) => {
   if (message.toUpperCase() === 'ECONNABORTED') {
     return 'Please try again shortly';
   }
+  if (message === 409) {
+    return 'This record alreday exists';
+  }
   return message;
+};
+
+export const getInitialNames = (value) => {
+  let initials = '';
+  const names = value.split(' ');
+  initials = `${names[0].split('')[0]}${names[1].split('')[0]}`;
+  return initials;
 };

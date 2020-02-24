@@ -183,6 +183,7 @@ export const getTenantID = (email) => async (dispatch) => {
       payload: data.tenant,
     });
   } catch (error) {
+    console.log('this is the error', { error });
     return dispatch({
       type: SET_APP_NOTIFICATION,
       payload: {
