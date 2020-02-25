@@ -10,7 +10,7 @@ export default (state = initialState, action) => {
       // check the type of error
       let errorMessage = '';
       const { notification } = action.payload;
-      if (notification.isAxiosError && notification.code === 'ECONNABORTED') {
+      if (notification.isAxiosError && notification.code && notification.code === 'ECONNABORTED') {
         errorMessage = 'Please try again after some time.';
       } else if (notification.isAxiosError && notification.code) {
         errorMessage = notification.code;
