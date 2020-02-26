@@ -6,6 +6,7 @@ import KtWrapper from '../../../kt-wrapper/kt-wrapper';
 import MainContent from '../../../kt-main-content/mainContent';
 import UserDetails from '../../../snippets/user-details/user-details';
 import { getUsers, getInvitations } from '../../../../redux/actions/userActions';
+import Help from '../../../../utils/requisitions/new/help';
 
 import './show-users.scss';
 
@@ -23,6 +24,7 @@ class showUsers extends React.Component {
 	<div>
 		<MainContent
 			classes="m-t-20"
+			help={Help}
 		>
 			<KtWrapper
 				header="Users"
