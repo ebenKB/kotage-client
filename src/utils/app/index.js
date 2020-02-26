@@ -17,16 +17,18 @@ export const titleize = (text) => {
 };
 
 export const pretifyMessage = (message) => {
-  if (message.toLowerCase() === 'network error') {
-    return 'Please check your internet connection';
-  } if (message.toLowerCase() === 'tenant not found') {
-    return 'The tenant you are looking for could not be  found';
-  }
-  if (message.toUpperCase() === 'ECONNABORTED') {
-    return 'Please try again shortly';
-  }
-  if (message === 409) {
-    return 'This record alreday exists';
+  if (message) {
+    if (message.toLowerCase() === 'network error') {
+      return 'Please check your internet connection';
+    } if (message.toLowerCase() === 'tenant not found') {
+      return 'The tenant you are looking for could not be  found';
+    }
+    if (message.toUpperCase() === 'ECONNABORTED') {
+      return 'Please try again shortly';
+    }
+    if (message === 409) {
+      return 'This record alreday exists';
+    }
   }
   return message;
 };

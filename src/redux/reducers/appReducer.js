@@ -18,7 +18,7 @@ export default (state = initialState, action) => {
         errorMessage = 'No record found for this domain';
       } else if (notification.response && notification.response.status
         && notification.response.status === 409) {
-        errorMessage = 'The record already exists';
+        errorMessage = 'Duplicate record found.';
       } else {
         errorMessage = notification.message;
       }

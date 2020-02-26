@@ -1,7 +1,8 @@
 import {
   INVITE_USER, LOGIN, SET_USER_LOADING, DONE_LOADING,
   GET_USERS, GET_INVIATION, GET_INVIATIONS, CREATE_USER, GET_TENANT_ID,
-  MAKE_ADMIN, REVOKE_ADMIN, REQUEST_PASS_REQUEST, RESET_PASSWORD, DELETE_USER, RESEND_INVITATION,
+  MAKE_ADMIN, REVOKE_ADMIN, REQUEST_PASS_RESET, RESET_PASSWORD, DELETE_USER,
+  RESEND_INVITATION, DELETE_INVITATION,
 } from '../types/userTypes';
 
 const initialState = {
@@ -108,7 +109,7 @@ export default (state = initialState, action) => {
       };
     }
 
-    case REQUEST_PASS_REQUEST: {
+    case REQUEST_PASS_RESET: {
       return {
         ...state,
       };
@@ -121,12 +122,19 @@ export default (state = initialState, action) => {
     }
 
     case DELETE_USER: {
-      console.log('This is the state', state);
+      // a user was deleted
       const users = state.users.filter((u) => u.id !== action.payload);
-      console.log('These are the users', users);
       return {
         ...state,
         users,
+      };
+    }
+
+    case DELETE_INVITATION: {
+      const invitations = state.userInvitations.filter((u) => u.id !== action.payload);
+      return {
+        ...state,
+        userInvitations: invitations,
       };
     }
 

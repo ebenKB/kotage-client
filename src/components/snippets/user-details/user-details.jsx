@@ -7,13 +7,14 @@ import { Label, Checkbox, Button } from 'semantic-ui-react';
 import './user-details.scss';
 import {
   setAdminStatus, sendPasswordResetToken, softDeleteUser, resendUserInvitation,
+  softDeleteInvitation,
 } from '../../../redux/actions/userActions';
 import Popup from '../popup/popup';
 import { getInitialNames } from '../../../utils/app';
 
 
 const UserDetails = ({
-  user, setUserAsAdmin, resetPass, currentTenant, currentUser, type = 'user', deleteUser, resendInvitation,
+  user, setUserAsAdmin, resetPass, currentTenant, currentUser, type = 'user', deleteUser, resendInvitation, deleteInvitation,
 }) => {
   /**
    * this function toggles the admin status of the user
@@ -44,7 +45,7 @@ const UserDetails = ({
     if (type === 'user') {
       deleteUser(user.id);
     } else {
-      // deleteInvitation(user.id);
+      deleteInvitation(user.id);
     }
   };
 
@@ -89,7 +90,7 @@ const UserDetails = ({
 					</Fragment>
 				)}
 			</div>
-			{ type === 'user' && currentTenant.email !== user.email && (
+			{ type === 'user' && currentTenant.email !== user.email && currentUser.user_id !== user.id && (
 				<div className="m-t-10">
 					<Popup
 						position="top center"
@@ -133,6 +134,7 @@ const mapDisptachToProps = {
   setUserAsAdmin: setAdminStatus,
   resetPass: sendPasswordResetToken,
   deleteUser: softDeleteUser,
+  deleteInvitation: softDeleteInvitation,
   resendInvitation: resendUserInvitation,
 };
 

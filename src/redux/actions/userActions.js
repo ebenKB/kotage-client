@@ -6,7 +6,7 @@
 import Axios from '../../utils/axios/axios';
 import {
   SET_USER_LOADING, DONE_LOADING, LOGIN, GET_INVIATION, GET_USERS,
-  GET_TENANT_ID, CREATE_USER, MAKE_ADMIN, GET_INVIATIONS, INVITE_USER, DELETE_USER, RESEND_INVITATION,
+  GET_TENANT_ID, CREATE_USER, MAKE_ADMIN, GET_INVIATIONS, INVITE_USER, DELETE_USER, RESEND_INVITATION, DELETE_INVITATION,
 } from '../types/userTypes';
 import { SET_APP_NOTIFICATION } from '../types/appTypes';
 
@@ -233,24 +233,62 @@ export const setAdminStatus = (newUser) => async (dispatch, getState) => {
   }
 };
 
+/**
+ * This fuction sends instructions to users on how to reset their password
+ * @param {*} email the email to receive the password reset instructions
+ */
 export const sendPasswordResetToken = (email) => async (dispatch, getState) => {
-  const { user } = getState();
-  const { data } = await Axios.post(`/${user.currentUser.tenant_id}/users/password_reset`, { email });
-  console.log('We are done posting the data', data);
+  try {
+    const { user } = getState();
+    await Axios.post(`/${user.currentUser.tenant_id}/users/password_reset`, { email });
+    dispatch({
+      type: SET_APP_NOTIFICATION,
+      payload: {
+        type: 'success',
+        notification: {
+          message: 'Instructions for password reset has been sent to this user',
+        },
+      },
+    });
+  } catch (error) {
+    dispatch({
+      type: SET_APP_NOTIFICATION,
+      payload: {
+        type: 'error',
+        notification: 'an error occurred while sending the notification',
+      },
+    });
+  }
 };
 
 /**
- * Reset password
+ * This function allows users to reset their password
  * @param {*} password the new password
  * @param {*} password_confirmation the new password confirmation
  * @param {*} token the token to be used to reset the password
  * @param {*} tenant_id the tenant that the user belongs to
  */
-export const resetUserPassword = (password, password_confirmation, token, tenant_id) => async () => new Promise(async (resolve, reject) => {
+export const resetUserPassword = (password, password_confirmation, token, tenant_id) => async (dispatch) => new Promise(async (resolve, reject) => {
   try {
-    const data = await Axios.put(`/${tenant_id}/users/password_update`, { password, password_confirmation, token });
+    const { data } = await Axios.put(`/${tenant_id}/users/password_update`, { password, password_confirmation, token });
+    if (data.status === 200) {
+      dispatch({
+        type: SET_APP_NOTIFICATION,
+        payload: {
+          type: 'success',
+          notification: 'Instructions for password reset has been sent to this user',
+        },
+      });
+    }
     resolve(data);
   } catch (error) {
+    dispatch({
+      type: SET_APP_NOTIFICATION,
+      payload: {
+        type: 'error',
+        notification: 'an error occurred while sending password reset instructions',
+      },
+    });
     reject(error);
   }
 });
@@ -266,13 +304,61 @@ export const softDeleteUser = (user_id, type = 'normal') => async (dispatch, get
   try {
     const { user } = getState();
     const data = await Axios.delete(`/${user.currentUser.tenant_id}/users/${user_id}?type=${type}`);
-    console.log('We have delete a user and this is id: ', data);
-    return dispatch({
-      type: DELETE_USER,
-      payload: user_id,
-    });
+    if (data.status === 200) {
+      dispatch({
+        type: DELETE_USER,
+        payload: user_id,
+      });
+
+      dispatch({
+        type: SET_APP_NOTIFICATION,
+        payload: {
+          type: 'success',
+          notification: {
+            message: 'User has been deleted',
+          },
+        },
+      });
+    }
   } catch (error) {
     console.log('an error occured', { error });
+  }
+};
+
+/**
+ * This function allows priviledged users to delete invitations
+ * @param {*} invitation_id the invitation to delete
+ */
+export const softDeleteInvitation = (invitation_id) => async (dispatch, getState) => {
+  try {
+    const { user } = getState();
+    const data = await Axios.delete(`/${user.currentUser.tenant_id}/invitations/${invitation_id}?type=forever`);
+    if (data.status === 200) {
+      dispatch({
+        type: DELETE_INVITATION,
+        payload: invitation_id,
+      });
+
+      dispatch({
+        type: SET_APP_NOTIFICATION,
+        payload: {
+          type: 'success',
+          notification: {
+            message: 'User has been deleted',
+          },
+        },
+      });
+    }
+  } catch (error) {
+    dispatch({
+      type: SET_APP_NOTIFICATION,
+      payload: {
+        type: 'error',
+        notification: {
+          message: 'an error occurred while deleting the user',
+        },
+      },
+    });
   }
 };
 
