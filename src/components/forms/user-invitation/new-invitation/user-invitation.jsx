@@ -11,6 +11,7 @@ import '../user-invitation.scss';
 import { inviteUser } from '../../../../redux/actions/userActions';
 import MainContent from '../../../kt-main-content/mainContent';
 import Help from '../../../../utils/requisitions/new/help';
+import { isValidEmail } from '../../../../utils/app';
 
 
 class UserInvitation extends React.Component {
@@ -43,11 +44,11 @@ class UserInvitation extends React.Component {
   }
 
   handleSubmit = () => {
-    this.props.inviteUser(this.state);
-    // this.props.inviteUser(this.state)
-    //   .then(() => {
-    //     this.props.history.push('/');
-    //   });
+    // check if the fields are valid
+    const { firstname, lastname, email } = this.state;
+    if (firstname.length > 0 && lastname.length > 0 && isValidEmail(email)) {
+      this.props.inviteUser(this.state);
+    }
   }
 
   setMessage = (message) => {
