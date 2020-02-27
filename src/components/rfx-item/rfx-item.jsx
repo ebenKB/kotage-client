@@ -6,7 +6,7 @@ const RfxItem = ({ children, title }) => (
 	<Fragment>
 		<div className="content">
 			{children}
-			<div className="m-t-20 m-b-20 bold light-caption text-center">{title}</div>
+			<div className="m-t-20 bold light-caption text-center">{title}</div>
 		</div>
 	</Fragment>
 );
