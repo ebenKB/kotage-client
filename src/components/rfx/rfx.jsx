@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
+
 import {
   Form, Radio, Button,
 } from 'semantic-ui-react';
@@ -16,6 +18,20 @@ import RfxItem from '../rfx-item/rfx-item';
 const Rfx = () => {
   const [selected, setSelected] = useState('');
   const [source, setSource] = useState('event');
+  const history = useHistory();
+
+  // allow the user to proceed to the next step
+  const handleAction = () => {
+    if (selected !== '') {
+      if (selected === 'quote') {
+        history.push('/rfx/quote');
+      } else if (selected === 'proposal') {
+        history.push('/rfx/proposal');
+      } else if (selected === 'information') {
+        history.push('/rfx/information');
+      }
+    }
+  };
 
   return (
 	<MainContent
@@ -28,6 +44,7 @@ const Rfx = () => {
 			canPerform
 			actionName="Continue"
 			cancelUrl="/rfx"
+			handleAction={handleAction}
 		>
 			<Form>
 				<Divider
