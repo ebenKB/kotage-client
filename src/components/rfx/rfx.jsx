@@ -27,6 +27,7 @@ const Rfx = () => {
 			canFilter={false}
 			canPerform
 			actionName="Continue"
+			cancelUrl="/rfx"
 		>
 			<Form>
 				<Divider
@@ -78,10 +79,10 @@ const Rfx = () => {
 				<Divider
 					type="thick"
 					title="Select Source"
-					classes="m-t-40 m-b-40"
+					classes="m-t-20 m-b-20"
 				/>
 				<div className="form-group fluid kt-content__wrapper">
-					<div className="bold">Source</div>
+					<div>Source</div>
 					<div className="flex-wrapper">
 						<Form.Field className={`custom radio ${source === 'event' ? 'active' : 'idle'}`}>
 							<Radio
