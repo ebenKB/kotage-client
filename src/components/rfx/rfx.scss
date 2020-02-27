@@ -41,7 +41,23 @@
   justify-content: space-evenly;
 }
 
-.ui.form .kt-content__wrapper .field {
+.ui.form .kt-content__wrapper ul{
+  list-style: none;
+  display: inline;
+}
+
+// apply style to only the second 
+.ui.form .kt-content__wrapper .feild:nth-child(2n) {
+  margin-left: 30px;
+}
+
+.ui.form .kt-content__wrapper .field.idle {
+  padding: 20px 40px;
+  border: 1px solid #d9e3e8;
+  margin: 0;
+}
+
+.ui.form .kt-content__wrapper .field.active {
   padding: 20px 40px;
   border: 1px solid var(--kt-green__light);
   margin: 0;

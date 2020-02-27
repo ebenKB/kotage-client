@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import { Form, Radio, Button } from 'semantic-ui-react';
+import {
+  Form, Radio, Button,
+} from 'semantic-ui-react';
 import MainContent from '../kt-main-content/mainContent';
 import KtWrapper from '../kt-wrapper/kt-wrapper';
 import Divider from '../kt-divider/divider';
@@ -13,6 +15,7 @@ import RfxItem from '../rfx-item/rfx-item';
 
 const Rfx = () => {
   const [selected, setSelected] = useState('');
+  const [source, setSource] = useState('event');
 
   return (
 	<MainContent
@@ -23,6 +26,7 @@ const Rfx = () => {
 			header="New Event"
 			canFilter={false}
 			canPerform
+			actionName="Continue"
 		>
 			<Form>
 				<Divider
@@ -79,18 +83,22 @@ const Rfx = () => {
 				<div className="form-group fluid kt-content__wrapper">
 					<div className="bold">Source</div>
 					<div className="flex-wrapper">
-						<Form.Field className="custom radio">
+						<Form.Field className={`custom radio ${source === 'event' ? 'active' : 'idle'}`}>
 							<Radio
 								label="Blank Event"
 								name="radioGroup"
-								value="Blank Event"
+								value={source}
+								onChange={() => setSource('event')}
+								checked={source === 'event'}
 							/>
 						</Form.Field>
-						<Form.Field className="custom radio">
+						<Form.Field className={`custom radio ${source === 'blank' ? 'active' : 'idle'}`}>
 							<Radio
 								label="From a Proposal"
 								name="radioGroup"
-								value="From a Proposal"
+								value={source}
+								onChange={() => setSource('blank')}
+								checked={source === 'blank'}
 							/>
 						</Form.Field>
 					</div>
