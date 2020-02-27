@@ -2,9 +2,7 @@
 /* eslint-disable react/no-array-index-key */
 import React, { lazy, Suspense } from 'react';
 import './App.css';
-import { Provider } from 'react-redux';
 import { Switch, Route } from 'react-router-dom';
-import store from './redux/store';
 import Layout from './components/Layout/layout';
 import SignIn from './components/auth/sign-in/sign-in';
 import PageNotFound from './pages/_404';

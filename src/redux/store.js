@@ -1,16 +1,22 @@
 /* eslint-disable function-paren-newline */
 import { createStore, applyMiddleware } from 'redux';
-import { composeWithDevTools } from 'redux-devtools-extension';
+import { persistStore } from 'redux-persist';
+import logger from 'redux-logger';
+// import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk from 'redux-thunk';
 import rootReducer from './reducers/root';
 
-
 const initialState = {};
 
-const middleware = [thunk];
+const middleware = [thunk, logger];
 
 const store = createStore(rootReducer,
   initialState,
-  composeWithDevTools(applyMiddleware(...middleware)),
+  applyMiddleware(...middleware),
 );
-export default store;
+
+const persistor = persistStore(store);
+
+// export { store, persistor };
+
+export { store, persistor };
