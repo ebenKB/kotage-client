@@ -35,7 +35,7 @@ const Rfx = () => {
 					title="Select RFX Type"
 					classes="m-t-10"
 				/>
-				<div className="m-t-40 m-b-40 bold light-caption text-center">
+				<div className="m-t-40 m-b-40 sm-caption text-center">
               You can see the types of events you can create. Select the type you want and proceed
 				</div>
 				<ul className="rfx-content">
