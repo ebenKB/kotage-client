@@ -28,7 +28,7 @@ class Rfp extends React.Component {
 			classes="m-t-20"
 		>
 			<KtWrapper
-				header="New Quote"
+				header="New Proposal"
 				canFilter={false}
 				canPerform
 			>
