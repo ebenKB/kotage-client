@@ -21,6 +21,7 @@ const Newquote = lazy(() => import('./components/forms/quotes/new/new-quote'));
 const RFX = lazy(() => import('./components/rfx/rfx'));
 const Vendors = lazy(() => import('./components/forms/vendors/vendors'));
 const Users = lazy(() => import('./components/forms/user/show-users/show-users'));
+const NewProposal = lazy(() => import('./components/forms/rfp/rfp'));
 
 const routes = [
   {
@@ -75,6 +76,11 @@ const routes = [
     exact: true,
     path: '/rfx',
     main: () => <RFX />,
+  },
+  {
+    exact: true,
+    path: '/rfx/proposal/new',
+    main: () => <NewProposal />,
   },
 
 ];
