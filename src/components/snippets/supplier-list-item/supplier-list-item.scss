@@ -1,0 +1,11 @@
+.supplier-list-item {
+  display: flex;
+  flex-direction: row;
+  border-bottom: 1px solid #D9E2E8;
+  padding: 10px 0;
+  align-items: center;
+}
+
+.supplier-list-item h2 {
+  margin-bottom: 0;
+}

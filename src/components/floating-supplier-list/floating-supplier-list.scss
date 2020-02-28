@@ -1,0 +1,34 @@
+.supplier-float {
+  position: relative;
+  background: var(--kt-white);
+  position: fixed;
+  height: 100vh;
+  width: 340px;
+  z-index: 200;
+  display: block;
+  top: 0;
+  right: 0;
+}
+
+.supplier-float .kt-wrapper__header {
+  color: var(--kt-black);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30px;
+}
+
+.supplier-float__content {
+  padding: 20px 30px;
+  min-height: 78vh;
+}
+
+.supplier-float__footer-content {
+  text-align: right;
+}
+
+.supplier-float__footer {
+  padding: 30px;
+
+}

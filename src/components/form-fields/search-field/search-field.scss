@@ -1,0 +1,15 @@
+.search-field {
+  position: relative;
+}
+.search-field .input input {
+  position: relative;
+  padding-left: 30px;
+}
+
+.search-field .icon {
+  position: absolute;
+  left: 10px;
+  z-index: 1;
+  top: 15px;
+  fill: var(--kt-dark-grey);
+}

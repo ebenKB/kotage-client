@@ -7,6 +7,7 @@ import FormGroup from '../../form-fields/form-group/form-group';
 import DateTimeGroup from '../../form-fields/date-time-form-group/date-time-group';
 import KtDocs from '../../form-fields/kt-docs-group/kt-docs';
 import Stakeholders from '../../snippets/stakeholders-group/stakeholders';
+import FloatingSupplierList from '../../floating-supplier-list/floating-supplier-list';
 
 class Rfp extends React.Component {
   constructor(props) {
@@ -15,9 +16,13 @@ class Rfp extends React.Component {
   }
 
   render() {
+    const handleSubmit = () => {
+      console.log('we want to submit');
+    };
     return (
 	<ValidatorForm
 		ref={this.myRef}
+		onSubmit={handleSubmit}
 	>
 		<MainContent
 			classes="m-t-20"
@@ -103,6 +108,7 @@ class Rfp extends React.Component {
 					<div className="form-item">
             Show the names of all vendors you want to invite
 						<span>Vendors are here</span>
+						<FloatingSupplierList />
 					</div>
 					<Divider type="thick" title="Invite Stakeholders" classes="m-t-40" isNumbered number="5" />
 					<div>
