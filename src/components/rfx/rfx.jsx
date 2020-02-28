@@ -24,11 +24,11 @@ const Rfx = () => {
   const handleAction = () => {
     if (selected !== '') {
       if (selected === 'quote') {
-        history.push('/rfx/quote');
+        history.push('/rfx/quote/new');
       } else if (selected === 'proposal') {
-        history.push('/rfx/proposal');
+        history.push('/rfx/proposal/new');
       } else if (selected === 'information') {
-        history.push('/rfx/information');
+        history.push('/rfx/information/new');
       }
     }
   };
@@ -45,6 +45,7 @@ const Rfx = () => {
 			actionName="Continue"
 			cancelUrl="/rfx"
 			handleAction={handleAction}
+			disabled={selected === ''}
 		>
 			<Form>
 				<Divider
