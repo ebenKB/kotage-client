@@ -27,7 +27,7 @@ class Rfp extends React.Component {
 				canFilter={false}
 				canPerform
 			>
-				<Divider type="thick" title="Setup Your Event" classes="m-t-10" />
+				<Divider type="thick" title="Setup Your Event" classes="m-t-10" isNumbered number="1" />
 				<div className="kt-content__wrapper">
 					<div className="m-t-30">
 						<FormGroup
@@ -75,7 +75,7 @@ class Rfp extends React.Component {
 							center
 						/>
 					</div>
-					<Divider type="thick" title="Timeline" classes="m-t-40" />
+					<Divider type="thick" title="Timeline" classes="m-t-40" isNumbered number="2" />
 					<div className="m-t-30">
 						<DateTimeGroup
 							placeholder="Date"
@@ -97,11 +97,11 @@ class Rfp extends React.Component {
 							center
 						/>
 					</div>
-					<Divider type="thick" title="Response Sheet" classes="m-t-40" />
+					<Divider type="thick" title="Response Sheet" classes="m-t-40" isNumbered number="3" />
 					<KtDocs />
-					<Divider type="thick" title="Invite Vendors" classes="m-t-40" />
+					<Divider type="thick" title="Invite Vendors" classes="m-t-40" isNumbered number="4" />
 					<div>invite vendors here</div>
-					<Divider type="thick" title="Invite Stakeholders" classes="m-t-40" />
+					<Divider type="thick" title="Invite Stakeholders" classes="m-t-40" isNumbered number="5" />
 					<div>
 						<Stakeholders />
 					</div>

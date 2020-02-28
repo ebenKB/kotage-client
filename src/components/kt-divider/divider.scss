@@ -18,3 +18,10 @@
 .kt-divider.thick.kt-danger {
   border-bottom: 2px solid var(--kt-red);
 }
+
+.kt-divider__wrapper {
+  display: grid;
+  grid-template-columns: 5% 95%;
+  grid-column-gap: 10px;
+  align-items: center;
+}

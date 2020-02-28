@@ -168,6 +168,13 @@ svg.faint {
   font-weight: 300;
 }
 
+/* general divider for application level */
+.user-invitation .label.kt-success,
+.kt-divider__wrapper .label.kt-success {
+  background: var(--kt-green);
+  color: var(--kt-white);
+}
+
 /* media queries  */
 @media only screen and (max-width: 600px) {
   .small-form__wrapper {
