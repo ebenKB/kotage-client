@@ -29,7 +29,7 @@ class Rfp extends React.Component {
 			>
 				<Divider type="thick" title="Setup Your Event" classes="m-t-10" isNumbered number="1" />
 				<div className="kt-content__wrapper">
-					<div className="m-t-30">
+					<div className="form-item m-t-30">
 						<FormGroup
 							type="text"
 							placeholder="Enter title"
@@ -39,7 +39,7 @@ class Rfp extends React.Component {
 							center
 						/>
 					</div>
-					<div className="m-t-30">
+					<div className="form-item m-t-30">
 						<FormGroup
 							type="kt-textarea"
 							placeholder="How would you describe the quote?"
@@ -47,7 +47,7 @@ class Rfp extends React.Component {
 							labelName="decription"
 						/>
 					</div>
-					<div className="m-t-30">
+					<div className="form-item m-t-30">
 						<FormGroup
 							type="dropzone"
 							placeholder="Enter title"
@@ -55,7 +55,7 @@ class Rfp extends React.Component {
 							labelName="attachment"
 						/>
 					</div>
-					<div className="m-t-30">
+					<div className="form-item m-t-30">
 						<FormGroup
 							type="dropdown"
 							placeholder="Enter title"
@@ -65,7 +65,7 @@ class Rfp extends React.Component {
 							center
 						/>
 					</div>
-					<div className="m-t-30">
+					<div className="form-item m-t-30">
 						<FormGroup
 							type="amount"
 							placeholder="What is the budget?"
@@ -76,21 +76,21 @@ class Rfp extends React.Component {
 						/>
 					</div>
 					<Divider type="thick" title="Timeline" classes="m-t-40" isNumbered number="2" />
-					<div className="m-t-30">
+					<div className="form-item m-t-30">
 						<DateTimeGroup
 							placeholder="Date"
 							label="Bid Deadline *"
 							center
 						/>
 					</div>
-					<div className="m-t-30">
+					<div className="form-item m-t-30">
 						<DateTimeGroup
 							placeholder="Date"
 							label="RSVP Deadline"
 							center
 						/>
 					</div>
-					<div className="m-t-30">
+					<div className="form-item m-t-30">
 						<DateTimeGroup
 							placeholder="Date"
 							label="Question Deadline"
@@ -98,12 +98,17 @@ class Rfp extends React.Component {
 						/>
 					</div>
 					<Divider type="thick" title="Response Sheet" classes="m-t-40" isNumbered number="3" />
-					<KtDocs />
+					<KtDocs className="form-item" />
 					<Divider type="thick" title="Invite Vendors" classes="m-t-40" isNumbered number="4" />
-					<div>invite vendors here</div>
+					<div className="form-item">
+            Show the names of all vendors you want to invite
+						<span>Vendors are here</span>
+					</div>
 					<Divider type="thick" title="Invite Stakeholders" classes="m-t-40" isNumbered number="5" />
 					<div>
-						<Stakeholders />
+						<Stakeholders
+							className="form-item"
+						/>
 					</div>
 				</div>
 			</KtWrapper>

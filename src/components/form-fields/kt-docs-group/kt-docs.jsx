@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable jsx-a11y/interactive-supports-focus */
 import React from 'react';
 import Input from '../input/input';
@@ -6,12 +7,12 @@ import { ReactComponent as Trash } from '../../../svg/bin.svg';
 
 import './kt-docs.scss';
 
-const KtDocs = () => {
+const KtDocs = ({ className }) => {
   const handleClick = () => {
 
   };
   return (
-	<div className="docs-group m-t-30">
+	<div className={`docs-group m-t-30 ${className}`}>
 		<div className="bold">Documents</div>
 		<div className="docs-wrapper">
 			<div className="docs-wrapper__header bold light-caption">

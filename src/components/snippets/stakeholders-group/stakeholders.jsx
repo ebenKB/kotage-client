@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React from 'react';
@@ -7,7 +8,7 @@ import Input from '../../form-fields/input/input';
 import { ReactComponent as Trash } from '../../../svg/bin.svg';
 import { ReactComponent as Logo } from '../../../svg/plus.svg';
 
-const Stakeholders = () => {
+const Stakeholders = ({ className }) => {
   const options = [
     {
       key: '1',
@@ -26,7 +27,7 @@ const Stakeholders = () => {
   };
 
   return (
-	<div className="kt-stk__group m-t-30">
+	<div className={`kt-stk__group m-t-30 ${className}`}>
 		<div className="bold">Stakeholders</div>
 		<div>
 			<div className="kt-stk-group__header bold light-caption">

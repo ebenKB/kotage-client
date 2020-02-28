@@ -112,7 +112,11 @@ ul.custom {
 
 .kt-content__wrapper {
   position: relative;
-  padding: 20px;
+  /* padding: 20px; */
+}
+
+.form-item {
+  padding: 0 45px;
 }
 
 .logo.small {
