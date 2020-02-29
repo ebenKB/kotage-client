@@ -180,7 +180,7 @@ svg.faint {
 /* general divider for application level */
 .user-invitation .label.kt-success,
 .kt-divider__wrapper .label.kt-success {
-  background: var(--kt-green);
+  background: var(--kt-green__very-light);
   color: var(--kt-white);
 }
 
