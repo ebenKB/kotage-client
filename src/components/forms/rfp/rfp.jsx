@@ -9,7 +9,8 @@ import DateTimeGroup from '../../form-fields/date-time-form-group/date-time-grou
 import KtDocs from '../../form-fields/kt-docs-group/kt-docs';
 import Stakeholders from '../../snippets/stakeholders-group/stakeholders';
 import FloatingSupplierList from '../../floating-supplier-list/floating-supplier-list';
-import { ReactComponent as Logo } from '../../../svg/plus.svg';
+import Help from '../../../utils/requisitions/new/help';
+// import { ReactComponent as Logo } from '../../../svg/plus.svg';
 
 class Rfp extends React.Component {
   constructor(props) {
@@ -28,6 +29,7 @@ class Rfp extends React.Component {
 	>
 		<MainContent
 			classes="m-t-20"
+			help={Help}
 		>
 			<KtWrapper
 				header="New Proposal"
@@ -106,13 +108,12 @@ class Rfp extends React.Component {
 					</div>
 					<Divider type="thick" title="Response Sheet" classes="m-t-40" isNumbered number="3" />
 					<KtDocs className="form-item" />
-					<Divider type="thick" title="Invite Vendors" classes="m-t-40" isNumbered number="4" />
-					<div className="form-item m-t-20">
-						<div>You can add suppliers to this Proposal</div>
-						<div className="m-t-20">
-							<Button className="flex-center kt-transparent clickable m-t-20 kt-primary bold sm-caption flex-center">
-								<Logo className="kt-logo__small kt-primary" />
-								<span>Add suppliers</span>
+					<Divider type="thick" title="Invite Suppliers" classes="m-t-40" isNumbered number="4" />
+					<div className="form-item m-t-20 flex-inline">
+						<div>Open your supplier directory to add suppliers</div>
+						<div className="">
+							<Button className="flex-center kt-transparent kt-primary clickable m-t-20 kt-primary bold sm-caption flex-center">
+								<span className="kt-primary">Open Supplier Directory</span>
 							</Button>
 							<FloatingSupplierList />
 						</div>

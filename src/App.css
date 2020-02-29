@@ -178,6 +178,11 @@ svg.faint {
   align-items: center;
 }
 
+.flex-inline {
+  display: flex;
+  justify-content: space-between;
+}
+
 /* general divider for application level */
 .user-invitation .label.kt-success,
 .kt-divider__wrapper .label.kt-success {
@@ -197,7 +202,7 @@ svg.faint {
   /* body {
     font-size: 90%;
   } */
-  
+
   /* .app-container,
   .header .content {
     width: 76%;
