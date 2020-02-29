@@ -49,7 +49,7 @@ const Stakeholders = ({ className }) => {
 					<Trash className="kt-logo__small" />
 				</div>
 			</div>
-			<div className="clickable m-t-20 kt-primary bold sm-caption" onClick={handleClick}>
+			<div className="clickable m-t-20 kt-primary bold sm-caption flex-center" onClick={handleClick}>
 				<Logo className="kt-logo__small kt-primary" />
 				<span>Invite Stakeholder</span>
 			</div>

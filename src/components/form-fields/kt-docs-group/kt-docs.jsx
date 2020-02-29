@@ -37,7 +37,7 @@ const KtDocs = ({ className }) => {
 					<Trash className="kt-logo__small" />
 				</div>
 			</div>
-			<div className="clickable m-t-20 kt-primary bold sm-caption" role="button" onClick={handleClick} onKeyDown={handleClick}>
+			<div className="clickable m-t-20 kt-primary bold sm-caption flex-center" role="button" onClick={handleClick} onKeyDown={handleClick}>
 				<Logo className="kt-logo__small kt-primary" />
 				<span>Request New Document</span>
 			</div>

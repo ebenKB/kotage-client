@@ -172,6 +172,11 @@ svg.faint {
   font-weight: 300;
 }
 
+.flex-center {
+  display: flex;
+  align-items: center;
+}
+
 /* general divider for application level */
 .user-invitation .label.kt-success,
 .kt-divider__wrapper .label.kt-success {

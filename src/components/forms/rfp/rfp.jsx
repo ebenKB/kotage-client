@@ -1,5 +1,6 @@
 import React from 'react';
 import { ValidatorForm } from 'react-form-validator-core';
+import { Button } from 'semantic-ui-react';
 import MainContent from '../../kt-main-content/mainContent';
 import KtWrapper from '../../kt-wrapper/kt-wrapper';
 import Divider from '../../kt-divider/divider';
@@ -8,6 +9,7 @@ import DateTimeGroup from '../../form-fields/date-time-form-group/date-time-grou
 import KtDocs from '../../form-fields/kt-docs-group/kt-docs';
 import Stakeholders from '../../snippets/stakeholders-group/stakeholders';
 import FloatingSupplierList from '../../floating-supplier-list/floating-supplier-list';
+import { ReactComponent as Logo } from '../../../svg/plus.svg';
 
 class Rfp extends React.Component {
   constructor(props) {
@@ -105,10 +107,15 @@ class Rfp extends React.Component {
 					<Divider type="thick" title="Response Sheet" classes="m-t-40" isNumbered number="3" />
 					<KtDocs className="form-item" />
 					<Divider type="thick" title="Invite Vendors" classes="m-t-40" isNumbered number="4" />
-					<div className="form-item">
-            Show the names of all vendors you want to invite
-						<span>Vendors are here</span>
-						<FloatingSupplierList />
+					<div className="form-item m-t-20">
+						<div>You can add suppliers to this Proposal</div>
+						<div className="m-t-20">
+							<Button className="flex-center kt-transparent clickable m-t-20 kt-primary bold sm-caption flex-center">
+								<Logo className="kt-logo__small kt-primary" />
+								<span>Add suppliers</span>
+							</Button>
+							<FloatingSupplierList />
+						</div>
 					</div>
 					<Divider type="thick" title="Invite Stakeholders" classes="m-t-40" isNumbered number="5" />
 					<div>
