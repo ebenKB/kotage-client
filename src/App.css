@@ -30,7 +30,8 @@ p{
 }
 
 .app-container {
-  width: 70%;
+  /* width: 70%; */
+  width: 80%;
   margin: auto;
 }
 
@@ -196,10 +197,11 @@ svg.faint {
   /* body {
     font-size: 90%;
   } */
-  .app-container,
+  
+  /* .app-container,
   .header .content {
     width: 76%;
-  }
+  } */
 }
 
 /* for large screens */
