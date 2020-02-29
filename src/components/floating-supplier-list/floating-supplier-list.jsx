@@ -26,12 +26,11 @@ const FloatingSupplierList = ({ loading }) => (
 			</div>
 		</div>
 		<div className="supplier-float__footer">
-			<div className="m-b-20 m-t-20">5 customers selected</div>
 			<div className="supplier-float__footer-content">
 				<Button
 					type="submit"
-					content="Add to event"
-					className={`green ${loading && 'loading'}`}
+					content="Add 5 suppliers to event"
+					className={`fluid green ${loading && 'loading'}`}
 				/>
 			</div>
 		</div>
