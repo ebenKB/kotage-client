@@ -13,6 +13,7 @@ import './form-group.scss';
 import Dropzone from '../dropzone/dropzone';
 import KtTextArea from '../textarea/textarea';
 import InputValidator from '../input-validator/input-validator';
+import RichTextEditor from '../../rich-text-editor/rich-text-editor';
 
 const FormGroup = ({
   type, placeholder, label, labelName, center, classes = '', inline = true, ...rest
@@ -42,7 +43,7 @@ const FormGroup = ({
 		search
 		selection
 		options={options}
-		className={rest.classes}
+		className={`md-dropdown ${rest.classes}`}
 		onChange={() => {}}
 		{...rest}
 	/>
@@ -55,6 +56,8 @@ const FormGroup = ({
 		<TextArea placeholder={placeholder} style={{ minHeight: 100 }} />
 	</Form>
       );
+    } else if (type === 'rte') {
+      return (<RichTextEditor />);
     } else if (type === 'kt-textarea') {
       return (
 	<div className="ui form">

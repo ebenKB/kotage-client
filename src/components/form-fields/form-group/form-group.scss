@@ -1,8 +1,8 @@
 .form-group.inline {
   display: grid;
-  grid-template-columns: 30% 70%;
+  grid-template-columns: 15% 85%;
   grid-column-gap: 10px;
-  width: 80%;
+  width: 100%;
 }
 
 .form-group.block {
@@ -24,4 +24,7 @@
 
 .form-group .ui.input {
   width: 100%;
+}
+.form-group .ui.dropdown.md-dropdown {
+  width: 250px;
 }
