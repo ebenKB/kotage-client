@@ -140,6 +140,10 @@ svg.faint {
   display: none;
 }
 
+.show {
+  display: block;
+}
+
 .small-form__wrapper {
   width: 360px;
   border: 1px solid #e8e9e9;

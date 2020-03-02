@@ -7,12 +7,22 @@ import Divider from '../kt-divider/divider';
 import SupplierListItem from '../snippets/supplier-list-item/supplier-list-item';
 import { ReactComponent as Icon } from '../../svg/cancel-white.svg';
 
-const FloatingSupplierList = ({ loading }) => (
-	<div className="supplier-float">
+const FloatingSupplierList = ({ loading, isVisible, closeForm }) => {
+  const handleClose = () => {
+    closeForm();
+  };
+
+  return (
+	<div className={`supplier-float ${isVisible ? 'show' : 'hide'}`}>
 		<div className="supplier-float__body">
 			<div className="kt-wrapper__header bold big-caption light-caption">
 				<div>Supplier Directory</div>
-				<Icon className="icon-sm small logo" />
+				<Button
+					onClick={handleClose}
+					className="kt-transparent"
+				>
+					<Icon className="icon-sm small logo" />
+				</Button>
 			</div>
 			<div className="supplier-float__content">
 				<SearchField />
@@ -37,6 +47,7 @@ const FloatingSupplierList = ({ loading }) => (
 			</div>
 		</div>
 	</div>
-);
+  );
+};
 
 export default FloatingSupplierList;

@@ -16,12 +16,32 @@ class Rfp extends React.Component {
   constructor(props) {
     super(props);
     this.myRef = React.createRef();
+    this.state = {
+      canShowSuplliers: false,
+    };
   }
 
+
   render() {
+    const { canShowSuplliers } = this.state;
     const handleSubmit = () => {
       console.log('we want to submit');
     };
+
+    const openSupplierDirectory = () => {
+      this.setState((state) => ({
+        ...state,
+        canShowSuplliers: true,
+      }));
+    };
+
+    const hideSuppliers = () => {
+      this.setState((state) => ({
+        ...state,
+        canShowSuplliers: false,
+      }));
+    };
+
     return (
 	<ValidatorForm
 		ref={this.myRef}
@@ -102,10 +122,16 @@ class Rfp extends React.Component {
 					<div className="form-item m-t-20 flex-inline">
 						<div>Open your supplier directory to add suppliers</div>
 						<div className="">
-							<Button className="flex-center kt-transparent kt-primary clickable m-t-20 kt-primary bold sm-caption flex-center">
+							<Button
+								onClick={openSupplierDirectory}
+								className="flex-center kt-transparent kt-primary clickable m-t-20 kt-primary bold sm-caption flex-center"
+							>
 								<span className="kt-primary">Open Supplier Directory</span>
 							</Button>
-							<FloatingSupplierList />
+							<FloatingSupplierList
+								isVisible={canShowSuplliers}
+								closeForm={hideSuppliers}
+							/>
 						</div>
 					</div>
 					<Divider type="thick" title="Invite Stakeholders" classes="m-t-40" isNumbered number="5" />
