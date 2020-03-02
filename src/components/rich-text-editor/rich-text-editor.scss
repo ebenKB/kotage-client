@@ -1,0 +1,27 @@
+.kt-toolbar-wrapper {
+  margin-top: 30px;
+  color: var(--kt-black);
+  font-family: 'Open Sans', sans-serif;
+  font-size: 1em;
+}
+
+.kt-toolbar,
+.rdw-editor-toolbar {
+  border: 1px solid rgba(212, 212, 213, 0.7);
+}
+
+.kt-toolbar {
+  min-height: 200px;
+  padding: 20px;
+}
+
+// override defualt behaviour
+.rdw-option-wrapper {
+  min-width: 20px;
+  height: 14px;
+}
+
+.kt-block {
+  font-size: 0.80em;
+  font-weight: 600;
+}

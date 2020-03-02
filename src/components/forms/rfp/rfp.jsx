@@ -11,6 +11,7 @@ import Stakeholders from '../../snippets/stakeholders-group/stakeholders';
 import FloatingSupplierList from '../../floating-supplier-list/floating-supplier-list';
 import Help from '../../../utils/requisitions/new/help';
 // import { ReactComponent as Logo } from '../../../svg/plus.svg';
+import RichTextEditor from '../../rich-text-editor/rich-text-editor';
 
 class Rfp extends React.Component {
   constructor(props) {
@@ -47,6 +48,9 @@ class Rfp extends React.Component {
 							value="Request for NOC"
 							center
 						/>
+					</div>
+					<div className="form-item">
+						<RichTextEditor />
 					</div>
 					<div className="form-item m-t-30">
 						<FormGroup
