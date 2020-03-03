@@ -2,12 +2,12 @@
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import DateFnsUtils from '@date-io/date-fns';
-import DateRangeOutlinedIcon from '@material-ui/icons/DateRangeOutlined';
-import './picker.scss';
+import AccessTimeIcon from '@material-ui/icons/AccessTime';
+
 
 import {
   MuiPickersUtilsProvider,
-  KeyboardDatePicker,
+  KeyboardTimePicker,
 } from '@material-ui/pickers';
 
 export default function MaterialUIPickers() {
@@ -16,24 +16,25 @@ export default function MaterialUIPickers() {
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
+    console.log('This is the date', date);
   };
 
   return (
 	<MuiPickersUtilsProvider utils={DateFnsUtils}>
-		<Grid>
-			<KeyboardDatePicker
+		<Grid justify="space-around" container>
+			<KeyboardTimePicker
 				variant="inline"
 				margin="normal"
-				id="date-picker-dialog"
+				id="time-picker"
 				label=""
-				format="MM/dd/yyyy"
 				value={selectedDate}
 				onChange={handleDateChange}
-				KeyboardButtonProps={{ 'aria-label': 'change date' }}
-				placeholder="Select Date"
+				KeyboardButtonProps={{ 'aria-label': 'change time' }}
+				placeholder="Time"
+				emptyLabel=""
 				autoOk
 				invalidDateMessage={null}
-				keyboardIcon={<DateRangeOutlinedIcon />}
+				keyboardIcon={<AccessTimeIcon />}
 			/>
 		</Grid>
 	</MuiPickersUtilsProvider>
