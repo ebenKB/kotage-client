@@ -19,7 +19,10 @@ const RichTextEditor = () => {
 
   const toolbarOptions = {
     options,
-    inline: { inDropdown: false },
+    inline: {
+      inDropdown: false,
+      options: ['bold', 'italic', 'underline', 'strikethrough'],
+    },
     list: {
       inDropdown: false,
       options: ['unordered', 'ordered'],
@@ -27,7 +30,7 @@ const RichTextEditor = () => {
     textAlign: { inDropdown: false },
     link: { inDropdown: false },
     blockType: {
-      inDropdown: false,
+      inDropdown: true,
       options: ['Normal', 'H1', 'H2', 'H3', 'H4', 'H5', 'H6'],
       className: 'kt-block',
     },
