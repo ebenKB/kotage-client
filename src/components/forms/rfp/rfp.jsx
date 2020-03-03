@@ -10,8 +10,13 @@ import KtDocs from '../../form-fields/kt-docs-group/kt-docs';
 import Stakeholders from '../../snippets/stakeholders-group/stakeholders';
 import FloatingSupplierList from '../../floating-supplier-list/floating-supplier-list';
 import Help from '../../../utils/requisitions/new/help';
+<<<<<<< HEAD
 import './rfp.scss';
 // import SupplierListItem from '../../snippets/supplier-list-item/supplier-list-item';
+=======
+import DatePicker from '../../pickers/date-picker';
+// import { ReactComponent as Logo } from '../../../svg/plus.svg';
+>>>>>>> add picker component
 
 class Rfp extends React.Component {
   constructor(props) {
@@ -60,6 +65,7 @@ class Rfp extends React.Component {
 			>
 				<Divider type="thick" title="Setup Your Event" classes="m-t-10" isNumbered number="1" />
 				<div className="kt-content__wrapper">
+					<DatePicker />
 					<div className="form-item m-t-30">
 						<FormGroup
 							type="text"
