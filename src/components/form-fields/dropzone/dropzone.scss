@@ -92,10 +92,34 @@
 }
 
 .dropzone-content {
-  visibility: hidden;
+  // visibility: hidden;
   margin-top: 10px;
+  width: 100%;
+  margin-bottom: 20px;
 }
 
+.dropzone-content__heading {
+  width: 100%;
+  font-size: 0.8rem;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(212, 212, 213, 0.7);
+  margin-bottom: 20px;
+}
+
+.dropzone-heading__items {
+  display: flex;
+  justify-content: space-between;
+  width: 68%;
+}
+
+.dropzone-content__body {
+  width: 100%;
+}
+
+.dropzone-item {
+  display: grid;
+  grid-template-columns: 3% 61% 12% 25%;
+}
 .dropzone-content.active {
   width: 100%;
   height: 10%;
@@ -112,4 +136,9 @@
 
 .dropzone .kt-danger {
   animation: fadeOut 6s ease-in-out 1 forwards normal;
+}
+
+.dropzone-wrapper .small.logo {
+  width: 10px;
+  height: auto;
 }

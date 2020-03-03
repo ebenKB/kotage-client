@@ -13,6 +13,7 @@ import { ReactComponent as Icon } from '../../../svg/upload.svg';
 import './dropzone.scss';
 import DropzoneItem from './dropzone-item/dropzone-item';
 import AddItem from '../../snippets/add-item/add-item';
+import { ReactComponent as Logo } from '../../../svg/menu.svg';
 
 const dropzoneRef = createRef();
 function KtDropzone({ onFilesChange }) {
@@ -89,6 +90,24 @@ function KtDropzone({ onFilesChange }) {
 	<div
 		className="dropzone-wrapper"
 	>
+		<div className="dropzone-content light-caption">
+			<div className="dropzone-content__heading">
+				<div className="dropzone-heading__items">
+					<div>Title</div>
+					<div>Type</div>
+				</div>
+			</div>
+			<div className="dropzone-content__body">
+				<div className="dropzone-item">
+					<div>
+						<Logo className="small logo" />
+					</div>
+					<div className="bold">Implementation plan</div>
+					<div>type</div>
+					<div>actions</div>
+				</div>
+			</div>
+		</div>
 		<Dropzone
 			onDrop={(acceptedFiles) => handleDrop(acceptedFiles)}
 			onDragEnter={handleDragEnter}
