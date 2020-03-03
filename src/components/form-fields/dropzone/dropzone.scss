@@ -63,6 +63,10 @@
   background: var(--kt-off-grey);
 }
 
+.dropzone div.root:focus {
+ outline: none;
+}
+
 .dropzone-items {
   display: flex;
   // justify-content: space-evenly;

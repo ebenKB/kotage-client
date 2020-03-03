@@ -4,13 +4,17 @@
 /* eslint-disable react/jsx-fragments */
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable react/jsx-no-undef */
-import React, { useState, useEffect, Fragment } from 'react';
+import React, {
+  useState, useEffect, Fragment, createRef,
+} from 'react';
+import { Button } from 'semantic-ui-react';
 import Dropzone from 'react-dropzone';
 import { ReactComponent as Icon } from '../../../svg/upload.svg';
 import './dropzone.scss';
 import DropzoneItem from './dropzone-item/dropzone-item';
 import AddItem from '../../snippets/add-item/add-item';
 
+const dropzoneRef = createRef();
 function KtDropzone({ onFilesChange }) {
   const [hasEntered, setHasEntered] = useState(false);
   const [isEmpty, setIsEmpty] = useState(false);
@@ -48,6 +52,13 @@ function KtDropzone({ onFilesChange }) {
     setFiles((oldFiles) => ([...oldFiles, ...filteredFiles]));
   };
 
+  // open file explorer to select files
+  const openDialog = () => {
+    if (dropzoneRef.current) {
+      dropzoneRef.current.open();
+    }
+  };
+
   const handleDragEnter = () => {
     setHasEntered(true);
   };
@@ -82,6 +93,8 @@ function KtDropzone({ onFilesChange }) {
 			onDrop={(acceptedFiles) => handleDrop(acceptedFiles)}
 			onDragEnter={handleDragEnter}
 			onDragLeave={handleDragLeave}
+			noClick
+			ref={dropzoneRef}
 		>
 			{({ getRootProps, getInputProps }) => (
 				<section className={`dropzone text-center ${hasEntered ? 'active' : ''} ${!isEmpty ? 'empty' : 'full'}`}>
@@ -91,8 +104,14 @@ function KtDropzone({ onFilesChange }) {
 							<Icon className="kt-logo__medium" />
 							<p>
 								<span className="bold">Drag & drop</span>
-                your documents here, or
-								<span className="bold kt-primary"> browse</span>
+                your documents here, or&nbsp;
+								<Button
+									type="button"
+									onClick={openDialog}
+									className="kt-transparent"
+								>
+									<span className="bold kt-primary">browse</span>
+								</Button>
 							</p>
 						</div>
 					</div>
