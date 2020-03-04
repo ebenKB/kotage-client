@@ -99,6 +99,14 @@ function KtDropzone({ onFilesChange }) {
 				</div>
 			</div>
 			<div className="dropzone-content__body">
+				{files && files.map((file, idx) => (
+					<DropzoneItem
+						file={file}
+						deleteFile={() => handleDeleteFile(file.name)}
+						id={idx}
+						key={idx}
+					/>
+				))}
 				<div className="dropzone-item">
 					<div>
 						<Menu className="small logo" />
@@ -114,82 +122,6 @@ function KtDropzone({ onFilesChange }) {
 						<Button>EDIT</Button>
 						<Button>DELETE</Button>
 					</Button.Group>
-					{/* <div className="dropzone-cta">
-						<Button basic size="mini">EDIT</Button>
-						<DeleteButton
-							type="icon"
-							classes="kt-transparent kt-danger"
-						/>
-					</div> */}
-				</div>
-				<div className="dropzone-item">
-					<div>
-						<Menu className="small logo" />
-					</div>
-					<div>
-						<div className="bold">Implementation plan</div>
-						<div className="light-caption sm-caption">Implementation_plan.pptx</div>
-					</div>
-					<div>
-						<PowerPoint className="dark medium logo" />
-					</div>
-					<Button.Group basic size="mini" className="dropzone-cta">
-						<Button>EDIT</Button>
-						<Button>DELETE</Button>
-					</Button.Group>
-					{/* <div className="dropzone-cta">
-						<Button basic size="mini">EDIT</Button>
-						<DeleteButton
-							type="icon"
-							classes="kt-transparent kt-danger"
-						/>
-					</div> */}
-				</div>
-				<div className="dropzone-item">
-					<div>
-						<Menu className="small logo" />
-					</div>
-					<div>
-						<div className="bold">Implementation plan</div>
-						<div className="light-caption sm-caption">Implementation_plan.pptx</div>
-					</div>
-					<div>
-						<PowerPoint className="dark medium logo" />
-					</div>
-					<Button.Group basic size="mini" className="dropzone-cta">
-						<Button>EDIT</Button>
-						<Button>DELETE</Button>
-					</Button.Group>
-					{/* <div className="dropzone-cta">
-						<Button basic size="mini">EDIT</Button>
-						<DeleteButton
-							type="icon"
-							classes="kt-transparent kt-danger"
-						/>
-					</div> */}
-				</div>
-				<div className="dropzone-item">
-					<div>
-						<Menu className="small logo" />
-					</div>
-					<div>
-						<div className="bold">Implementation plan</div>
-						<div className="light-caption sm-caption">Implementation_plan.pptx</div>
-					</div>
-					<div>
-						<PowerPoint className="dark medium logo" />
-					</div>
-					<Button.Group basic size="mini" className="dropzone-cta">
-						<Button>EDIT</Button>
-						<Button>DELETE</Button>
-					</Button.Group>
-					{/* <div className="dropzone-cta">
-						<Button basic size="mini">EDIT</Button>
-						<DeleteButton
-							type="icon"
-							classes="kt-transparent kt-danger"
-						/>
-					</div> */}
 				</div>
 			</div>
 		</div>
