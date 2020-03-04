@@ -12,12 +12,10 @@ import Dropzone from 'react-dropzone';
 import { ReactComponent as Icon } from '../../../svg/upload.svg';
 import './dropzone.scss';
 import DropzoneItem from './dropzone-item/dropzone-item';
-// import AddItem from '../../snippets/add-item/add-item';
 
 const dropzoneRef = createRef();
 function KtDropzone({ onFilesChange }) {
   const [hasEntered, setHasEntered] = useState(false);
-  // const [isEmpty, setIsEmpty] = useState(false);
   const [error, setError] = useState(null);
   const [files, setFiles] = useState([]);
 
@@ -38,6 +36,7 @@ function KtDropzone({ onFilesChange }) {
     // check if the user tries to upload duplicate files and filter them out
     let filteredFiles = newFiles;
     for (const f of files) {
+      console.log(f);
       filteredFiles = filteredFiles.filter((x) => x.name !== f.name);
     }
 
@@ -74,10 +73,6 @@ function KtDropzone({ onFilesChange }) {
    */
   const handleDeleteFile = (file) => {
     setFiles(files.filter((x) => (x.name !== file)));
-    // check if the last item has been deleted and show a form to add more files
-    // if (files.length === 1) {
-    //   setIsEmpty(false);
-    // }
   };
 
   // const { getRootProps, getInputProps, isDragActive } = useDropzone({onDrop})
@@ -85,24 +80,26 @@ function KtDropzone({ onFilesChange }) {
 	<div
 		className="dropzone-wrapper"
 	>
-		<div className="dropzone-content active light-caption">
-			<div className="dropzone-content__heading">
-				<div className="dropzone-heading__items">
-					<div>Title</div>
-					<div>Type</div>
+		{files && files.length > 0 && (
+			<div className="dropzone-content active light-caption">
+				<div className="dropzone-content__heading">
+					<div className="dropzone-heading__items">
+						<div>Title</div>
+						<div>Type</div>
+					</div>
+				</div>
+				<div className="dropzone-content__body">
+					{files.map((file, idx) => (
+						<DropzoneItem
+							file={file}
+							deleteFile={() => handleDeleteFile(file.name)}
+							idx={idx}
+							key={idx}
+						/>
+					))}
 				</div>
 			</div>
-			<div className="dropzone-content__body">
-				{files.map((file, idx) => (
-					<DropzoneItem
-						file={file}
-						deleteFile={() => handleDeleteFile(file.name)}
-						id={idx}
-						key={idx}
-					/>
-				))}
-			</div>
-		</div>
+		)}
 		{error && (
 			<div className="kt-danger m-t-20 m-b-20">{error}</div>
 		)}
