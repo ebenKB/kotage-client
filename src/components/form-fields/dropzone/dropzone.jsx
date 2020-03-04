@@ -13,7 +13,8 @@ import { ReactComponent as Icon } from '../../../svg/upload.svg';
 import './dropzone.scss';
 import DropzoneItem from './dropzone-item/dropzone-item';
 import AddItem from '../../snippets/add-item/add-item';
-import { ReactComponent as Logo } from '../../../svg/menu.svg';
+import { ReactComponent as Menu } from '../../../svg/menu.svg';
+import { ReactComponent as Document } from '../../../svg/document.svg';
 
 const dropzoneRef = createRef();
 function KtDropzone({ onFilesChange }) {
@@ -90,7 +91,7 @@ function KtDropzone({ onFilesChange }) {
 	<div
 		className="dropzone-wrapper"
 	>
-		<div className="dropzone-content light-caption">
+		<div className="dropzone-content active light-caption">
 			<div className="dropzone-content__heading">
 				<div className="dropzone-heading__items">
 					<div>Title</div>
@@ -100,11 +101,26 @@ function KtDropzone({ onFilesChange }) {
 			<div className="dropzone-content__body">
 				<div className="dropzone-item">
 					<div>
-						<Logo className="small logo" />
+						<Menu className="small logo" />
 					</div>
-					<div className="bold">Implementation plan</div>
-					<div>type</div>
-					<div>actions</div>
+					<div>
+						<div className="bold">Implementation plan</div>
+						<div className="light-caption sm-caption">Implementation_plan.pptx</div>
+					</div>
+					<div>
+						<Document className="small logo" />
+					</div>
+					<Button.Group basic size="mini" className="dropzone-cta">
+						<Button>EDIT</Button>
+						<Button>DELETE</Button>
+					</Button.Group>
+					{/* <div className="dropzone-cta">
+						<Button basic size="mini">EDIT</Button>
+						<DeleteButton
+							type="icon"
+							classes="kt-transparent kt-danger"
+						/>
+					</div> */}
 				</div>
 			</div>
 		</div>
