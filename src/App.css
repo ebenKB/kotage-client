@@ -120,12 +120,21 @@ ul.custom {
   padding: 0 45px;
 }
 
+.logo.medium {
+  width: 20px;
+  height: auto;
+}
+
 .logo.small {
   width: 14px;
 }
 
 .logo.very.small {
   width: 10px;
+}
+
+.logo.dark {
+  fill: var(--kt-dark);
 }
 
 svg.faint {
