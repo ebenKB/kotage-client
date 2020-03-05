@@ -5,8 +5,8 @@ import React from 'react';
 import './stakeholders.scss';
 import { Dropdown } from 'semantic-ui-react';
 import Input from '../../form-fields/input/input';
-import { ReactComponent as Trash } from '../../../svg/bin.svg';
 import { ReactComponent as Logo } from '../../../svg/plus.svg';
+import DeleteButton from '../../buttons/delete-button';
 
 const Stakeholders = ({ className }) => {
   const options = [
@@ -46,7 +46,7 @@ const Stakeholders = ({ className }) => {
 					<Dropdown selection options={options} placeholder="Event owner" />
 				</div>
 				<div>
-					<Trash className="kt-logo__small" />
+					<DeleteButton type="icon" />
 				</div>
 			</div>
 			<div className="clickable m-t-20 kt-primary bold sm-caption flex-center" onClick={handleClick}>

@@ -1,15 +1,17 @@
+/* eslint-disable react/require-default-props */
 import React from 'react';
 import { Button } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import { ReactComponent as Trash } from '../../svg/bin.svg';
+import './buttons.scss';
 
 
-const DeleteButton = ({ type, classes }) => {
+const DeleteButton = ({ type, classes = '' }) => {
   const getButton = () => {
     if (type === 'icon') {
       return (
 	<Button className={`kt-transparent ${classes}`}>
-		<Trash className="kt-logo__small" />
+		<Trash className="delete kt-logo__small" />
 	</Button>
       );
     }
@@ -21,7 +23,7 @@ const DeleteButton = ({ type, classes }) => {
 
 DeleteButton.propTypes = {
   type: PropTypes.string.isRequired,
-  classes: PropTypes.string.isRequired,
+  classes: PropTypes.string,
 };
 
 export default DeleteButton;

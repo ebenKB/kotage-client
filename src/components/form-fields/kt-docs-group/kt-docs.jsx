@@ -3,9 +3,10 @@
 import React from 'react';
 import Input from '../input/input';
 import { ReactComponent as Logo } from '../../../svg/plus.svg';
-import { ReactComponent as Trash } from '../../../svg/bin.svg';
+import DeleteButton from '../../buttons/delete-button';
 
 import './kt-docs.scss';
+
 
 const KtDocs = ({ className }) => {
   const handleClick = () => {
@@ -34,7 +35,7 @@ const KtDocs = ({ className }) => {
 					/>
 				</div>
 				<div>
-					<Trash className="kt-logo__small" />
+					<DeleteButton type="icon" />
 				</div>
 			</div>
 			<div className="clickable m-t-20 kt-primary bold sm-caption flex-center" role="button" onClick={handleClick} onKeyDown={handleClick}>
