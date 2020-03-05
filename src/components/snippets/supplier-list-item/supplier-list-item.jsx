@@ -1,3 +1,4 @@
+/* eslint-disable react/require-default-props */
 /* eslint-disable react/no-typos */
 /* eslint-disable react/forbid-prop-types */
 
@@ -43,7 +44,7 @@ const SupplierListItem = ({ isInline, supplier }) => {
 };
 
 SupplierListItem.propTypes = {
-  isInline: PropTypes.isRequired,
+  isInline: PropTypes.bool,
   supplier: PropTypes.object.isRequired,
 };
 

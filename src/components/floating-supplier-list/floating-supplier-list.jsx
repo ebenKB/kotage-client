@@ -30,9 +30,9 @@ const FloatingSupplierList = ({ loading, isVisible, closeForm }) => {
 					<Checkbox label="Select All" />
 					<Divider type="thick" />
 					<div className="m-t-20">
-						<SupplierListItem />
-						<SupplierListItem />
-						<SupplierListItem />
+						<SupplierListItem supplier={{}} />
+						<SupplierListItem supplier={{}} />
+						<SupplierListItem supplier={{}} />
 					</div>
 				</div>
 			</div>
