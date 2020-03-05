@@ -9,7 +9,7 @@ import React, {
 } from 'react';
 import { Button } from 'semantic-ui-react';
 import Dropzone from 'react-dropzone';
-import { ReactComponent as Icon } from '../../../svg/upload.svg';
+import { ReactComponent as Icon } from '../../svg/upload.svg';
 import './dropzone.scss';
 import DropzoneItem from './dropzone-item/dropzone-item';
 
@@ -36,7 +36,6 @@ function KtDropzone({ onFilesChange }) {
     // check if the user tries to upload duplicate files and filter them out
     let filteredFiles = newFiles;
     for (const f of files) {
-      console.log(f);
       filteredFiles = filteredFiles.filter((x) => x.name !== f.name);
     }
 

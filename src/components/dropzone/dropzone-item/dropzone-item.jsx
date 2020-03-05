@@ -2,18 +2,22 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
 import { Button } from 'semantic-ui-react';
-import { ReactComponent as Menu } from '../../../../svg/menu.svg';
-import { ReactComponent as PowerPoint } from '../../../../svg/pptx.svg';
-import { ReactComponent as PDF } from '../../../../svg/pdf.svg';
-import { ReactComponent as JPEG } from '../../../../svg/jpg.svg';
-import { ReactComponent as EXCEL } from '../../../../svg/excel.svg';
-import { ReactComponent as WORD } from '../../../../svg/word.svg';
-import { ReactComponent as CSV } from '../../../../svg/csv.svg';
+import { ReactComponent as Menu } from '../../../svg/menu.svg';
+import { ReactComponent as PowerPoint } from '../../../svg/pptx.svg';
+import { ReactComponent as PDF } from '../../../svg/pdf.svg';
+import { ReactComponent as JPEG } from '../../../svg/jpg.svg';
+import { ReactComponent as EXCEL } from '../../../svg/excel.svg';
+import { ReactComponent as WORD } from '../../../svg/word.svg';
+import { ReactComponent as CSV } from '../../../svg/csv.svg';
 
 
 const DropzoneItem = ({ file, deleteFile, idx }) => {
-  const handleDelete = (f) => {
-    deleteFile(f);
+  /**
+   * This fonunction is used to delete files that the user has uploaded
+   * @param {*} fileToDelete the file to delete
+   */
+  const handleDelete = (fileToDelete) => {
+    deleteFile(fileToDelete);
   };
 
   // this function returns the appropriate icon based on the file type
@@ -53,7 +57,7 @@ const DropzoneItem = ({ file, deleteFile, idx }) => {
 			<Menu className="small logo" />
 		</div>
 		<div>
-			<div className="bold">Implementation plan</div>
+			<div className="bold">{file.name.split('.')[0].toUpperCase()}</div>
 			<div className="light-caption sm-caption">
 				{file && file.name}
 			</div>

@@ -10,7 +10,7 @@ import Input from '../input/input';
 import Amount from '../amount/amount';
 
 import './form-group.scss';
-import Dropzone from '../dropzone/dropzone';
+import Dropzone from '../../dropzone/dropzone';
 import KtTextArea from '../textarea/textarea';
 import InputValidator from '../input-validator/input-validator';
 import RichTextEditor from '../../rich-text-editor/rich-text-editor';

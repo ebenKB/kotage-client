@@ -10,7 +10,7 @@ import { ReactComponent as Logo } from '../../../svg/plus.svg';
 import './item-detail-wrapper.scss';
 import Collapsible from '../collapsible/collapsible';
 import AddItem from '../add-item/add-item';
-import Dropzone from '../../form-fields/dropzone/dropzone';
+import Dropzone from '../../dropzone/dropzone';
 
 // eslint-disable-next-line react/prop-types
 const ItemDetailsWrapper = ({ item_details, handleAction, handleChange, deleteItem }) => {
