@@ -117,7 +117,7 @@ function KtDropzone({ onFilesChange }) {
 							<Icon className="kt-logo__medium" />
 							<p>
 								<span className="bold">
-                  Drag & drop
+                  Drop&nbsp;
 								</span>
                   your documents here, or&nbsp;
 								<Button
