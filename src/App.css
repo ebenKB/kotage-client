@@ -196,6 +196,9 @@ svg.faint {
   justify-content: space-between;
 }
 
+.items-group.underline.bottom > div {
+  border-bottom: 1px solid rgba(212, 212, 213, 0.7);
+}
 /* general divider for application level */
 .user-invitation .label.kt-success,
 .kt-divider__wrapper .label.kt-success {

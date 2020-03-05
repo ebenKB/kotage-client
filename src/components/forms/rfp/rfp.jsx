@@ -10,7 +10,8 @@ import KtDocs from '../../form-fields/kt-docs-group/kt-docs';
 import Stakeholders from '../../snippets/stakeholders-group/stakeholders';
 import FloatingSupplierList from '../../floating-supplier-list/floating-supplier-list';
 import Help from '../../../utils/requisitions/new/help';
-// import { ReactComponent as Logo } from '../../../svg/plus.svg';
+import './rfp.scss';
+// import SupplierListItem from '../../snippets/supplier-list-item/supplier-list-item';
 
 class Rfp extends React.Component {
   constructor(props) {
@@ -119,20 +120,39 @@ class Rfp extends React.Component {
 					<Divider type="thick" title="Response Sheet" classes="m-t-40" isNumbered number="3" />
 					<KtDocs className="form-item" />
 					<Divider type="thick" title="Invite Suppliers" classes="m-t-40" isNumbered number="4" />
-					<div className="form-item m-t-20 flex-inline">
-						<div>Open your supplier directory to add suppliers</div>
-						<div className="">
-							<Button
-								onClick={openSupplierDirectory}
-								className="flex-center kt-transparent kt-primary clickable m-t-20 kt-primary bold sm-caption flex-center"
-							>
-								<span className="kt-primary">Open Supplier Directory</span>
-							</Button>
-							<FloatingSupplierList
-								isVisible={canShowSuplliers}
-								closeForm={hideSuppliers}
-							/>
+					<div className="form-item">
+						<div className="flex-inline m-t-20">
+							<div>Open your supplier directory to add suppliers</div>
+							<div className="">
+								<Button
+									onClick={openSupplierDirectory}
+									className="flex-center kt-transparent kt-primary clickable m-t-20 kt-primary bold sm-caption flex-center"
+								>
+									<span className="kt-primary">Open Supplier Directory</span>
+								</Button>
+								<FloatingSupplierList
+									isVisible={canShowSuplliers}
+									closeForm={hideSuppliers}
+								/>
+							</div>
 						</div>
+						<Divider type="faint" title="" classes="m-t-20" isNumbered={false} />
+						{/* <div>
+							<div className="bold faint-caption m-t-8 m-b-8">3 ADDED SUPPLIERS</div>
+							<Divider type="faint" title="" classes="m-t-8" isNumbered={false} />
+							<div className="xsm-caption supplier-content__heading faint-caption m-t-8 m-b-8">
+								<div>
+									<di>SUPPLIER NAME</di>
+								</div>
+								<div>CONTACT</div>
+							</div>
+							<Divider type="faint" title="" classes="m-t-8" isNumbered={false} />
+							<div className="items-group underline bottom">
+								<SupplierListItem isInline />
+								<SupplierListItem isInline />
+								<SupplierListItem isInline />
+							</div>
+						</div> */}
 					</div>
 					<Divider type="thick" title="Invite Stakeholders" classes="m-t-40" isNumbered number="5" />
 					<div>

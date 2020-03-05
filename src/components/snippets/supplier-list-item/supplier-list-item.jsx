@@ -1,9 +1,26 @@
-/* eslint-disable import/no-unresolved */
+/* eslint-disable react/no-typos */
+/* eslint-disable react/forbid-prop-types */
+
 import React from 'react';
 import './supplier-list-item.scss';
 import { Checkbox } from 'semantic-ui-react';
+import { PropTypes } from 'prop-types';
 
-const SupplierListItem = () => (
+const SupplierListItem = ({ isInline, supplier }) => {
+  const getForm = () => {
+    if (isInline) {
+      return (
+	<div className="inline supplier-list__item">
+		<div className="bold">
+      MTN GHANA
+			{' '}
+			{ supplier && supplier.name }
+		</div>
+		<div>example@email.com</div>
+	</div>
+      );
+    }
+    return (
 	<div className="supplier-list-item m-b-5 m-t-5">
 		<div className="m-r-10">
 			<Checkbox />
@@ -13,6 +30,22 @@ const SupplierListItem = () => (
 			<div className="sm-caption light-caption">example@email.com</div>
 		</div>
 	</div>
-);
+    );
+  };
+
+  return (
+	<div>
+		{
+      getForm()
+    }
+	</div>
+  );
+};
+
+SupplierListItem.propTypes = {
+  isInline: PropTypes.isRequired,
+  supplier: PropTypes.object.isRequired,
+};
+
 
 export default SupplierListItem;

@@ -9,3 +9,13 @@
 .supplier-list-item h2 {
   margin-bottom: 0;
 }
+
+.inline.supplier-list__item {
+  display: grid;
+  grid-template-columns: 1.5fr 2.5fr;
+  padding: 15px 0;
+}
+  
+  .inline.supplier-list__item:not(:last-child) {
+    border-bottom: 1px solid red;
+  }
