@@ -12,7 +12,8 @@ import SearcFilter from '../search-filter/filter';
 class KtWrapper extends React.Component {
   render() {
     let {
-      link = '', linkName = '', header, canFilter, canPerform, handleAction, cancelUrl = '/', loading = false, actionName = 'Save', disabled = false,
+      link = '', linkName = '', header, canFilter, canPerform, handleAction, cancelUrl = '/',
+      loading = false, actionName = 'Save', disabled = false, canPublish = false,
     } = this.props;
 
     // check if there are no defaults
@@ -82,6 +83,15 @@ class KtWrapper extends React.Component {
 						onClick={handleAction}
 						disabled={disabled}
 					/>
+					{canPublish && (
+						<Button
+							type="submit"
+							content="Publish"
+							className={`green ${loading && 'loading'}`}
+							onClick={handleAction}
+							disabled={disabled}
+						/>
+					)}
 				</div>
 			</div>
 		)}

@@ -56,6 +56,7 @@ class Rfp extends React.Component {
 				header="New Proposal"
 				canFilter={false}
 				canPerform
+				canPublish
 			>
 				<Divider type="thick" title="Setup Your Event" classes="m-t-10" isNumbered number="1" />
 				<div className="kt-content__wrapper">
@@ -136,8 +137,8 @@ class Rfp extends React.Component {
 								/>
 							</div>
 						</div>
-						<Divider type="faint" title="" classes="m-t-20" isNumbered={false} />
-						{/* <div>
+						{/* <Divider type="faint" title="" classes="m-t-20" isNumbered={false} />
+						<div>
 							<div className="bold faint-caption m-t-8 m-b-8">3 ADDED SUPPLIERS</div>
 							<Divider type="faint" title="" classes="m-t-8" isNumbered={false} />
 							<div className="xsm-caption supplier-content__heading faint-caption m-t-8 m-b-8">
