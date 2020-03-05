@@ -5,7 +5,7 @@ import { Checkbox, Button } from 'semantic-ui-react';
 import SearchField from '../form-fields/search-field/search-field';
 import Divider from '../kt-divider/divider';
 import SupplierListItem from '../snippets/supplier-list-item/supplier-list-item';
-import { ReactComponent as Icon } from '../../svg/cancel-white.svg';
+import { ReactComponent as Icon } from '../../svg/close.svg';
 
 const FloatingSupplierList = ({ loading, isVisible, closeForm }) => {
   const handleClose = () => {

@@ -11,7 +11,7 @@
 }
 
 .supplier-float .kt-wrapper__header {
-  color: var(--kt-black);
+  color: var(--kt-dark);
   // background: var(--kt-dark-grey);
   display: flex;
   flex-direction: row;
@@ -21,9 +21,17 @@
   border-radius: 0;
 }
 
+.supplier-float .logo {
+  fill: var(--kt-dark);
+}
+
 .supplier-float__body {
   height: 90vh;
 }
+
+// .supplier-float .input input:focus {
+//   border: 1px solid var(--kt-dark);
+// }
 
 .supplier-float__content {
   padding: 20px 30px;

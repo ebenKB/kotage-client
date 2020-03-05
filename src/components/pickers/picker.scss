@@ -52,6 +52,10 @@
   border: 14px solid var(--kt-dark) !important;
 }
 
+.MuiIconButton-label {
+  opacity: 0.8;
+}
+
 // hide default errors
 .MuiFormHelperText-root.Mui-error {
   // display: none;
