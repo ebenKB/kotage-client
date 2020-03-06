@@ -1,4 +1,5 @@
-import React from 'react';
+/* eslint-disable react/jsx-fragments */
+import React, { Fragment } from 'react';
 import { ValidatorForm } from 'react-form-validator-core';
 import { Button } from 'semantic-ui-react';
 import MainContent from '../../kt-main-content/mainContent';
@@ -10,6 +11,8 @@ import KtDocs from '../../form-fields/kt-docs-group/kt-docs';
 import Stakeholders from '../../snippets/stakeholders-group/stakeholders';
 import FloatingSupplierList from '../../floating-supplier-list/floating-supplier-list';
 import Help from '../../../utils/requisitions/new/help';
+import SupplierListItem from '../../snippets/supplier-list-item/supplier-list-item';
+import './rfp.scss';
 
 class Rfp extends React.Component {
   constructor(props) {
@@ -17,16 +20,19 @@ class Rfp extends React.Component {
     this.myRef = React.createRef();
     this.state = {
       canShowSuplliers: false,
+      proposal: {
+        suppliers: [],
+      },
     };
   }
 
-
   render() {
-    const { canShowSuplliers } = this.state;
+    const { canShowSuplliers, proposal } = this.state;
     const handleSubmit = () => {
-      console.log('we want to submit');
+
     };
 
+    // use this function to open the floating supplier directory to select suppliers
     const openSupplierDirectory = () => {
       this.setState((state) => ({
         ...state,
@@ -34,6 +40,7 @@ class Rfp extends React.Component {
       }));
     };
 
+    // use this function to hide the floating suppplier list items
     const hideSuppliers = () => {
       this.setState((state) => ({
         ...state,
@@ -55,6 +62,10 @@ class Rfp extends React.Component {
 				canFilter={false}
 				canPerform
 				canPublish
+				isDisabled={false}
+				isLoading={false}
+				cancelUrl="/rfx"
+				handleAction={handleSubmit}
 			>
 				<Divider type="thick" title="Setup Your Event" classes="m-t-10" isNumbered number="1" />
 				<div className="kt-content__wrapper">
@@ -92,6 +103,20 @@ class Rfp extends React.Component {
 							labelName="event_type"
 							classes="small"
 							center
+							options={
+                [
+                  {
+                    key: '1',
+                    text: 'GHC',
+                    value: 'GHC',
+                  },
+                  {
+                    key: '2',
+                    text: 'USD',
+                    value: 'USD',
+                  },
+                ]
+              }
 						/>
 					</div>
 					<Divider type="thick" title="Timeline" classes="m-t-40" isNumbered number="2" />
@@ -135,23 +160,27 @@ class Rfp extends React.Component {
 								/>
 							</div>
 						</div>
-						{/* <Divider type="faint" title="" classes="m-t-20" isNumbered={false} />
-						<div>
-							<div className="bold faint-caption m-t-8 m-b-8">3 ADDED SUPPLIERS</div>
-							<Divider type="faint" title="" classes="m-t-8" isNumbered={false} />
-							<div className="xsm-caption supplier-content__heading faint-caption m-t-8 m-b-8">
+						{proposal.suppliers.length > 0 && (
+							<Fragment>
+								<Divider type="faint" title="" classes="m-t-20" isNumbered={false} />
 								<div>
-									<di>SUPPLIER NAME</di>
+									<div className="bold faint-caption m-t-8 m-b-8">3 ADDED SUPPLIERS</div>
+									<Divider type="faint" title="" classes="m-t-8" isNumbered={false} />
+									<div className="xsm-caption supplier-content__heading faint-caption m-t-8 m-b-8">
+										<div>
+											<div>SUPPLIER NAME</div>
+										</div>
+										<div>CONTACT</div>
+									</div>
+									<Divider type="faint" title="" classes="m-t-8" isNumbered={false} />
+									<div className="items-group underline bottom">
+										<SupplierListItem isInline />
+										<SupplierListItem isInline />
+										<SupplierListItem isInline />
+									</div>
 								</div>
-								<div>CONTACT</div>
-							</div>
-							<Divider type="faint" title="" classes="m-t-8" isNumbered={false} />
-							<div className="items-group underline bottom">
-								<SupplierListItem isInline />
-								<SupplierListItem isInline />
-								<SupplierListItem isInline />
-							</div>
-						</div> */}
+							</Fragment>
+						)}
 					</div>
 					<Divider type="thick" title="Invite Stakeholders" classes="m-t-40" isNumbered number="5" />
 					<div>

@@ -45,7 +45,8 @@ const Rfx = () => {
 			actionName="Continue"
 			cancelUrl="/rfx"
 			handleAction={handleAction}
-			disabled={selected === ''}
+			isDisabled={selected === ''}
+			isLoading={false}
 		>
 			<Form>
 				<Divider

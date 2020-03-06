@@ -11,7 +11,11 @@ export default (state = initialState, action) => {
       let errorMessage = '';
       const { notification } = action.payload;
       if (notification.isAxiosError && notification.code && notification.code === 'ECONNABORTED') {
-        errorMessage = 'Please try again after some time.';
+        if (notification.status === 0) {
+          errorMessage = 'Please check your internet connection';
+        } else {
+          errorMessage = 'Please try again after some time.';
+        }
       } else if (notification.isAxiosError && notification.code) {
         errorMessage = notification.code;
       } else if (notification.isAxiosError && notification.code) {

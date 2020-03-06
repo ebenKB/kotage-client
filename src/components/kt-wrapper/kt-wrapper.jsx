@@ -1,9 +1,12 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable react/destructuring-assignment */
-/* eslint-disable prefer-const */
+/* eslint-disable react/require-default-props */
 /* eslint-disable react/prop-types */
+/* eslint-disable react/forbid-prop-types */
+/* eslint-disable react/boolean-prop-naming */
+/* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/prefer-stateless-function */
+
 import React from 'react';
+import { PropTypes } from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Button, Dropdown } from 'semantic-ui-react';
 import './kt-wrapper.scss';
@@ -11,9 +14,12 @@ import SearcFilter from '../search-filter/filter';
 
 class KtWrapper extends React.Component {
   render() {
+    const {
+      header, canFilter, canPerform, handleAction, cancelUrl = '/', isLoading = false,
+      actionName, isDisabled = false, canPublish = false, children,
+    } = this.props;
     let {
-      link = '', linkName = '', header, canFilter, canPerform, handleAction, cancelUrl = '/',
-      loading = false, actionName = 'Save', disabled = false, canPublish = false,
+      link = '', linkName = '',
     } = this.props;
 
     // check if there are no defaults
@@ -42,10 +48,6 @@ class KtWrapper extends React.Component {
       console.log('The selection has chnaged', data);
     };
 
-    const performAction = (e) => {
-      console.log('we want to perform an action', this.props.footer, e);
-    };
-
     return (
 	<div className="kt-wrapper">
 		<div className="kt-wrapper__header bold">
@@ -67,7 +69,7 @@ class KtWrapper extends React.Component {
 		<div className="kt-wrapper__body">
 			{ canFilter && <SearcFilter /> }
 			<div className="kt-wrapper__content">
-				{this.props.children}
+				{children}
 			</div>
 		</div>
 		{canPerform && (
@@ -79,17 +81,17 @@ class KtWrapper extends React.Component {
 					<Button
 						type="submit"
 						content={actionName}
-						className={`green ${loading && 'loading'}`}
+						className={`green ${isLoading && 'loading'}`}
 						onClick={handleAction}
-						disabled={disabled}
+						disabled={isDisabled}
 					/>
 					{canPublish && (
 						<Button
 							type="submit"
 							content="Publish"
-							className={`green ${loading && 'loading'}`}
+							className={`green ${isLoading && 'loading'}`}
 							onClick={handleAction}
-							disabled={disabled}
+							disabled={isDisabled}
 						/>
 					)}
 				</div>
@@ -99,5 +101,24 @@ class KtWrapper extends React.Component {
     );
   }
 }
+
+// vaidate all proptypes
+KtWrapper.propTypes = {
+  link: PropTypes.string,
+  linkName: PropTypes.string,
+  header: PropTypes.string.isRequired,
+  canFilter: PropTypes.bool.isRequired,
+  canPerform: PropTypes.bool.isRequired,
+  handleAction: PropTypes.func.isRequired,
+  cancelUrl: PropTypes.string.isRequired,
+  isLoading: PropTypes.bool.isRequired,
+  actionName: PropTypes.string,
+  isDisabled: PropTypes.bool.isRequired,
+  canPublish: PropTypes.bool,
+};
+
+KtWrapper.defaultProps = {
+  actionName: 'Save',
+};
 
 export default KtWrapper;

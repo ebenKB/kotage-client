@@ -16,9 +16,7 @@ import InputValidator from '../input-validator/input-validator';
 import RichTextEditor from '../../rich-text-editor/rich-text-editor';
 
 const FormGroup = ({
-  type, placeholder, label, labelName, center, classes = '', inline = true, ...rest
-}) => {
-  const options = [
+  type, placeholder, label, labelName, center, classes = '', inline = true, options = [
     {
       key: '1',
       text: 'Emmanuel',
@@ -29,8 +27,8 @@ const FormGroup = ({
       text: 'Elorm',
       value: 'Elorm',
     },
-  ];
-
+  ], ...rest
+}) => {
   const getElement = () => {
     if (type === 'text' || type === 'password' || type === 'number' || type === 'email') {
       return <InputValidator type={type} placeholder={placeholder} {...rest} />;

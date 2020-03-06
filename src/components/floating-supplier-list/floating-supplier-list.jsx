@@ -1,5 +1,6 @@
-/* eslint-disable react/prop-types */
+/* eslint-disable react/require-default-props */
 import React from 'react';
+import { PropTypes } from 'prop-types';
 import './floating-supplier-list.scss';
 import { Checkbox, Button } from 'semantic-ui-react';
 import SearchField from '../form-fields/search-field/search-field';
@@ -7,7 +8,8 @@ import Divider from '../kt-divider/divider';
 import SupplierListItem from '../snippets/supplier-list-item/supplier-list-item';
 import { ReactComponent as Icon } from '../../svg/close.svg';
 
-const FloatingSupplierList = ({ loading, isVisible, closeForm }) => {
+
+const FloatingSupplierList = ({ isLoading, isVisible, closeForm }) => {
   const handleClose = () => {
     closeForm();
   };
@@ -42,12 +44,18 @@ const FloatingSupplierList = ({ loading, isVisible, closeForm }) => {
 				<Button
 					type="submit"
 					content="Add 5 suppliers to event"
-					className={`fluid green ${loading && 'loading'}`}
+					className={`fluid green ${isLoading && 'loading'}`}
 				/>
 			</div>
 		</div>
 	</div>
   );
+};
+
+FloatingSupplierList.propTypes = {
+  isLoading: PropTypes.bool,
+  isVisible: PropTypes.bool.isRequired,
+  closeForm: PropTypes.func.isRequired,
 };
 
 export default FloatingSupplierList;
