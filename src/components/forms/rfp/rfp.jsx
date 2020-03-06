@@ -73,7 +73,7 @@ class Rfp extends React.Component {
 						<FormGroup
 							type="text"
 							placeholder="Enter title"
-							label="Title"
+							label="Title *"
 							labelName="title"
 							value="Request for NOC"
 							center
@@ -99,7 +99,7 @@ class Rfp extends React.Component {
 						<FormGroup
 							type="dropdown"
 							placeholder="Select currency"
-							label="Currency Type*"
+							label="Currency Type *"
 							labelName="event_type"
 							classes="small"
 							center
@@ -130,14 +130,14 @@ class Rfp extends React.Component {
 					<div className="form-item m-t-30">
 						<DateTimeGroup
 							placeholder="Date"
-							label="RSVP Deadline"
+							label="RSVP Deadline *"
 							center
 						/>
 					</div>
 					<div className="form-item m-t-30">
 						<DateTimeGroup
 							placeholder="Date"
-							label="Question Deadline"
+							label="Question Deadline*"
 							center
 						/>
 					</div>

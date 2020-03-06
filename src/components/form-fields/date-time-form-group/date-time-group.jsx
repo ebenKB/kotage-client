@@ -9,7 +9,7 @@ import './date-time-group.scss';
 const DateTimeGroup = ({ labelName, label }) => (
 	<div className="date-time-group">
 		<label htmlFor={labelName}>
-			<span className="bold">{label}</span>
+			<span className="">{label}</span>
 		</label>
 		<div className="date-group__content">
 			<div>
