@@ -98,7 +98,7 @@ class Rfp extends React.Component {
 					<div className="form-item m-t-30">
 						<FormGroup
 							type="dropdown"
-							placeholder="Enter title"
+							placeholder="Select currency"
 							label="Currency Type*"
 							labelName="event_type"
 							classes="small"
