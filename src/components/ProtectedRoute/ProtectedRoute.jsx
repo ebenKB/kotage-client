@@ -8,7 +8,7 @@ const ProtectedRoute = ({ children, isAuthenticated, ...rest }) => (
 	<Route
 		{...rest}
 		// eslint-disable-next-line no-self-compare
-		render={({ location }) => ((isAuthenticated) || (1 === 1) ? (children
+		render={({ location }) => ((isAuthenticated) ? (children
 		) : (
 			<Redirect
 				to={{ pathname: '/auth/signin', state: { from: location } }}
