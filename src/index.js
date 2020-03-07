@@ -7,17 +7,17 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
 import './index.css';
 // import { store, persistor } from './redux/store';
-// eslint-disable-next-line import/named
+
 import { store, persistor } from './redux/store';
 import App from './App';
 
 ReactDOM.render(
 	<Provider store={store}>
-		<PersistGate persistor={persistor} loading={null}>
-			<Router>
+		<Router>
+			<PersistGate persistor={persistor} loading={null}>
 				<App />
-			</Router>
-		</PersistGate>
+			</PersistGate>
+		</Router>
 	</Provider>,
 	document.getElementById('root'),
 );

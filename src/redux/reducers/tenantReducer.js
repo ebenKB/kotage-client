@@ -100,6 +100,11 @@ export default (state = initialState, action) => {
       }
       return { ...state };
     }
+    // case 'persist/REHYDRATE': {
+    //   return {
+    //     ...action.payload.tenant,
+    //   };
+    // }
 
     default: {
       return state;

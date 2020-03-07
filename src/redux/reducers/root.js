@@ -11,7 +11,7 @@ import proposalReducer from './rfpReducer';
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['user', 'tenant', 'requisitions'],
+  whitelist: ['user', 'tenant', 'requisitions', 'app'],
 };
 
 const rootReducer = combineReducers({

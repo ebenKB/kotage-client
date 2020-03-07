@@ -154,6 +154,14 @@ export default (state = initialState, action) => {
       };
     }
 
+    // case 'persist/REHYDRATE': {
+    //   console.log(action.payload);
+    //   return {
+    //     // state: action.payload,
+    //     ...action.payload.user,
+    //   };
+    // }
+
     default:
       return state;
   }
