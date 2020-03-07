@@ -76,7 +76,8 @@ class UserInvitation extends React.Component {
 			canPerform
 			actionName="Send Invitation"
 			handleAction={this.handleSubmit}
-			loading={loading}
+			isLoading={loading}
+			isDisabled={false}
 		>
 			<p className="">
         The person you invite will receive an email with an invitation link.
