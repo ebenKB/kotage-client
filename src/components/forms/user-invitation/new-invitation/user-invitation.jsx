@@ -37,8 +37,8 @@ class UserInvitation extends React.Component {
   }
 
   setMessage = (message) => {
-    this.setState((s) => ({
-      ...s,
+    this.setState((state) => ({
+      ...state,
       message,
     }));
   }
