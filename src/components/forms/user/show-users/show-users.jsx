@@ -30,6 +30,8 @@ class showUsers extends React.Component {
 				header="Users"
 				link="user/invitation"
 				linkName="Invite User"
+				isDiabled={false}
+				isloading={false}
 			>
 				<div className="user-content">
 					{users && users.map((u) => (

@@ -107,18 +107,24 @@ KtWrapper.propTypes = {
   link: PropTypes.string,
   linkName: PropTypes.string,
   header: PropTypes.string.isRequired,
-  canFilter: PropTypes.bool.isRequired,
-  canPerform: PropTypes.bool.isRequired,
-  handleAction: PropTypes.func.isRequired,
-  cancelUrl: PropTypes.string.isRequired,
-  isLoading: PropTypes.bool.isRequired,
+  canFilter: PropTypes.bool,
+  canPerform: PropTypes.bool,
+  handleAction: PropTypes.func,
+  cancelUrl: PropTypes.string,
+  isLoading: PropTypes.bool,
   actionName: PropTypes.string,
-  isDisabled: PropTypes.bool.isRequired,
+  isDisabled: PropTypes.bool,
   canPublish: PropTypes.bool,
 };
 
 KtWrapper.defaultProps = {
   actionName: 'Save',
+  isLoading: false,
+  isDisabled: false,
+  cancelUrl: '/',
+  canFilter: false,
+  handleAction: null,
+
 };
 
 export default KtWrapper;
