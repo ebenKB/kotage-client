@@ -13,18 +13,16 @@ const Message = () => {
     setHasInit(true);
   };
 
-  // const handleInputChange = (e) => {
-  //   e.preventDefault();
-  //   // handle input changes here
-  // };
-
   const toggle = () => {
     if (hasInit && canShowMsg) {
       handleClick();
+    } else {
+      setHasInit(false);
     }
   };
+
   const getClas = () => {
-    if (canShowMsg) {
+    if (canShowMsg && hasInit) {
       return 'active';
     } if (hasInit) {
       return 'dispose';
@@ -43,7 +41,6 @@ const Message = () => {
 				</div>
 				<div className="kt-message_content">
 					<div className="ui form m-b-10">
-						{/* <KtTextArea  value="The content is here"/> */}
 						<Form>
 							<TextArea
 								placeholder="Tell us more"
