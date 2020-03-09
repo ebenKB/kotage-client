@@ -21,7 +21,7 @@ const RichTextEditor = () => {
     options,
     inline: {
       inDropdown: false,
-      options: ['bold', 'italic', 'underline', 'strikethrough'],
+      options: ['bold', 'italic', 'underline'],
     },
     list: {
       inDropdown: false,
