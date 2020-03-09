@@ -2,7 +2,7 @@ import {
   INVITE_USER, LOGIN, SET_USER_LOADING, DONE_LOADING,
   GET_USERS, GET_INVIATION, GET_INVIATIONS, CREATE_USER, GET_TENANT_ID,
   MAKE_ADMIN, REVOKE_ADMIN, REQUEST_PASS_RESET, RESET_PASSWORD, DELETE_USER,
-  RESEND_INVITATION, DELETE_INVITATION,
+  RESEND_INVITATION, DELETE_INVITATION, LOGOUT,
 } from '../types/userTypes';
 
 const initialState = {
@@ -56,6 +56,15 @@ export default (state = initialState, action) => {
         isAuthenticated: true,
         currentUser: action.payload,
       };
+
+    case LOGOUT: {
+      localStorage.removeItem('kotage-auth');
+      return {
+        ...state,
+        isAuthenticated: false,
+        currentUser: null,
+      };
+    }
 
     case SET_USER_LOADING:
       return {

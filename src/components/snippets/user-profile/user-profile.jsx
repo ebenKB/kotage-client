@@ -5,10 +5,11 @@ import { Dropdown } from 'semantic-ui-react';
 import './user-profile.scss';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { logout } from '../../../redux/actions/userActions';
 
-const UserProfile = ({ title }) => {
-  const logout = () => {
-    console.log('we want to logout');
+const UserProfile = ({ title, handleLogout }) => {
+  const signout = () => {
+    handleLogout();
   };
   return (
 	<Dropdown
@@ -61,7 +62,7 @@ const UserProfile = ({ title }) => {
 				icon="sign-out"
 				text="Sign out"
 				className="kt-danger"
-				onClick={logout}
+				onClick={signout}
 			/>
 		</Dropdown.Menu>
 	</Dropdown>
@@ -72,4 +73,8 @@ const mapStateToProps = (state) => ({
   tenant: state.tenant.currentTenant,
 });
 
-export default connect(mapStateToProps, null)(UserProfile);
+const mapDispatchToProps = {
+  handleLogout: logout,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(UserProfile);

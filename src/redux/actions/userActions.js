@@ -6,7 +6,7 @@
 import Axios from '../../utils/axios/axios';
 import {
   SET_USER_LOADING, DONE_LOADING, LOGIN, GET_INVIATION, GET_USERS,
-  GET_TENANT_ID, CREATE_USER, MAKE_ADMIN, GET_INVIATIONS, INVITE_USER, DELETE_USER, RESEND_INVITATION, DELETE_INVITATION,
+  GET_TENANT_ID, CREATE_USER, MAKE_ADMIN, GET_INVIATIONS, INVITE_USER, DELETE_USER, RESEND_INVITATION, DELETE_INVITATION, LOGOUT,
 } from '../types/userTypes';
 import { SET_APP_NOTIFICATION } from '../types/appTypes';
 
@@ -116,6 +116,12 @@ export const login = (email, password) => async (dispatch, getState) => new Prom
     reject(error);
   }
 });
+
+export const logout = () => async (dispatch) => {
+  dispatch({
+    type: LOGOUT,
+  });
+};
 
 export const setToken = () => async () => {
   console.log('We are trying to set the token to the localhost');
