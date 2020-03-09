@@ -9,7 +9,6 @@ import React, {
 } from 'react';
 import { Button } from 'semantic-ui-react';
 import Dropzone from 'react-dropzone';
-import { ReactComponent as Icon } from '../../svg/upload.svg';
 import './dropzone.scss';
 import DropzoneItem from './dropzone-item/dropzone-item';
 
@@ -114,12 +113,11 @@ function KtDropzone({ onFilesChange }) {
 					<div {...getRootProps()} className="root">
 						<input {...getInputProps()} />
 						<div>
-							<Icon className="kt-logo__medium" />
 							<p>
 								<span className="bold">
                   Drop&nbsp;
 								</span>
-                  your documents here, or&nbsp;
+                  your documents here or&nbsp;
 								<Button
 									type="button"
 									onClick={openDialog}
