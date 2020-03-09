@@ -155,9 +155,14 @@ export default (state = initialState, action) => {
     }
 
     case 'persist/REHYDRATE': {
+      if (action.payload) {
+        const { user } = action.payload;
+        return {
+          ...user,
+        };
+      }
       return {
-        // state: action.payload,
-        ...action.payload.user,
+        ...state,
       };
     }
 

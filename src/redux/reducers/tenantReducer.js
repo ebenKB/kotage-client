@@ -105,6 +105,17 @@ export default (state = initialState, action) => {
     //     ...action.payload.tenant,
     //   };
     // }
+    case 'persist/REHYDRATE': {
+      if (action.payload) {
+        const { tenant } = action.payload;
+        return {
+          ...tenant,
+        };
+      }
+      return {
+        ...state,
+      };
+    }
 
     default: {
       return state;

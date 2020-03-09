@@ -29,7 +29,21 @@ export default (state = initialState, action) => {
       };
 
     case SET_FILES:
-      return state;
+      return {
+        ...state,
+      };
+
+    case 'persist/REHYDRATE': {
+      if (action.payload) {
+        const { requisitions } = action.payload;
+        return {
+          ...requisitions,
+        };
+      }
+      return {
+        ...state,
+      };
+    }
 
     default: return state;
   }
