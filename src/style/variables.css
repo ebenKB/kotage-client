@@ -15,7 +15,8 @@
   --kt-error: #cf2a25bf;
   --kt-off-grey: #FBFCFD;
   --kt-dark-grey: #505050;
-  --kt-light : #D9E2E8;
+  /* --kt-light : #D9E2E8; */
+  --kt-light : #a5a6a6;
   --kt-off-grey: #f1f5f94d;
   --kt-border: #DBDEE2;
 }

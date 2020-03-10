@@ -1,5 +1,7 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable react/jsx-fragments */
 import React, { Fragment } from 'react';
+import { connect } from 'react-redux';
 import { ValidatorForm } from 'react-form-validator-core';
 import { Button } from 'semantic-ui-react';
 import MainContent from '../../kt-main-content/mainContent';
@@ -8,20 +10,28 @@ import Divider from '../../kt-divider/divider';
 import FormGroup from '../../form-fields/form-group/form-group';
 import DateTimeGroup from '../../form-fields/date-time-form-group/date-time-group';
 import KtDocs from '../../form-fields/kt-docs-group/kt-docs';
-import Stakeholders from '../../snippets/stakeholders-group/stakeholders';
 import FloatingSupplierList from '../../floating-supplier-list/floating-supplier-list';
 import Help from '../../../utils/requisitions/new/help';
 import SupplierListItem from '../../snippets/supplier-list-item/supplier-list-item';
 import './rfp.scss';
+import StakeholderGroup from '../../stakeholder-group/stakeholder-group';
 
 class RFP extends React.Component {
   constructor(props) {
     super(props);
+    const { currentUser } = this.props;
+    console.log('This is the current user', currentUser);
     this.myRef = React.createRef();
     this.state = {
       canShowSuplliers: false,
       proposal: {
         suppliers: [],
+        stakeholders: [{
+          id: currentUser.user_id,
+          firstname: currentUser.firstname,
+          lastname: currentUser.lastname,
+          email: currentUser.email,
+        }],
       },
     };
   }
@@ -184,11 +194,9 @@ class RFP extends React.Component {
 						)}
 					</div>
 					<Divider type="thick" title="Invite Stakeholders" classes="m-t-40" isNumbered number="5" />
-					<div>
-						<Stakeholders
-							className="form-item"
-						/>
-					</div>
+					<StakeholderGroup
+						stakeholders={proposal.stakeholders}
+					/>
 				</div>
 			</KtWrapper>
 		</MainContent>
@@ -197,4 +205,8 @@ class RFP extends React.Component {
   }
 }
 
-export default RFP;
+const mapStateToProps = (state) => ({
+  currentUser: state.user.currentUser,
+});
+
+export default connect(mapStateToProps, null)(RFP);
