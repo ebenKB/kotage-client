@@ -1,0 +1,7 @@
+.stakeholder-group,
+.stake-holder__item,
+.kt-stk__content {
+  display: grid;
+  grid-template-columns: 50% 38% calc(12% - 20px);
+  column-gap: 10px;
+}

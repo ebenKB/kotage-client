@@ -1,17 +1,27 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable jsx-a11y/interactive-supports-focus */
-import React from 'react';
+import React, { useState } from 'react';
 import Input from '../input/input';
 import { ReactComponent as Logo } from '../../../svg/plus.svg';
 import DeleteButton from '../../buttons/delete-button';
 
 import './kt-docs.scss';
 
-
 const KtDocs = ({ className }) => {
+  const [document, setDocument] = useState({ name: '', description: '' });
   const handleClick = () => {
 
   };
+
+  const handleTextChange = (e) => {
+    e.preventDefault();
+    const { value, name } = e.target;
+    setDocument((doc) => ({
+      ...doc,
+      [name]: value,
+    }));
+  };
+
   return (
 	<div className={`docs-group m-t-30 ${className}`}>
 		<div className="bold">Documents</div>
@@ -25,6 +35,9 @@ const KtDocs = ({ className }) => {
 					<Input
 						type="text"
 						placeholder="Document name"
+						value={document.title}
+						name="title"
+						onChange={handleTextChange}
 					/>
 				</div>
 				<div>
@@ -32,6 +45,9 @@ const KtDocs = ({ className }) => {
 						type="text"
 						placeholder="Document Description"
 						classes="fluid"
+						value={document.description}
+						name="description"
+						onChange={handleTextChange}
 					/>
 				</div>
 				<div>

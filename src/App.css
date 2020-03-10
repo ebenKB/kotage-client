@@ -117,7 +117,9 @@ ul.custom {
 }
 
 .form-item {
-  padding: 0 45px;
+  /* padding: 0 50px; */
+  /* width: calc(100% - 50px);
+  margin-left: 50px; */
 }
 
 .logo.medium {
@@ -135,6 +137,10 @@ ul.custom {
 
 .logo.dark {
   fill: var(--kt-dark);
+}
+
+.faint{
+  color: var(--kt-light);
 }
 
 svg.faint {
