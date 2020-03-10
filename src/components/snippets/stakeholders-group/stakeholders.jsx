@@ -2,6 +2,7 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React from 'react';
+import { connect } from 'react-redux';
 import './stakeholders.scss';
 import { Dropdown } from 'semantic-ui-react';
 import Input from '../../form-fields/input/input';
@@ -12,18 +13,23 @@ const Stakeholders = ({ className }) => {
   const options = [
     {
       key: '1',
-      text: 'Emmanuel',
-      value: 'Emmanuel',
+      text: 'Read only',
+      value: '1',
     },
     {
       key: '2',
-      text: 'Elorm',
-      value: 'Elorm',
+      text: 'Read & Write',
+      value: '2',
     },
   ];
 
   const handleClick = () => {
 
+  };
+
+  const handlePermissionChange = (data) => {
+    const { value } = data;
+    console.log('Permission has changed', value);
   };
 
   return (
@@ -43,7 +49,12 @@ const Stakeholders = ({ className }) => {
 					/>
 				</div>
 				<div>
-					<Dropdown selection options={options} placeholder="Event owner" />
+					<Dropdown
+						selection
+						options={options}
+						placeholder="Event owner"
+						onChange={(e, data) => { handlePermissionChange(data); }}
+					/>
 				</div>
 				<div>
 					<DeleteButton type="icon" />
@@ -58,4 +69,8 @@ const Stakeholders = ({ className }) => {
   );
 };
 
-export default Stakeholders;
+// const mapStateToProps = (state) => ({
+//   users: state.user.users,
+// });
+
+export default connect(null, null)(Stakeholders);
