@@ -14,7 +14,7 @@ import Help from '../../../utils/requisitions/new/help';
 import SupplierListItem from '../../snippets/supplier-list-item/supplier-list-item';
 import './rfp.scss';
 
-class Rfp extends React.Component {
+class RFP extends React.Component {
   constructor(props) {
     super(props);
     this.myRef = React.createRef();
@@ -66,6 +66,7 @@ class Rfp extends React.Component {
 				isLoading={false}
 				cancelUrl="/rfx"
 				handleAction={handleSubmit}
+				saveBtnClasses="default"
 			>
 				<Divider type="thick" title="Setup Your Event" classes="m-t-10" isNumbered number="1" />
 				<div className="kt-content__wrapper">
@@ -130,14 +131,14 @@ class Rfp extends React.Component {
 					<div className="form-item m-t-30">
 						<DateTimeGroup
 							placeholder="Date"
-							label="RSVP Deadline *"
+							label="RSVP Deadline"
 							center
 						/>
 					</div>
 					<div className="form-item m-t-30">
 						<DateTimeGroup
 							placeholder="Date"
-							label="Question Deadline*"
+							label="Question Deadline"
 							center
 						/>
 					</div>
@@ -196,4 +197,4 @@ class Rfp extends React.Component {
   }
 }
 
-export default Rfp;
+export default RFP;

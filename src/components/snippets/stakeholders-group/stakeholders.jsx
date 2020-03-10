@@ -27,7 +27,7 @@ const Stakeholders = ({ className }) => {
   };
 
   return (
-	<div className={`kt-stk__group m-t-30 ${className}`}>
+	<div className={`docs-group m-t-30 ${className}`}>
 		<div className="bold">Stakeholders</div>
 		<div>
 			<div className="kt-stk-group__header bold light-caption">

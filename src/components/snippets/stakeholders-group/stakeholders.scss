@@ -1,21 +1,21 @@
-.kt-stk__group {
-  display: grid;
-  grid-template-columns: 25% 75%;
-  grid-column-gap: 10px;
-}
+// .kt-stk__group {
+//   display: grid;
+//   grid-template-columns: 25% 75%;
+//   grid-column-gap: 10px;
+// }
 
 .kt-stk-group__header {
   display: grid;
-  grid-template-columns:  60% 30%;
+  grid-template-columns:  55% 35%;
   grid-column-gap: 10px;
 }
 
 .kt-stk__content {
   display: grid;
-  grid-template-columns:  60% 30% 10%;
+  grid-template-columns: 55% 35% calc(10% - 20px);
   grid-column-gap: 10px;
 }
 
 .kt-stk__content .ui.selection.dropdown {
-  min-width: 8em;
+  // min-width: 8em;
 }
