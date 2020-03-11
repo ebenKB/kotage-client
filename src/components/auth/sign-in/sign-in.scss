@@ -35,7 +35,8 @@
 }
 
 .kt__wrapper_active {
-  animation: slideInRight 0.3s ease-in-out 0s 1 forwards normal;
+  display: block;
+  // animation: slideInRight 0.3s ease-in-out 0s 1 forwards normal;
   background: var(--white);
 }
 
