@@ -197,9 +197,7 @@ class RFP extends React.Component {
 					</div>
 					<Divider type="thick" title="Invite Stakeholders" classes="m-t-40" isNumbered number="5" />
 					{newProposal.stakeholders && (
-						<StakeholderGroup
-							stakeholders={newProposal.stakeholders}
-						/>
+						<StakeholderGroup />
 					)}
 				</div>
 			</KtWrapper>
