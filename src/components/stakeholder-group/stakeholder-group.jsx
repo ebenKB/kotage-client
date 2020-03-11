@@ -1,10 +1,12 @@
 /* eslint-disable react/forbid-prop-types */
 import React from 'react';
+import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
 import Stakeholders from '../snippets/add-stakeholder/add-stakeholder';
 import Divider from '../kt-divider/divider';
 import './stakeholder.scss';
 import StakeholderItem from '../stakeholder-item/stakeholder-item';
+
 
 const StakeholderGroup = ({ stakeholders }) => (
 	<div>
@@ -34,4 +36,8 @@ StakeholderGroup.propTypes = {
   stakeholders: PropTypes.array.isRequired,
 };
 
-export default StakeholderGroup;
+const mapStateToProps = (state) => ({
+  stakeholders: state.rfp.newProposal.stakeholders,
+});
+
+export default connect(mapStateToProps, null)(StakeholderGroup);
