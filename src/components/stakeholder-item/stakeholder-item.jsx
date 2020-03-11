@@ -15,7 +15,7 @@ const StakeholderItem = ({ stakeholder, currentUserId }) => (
 					{ stakeholder.lastname }
 				</span>
 				<span>
-					<span>,</span>
+					<span> ,</span>
 					{ stakeholder.email }
 				</span>
 			</div>

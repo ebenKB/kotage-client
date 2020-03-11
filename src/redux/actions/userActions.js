@@ -19,7 +19,6 @@ export const inviteUser = (invitation) => async (dispatch, getState) => new Prom
   try {
     const { user } = getState();
     const { data } = await Axios.post(`/${user.currentUser.tenant_id}/invitations`, invitation);
-    console.log('this is the data', data.invitation);
     dispatch(doneLoading());
     dispatch({
       type: INVITE_USER,
