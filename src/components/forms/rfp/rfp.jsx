@@ -1,3 +1,4 @@
+/* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/prop-types */
 /* eslint-disable react/jsx-fragments */
 import React, { Fragment } from 'react';
@@ -15,31 +16,29 @@ import Help from '../../../utils/requisitions/new/help';
 import SupplierListItem from '../../snippets/supplier-list-item/supplier-list-item';
 import './rfp.scss';
 import StakeholderGroup from '../../stakeholder-group/stakeholder-group';
+import { createProposal, setRFPOwner } from '../../../redux/actions/rfpActions';
 
 class RFP extends React.Component {
   constructor(props) {
     super(props);
-    const { currentUser } = this.props;
-    console.log('This is the current user', currentUser);
+    // set a default owner for the proposal
+    this.props.addOwnerToRFP();
+    // const { currentUser } = this.props;
     this.myRef = React.createRef();
     this.state = {
       canShowSuplliers: false,
-      proposal: {
-        suppliers: [],
-        stakeholders: [{
-          id: currentUser.user_id,
-          firstname: currentUser.firstname,
-          lastname: currentUser.lastname,
-          email: currentUser.email,
-        }],
-      },
     };
   }
 
   render() {
-    const { canShowSuplliers, proposal } = this.state;
+    const { canShowSuplliers } = this.state;
+    const { createNewProposal, newProposal } = this.props;
     const handleSubmit = () => {
 
+    };
+
+    const handlePublish = () => {
+      createNewProposal();
     };
 
     // use this function to open the floating supplier directory to select suppliers
@@ -76,6 +75,7 @@ class RFP extends React.Component {
 				isLoading={false}
 				cancelUrl="/rfx"
 				handleAction={handleSubmit}
+				handlePublishAction={handlePublish}
 				saveBtnClasses="default"
 			>
 				<Divider type="thick" title="Setup Your Event" classes="m-t-10" isNumbered number="1" />
@@ -86,7 +86,7 @@ class RFP extends React.Component {
 							placeholder="Enter title"
 							label="Title *"
 							labelName="title"
-							value="Request for NOC"
+							value={newProposal.title}
 							center
 						/>
 					</div>
@@ -153,7 +153,9 @@ class RFP extends React.Component {
 						/>
 					</div>
 					<Divider type="thick" title="Response Sheet" classes="m-t-40" isNumbered number="3" />
-					<KtDocs className="form-item" />
+					{newProposal.documents && newProposal.documents.map(({ doc, idx }) => (
+						<KtDocs className="form-item" key={idx} doc={doc} />
+					))}
 					<Divider type="thick" title="Invite Suppliers" classes="m-t-40" isNumbered number="4" />
 					<div className="form-item">
 						<div className="flex-inline m-t-20">
@@ -171,7 +173,7 @@ class RFP extends React.Component {
 								/>
 							</div>
 						</div>
-						{proposal.suppliers.length > 0 && (
+						{newProposal.suppliers && newProposal.suppliers.length > 0 && (
 							<Fragment>
 								<Divider type="faint" title="" classes="m-t-20" isNumbered={false} />
 								<div>
@@ -194,9 +196,11 @@ class RFP extends React.Component {
 						)}
 					</div>
 					<Divider type="thick" title="Invite Stakeholders" classes="m-t-40" isNumbered number="5" />
-					<StakeholderGroup
-						stakeholders={proposal.stakeholders}
-					/>
+					{newProposal.stakeholders && (
+						<StakeholderGroup
+							stakeholders={newProposal.stakeholders}
+						/>
+					)}
 				</div>
 			</KtWrapper>
 		</MainContent>
@@ -207,6 +211,12 @@ class RFP extends React.Component {
 
 const mapStateToProps = (state) => ({
   currentUser: state.user.currentUser,
+  newProposal: state.rfp.newProposal,
 });
 
-export default connect(mapStateToProps, null)(RFP);
+const mapDispatchToProps = {
+  createNewProposal: createProposal,
+  addOwnerToRFP: setRFPOwner,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(RFP);

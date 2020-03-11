@@ -9,7 +9,7 @@ import StakeholderItem from '../stakeholder-item/stakeholder-item';
 const StakeholderGroup = ({ stakeholders }) => (
 	<div>
 		<div>
-			<div className="faint m-t-20 m-b-10 form-item stakeholder-group">
+			<div className="sm-caption faint m-t-20 m-b-10 form-item stakeholder-group">
 				<div className="faint-caption">NAME OR EMAIL</div>
 				<div className="light-caption">PERMISSIONS</div>
 				<div className="light-caption">ACTION</div>
@@ -31,11 +31,7 @@ const StakeholderGroup = ({ stakeholders }) => (
 );
 
 StakeholderGroup.propTypes = {
-  stakeholders: PropTypes.array,
-};
-
-StakeholderGroup.defaultProps = {
-  stakeholders: [],
+  stakeholders: PropTypes.array.isRequired,
 };
 
 export default StakeholderGroup;

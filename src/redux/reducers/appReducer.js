@@ -10,21 +10,23 @@ export default (state = initialState, action) => {
       // check the type of error
       let errorMessage = '';
       const { notification } = action.payload;
-      if (notification.isAxiosError && notification.code && notification.code === 'ECONNABORTED') {
-        if (notification.status === 0) {
-          errorMessage = 'Please check your internet connection';
+      if (notification) {
+        if (notification.isAxiosError && notification.code && notification.code === 'ECONNABORTED') {
+          if (notification.status === 0) {
+            errorMessage = 'Please check your internet connection';
+          } else {
+            errorMessage = 'Please try again after some time.';
+          }
+        } else if (notification.isAxiosError && notification.code) {
+          errorMessage = notification.code;
+        } else if (notification.isAxiosError && notification.code) {
+          errorMessage = 'No record found for this domain';
+        } else if (notification.response && notification.response.status
+          && notification.response.status === 409) {
+          errorMessage = 'Duplicate record found.';
         } else {
-          errorMessage = 'Please try again after some time.';
+          errorMessage = notification.message;
         }
-      } else if (notification.isAxiosError && notification.code) {
-        errorMessage = notification.code;
-      } else if (notification.isAxiosError && notification.code) {
-        errorMessage = 'No record found for this domain';
-      } else if (notification.response && notification.response.status
-        && notification.response.status === 409) {
-        errorMessage = 'Duplicate record found.';
-      } else {
-        errorMessage = notification.message;
       }
       return {
         ...state,

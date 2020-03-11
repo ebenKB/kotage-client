@@ -50,7 +50,7 @@ const UserDetails = ({
   };
 
   // return the nature and type of user whose details is showing
-  const getUserStatus = () => (((type === 'user' && user.id !== currentUser.user_id) && (currentUser.is_admin))
+  const getUserStatus = () => (((type === 'user' && user.id !== currentUser.id) && (currentUser.is_admin))
     || ((type === 'invitation') && (currentUser.is_admin)));
 
   return (
@@ -90,7 +90,7 @@ const UserDetails = ({
 					</Fragment>
 				)}
 			</div>
-			{ type === 'user' && currentTenant.email !== user.email && currentUser.user_id !== user.id && (
+			{ type === 'user' && currentTenant.email !== user.email && currentUser.id !== user.id && (
 				<div className="m-t-10">
 					<Popup
 						position="top center"

@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 /* eslint-disable react/prop-types */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
@@ -7,17 +8,19 @@ import { Dropdown, Button } from 'semantic-ui-react';
 // import { ReactComponent as Logo } from '../../../svg/plus.svg';
 import { getUsers } from '../../../redux/actions/userActions';
 import './add-stakeholder.scss';
+import { addStakeholder } from '../../../redux/actions/rfpActions';
 
 const Stakeholders = ({
-  className, getAllUsers, users, currentUser,
+  className, getAllUsers, users, currentUser, addNewStakeholder,
 }) => {
   useEffect(() => {
     if (!users) {
       getAllUsers();
     }
   });
-
   const [stakeholder, setStakeholder] = useState();
+  const [access_level, setAccessLevel] = useState();
+
   const options = [
     {
       key: '1',
@@ -31,12 +34,14 @@ const Stakeholders = ({
     },
   ];
 
+  // This function takes an array of users and formats them in a way the dropdown can accept
   const formatUsers = () => {
     if (users) {
       const newUsers = users.map((u) => ({
+        // id: u.id,
         key: u.id,
-        text: u.firstname,
-        value: u.id,
+        text: `${u.firstname} ${u.lastname}`,
+        value: u,
         email: u.email,
       }));
       // all users belonging to this tenant can  be added as
@@ -46,23 +51,29 @@ const Stakeholders = ({
     return null;
   };
 
-  // const handleClick = () => {
-
-  // };
-
+  /**
+   * The function sets permissions for the user
+   * @param {*} data the permission to set for the user
+   */
   const handlePermissionChange = (data) => {
     const { value } = data;
     console.log('Permission has changed', value);
-    setStakeholder(value);
+    setAccessLevel(value);
   };
 
+  /**
+   * this function sets a stakeholder
+   * @param {*} data the user to add as a stakeholder
+   */
   const handleStakeholderChange = (data) => {
     const { value } = data;
+    setStakeholder(value);
     console.log('This is the data that we want to set as stakeholder', value);
   };
 
-  const addStakeholder = () => {
-    console.log('This is the stakeholder', stakeholder);
+  // confirm the user to add as a stakeholder
+  const handleAddStakeholder = () => {
+    addNewStakeholder(stakeholder, access_level);
   };
 
   return (
@@ -91,7 +102,7 @@ const Stakeholders = ({
 				<div>
 					<Button
 						content="Add"
-						onClick={addStakeholder}
+						onClick={handleAddStakeholder}
 						size="mini"
 					/>
 				</div>
@@ -113,6 +124,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
   getAllUsers: getUsers,
+  addNewStakeholder: addStakeholder,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Stakeholders);

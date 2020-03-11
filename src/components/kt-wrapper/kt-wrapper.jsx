@@ -17,6 +17,7 @@ class KtWrapper extends React.Component {
     const {
       header, canFilter, canPerform, handleAction, cancelUrl = '/', isLoading = false,
       actionName, isDisabled = false, canPublish = false, children, saveBtnClasses,
+      handlePublishAction,
     } = this.props;
     let {
       link = '', linkName = '',
@@ -90,7 +91,7 @@ class KtWrapper extends React.Component {
 							type="submit"
 							content="Publish"
 							className={`green ${isLoading && 'loading'}`}
-							onClick={handleAction}
+							onClick={handlePublishAction}
 							disabled={isDisabled}
 						/>
 					)}
@@ -116,6 +117,7 @@ KtWrapper.propTypes = {
   isDisabled: PropTypes.bool,
   canPublish: PropTypes.bool,
   saveBtnClasses: PropTypes.string,
+  handlePublishAction: PropTypes.func,
 };
 
 KtWrapper.defaultProps = {
@@ -126,6 +128,7 @@ KtWrapper.defaultProps = {
   canFilter: false,
   handleAction: null,
   saveBtnClasses: 'green',
+  handlePublishAction: null,
 };
 
 export default KtWrapper;
