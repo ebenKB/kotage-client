@@ -1,18 +1,27 @@
+import shortid from 'shortid';
 import {
-  UPDATE_DOC, CREATE_PROPOSAL, SET_RFP_OWNER, ADD_STAKEHOLDER,
+  UPDATE_DOC, CREATE_PROPOSAL, SET_RFP_OWNER, ADD_STAKEHOLDER, REQUEST_NEW_DOCUMENT,
 } from '../types/rfpTypes';
 
 const initialState = {
   newProposal: {
     title: 'This is a new proposal',
     description: 'This is the description for the proposal',
-    bid_deadline: '',
-    rsvp_deadline: '',
-    question_deadline: '',
+    bid_deadline_date: '',
+    rsvp_deadline_date: '',
+    question_deadline_date: '',
+    bid_deadline_time: '',
+    rsvp_deadline_time: '',
+    question_deadline_time: '',
     currency_id: null,
     tenant_id: null,
     suppliers: null,
     stakeholders: null,
+    documents: [{
+      id: shortid.generate(),
+      name: 'VAT CLEARANCE',
+      description: 'Please provide a copy of your VAT clearance certificate',
+    }],
     proposal_attachments_attributes: null,
     proposal_response_sheet_attributes: {
       proposal_question_attributes: null,
@@ -28,8 +37,9 @@ export default (state = initialState, action) => {
       return null;
     }
     case CREATE_PROPOSAL: {
-      console.log('we want to create a proposal', state.newProposal);
-      return null;
+      return {
+        ...state,
+      };
     }
 
     case SET_RFP_OWNER: {
@@ -50,18 +60,41 @@ export default (state = initialState, action) => {
     case ADD_STAKEHOLDER: {
       const { payload } = action;
       const updatedProposal = state.newProposal;
-      updatedProposal.stakeholders = [...state.newProposal.stakeholders,
-        {
-          access_level: payload.access_level,
-          id: payload.user.id,
-          firstname: payload.user.firstname,
-          lastname: payload.user.lastname,
-          email: payload.user.email,
-        }];
-      return {
-        ...state,
-        newProposal: updatedProposal,
-      };
+      // check if the user is not already added as a stakeholder
+      const existing = updatedProposal.stakeholders.filter((s) => s.id === payload.user.id);
+      if (!existing) {
+        updatedProposal.stakeholders = [...state.newProposal.stakeholders,
+          {
+            access_level: payload.access_level,
+            id: payload.user.id,
+            firstname: payload.user.firstname,
+            lastname: payload.user.lastname,
+            email: payload.user.email,
+          }];
+        return {
+          ...state,
+          newProposal: updatedProposal,
+        };
+      }
+      return { ...state };
+    }
+
+    case REQUEST_NEW_DOCUMENT: {
+      // before adding a document, check to make sure that the prev document is not empty
+      const { documents } = state.newProposal;
+      const docsSize = documents.length;
+      const prevDoc = documents[docsSize - 1];
+      if (prevDoc.name !== '' && prevDoc.description !== '') {
+        const newDocs = [...documents, action.payload];
+        return {
+          ...state,
+          newProposal: {
+            ...state.newProposal,
+            documents: newDocs,
+          },
+        };
+      }
+      return { ...state };
     }
     default: {
       return {

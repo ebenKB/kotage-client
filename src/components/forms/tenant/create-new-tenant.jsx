@@ -26,7 +26,7 @@ const CreateNewTenant = ({
     phone: '',
     job_function: '',
     company_name: '',
-    website_url: 'www.aspotica.com',
+    website_url: '',
     country: '',
     timezone: '',
   });
@@ -82,8 +82,7 @@ const CreateNewTenant = ({
       newTenant,
     }));
     try {
-      const data = await createTenant(tenant);
-      console.log('Done fetching ', data);
+      await createTenant(tenant);
       history.push('/auth/signin');
     } catch (error) {
       console.log('an error occurred');

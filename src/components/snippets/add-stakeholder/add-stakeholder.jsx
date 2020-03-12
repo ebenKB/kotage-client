@@ -38,7 +38,7 @@ const Stakeholders = ({
   const formatUsers = () => {
     if (users) {
       const newUsers = users.map((u) => ({
-        // id: u.id,
+        id: u.id,
         key: u.id,
         text: `${u.firstname} ${u.lastname}`,
         value: u,

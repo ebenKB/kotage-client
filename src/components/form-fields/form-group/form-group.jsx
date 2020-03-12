@@ -55,7 +55,7 @@ const FormGroup = ({
 	</Form>
       );
     } else if (type === 'rte') {
-      return (<RichTextEditor />);
+      return (<RichTextEditor {...rest} />);
     } else if (type === 'kt-textarea') {
       return (
 	<div className="ui form">

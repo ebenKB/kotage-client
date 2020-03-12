@@ -1,7 +1,8 @@
 /* eslint-disable camelcase */
 /* eslint-disable import/prefer-default-export */
+import shortid from 'shortid';
 import {
-  CREATE_PROPOSAL, SET_RFP_OWNER, ADD_STAKEHOLDER, ADD_SUPPLIER,
+  CREATE_PROPOSAL, SET_RFP_OWNER, ADD_STAKEHOLDER, ADD_SUPPLIER, REQUEST_NEW_DOCUMENT,
 } from '../types/rfpTypes';
 
 export const createProposal = (proposal) => async (dispatch) => {
@@ -23,16 +24,23 @@ export const setRFPOwner = () => async (dispatch, getState) => {
  * This function adds a new stakeholder to the new proposal
  * @param {*} user the user to be added as a stakeholder
  */
-export const addStakeholder = (user, access_level) => async (dispatch) => {
-  console.log('we want to add this user a stakeholder', user);
-  return dispatch({
-    type: ADD_STAKEHOLDER,
-    payload: {
-      user,
-      access_level,
-    },
-  });
-};
+export const addStakeholder = (user, access_level) => async (dispatch) => dispatch({
+  type: ADD_STAKEHOLDER,
+  payload: {
+    user,
+    access_level,
+  },
+});
+
+
+export const requestNewProposalDocument = () => async (dispatch) => dispatch({
+  type: REQUEST_NEW_DOCUMENT,
+  payload: {
+    id: shortid.generate(),
+    name: '',
+    title: '',
+  },
+});
 
 export const addSupplier = (supplier) => async (dispatch) => {
   console.log('We want to add a supplier', supplier);
