@@ -10,7 +10,7 @@ import KtWrapper from '../../kt-wrapper/kt-wrapper';
 import Divider from '../../kt-divider/divider';
 import FormGroup from '../../form-fields/form-group/form-group';
 import DateTimeGroup from '../../form-fields/date-time-form-group/date-time-group';
-import KtDocs from '../../form-fields/kt-docs-group/kt-docs';
+import KtDocsGroup from '../../form-fields/kt-docs-group/kt-docs-group';
 import FloatingSupplierList from '../../floating-supplier-list/floating-supplier-list';
 import Help from '../../../utils/requisitions/new/help';
 import SupplierListItem from '../../snippets/supplier-list-item/supplier-list-item';
@@ -37,8 +37,36 @@ class RFP extends React.Component {
 
     };
 
+    const handleInputChange = (e) => {
+      e.preventDefault();
+      console.log('The input has change and this is the value', e);
+    };
+
+    const setDate = (data, name) => {
+      if (name === 'bid_deadline_date') {
+        newProposal.bid_deadline_date = data;
+      } else if (name === 'rsvp_deadline_date') {
+        newProposal.rsvp_deadline_date = data;
+      } else if (name === 'question_deadline_date') {
+        newProposal.question_deadline_date = data;
+      }
+    };
+
+    const setTime = (time, name) => {
+      if (name === 'bid_deadline_time') {
+        newProposal.bid_deadline_time = time;
+      } else if (name === 'rsvp_deadline_time') {
+        newProposal.rsvp_deadline_time = time;
+      } else if (name === 'question_deadline_time') {
+        newProposal.question_deadline_time = time;
+      }
+    };
+    const setDescription = (e) => {
+      newProposal.description = e;
+    };
+
     const handlePublish = () => {
-      createNewProposal();
+      createNewProposal(newProposal);
     };
 
     // use this function to open the floating supplier directory to select suppliers
@@ -87,6 +115,7 @@ class RFP extends React.Component {
 							label="Title *"
 							labelName="title"
 							value={newProposal.title}
+							onChange={handleInputChange}
 							center
 						/>
 					</div>
@@ -96,6 +125,7 @@ class RFP extends React.Component {
 							placeholder="How would you describe the quote?"
 							label="Description"
 							labelName="decription"
+							onChange={setDescription}
 						/>
 					</div>
 					<div className="form-item m-t-30">
@@ -136,6 +166,8 @@ class RFP extends React.Component {
 							placeholder="Date"
 							label="Bid Deadline *"
 							center
+							onDateChange={(date) => setDate(date, 'bid_deadline_date')}
+							onTimeChange={(time) => setTime(time, 'bid_deadline_time')}
 						/>
 					</div>
 					<div className="form-item m-t-30">
@@ -143,6 +175,8 @@ class RFP extends React.Component {
 							placeholder="Date"
 							label="RSVP Deadline"
 							center
+							onDateChange={(date) => setDate(date, 'rsvp_deadline_date')}
+							onTimeChange={(time) => setTime(time, 'rsvp_deadline_time')}
 						/>
 					</div>
 					<div className="form-item m-t-30">
@@ -150,12 +184,15 @@ class RFP extends React.Component {
 							placeholder="Date"
 							label="Question Deadline"
 							center
+							onDateChange={(date) => setDate(date, 'question_deadline_date')}
+							onTimeChange={(time) => setTime(time, 'question_deadline_time')}
 						/>
 					</div>
 					<Divider type="thick" title="Response Sheet" classes="m-t-40" isNumbered number="3" />
-					{newProposal.documents && newProposal.documents.map(({ doc, idx }) => (
-						<KtDocs className="form-item" key={idx} doc={doc} />
-					))}
+					{/* {newProposal.documents && newProposal.documents.map((doc) => (
+						<KtDocs className="form-item" key={doc.id} doc={doc} />
+					))} */}
+					<KtDocsGroup documents={newProposal.documents} />
 					<Divider type="thick" title="Invite Suppliers" classes="m-t-40" isNumbered number="4" />
 					<div className="form-item">
 						<div className="flex-inline m-t-20">
@@ -197,7 +234,9 @@ class RFP extends React.Component {
 					</div>
 					<Divider type="thick" title="Invite Stakeholders" classes="m-t-40" isNumbered number="5" />
 					{newProposal.stakeholders && (
-						<StakeholderGroup />
+						<StakeholderGroup
+							stakeholders={newProposal.stakeholders}
+						/>
 					)}
 				</div>
 			</KtWrapper>

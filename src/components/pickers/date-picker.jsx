@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 // import 'date-fns';
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
@@ -10,12 +11,13 @@ import {
   KeyboardDatePicker,
 } from '@material-ui/pickers';
 
-export default function MaterialUIPickers() {
+export default function MaterialUIPickers({ handleChange }) {
   // The first commit of Material-UI
   const [selectedDate, setSelectedDate] = React.useState(null);
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
+    handleChange(date);
   };
 
   return (
@@ -26,7 +28,6 @@ export default function MaterialUIPickers() {
 				margin="normal"
 				id="date-picker-dialog"
 				label=""
-				format="MM/dd/yyyy"
 				value={selectedDate}
 				onChange={handleDateChange}
 				KeyboardButtonProps={{ 'aria-label': 'change date' }}
@@ -34,6 +35,7 @@ export default function MaterialUIPickers() {
 				autoOk
 				invalidDateMessage={null}
 				keyboardIcon={<DateRangeOutlinedIcon />}
+				format="MM-dd-yyyy"
 			/>
 		</Grid>
 	</MuiPickersUtilsProvider>

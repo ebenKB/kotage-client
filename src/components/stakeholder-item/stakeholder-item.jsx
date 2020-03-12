@@ -31,7 +31,7 @@ const StakeholderItem = ({ stakeholder, currentUserId }) => (
 
 StakeholderItem.propTypes = {
   stakeholder: PropTypes.object.isRequired,
-  currentUserId: PropTypes.string,
+  currentUserId: PropTypes.number,
 };
 
 StakeholderItem.defaultProps = {

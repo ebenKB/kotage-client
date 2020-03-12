@@ -26,6 +26,7 @@ export default (state = initialState, action) => {
           errorMessage = 'Duplicate record found.';
         } else {
           errorMessage = notification.message;
+          // errorMessage = 'An error occurred while completing your request';
         }
       }
       return {

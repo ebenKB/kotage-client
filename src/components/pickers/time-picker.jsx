@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import DateFnsUtils from '@date-io/date-fns';
@@ -9,12 +10,13 @@ import {
   KeyboardTimePicker,
 } from '@material-ui/pickers';
 
-export default function MaterialUIPickers() {
+export default function MaterialUIPickers({ handleChange }) {
   const [selectedDate, setSelectedDate] = React.useState(null);
 
   // check when the date changes
-  const handleDateChange = (date) => {
-    setSelectedDate(date);
+  const handleTimeChange = (time) => {
+    setSelectedDate(time);
+    handleChange(time);
   };
 
   return (
@@ -26,7 +28,7 @@ export default function MaterialUIPickers() {
 				id="time-picker"
 				label=""
 				value={selectedDate}
-				onChange={handleDateChange}
+				onChange={handleTimeChange}
 				KeyboardButtonProps={{ 'aria-label': 'change time' }}
 				placeholder="Time"
 				emptyLabel=""
