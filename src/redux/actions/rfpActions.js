@@ -3,6 +3,7 @@
 import shortid from 'shortid';
 import {
   CREATE_PROPOSAL, SET_RFP_OWNER, ADD_STAKEHOLDER, ADD_SUPPLIER, REQUEST_NEW_DOCUMENT,
+  DELETE_PROPOSAL_DOCUMENT,
 } from '../types/rfpTypes';
 
 export const createProposal = (proposal) => async (dispatch) => {
@@ -40,6 +41,11 @@ export const requestNewProposalDocument = () => async (dispatch) => dispatch({
     name: '',
     title: '',
   },
+});
+
+export const deleteProposalDocument = (id) => async (dispatch) => dispatch({
+  type: DELETE_PROPOSAL_DOCUMENT,
+  payload: id,
 });
 
 export const addSupplier = (supplier) => async (dispatch) => {

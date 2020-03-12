@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable react/require-default-props */
 import React from 'react';
 import { Button } from 'semantic-ui-react';
@@ -6,11 +7,14 @@ import { ReactComponent as Trash } from '../../svg/bin.svg';
 import './buttons.scss';
 
 
-const DeleteButton = ({ type, classes = '' }) => {
+const DeleteButton = ({ type, classes = '', handleAction }) => {
   const getButton = () => {
     if (type === 'icon') {
       return (
-	<Button className={`kt-transparent ${classes}`}>
+	<Button
+		className={`kt-transparent ${classes}`}
+		onClick={handleAction}
+	>
 		<Trash className="delete kt-logo__small" />
 	</Button>
       );
