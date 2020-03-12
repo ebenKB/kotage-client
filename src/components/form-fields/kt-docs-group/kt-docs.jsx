@@ -2,12 +2,16 @@
 /* eslint-disable jsx-a11y/interactive-supports-focus */
 import React from 'react';
 import { connect } from 'react-redux';
-import { requestNewProposalDocument } from '../../../redux/actions/rfpActions';
+import {
+  requestNewProposalDocument,
+  deleteProposalDocument,
+} from '../../../redux/actions/rfpActions';
 import Input from '../input/input';
 import DeleteButton from '../../buttons/delete-button';
 import './kt-docs.scss';
 
-const KtDocs = ({ doc }) => {
+
+const KtDocs = ({ doc, deleteDoc }) => {
   // const [document, setDocument] = useState({ name: '', description: '' });
   const handleTextChange = (e) => {
     e.preventDefault();
@@ -40,7 +44,10 @@ const KtDocs = ({ doc }) => {
 			/>
 		</div>
 		<div>
-			<DeleteButton type="icon" />
+			<DeleteButton
+				type="icon"
+				handleAction={() => deleteDoc(doc.id)}
+			/>
 		</div>
 	</div>
   );
@@ -48,5 +55,6 @@ const KtDocs = ({ doc }) => {
 
 const mapDispatchToProps = {
   requestNewDoc: requestNewProposalDocument,
+  deleteDoc: deleteProposalDocument,
 };
 export default connect(null, mapDispatchToProps)(KtDocs);

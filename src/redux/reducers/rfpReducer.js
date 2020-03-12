@@ -1,6 +1,7 @@
 import shortid from 'shortid';
 import {
-  UPDATE_DOC, CREATE_PROPOSAL, SET_RFP_OWNER, ADD_STAKEHOLDER, REQUEST_NEW_DOCUMENT,
+  UPDATE_DOC, CREATE_PROPOSAL, SET_RFP_OWNER, ADD_STAKEHOLDER,
+  REQUEST_NEW_DOCUMENT, DELETE_PROPOSAL_DOCUMENT,
 } from '../types/rfpTypes';
 
 const initialState = {
@@ -84,7 +85,7 @@ export default (state = initialState, action) => {
       const { documents } = state.newProposal;
       const docsSize = documents.length;
       const prevDoc = documents[docsSize - 1];
-      if (prevDoc.name !== '' && prevDoc.description !== '') {
+      if ((prevDoc && (prevDoc.name !== '' && prevDoc.description !== '')) || (!prevDoc)) {
         const newDocs = [...documents, action.payload];
         return {
           ...state,
@@ -96,6 +97,19 @@ export default (state = initialState, action) => {
       }
       return { ...state };
     }
+
+    case DELETE_PROPOSAL_DOCUMENT: {
+      const { documents } = state.newProposal;
+      const newDocs = documents.filter((doc) => doc.id !== action.payload);
+      return {
+        ...state,
+        newProposal: {
+          ...state.newProposal,
+          documents: newDocs,
+        },
+      };
+    }
+
     default: {
       return {
         ...state,
