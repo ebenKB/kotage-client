@@ -3,6 +3,7 @@
 /* eslint-disable react/jsx-fragments */
 import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
+import shortid from 'shortid';
 import { ValidatorForm } from 'react-form-validator-core';
 import { Button } from 'semantic-ui-react';
 import MainContent from '../../kt-main-content/mainContent';
@@ -16,40 +17,90 @@ import Help from '../../../utils/requisitions/new/help';
 import SupplierListItem from '../../snippets/supplier-list-item/supplier-list-item';
 import './rfp.scss';
 import StakeholderGroup from '../../stakeholder-group/stakeholder-group';
-import { createProposal, setRFPOwner } from '../../../redux/actions/rfpActions';
+import { createProposal } from '../../../redux/actions/rfpActions';
+import { removeTimeFromDate } from '../../../utils/app/index';
 
 class RFP extends React.Component {
   constructor(props) {
     super(props);
-    // set a default owner for the proposal
-    this.props.addOwnerToRFP();
-    // const { currentUser } = this.props;
+    const { currentUser } = this.props;
     this.myRef = React.createRef();
     this.state = {
       canShowSuplliers: false,
+      newProposal: {
+        title: '',
+        description: '',
+        bid_deadline_date: '',
+        rsvp_deadline_date: '',
+        question_deadline_date: '',
+        bid_deadline_time: '',
+        rsvp_deadline_time: '',
+        question_deadline_time: '',
+        currency_id: null,
+        tenant_id: currentUser.tenant_id,
+        suppliers: null,
+        questions: null,
+        files: [{ file: 'example@fileLocation.com' }],
+        stakeholders: [
+          {
+            id: currentUser.id,
+            access_level: 2,
+            firstname: currentUser.firstname,
+            lastname: currentUser.lastname,
+            email: currentUser.email,
+          },
+        ],
+        documents: [{
+          id: shortid.generate(),
+          name: '',
+          description: '',
+        }],
+        proposal_attachments_attributes: null,
+        proposal_response_sheet_attributes: {
+          proposal_question_attributes: null,
+          proposal_document_requests_attributes: null,
+        },
+      },
+      currencyOptions: [
+        {
+          key: '1',
+          text: 'GHC',
+          value: 'GHC',
+        },
+        {
+          key: '2',
+          text: 'USD',
+          value: 'USD',
+        },
+      ],
     };
   }
 
   render() {
-    const { canShowSuplliers } = this.state;
-    const { createNewProposal, newProposal } = this.props;
+    const { canShowSuplliers, newProposal, currencyOptions } = this.state;
+    const { createNewProposal } = this.props;
     const handleSubmit = () => {
 
     };
 
     const handleInputChange = (e) => {
       e.preventDefault();
-      console.log('The input has change and this is the value', e);
+      const { name, value } = e.target;
+      const proposal = newProposal;
+      proposal[name] = value;
+      this.setState((state) => ({
+        ...state,
+        newProposal: proposal,
+      }));
     };
 
-    const setDate = (data, name) => {
-      if (name === 'bid_deadline_date') {
-        newProposal.bid_deadline_date = data;
-      } else if (name === 'rsvp_deadline_date') {
-        newProposal.rsvp_deadline_date = data;
-      } else if (name === 'question_deadline_date') {
-        newProposal.question_deadline_date = data;
-      }
+    const setDate = (date, name) => {
+      const proposal = newProposal;
+      proposal[name] = removeTimeFromDate(date);
+      this.setState((state) => ({
+        ...state,
+        newProposal: proposal,
+      }));
     };
 
     const setTime = (time, name) => {
@@ -61,12 +112,64 @@ class RFP extends React.Component {
         newProposal.question_deadline_time = time;
       }
     };
+
     const setDescription = (e) => {
-      newProposal.description = e;
+      const proposal = newProposal;
+      proposal.description = e;
+      this.setState((state) => (
+        {
+          ...state,
+          newProposal: proposal,
+        }));
+    };
+    const deleteDocument = (id) => {
+      const newDocs = newProposal.documents.filter((doc) => doc.id !== id);
+      const proposal = newProposal;
+      proposal.documents = newDocs;
+      this.setState((state) => ({
+        ...state,
+        newProposal: proposal,
+      }));
+    };
+
+    const addNewDocument = () => {
+      // check if the previous document is not empty
+      const docSize = newProposal.documents.length;
+      const prevDoc = newProposal.documents[docSize - 1];
+      if ((prevDoc && (prevDoc.name !== '' && prevDoc.description !== '')) || (!prevDoc)) {
+        const document = {
+          id: shortid.generate(),
+          name: '',
+          description: '',
+        };
+        const newDocs = [...newProposal.documents, document];
+        const proposal = newProposal;
+        proposal.documents = newDocs;
+        this.setState((state) => ({
+          ...state,
+          newProposal: proposal,
+        }));
+      }
+    };
+
+    const addNewStakeholder = (stakeholder, access) => {
+      console.log('we want to add a new stakeholder', stakeholder, access);
+    };
+
+    const updateDocument = (index, newDoc) => {
+      const { documents } = newProposal;
+      const proposal = newProposal;
+      documents[index] = newDoc;
+      proposal.documents = documents;
+      this.setState((state) => ({
+        ...state,
+        newProposal: proposal,
+      }));
     };
 
     const handlePublish = () => {
       createNewProposal(newProposal);
+      console.log('The is the proposl that we want to create', newProposal);
     };
 
     // use this function to open the floating supplier directory to select suppliers
@@ -117,6 +220,7 @@ class RFP extends React.Component {
 							value={newProposal.title}
 							onChange={handleInputChange}
 							center
+							name="title"
 						/>
 					</div>
 					<div className="form-item m-t-30">
@@ -144,20 +248,7 @@ class RFP extends React.Component {
 							labelName="event_type"
 							classes="small"
 							center
-							options={
-                [
-                  {
-                    key: '1',
-                    text: 'GHC',
-                    value: 'GHC',
-                  },
-                  {
-                    key: '2',
-                    text: 'USD',
-                    value: 'USD',
-                  },
-                ]
-              }
+							options={currencyOptions}
 						/>
 					</div>
 					<Divider type="thick" title="Timeline" classes="m-t-40" isNumbered number="2" />
@@ -189,10 +280,12 @@ class RFP extends React.Component {
 						/>
 					</div>
 					<Divider type="thick" title="Response Sheet" classes="m-t-40" isNumbered number="3" />
-					{/* {newProposal.documents && newProposal.documents.map((doc) => (
-						<KtDocs className="form-item" key={doc.id} doc={doc} />
-					))} */}
-					<KtDocsGroup documents={newProposal.documents} />
+					<KtDocsGroup
+						documents={newProposal.documents}
+						deleteDocument={(id) => deleteDocument(id)}
+						addNewDocument={addNewDocument}
+						updateDocument={(id, index, newDoc) => updateDocument(id, index, newDoc)}
+					/>
 					<Divider type="thick" title="Invite Suppliers" classes="m-t-40" isNumbered number="4" />
 					<div className="form-item">
 						<div className="flex-inline m-t-20">
@@ -236,6 +329,7 @@ class RFP extends React.Component {
 					{newProposal.stakeholders && (
 						<StakeholderGroup
 							stakeholders={newProposal.stakeholders}
+							addStakeholder={(stakeholder, access) => addNewStakeholder(stakeholder, access)}
 						/>
 					)}
 				</div>
@@ -253,7 +347,6 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
   createNewProposal: createProposal,
-  addOwnerToRFP: setRFPOwner,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(RFP);

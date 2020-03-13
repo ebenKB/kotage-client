@@ -1,7 +1,7 @@
 import shortid from 'shortid';
 import {
   UPDATE_DOC, CREATE_PROPOSAL, SET_RFP_OWNER, ADD_STAKEHOLDER,
-  REQUEST_NEW_DOCUMENT, DELETE_PROPOSAL_DOCUMENT,
+  REQUEST_NEW_DOCUMENT, DELETE_PROPOSAL_DOCUMENT, UPDATE_NEW_PROPOSAL,
 } from '../types/rfpTypes';
 
 const initialState = {
@@ -107,6 +107,13 @@ export default (state = initialState, action) => {
           ...state.newProposal,
           documents: newDocs,
         },
+      };
+    }
+
+    case UPDATE_NEW_PROPOSAL: {
+      return {
+        ...state,
+        newProposal: action.payload,
       };
     }
 

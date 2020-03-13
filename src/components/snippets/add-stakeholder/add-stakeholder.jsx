@@ -8,7 +8,7 @@ import { Dropdown, Button } from 'semantic-ui-react';
 // import { ReactComponent as Logo } from '../../../svg/plus.svg';
 import { getUsers } from '../../../redux/actions/userActions';
 import './add-stakeholder.scss';
-import { addStakeholder } from '../../../redux/actions/rfpActions';
+// import { addStakeholder } from '../../../redux/actions/rfpActions';
 
 const Stakeholders = ({
   className, getAllUsers, users, currentUser, addNewStakeholder,
@@ -57,7 +57,6 @@ const Stakeholders = ({
    */
   const handlePermissionChange = (data) => {
     const { value } = data;
-    console.log('Permission has changed', value);
     setAccessLevel(value);
   };
 
@@ -73,6 +72,7 @@ const Stakeholders = ({
 
   // confirm the user to add as a stakeholder
   const handleAddStakeholder = () => {
+    console.log('Action called to add a stakeholder');
     addNewStakeholder(stakeholder, access_level);
   };
 
@@ -124,7 +124,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
   getAllUsers: getUsers,
-  addNewStakeholder: addStakeholder,
+  // addNewStakeholder: addStakeholder,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Stakeholders);

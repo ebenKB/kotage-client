@@ -1,25 +1,19 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable jsx-a11y/interactive-supports-focus */
 import React from 'react';
-import { connect } from 'react-redux';
-import {
-  requestNewProposalDocument,
-  deleteProposalDocument,
-} from '../../../redux/actions/rfpActions';
 import Input from '../input/input';
 import DeleteButton from '../../buttons/delete-button';
 import './kt-docs.scss';
 
-
-const KtDocs = ({ doc, deleteDoc }) => {
-  // const [document, setDocument] = useState({ name: '', description: '' });
+const KtDocs = ({
+  doc, deleteDocument, index, updateDocument,
+}) => {
   const handleTextChange = (e) => {
     e.preventDefault();
-    // const { value, name } = e.target;
-    // setDocument((doc) => ({
-    //   ...doc,
-    //   [name]: value,
-    // }));
+    const { value, name } = e.target;
+    const newDoc = doc;
+    newDoc[name] = value;
+    updateDocument(index, newDoc);
   };
 
   return (
@@ -29,7 +23,7 @@ const KtDocs = ({ doc, deleteDoc }) => {
 				type="text"
 				placeholder="Document name"
 				value={doc.name}
-				name="title"
+				name="name"
 				onChange={handleTextChange}
 			/>
 		</div>
@@ -46,15 +40,11 @@ const KtDocs = ({ doc, deleteDoc }) => {
 		<div>
 			<DeleteButton
 				type="icon"
-				handleAction={() => deleteDoc(doc.id)}
+				handleAction={() => deleteDocument(doc.id)}
 			/>
 		</div>
 	</div>
   );
 };
 
-const mapDispatchToProps = {
-  requestNewDoc: requestNewProposalDocument,
-  deleteDoc: deleteProposalDocument,
-};
-export default connect(null, mapDispatchToProps)(KtDocs);
+export default KtDocs;

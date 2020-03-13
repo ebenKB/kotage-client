@@ -5,19 +5,20 @@ import Grid from '@material-ui/core/Grid';
 import DateFnsUtils from '@date-io/date-fns';
 import DateRangeOutlinedIcon from '@material-ui/icons/DateRangeOutlined';
 import './picker.scss';
-
 import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker,
 } from '@material-ui/pickers';
+import { formatDate } from '../../utils/app';
 
 export default function MaterialUIPickers({ handleChange }) {
   // The first commit of Material-UI
   const [selectedDate, setSelectedDate] = React.useState(null);
 
   const handleDateChange = (date) => {
-    setSelectedDate(date);
-    handleChange(date);
+    const newDate = formatDate(date);
+    setSelectedDate(newDate);
+    handleChange(newDate);
   };
 
   return (

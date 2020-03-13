@@ -1,14 +1,13 @@
 /* eslint-disable react/forbid-prop-types */
 import React from 'react';
-import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
-import Stakeholders from '../snippets/add-stakeholder/add-stakeholder';
+import AddStakeholder from '../snippets/add-stakeholder/add-stakeholder';
 import Divider from '../kt-divider/divider';
 import './stakeholder.scss';
 import StakeholderItem from '../stakeholder-item/stakeholder-item';
 
 
-const StakeholderGroup = ({ stakeholders }) => (
+const StakeholderGroup = ({ stakeholders, addStakeholder }) => (
 	<div>
 		<div>
 			<div className="sm-caption faint m-t-20 m-b-10 form-item stakeholder-group">
@@ -26,18 +25,17 @@ const StakeholderGroup = ({ stakeholders }) => (
 				</div>
 			))}
 		</div>
-		<Stakeholders
+		<AddStakeholder
 			className="form-item"
+			addNewStakeholder={(stakeholder, access) => addStakeholder(stakeholder, access)}
 		/>
 	</div>
 );
 
 StakeholderGroup.propTypes = {
   stakeholders: PropTypes.array.isRequired,
+  addStakeholder: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  stakeholders: state.rfp.newProposal.stakeholders,
-});
 
-export default connect(mapStateToProps, null)(StakeholderGroup);
+export default StakeholderGroup;
