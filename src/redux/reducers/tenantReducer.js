@@ -1,10 +1,11 @@
 import {
-  CREATE_TENANT, SET_LOADING, DONE_LOADING, SET_ERROR, GET_TENANT, ADD_SUPPLIER,
+  CREATE_TENANT, SET_LOADING, DONE_LOADING, SET_ERROR, GET_TENANT,
+  ADD_SUPPLIER, GET_SUPPLIERS,
 } from '../types/tenantTypes';
 
 const initialState = {
   tenants: null,
-  suppliers: [],
+  suppliers: null,
   currentTenant: null,
   loading: false,
   error: '',
@@ -47,11 +48,31 @@ export default (state = initialState, action) => {
     }
 
     case ADD_SUPPLIER: {
+      let newSuppliers = null;
+      if (!state.suppliers) {
+        newSuppliers = action.payload;
+      } else {
+        newSuppliers = [...state.suppliers, action.payload];
+      }
       return {
         ...state,
-        supplier: [...state.suppliers, action.payload],
+        suppliers: newSuppliers,
       };
     }
+
+    case GET_SUPPLIERS: {
+      let newSuppliers = null;
+      if (state.suppliers) {
+        newSuppliers = [...state.suppliers, ...action.payload];
+      } else {
+        newSuppliers = [...action.payload];
+      }
+      return {
+        ...state,
+        suppliers: newSuppliers,
+      };
+    }
+
     default: {
       return {
         ...state,

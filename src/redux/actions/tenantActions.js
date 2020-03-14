@@ -4,7 +4,7 @@
 import Axios from '../../utils/axios/axios';
 import { SET_APP_NOTIFICATION } from '../types/appTypes';
 import {
-  SET_LOADING, DONE_LOADING, SET_ERROR, GET_TENANT, ADD_SUPPLIER,
+  SET_LOADING, DONE_LOADING, SET_ERROR, GET_TENANT, ADD_SUPPLIER, GET_SUPPLIERS,
 } from '../types/tenantTypes';
 
 /**
@@ -87,6 +87,19 @@ export const searchSupplier = (tenant_id, uid) => async (dispatch) => (
     }
   })
 );
+
+export const getAllSuppliers = () => async (dispatch, getState) => {
+  const { user } = getState();
+  try {
+    const { data } = await Axios.get(`/${user.currentUser.tenant_id}/suppliers`);
+    dispatch({
+      type: GET_SUPPLIERS,
+      payload: data.suppliers,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 export const addSupplier = (tenant_id, uid) => async (dispatch) => {
   const { data } = await Axios.post(`/${tenant_id}/suppliers`, { tenant_id, uid });

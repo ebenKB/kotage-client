@@ -53,7 +53,7 @@ const InviteSupplier = ({
 					{supplier && (
 						<div>
 							<div className="m-t-20 m-b-20">
-								<div className="bold big-caption">{supplier.company_name }</div>
+								<div className="bold big-caption p-t-10 p-b-10">{supplier.company_name }</div>
 								<div>{supplier.email}</div>
 								<div>{supplier.phone}</div>
 							</div>

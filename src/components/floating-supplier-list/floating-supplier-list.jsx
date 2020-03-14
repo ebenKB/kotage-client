@@ -1,5 +1,7 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable react/require-default-props */
-import React from 'react';
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
 import './floating-supplier-list.scss';
 import { Checkbox, Button } from 'semantic-ui-react';
@@ -7,9 +9,16 @@ import SearchField from '../form-fields/search-field/search-field';
 import Divider from '../kt-divider/divider';
 import SupplierListItem from '../snippets/supplier-list-item/supplier-list-item';
 import { ReactComponent as Icon } from '../../svg/close.svg';
+import { getAllSuppliers } from '../../redux/actions/tenantActions';
 
-
-const FloatingSupplierList = ({ isLoading, isVisible, closeForm }) => {
+const FloatingSupplierList = ({
+  isLoading, isVisible, closeForm, suppliers, getSuppliers,
+}) => {
+  useEffect(() => {
+    if (!suppliers) {
+      getSuppliers();
+    }
+  });
   const handleClose = () => {
     closeForm();
   };
@@ -58,4 +67,12 @@ FloatingSupplierList.propTypes = {
   closeForm: PropTypes.func.isRequired,
 };
 
-export default FloatingSupplierList;
+const mapDispatchToProps = {
+  getSuppliers: getAllSuppliers,
+};
+
+const mapStateToProps = (state) => ({
+  suppliers: state.tenant.suppliers,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(FloatingSupplierList);
