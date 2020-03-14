@@ -1,3 +1,4 @@
+/* eslint-disable react/boolean-prop-naming */
 /* eslint-disable react/forbid-prop-types */
 import React from 'react';
 import { PropTypes } from 'prop-types';
@@ -7,7 +8,7 @@ import './stakeholder.scss';
 import StakeholderItem from '../stakeholder-item/stakeholder-item';
 
 
-const StakeholderGroup = ({ stakeholders, addStakeholder }) => (
+const StakeholderGroup = ({ stakeholders, addStakeholder, shouldFetchData }) => (
 	<div>
 		<div>
 			<div className="sm-caption faint m-t-20 m-b-10 form-item stakeholder-group">
@@ -26,6 +27,7 @@ const StakeholderGroup = ({ stakeholders, addStakeholder }) => (
 			))}
 		</div>
 		<AddStakeholder
+			shouldFetchData={shouldFetchData}
 			className="form-item"
 			addNewStakeholder={(stakeholder, access) => addStakeholder(stakeholder, access)}
 		/>
@@ -35,6 +37,7 @@ const StakeholderGroup = ({ stakeholders, addStakeholder }) => (
 StakeholderGroup.propTypes = {
   stakeholders: PropTypes.array.isRequired,
   addStakeholder: PropTypes.func.isRequired,
+  shouldFetchData: PropTypes.bool.isRequired,
 };
 
 

@@ -104,14 +104,25 @@ export const getAllSuppliers = () => async (dispatch, getState) => {
   }
 };
 
-export const addSupplier = (tenant_id, uid) => async (dispatch) => {
-  const { data } = await Axios.post(`/${tenant_id}/suppliers`, { tenant_id, uid });
-  console.log('This is the tenant', data.tenant);
-  dispatch({
-    type: ADD_SUPPLIER,
-    payload: data.tenant,
-  });
-};
+export const addSupplier = (tenant_id, uid) => async (dispatch) => (
+  new Promise(async (resolve) => {
+    try {
+      const { data } = await Axios.post(`/${tenant_id}/suppliers`, { tenant_id, uid });
+      dispatch({
+        type: ADD_SUPPLIER,
+        payload: data.tenant,
+      });
+      resolve(data);
+    } catch (error) {
+      dispatch({
+        type: SET_APP_NOTIFICATION,
+        payload: {
+          type: 'error',
+          notification: error,
+        },
+      });
+    }
+  }));
 
 export const setLoading = (dispatch) => dispatch({
   type: SET_LOADING,

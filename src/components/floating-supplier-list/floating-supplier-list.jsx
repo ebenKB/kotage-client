@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable react/require-default-props */
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
 import './floating-supplier-list.scss';
@@ -12,15 +12,41 @@ import { ReactComponent as Icon } from '../../svg/close.svg';
 import { getAllSuppliers } from '../../redux/actions/tenantActions';
 
 const FloatingSupplierList = ({
-  isLoading, isVisible, closeForm, suppliers, getSuppliers, loading,
+  isLoading, isVisible, closeForm, suppliers, getSuppliers, loading, handleAction,
 }) => {
   useEffect(() => {
     if (!suppliers) {
       getSuppliers();
     }
-  });
+  }, [isVisible]);
+  const [selectedSuppliers, setSelectedSuppliers] = useState([{ id: 999, name: 'Nuhu' }]);
+
+  const handleSelectionChange = (supplier) => {
+    if (selectedSuppliers.includes(supplier)) {
+      // remove the supplier from the selection
+      const newSuppliers = selectedSuppliers.filter((s) => s.id !== supplier.id);
+      setSelectedSuppliers(() => newSuppliers);
+    } else {
+      // add the supplier to the selection
+      setSelectedSuppliers((state) => ([
+        ...state,
+        supplier,
+      ]));
+    }
+  };
+  const addNewSuppliers = () => {
+    handleAction(selectedSuppliers);
+  };
+
   const handleClose = () => {
     closeForm();
+  };
+
+  const getContent = () => {
+    if (selectedSuppliers.length === 1) {
+      return `Add ${selectedSuppliers.length} supplier`;
+    }
+    return `Add ${selectedSuppliers.length} suppliers`;
   };
 
   return (
@@ -44,9 +70,18 @@ const FloatingSupplierList = ({
 					<Checkbox label="Select All" />
 					<Divider type="thick" />
 					<div className="m-t-20">
-						<SupplierListItem supplier={{}} />
-						<SupplierListItem supplier={{}} />
-						<SupplierListItem supplier={{}} />
+						<SupplierListItem
+							supplier={{}}
+							handleChange={(s) => handleSelectionChange(s)}
+						/>
+						<SupplierListItem
+							supplier={{}}
+							handleChange={(s) => handleSelectionChange(s)}
+						/>
+						<SupplierListItem
+							supplier={{}}
+							handleChange={(s) => handleSelectionChange(s)}
+						/>
 					</div>
 				</div>
 			</div>
@@ -55,8 +90,9 @@ const FloatingSupplierList = ({
 			<div className="supplier-float__footer-content">
 				<Button
 					type="submit"
-					content="Add 5 suppliers to event"
+					content={`${selectedSuppliers.length > 0 ? getContent() : 'No Supplier selected'}`}
 					className={`fluid green ${isLoading && 'loading'}`}
+					onClick={addNewSuppliers}
 				/>
 			</div>
 		</div>

@@ -11,15 +11,17 @@ import './add-stakeholder.scss';
 // import { addStakeholder } from '../../../redux/actions/rfpActions';
 
 const Stakeholders = ({
-  className, getAllUsers, users, currentUser, addNewStakeholder,
+  className, getAllUsers, users, currentUser, addNewStakeholder, shouldFetchData = false, loading,
 }) => {
+  const [stakeholder, setStakeholder] = useState();
+  const [access_level, setAccessLevel] = useState();
+  const [isTriggered, setTriggered] = useState(false);
+
   useEffect(() => {
-    if (!users) {
+    if (!users && (shouldFetchData || isTriggered)) {
       getAllUsers();
     }
   });
-  const [stakeholder, setStakeholder] = useState();
-  const [access_level, setAccessLevel] = useState();
 
   const options = [
     {
@@ -87,7 +89,9 @@ const Stakeholders = ({
 						options={formatUsers()}
 						placeholder="Search by name or email"
 						onChange={(e, data) => { handleStakeholderChange(data); }}
+						onClick={() => { setTriggered(true); }}
 						className="fluid"
+						loading={loading}
 					/>
 				</div>
 				<div>
@@ -120,6 +124,7 @@ const Stakeholders = ({
 const mapStateToProps = (state) => ({
   users: state.user.users,
   currentUser: state.user.currentUser,
+  loading: state.user.loading,
 });
 
 const mapDispatchToProps = {

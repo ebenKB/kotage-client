@@ -7,7 +7,7 @@ import './supplier-list-item.scss';
 import { Checkbox } from 'semantic-ui-react';
 import { PropTypes } from 'prop-types';
 
-const SupplierListItem = ({ isInline, supplier }) => {
+const SupplierListItem = ({ isInline, supplier, handleChange }) => {
   const getForm = () => {
     if (isInline) {
       return (
@@ -24,7 +24,9 @@ const SupplierListItem = ({ isInline, supplier }) => {
     return (
 	<div className="supplier-list-item m-b-5 m-t-5">
 		<div className="m-r-10">
-			<Checkbox />
+			<Checkbox
+				onChange={() => handleChange(supplier)}
+			/>
 		</div>
 		<div>
 			<h2 className="kt-primary">Company Name</h2>
@@ -46,6 +48,7 @@ const SupplierListItem = ({ isInline, supplier }) => {
 SupplierListItem.propTypes = {
   isInline: PropTypes.bool,
   supplier: PropTypes.object.isRequired,
+  handleChange: PropTypes.func.isRequired,
 };
 
 

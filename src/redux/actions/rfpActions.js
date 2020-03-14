@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 /* eslint-disable import/prefer-default-export */
 import {
-  CREATE_PROPOSAL, SET_RFP_OWNER, ADD_STAKEHOLDER,
+  CREATE_PROPOSAL,
 } from '../types/rfpTypes';
 import Axios from '../../utils/axios/axios';
 
@@ -42,25 +42,25 @@ export const createProposal = (proposal) => async (dispatch, getState) => {
   }
 };
 
-export const setRFPOwner = () => async (dispatch, getState) => {
-  const { user } = getState();
-  dispatch({
-    type: SET_RFP_OWNER,
-    payload: user.currentUser,
-  });
-};
+// export const setRFPOwner = () => async (dispatch, getState) => {
+//   const { user } = getState();
+//   dispatch({
+//     type: SET_RFP_OWNER,
+//     payload: user.currentUser,
+//   });
+// };
 
 /**
  * This function adds a new stakeholder to the new proposal
  * @param {*} user the user to be added as a stakeholder
  */
-export const addStakeholder = (user, access_level) => async (dispatch) => dispatch({
-  type: ADD_STAKEHOLDER,
-  payload: {
-    user,
-    access_level,
-  },
-});
+// export const addStakeholder = (user, access_level) => async (dispatch) => dispatch({
+//   type: ADD_STAKEHOLDER,
+//   payload: {
+//     user,
+//     access_level,
+//   },
+// });
 
 
 // export const requestNewProposalDocument = () => async (dispatch) => dispatch({

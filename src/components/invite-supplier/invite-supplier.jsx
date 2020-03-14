@@ -12,8 +12,13 @@ import { searchSupplier, addSupplier } from '../../redux/actions/tenantActions';
 const InviteSupplier = ({
   findSupplier, currentUser, loading, addNewSupplier,
 }) => {
-  const [uid, setUID] = useState();
+  const [uid, setUID] = useState('');
   const [supplier, setSupplier] = useState();
+
+  const handleChange = (e) => {
+    e.preventDefault();
+    setUID(e.target.value);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -48,7 +53,7 @@ const InviteSupplier = ({
 						placeholder="Enter supplier Kotage number"
 						value={uid}
 						loading={loading}
-						onChange={(e) => setUID(e.target.value)}
+						onChange={handleChange}
 					/>
 					{supplier && (
 						<div>

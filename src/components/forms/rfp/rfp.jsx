@@ -38,9 +38,10 @@ class RFP extends React.Component {
         question_deadline_time: '',
         currency_id: null,
         tenant_id: currentUser.tenant_id,
-        suppliers: null,
+        suppliers: [],
         questions: null,
         files: [{ file: 'example@fileLocation.com' }],
+        // an rfp has a default owner who is the current user
         stakeholders: [
           {
             id: currentUser.id,
@@ -73,18 +74,29 @@ class RFP extends React.Component {
           value: 'USD',
         },
       ],
+      shouldFetchData: false,
     };
   }
 
   render() {
-    const { canShowSuplliers, newProposal, currencyOptions } = this.state;
+    const {
+      canShowSuplliers, newProposal, currencyOptions, shouldFetchData,
+    } = this.state;
     const { createNewProposal } = this.props;
+
     const handleSubmit = () => {
 
     };
 
     const handleInputChange = (e) => {
       e.preventDefault();
+      // check if we need to fetch any data for the form
+      if (!shouldFetchData) {
+        this.setState((state) => ({
+          ...state,
+          shouldFetchData: true,
+        }));
+      }
       const { name, value } = e.target;
       const proposal = newProposal;
       proposal[name] = value;
@@ -145,6 +157,18 @@ class RFP extends React.Component {
         const newDocs = [...newProposal.documents, document];
         const proposal = newProposal;
         proposal.documents = newDocs;
+        this.setState((state) => ({
+          ...state,
+          newProposal: proposal,
+        }));
+      }
+    };
+
+    const addSuppliers = (suppliers) => {
+      if (suppliers && suppliers.length > 0) {
+        const newSuppliers = [...newProposal.suppliers, ...suppliers];
+        const proposal = newProposal;
+        proposal.suppliers = newSuppliers;
         this.setState((state) => ({
           ...state,
           newProposal: proposal,
@@ -301,6 +325,7 @@ class RFP extends React.Component {
 									<FloatingSupplierList
 										isVisible={canShowSuplliers}
 										closeForm={hideSuppliers}
+										handleAction={(suppliers) => addSuppliers(suppliers)}
 									/>
 								)}
 							</div>
@@ -330,6 +355,7 @@ class RFP extends React.Component {
 					<Divider type="thick" title="Invite Stakeholders" classes="m-t-40" isNumbered number="5" />
 					{newProposal.stakeholders && (
 						<StakeholderGroup
+							shouldFetchData={shouldFetchData}
 							stakeholders={newProposal.stakeholders}
 							addStakeholder={(stakeholder, access) => addNewStakeholder(stakeholder, access)}
 						/>
