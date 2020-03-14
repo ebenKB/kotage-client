@@ -4,7 +4,7 @@
 import Axios from '../../utils/axios/axios';
 import { SET_APP_NOTIFICATION } from '../types/appTypes';
 import {
-  SET_LOADING, DONE_LOADING, SET_ERROR, GET_TENANT,
+  SET_LOADING, DONE_LOADING, SET_ERROR, GET_TENANT, ADD_SUPPLIER,
 } from '../types/tenantTypes';
 
 /**
@@ -68,6 +68,34 @@ export const validateDomain = (domain) => async (dispatch) => (
     }
   })
 );
+
+/**
+ * search supplier using their unique identification
+ * @param {*} tenant_id the tenant_id to search
+ * @param {*} uid the uid to search
+ */
+export const searchSupplier = (tenant_id, uid) => async (dispatch) => (
+  new Promise(async (resolve, reject) => {
+    dispatch(setLoading);
+    try {
+      const { data } = await Axios.get(`/${tenant_id}/suppliers?uid=${uid}`);
+      resolve(data.tenant);
+      dispatch(doneLoading);
+    } catch (error) {
+      dispatch(doneLoading);
+      reject(error);
+    }
+  })
+);
+
+export const addSupplier = (tenant_id, uid) => async (dispatch) => {
+  const { data } = await Axios.post(`/${tenant_id}/suppliers`, { tenant_id, uid });
+  console.log('This is the tenant', data.tenant);
+  dispatch({
+    type: ADD_SUPPLIER,
+    payload: data.tenant,
+  });
+};
 
 export const setLoading = (dispatch) => dispatch({
   type: SET_LOADING,

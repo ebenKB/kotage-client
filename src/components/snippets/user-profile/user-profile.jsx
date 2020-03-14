@@ -38,6 +38,12 @@ const UserProfile = ({ title, handleLogout }) => {
 					text="Invite user"
 				/>
 			</Link>
+			<Link to="/supplier/invitation" className="item">
+				<Dropdown.Item
+					icon="folder"
+					text="Invite Supplier"
+				/>
+			</Link>
 			<Link to="/user/requisitions" className="item">
 				<Dropdown.Item
 					icon="folder"
