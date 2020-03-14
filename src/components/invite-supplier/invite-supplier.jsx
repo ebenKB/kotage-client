@@ -42,7 +42,7 @@ const InviteSupplier = ({
             Enter the Kotage number for the Supplier you want to invite
 					</div>
 					<Input
-						action={{ content: 'Search', onClick: (e) => handleSubmit(e) }}
+						action={{ content: `${loading ? '' : 'Search'}`, onClick: (e) => handleSubmit(e) }}
 						type="text"
 						fluid
 						placeholder="Enter supplier Kotage number"
