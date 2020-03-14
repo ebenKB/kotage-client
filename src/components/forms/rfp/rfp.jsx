@@ -297,10 +297,12 @@ class RFP extends React.Component {
 								>
 									<span className="kt-primary">Open Supplier Directory</span>
 								</Button>
-								<FloatingSupplierList
-									isVisible={canShowSuplliers}
-									closeForm={hideSuppliers}
-								/>
+								{canShowSuplliers && (
+									<FloatingSupplierList
+										isVisible={canShowSuplliers}
+										closeForm={hideSuppliers}
+									/>
+								)}
 							</div>
 						</div>
 						{newProposal.suppliers && newProposal.suppliers.length > 0 && (

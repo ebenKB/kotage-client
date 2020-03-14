@@ -89,6 +89,7 @@ export const searchSupplier = (tenant_id, uid) => async (dispatch) => (
 );
 
 export const getAllSuppliers = () => async (dispatch, getState) => {
+  dispatch(setLoading);
   const { user } = getState();
   try {
     const { data } = await Axios.get(`/${user.currentUser.tenant_id}/suppliers`);
@@ -96,8 +97,10 @@ export const getAllSuppliers = () => async (dispatch, getState) => {
       type: GET_SUPPLIERS,
       payload: data.suppliers,
     });
+    dispatch(doneLoading);
   } catch (error) {
     console.log(error);
+    dispatch(doneLoading);
   }
 };
 

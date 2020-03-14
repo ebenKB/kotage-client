@@ -12,7 +12,7 @@ import { ReactComponent as Icon } from '../../svg/close.svg';
 import { getAllSuppliers } from '../../redux/actions/tenantActions';
 
 const FloatingSupplierList = ({
-  isLoading, isVisible, closeForm, suppliers, getSuppliers,
+  isLoading, isVisible, closeForm, suppliers, getSuppliers, loading,
 }) => {
   useEffect(() => {
     if (!suppliers) {
@@ -37,6 +37,9 @@ const FloatingSupplierList = ({
 			</div>
 			<div className="supplier-float__content">
 				<SearchField />
+				{loading && (
+					<div>Loading</div>
+				)}
 				<div className="m-t-30">
 					<Checkbox label="Select All" />
 					<Divider type="thick" />
@@ -73,6 +76,7 @@ const mapDispatchToProps = {
 
 const mapStateToProps = (state) => ({
   suppliers: state.tenant.suppliers,
+  loading: state.tenant.loading,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(FloatingSupplierList);
