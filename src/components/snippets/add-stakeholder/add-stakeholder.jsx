@@ -69,12 +69,10 @@ const Stakeholders = ({
   const handleStakeholderChange = (data) => {
     const { value } = data;
     setStakeholder(value);
-    console.log('This is the data that we want to set as stakeholder', value);
   };
 
   // confirm the user to add as a stakeholder
   const handleAddStakeholder = () => {
-    console.log('Action called to add a stakeholder');
     addNewStakeholder(stakeholder, access_level);
   };
 

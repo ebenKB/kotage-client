@@ -18,7 +18,6 @@ import SupplierListItem from '../../snippets/supplier-list-item/supplier-list-it
 import './rfp.scss';
 import StakeholderGroup from '../../stakeholder-group/stakeholder-group';
 import { createProposal } from '../../../redux/actions/rfpActions';
-import { removeTimeFromDate } from '../../../utils/app/index';
 
 class RFP extends React.Component {
   constructor(props) {
@@ -66,12 +65,12 @@ class RFP extends React.Component {
         {
           key: '1',
           text: 'GHC',
-          value: 'GHC',
+          value: '1',
         },
         {
           key: '2',
           text: 'USD',
-          value: 'USD',
+          value: '2',
         },
       ],
       shouldFetchData: false,
@@ -108,7 +107,7 @@ class RFP extends React.Component {
 
     const setDate = (date, name) => {
       const proposal = newProposal;
-      proposal[name] = removeTimeFromDate(date);
+      proposal[name] = date;
       this.setState((state) => ({
         ...state,
         newProposal: proposal,
@@ -116,13 +115,7 @@ class RFP extends React.Component {
     };
 
     const setTime = (time, name) => {
-      if (name === 'bid_deadline_time') {
-        newProposal.bid_deadline_time = time;
-      } else if (name === 'rsvp_deadline_time') {
-        newProposal.rsvp_deadline_time = time;
-      } else if (name === 'question_deadline_time') {
-        newProposal.question_deadline_time = time;
-      }
+      newProposal[name] = time;
     };
 
     const setDescription = (e) => {
@@ -177,7 +170,30 @@ class RFP extends React.Component {
     };
 
     const addNewStakeholder = (stakeholder, access) => {
-      console.log('we want to add a new stakeholder', stakeholder, access);
+      if (stakeholder && access) {
+        const proposal = newProposal;
+        const newStakeholders = [...newProposal.stakeholders, {
+          id: stakeholder.id,
+          access_level: access,
+          firstname: stakeholder.firstname,
+          lastname: stakeholder.lastname,
+          email: stakeholder.email,
+        }];
+        proposal.stakeholders = newStakeholders;
+        this.setState((state) => ({
+          ...state,
+          newProposal: proposal,
+        }));
+      }
+    };
+
+    const removeStakeholder = (id) => {
+      const proposal = newProposal;
+      proposal.stakeholders = newProposal.stakeholders.filter((s) => (s.id !== id));
+      this.setState((state) => ({
+        ...state,
+        newProposal: proposal,
+      }));
     };
 
     const updateDocument = (index, newDoc) => {
@@ -191,9 +207,17 @@ class RFP extends React.Component {
       }));
     };
 
+    const setCurrency = (id) => {
+      const proposal = newProposal;
+      proposal.currency_id = id;
+      this.setState((state) => ({
+        ...state,
+        newProposal: proposal,
+      }));
+    };
+
     const handlePublish = () => {
       createNewProposal(newProposal);
-      console.log('The is the proposl that we want to create', newProposal);
     };
 
     // use this function to open the floating supplier directory to select suppliers
@@ -273,6 +297,7 @@ class RFP extends React.Component {
 							classes="small"
 							center
 							options={currencyOptions}
+							onChange={(id) => setCurrency(id)}
 						/>
 					</div>
 					<Divider type="thick" title="Timeline" classes="m-t-40" isNumbered number="2" />
@@ -358,6 +383,7 @@ class RFP extends React.Component {
 							shouldFetchData={shouldFetchData}
 							stakeholders={newProposal.stakeholders}
 							addStakeholder={(stakeholder, access) => addNewStakeholder(stakeholder, access)}
+							removeStakeholder={(id) => removeStakeholder(id)}
 						/>
 					)}
 				</div>

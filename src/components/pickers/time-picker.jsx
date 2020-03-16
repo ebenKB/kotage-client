@@ -32,7 +32,6 @@ export default function MaterialUIPickers({ handleChange }) {
 				KeyboardButtonProps={{ 'aria-label': 'change time' }}
 				placeholder="Time"
 				emptyLabel=""
-				autoOk
 				invalidDateMessage={null}
 				keyboardIcon={<AccessTimeIcon />}
 			/>

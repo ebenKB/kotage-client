@@ -40,36 +40,33 @@ export const getInitialNames = (value) => {
   return initials;
 };
 
-export const removeTimeFromDate = (date) => {
-  console.log('This is the data', date);
-  // if (date) {
-  //   const newDate = date.split('T');
-  //   return newDate(0);
-  // } return date;
-  return date;
-};
+export const mergeDateAndTime = (date, time) => (`${date}T${time}`);
 
 /**
- * formate date to day-month-year
- * @param {*} dateObj the object to format
+ * formate date to month-day-year e.g mm-dd-yyyy
+ * @param {*} dateObj the date to format
  */
 export const formatDate = (dateObj) => {
   if (dateObj) {
     const year = dateObj.getFullYear();
-    let month = dateObj.getMonth();
+    // add 1 to the month because Javascript starts counting months from 0
+    let month = dateObj.getMonth() + 1;
     if (month < 10) {
       month = `0${month}`;
     }
-    let day = dateObj.getDay();
+    let day = dateObj.getDate();
     if (day < 10) {
       day = `0${day}`;
     }
-    const newDate = `${day}-${month}-${year}`;
-    return newDate;
+    return `${month}-${day}-${year}`;
   }
   return dateObj;
 };
 
+/**
+ * all time records will be formeatted to hh:mm using the 24 hour format
+ * @param {*} timeObj the time to format
+ */
 export const formatTime = (timeObj) => {
   if (timeObj) {
     let hrs = timeObj.getHours();

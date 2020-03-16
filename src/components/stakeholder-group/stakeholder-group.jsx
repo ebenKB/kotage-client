@@ -8,7 +8,9 @@ import './stakeholder.scss';
 import StakeholderItem from '../stakeholder-item/stakeholder-item';
 
 
-const StakeholderGroup = ({ stakeholders, addStakeholder, shouldFetchData }) => (
+const StakeholderGroup = ({
+  stakeholders, addStakeholder, shouldFetchData, removeStakeholder,
+}) => (
 	<div>
 		<div>
 			<div className="sm-caption faint m-t-20 m-b-10 form-item stakeholder-group">
@@ -21,6 +23,7 @@ const StakeholderGroup = ({ stakeholders, addStakeholder, shouldFetchData }) => 
 				<div key={stakeholder.id}>
 					<StakeholderItem
 						stakeholder={stakeholder}
+						removeStakeholder={(id) => removeStakeholder(id)}
 					/>
 					<Divider type="faint" title="" classes="form-item m-t-8" isNumbered={false} />
 				</div>
@@ -38,6 +41,7 @@ StakeholderGroup.propTypes = {
   stakeholders: PropTypes.array.isRequired,
   addStakeholder: PropTypes.func.isRequired,
   shouldFetchData: PropTypes.bool.isRequired,
+  removeStakeholder: PropTypes.func.isRequired,
 };
 
 

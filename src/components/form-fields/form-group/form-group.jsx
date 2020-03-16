@@ -20,15 +20,16 @@ const FormGroup = ({
     {
       key: '1',
       text: 'Emmanuel',
-      value: 'Emmanuel',
+      value: '1',
     },
     {
       key: '2',
       text: 'Elorm',
-      value: 'Elorm',
+      value: '2',
     },
   ], ...rest
 }) => {
+  console.log({ ...rest });
   const getElement = () => {
     if (type === 'text' || type === 'password' || type === 'number' || type === 'email') {
       return <InputValidator type={type} placeholder={placeholder} {...rest} />;
@@ -42,8 +43,7 @@ const FormGroup = ({
 		selection
 		options={options}
 		className={`md-dropdown ${rest.classes}`}
-		onChange={() => {}}
-		{...rest}
+		onChange={(e, data) => rest.onChange(data.value)}
 	/>
       );
     } else if (type === 'amount') {

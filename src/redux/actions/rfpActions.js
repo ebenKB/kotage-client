@@ -4,6 +4,7 @@ import {
   CREATE_PROPOSAL,
 } from '../types/rfpTypes';
 import Axios from '../../utils/axios/axios';
+import { mergeDateAndTime } from '../../utils/app/index';
 
 export const createProposal = (proposal) => async (dispatch, getState) => {
   // format the date to suit the api structure
@@ -11,14 +12,18 @@ export const createProposal = (proposal) => async (dispatch, getState) => {
     title: proposal.titile,
     tenant_id: proposal.tenant_id,
     description: proposal.description,
-    bid_deadline: proposal.bid_deadline_date,
-    rsvp_deadline: proposal.rsvp_deadline_date,
-    question_deadline: proposal.question_deadline_date,
+    bid_deadline: mergeDateAndTime(proposal.bid_deadline_date,
+      proposal.bid_deadline_time),
+    rsvp_deadline: mergeDateAndTime(proposal.rsvp_deadline_date,
+      proposal.rsvp_deadline_time),
+    question_deadline: mergeDateAndTime(proposal.question_deadline_date,
+      proposal.question_deadline_time),
     currency_id: proposal.currency_id,
     proposal_suppliers_attribute: proposal.suppliers,
     proposal_stateholders_attributes: proposal.stakeholders,
     proposal_attachments_attributes: proposal.files,
   };
+  console.log('This is the proposal wer are trying to create', newProposal);
   // set all the documents for the proposal
   const documents = proposal.documents.map((doc) => ({
     name: doc.name,
