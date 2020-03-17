@@ -23,7 +23,7 @@ export const createProposal = (proposal) => async (dispatch, getState) => {
     question_deadline: mergeDateAndTime(proposal.question_deadline_date,
       proposal.question_deadline_time),
     currency_id: proposal.currency_id,
-    proposal_stateholders_attributes: proposal.stakeholders,
+    proposal_stakeholders_attributes: proposal.stakeholders,
     proposal_attachments_attributes: proposal.files,
   };
 
