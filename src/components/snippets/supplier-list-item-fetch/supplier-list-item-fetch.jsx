@@ -7,19 +7,19 @@ import SupplierListItem from '../supplier-list-item/supplier-list-item';
 
 
 const SupplierListItemFetch = ({
-  id, tenant_id, handleChange, isSelectAll,
+  uid, tenant_id, handleChange, isSelectAll, fetchSupplier,
 }) => {
   const [supplier, setSupplier] = useState();
 
   useEffect(() => {
     const FetchSupplier = async () => {
       if (!supplier) {
-        const data = await getSupplier(id, tenant_id);
+        const data = await fetchSupplier(uid, tenant_id);
         setSupplier(data);
       }
     };
     FetchSupplier();
-  }, [id]);
+  }, [uid]);
   return (
 	<div>
 		<SupplierListItem
@@ -32,14 +32,19 @@ const SupplierListItemFetch = ({
 };
 
 SupplierListItemFetch.propTypes = {
-  id: PropTypes.string.isRequired,
+  uid: PropTypes.string.isRequired,
   tenant_id: PropTypes.string.isRequired,
   handleChange: PropTypes.func.isRequired,
   isSelectAll: PropTypes.bool.isRequired,
+  fetchSupplier: PropTypes.func.isRequired,
+};
+
+const mapDispatchToProps = {
+  fetchSupplier: getSupplier,
 };
 
 const mapStateToProps = (state) => ({
   tenant_id: state.user.currentUser.tenant_id,
 });
 
-export default connect(mapStateToProps, null)(SupplierListItemFetch);
+export default connect(mapStateToProps, mapDispatchToProps)(SupplierListItemFetch);

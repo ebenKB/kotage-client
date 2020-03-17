@@ -23,29 +23,16 @@ export const createProposal = (proposal) => async (dispatch, getState) => {
     question_deadline: mergeDateAndTime(proposal.question_deadline_date,
       proposal.question_deadline_time),
     currency_id: proposal.currency_id,
-    proposal_stakeholders_attributes: proposal.stakeholders,
+    proposal_stakeholders_attributes: proposal.stakeholders
+      .map((user) => ({ user_id: user.id, access_level: user.access_level })),
+    proposal_suppliers_attributes: proposal.suppliers.map((s) => ({ supplier_id: s.id })),
     proposal_attachments_attributes: proposal.files,
   };
 
-  /**
-   * serialize suppliers data for the backend
-   * This is important because, the supplier contains extra fields that is not sent to the backend
-   */
-  const newSuppliers = proposal.suppliers.map((s) => ({
-    supplier_id: s.id,
-  }));
-
-  newProposal.proposal_suppliers_attribute = newSuppliers;
-
-  // set all the documents for the proposal
-  const documents = proposal.documents.map((doc) => ({
-    name: doc.name,
-    description: doc.description,
-  }));
-
   // attach the response sheet
   newProposal.proposal_response_sheet_attributes = {
-    proposal_document_requests_attributes: documents,
+    proposal_document_requests_attributes: proposal.documents
+      .map((doc) => ({ name: doc.name, description: doc.description })),
     proposal_questions_attributes: proposal.questions,
   };
 

@@ -96,7 +96,7 @@ const FloatingSupplierList = ({
 					<div className="m-t-20">
 						{suppliers && suppliers.map((supplier) => (
 							<SupplierListItemFetch
-								id={supplier.uid}
+								uid={supplier.uid}
 								handleChange={(s) => handleSelectionChange(s)}
 								isSelectAll={isSelectAll}
 							/>
@@ -130,7 +130,7 @@ const mapDispatchToProps = {
 };
 
 const mapStateToProps = (state) => ({
-  suppliers: state.tenant.suppliers,
+  suppliers: state.tenant.tempSuppliers,
   loading: state.tenant.loading,
 });
 
