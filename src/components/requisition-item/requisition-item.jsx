@@ -5,11 +5,11 @@ import './requisition-item.scss';
 import { ReactComponent as Logo } from '../../svg/cart.svg';
 
 const RequisitionItem = ({ type }) => (
-	<div className="kt-req__item">
+	<div className="kt-list__item">
 		<div className="icon-caption">
 			<Logo />
 		</div>
-		<div className="kt-req__item-content">
+		<div className="kt-list__item-content">
 			<div>
 				<span className="bold big-caption kt-primary clickable">
 					<Link to="/requisitions/id">Cisco Meraki AP</Link>

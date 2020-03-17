@@ -11,7 +11,7 @@ import {
 } from '@material-ui/pickers';
 import { formatDate } from '../../utils/app';
 
-export default function MaterialUIPickers({ handleChange }) {
+export default function MaterialUIPickers({ handleChange, disablePast }) {
   // The first commit of Material-UI
   const [selectedDate, setSelectedDate] = React.useState(null);
 
@@ -37,6 +37,7 @@ export default function MaterialUIPickers({ handleChange }) {
 				invalidDateMessage={null}
 				keyboardIcon={<DateRangeOutlinedIcon />}
 				format="MM-dd-yyyy"
+				disablePast={disablePast}
 			/>
 		</Grid>
 	</MuiPickersUtilsProvider>

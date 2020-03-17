@@ -332,6 +332,7 @@ class RFP extends React.Component {
 					</div>
 					<div className="form-item m-t-30">
 						<DateTimeGroup
+							disablePast
 							placeholder="Date"
 							label="Question Deadline"
 							center

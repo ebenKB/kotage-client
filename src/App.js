@@ -18,7 +18,7 @@ const Home = lazy(() => import('./pages/home'));
 const NewRequisition = lazy(() => import('./components/forms/requisitions/new/new-requisitions'));
 const Requisitions = lazy(() => import('./components/forms/requisitions/show/requisitions-index'));
 const Newquote = lazy(() => import('./components/forms/quotes/new/new-quote'));
-const RFX = lazy(() => import('./components/rfx/rfx'));
+const RFX = lazy(() => import('./components/rfx/show/rfx'));
 const Vendors = lazy(() => import('./components/forms/vendors/vendors'));
 const Users = lazy(() => import('./components/forms/user/show-users/show-users'));
 const NewProposal = lazy(() => import('./components/forms/rfp/rfp'));

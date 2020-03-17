@@ -13,7 +13,7 @@ import { ReactComponent as InformationIcon } from '../../../svg/information.svg'
 import Help from '../../../utils/requisitions/new/help';
 
 import '../rfx.scss';
-import RfxItem from '../../rfx-item/rfx-item';
+import RfxOption from '../../rfx-option/rfx-option';
 
 const Rfx = () => {
   const [selected, setSelected] = useState('');
@@ -63,11 +63,11 @@ const Rfx = () => {
 							onClick={() => setSelected('quote')}
 							className="kt-transparent"
 						>
-							<RfxItem
+							<RfxOption
 								title="Request for Quote"
 							>
 								<QuoteIcon className="kt-rfx__icon" />
-							</RfxItem>
+							</RfxOption>
 						</Button>
 					</li>
 					<li className={`wrapper ${selected === 'proposal' && 'active'}`}>
@@ -75,11 +75,11 @@ const Rfx = () => {
 							onClick={() => setSelected('proposal')}
 							className="kt-transparent"
 						>
-							<RfxItem
+							<RfxOption
 								title="Request for Proposal"
 							>
 								<ProposalIcon className="kt-rfx__icon" />
-							</RfxItem>
+							</RfxOption>
 						</Button>
 					</li>
 					<li className={`wrapper ${selected === 'information' && 'active'}`}>
@@ -87,11 +87,11 @@ const Rfx = () => {
 							onClick={() => setSelected('information')}
 							className="kt-transparent"
 						>
-							<RfxItem
+							<RfxOption
 								title="Request for Information"
 							>
 								<InformationIcon className="kt-rfx__icon" />
-							</RfxItem>
+							</RfxOption>
 						</Button>
 					</li>
 				</ul>
