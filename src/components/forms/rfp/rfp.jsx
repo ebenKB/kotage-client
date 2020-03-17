@@ -371,7 +371,11 @@ class RFP extends React.Component {
 							<Fragment>
 								<Divider type="faint" title="" classes="m-t-20" isNumbered={false} />
 								<div>
-									<div className="bold faint-caption m-t-8 m-b-8">3 ADDED SUPPLIERS</div>
+									<div className="bold faint-caption m-t-8 m-b-8">
+										{ newProposal.suppliers.length }
+										{' '}
+                    ADDED SUPPLIER(S)
+									</div>
 									<Divider type="faint" title="" classes="m-t-8" isNumbered={false} />
 									<div className="xsm-caption supplier-content__heading faint-caption m-t-8 m-b-8">
 										<div>

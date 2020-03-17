@@ -13,10 +13,10 @@ import { ReactComponent as Icon } from '../../svg/close.svg';
 import { getAllSuppliers } from '../../redux/actions/tenantActions';
 
 const FloatingSupplierList = ({
-  isLoading, isVisible, closeForm, suppliers, getSuppliers, loading, handleAction,
+  isLoading, isVisible, closeForm, suppliers, tempSuppliers, getSuppliers, loading, handleAction,
 }) => {
   useEffect(() => {
-    if (!suppliers) {
+    if (!tempSuppliers || tempSuppliers.length === 0) {
       getSuppliers();
     }
   }, [isVisible]);
@@ -94,7 +94,7 @@ const FloatingSupplierList = ({
 					<Checkbox label="Select All" onChange={handleSelectAllSuppliers} />
 					<Divider type="thick" />
 					<div className="m-t-20">
-						{suppliers && suppliers.map((supplier) => (
+						{tempSuppliers && tempSuppliers.map((supplier) => (
 							<SupplierListItemFetch
 								uid={supplier.uid}
 								handleChange={(s) => handleSelectionChange(s)}
@@ -130,7 +130,8 @@ const mapDispatchToProps = {
 };
 
 const mapStateToProps = (state) => ({
-  suppliers: state.tenant.tempSuppliers,
+  tempSuppliers: state.tenant.tempSuppliers,
+  suppliers: state.tenant.suppliers,
   loading: state.tenant.loading,
 });
 
