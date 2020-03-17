@@ -6,7 +6,6 @@ import DeleteButton from '../buttons/delete-button';
 
 
 const StakeholderItem = ({ stakeholder, currentUserId, removeStakeholder }) => {
-  console.log('This is the stakeholder', stakeholder);
   const getAccessType = () => {
     if (parseInt(stakeholder.access_level, 10) === 2) {
       return (<div>Read & Write</div>);

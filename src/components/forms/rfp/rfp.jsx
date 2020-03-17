@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-syntax */
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/prop-types */
 /* eslint-disable react/jsx-fragments */
@@ -159,12 +160,22 @@ class RFP extends React.Component {
 
     const addSuppliers = (suppliers) => {
       if (suppliers && suppliers.length > 0) {
-        const newSuppliers = [...newProposal.suppliers, ...suppliers];
+        // const filteredSuppliers = newProposal.suppliers
+        //   .map((s) => suppliers.filter((f) => s.id !== f.id));
+        let filteredSuppliers = [];
+        for (const supplier of suppliers) {
+          const found = newProposal.suppliers.find((x) => x.id === supplier.id);
+          if (found === null || found === undefined) {
+            filteredSuppliers = [...filteredSuppliers, supplier];
+          }
+        }
+        const newSuppliers = [...newProposal.suppliers, ...filteredSuppliers];
         const proposal = newProposal;
         proposal.suppliers = newSuppliers;
         this.setState((state) => ({
           ...state,
           newProposal: proposal,
+          canShowSuplliers: false,
         }));
       }
     };
@@ -369,9 +380,9 @@ class RFP extends React.Component {
 									</div>
 									<Divider type="faint" title="" classes="m-t-8" isNumbered={false} />
 									<div className="items-group underline bottom">
-										<SupplierListItem isInline />
-										<SupplierListItem isInline />
-										<SupplierListItem isInline />
+										{newProposal.suppliers && (newProposal.suppliers.map((supplier) => (
+											<SupplierListItem isInline supplier={supplier} />
+										)))}
 									</div>
 								</div>
 							</Fragment>

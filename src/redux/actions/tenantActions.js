@@ -104,6 +104,17 @@ export const getAllSuppliers = () => async (dispatch, getState) => {
   }
 };
 
+export const getSupplier = (uid, tenant_id) => new Promise(async (resolve, reject) => {
+  try {
+    const { data } = await Axios.get(`/${tenant_id}/suppliers?uid=${uid}`);
+    console.log('This is the data we got', data);
+    resolve(data.tenant);
+  } catch (error) {
+    console.log('an error occurred');
+    reject(error);
+  }
+});
+
 export const addSupplier = (tenant_id, uid) => async (dispatch) => (
   new Promise(async (resolve) => {
     try {

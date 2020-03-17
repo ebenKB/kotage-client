@@ -1,3 +1,4 @@
+/* eslint-disable react/forbid-prop-types */
 /* eslint-disable react/prop-types */
 /* eslint-disable react/require-default-props */
 import React, { useEffect, useState } from 'react';
@@ -7,7 +8,7 @@ import './floating-supplier-list.scss';
 import { Checkbox, Button } from 'semantic-ui-react';
 import SearchField from '../form-fields/search-field/search-field';
 import Divider from '../kt-divider/divider';
-import SupplierListItem from '../snippets/supplier-list-item/supplier-list-item';
+import SupplierListItemFetch from '../snippets/supplier-list-item-fetch/supplier-list-item-fetch';
 import { ReactComponent as Icon } from '../../svg/close.svg';
 import { getAllSuppliers } from '../../redux/actions/tenantActions';
 
@@ -19,7 +20,8 @@ const FloatingSupplierList = ({
       getSuppliers();
     }
   }, [isVisible]);
-  const [selectedSuppliers, setSelectedSuppliers] = useState([{ id: 999, name: 'Nuhu' }]);
+  const [selectedSuppliers, setSelectedSuppliers] = useState([]);
+  const [isSelectAll, setSelectAll] = useState(false);
 
   const handleSelectionChange = (supplier) => {
     if (selectedSuppliers.includes(supplier)) {
@@ -34,8 +36,17 @@ const FloatingSupplierList = ({
       ]));
     }
   };
+
   const addNewSuppliers = () => {
-    handleAction(selectedSuppliers);
+    if (isSelectAll) {
+      handleAction(suppliers);
+    } else {
+      handleAction(selectedSuppliers);
+    }
+  };
+
+  const handleSelectAllSuppliers = () => {
+    setSelectAll(!isSelectAll);
   };
 
   const handleClose = () => {
@@ -43,9 +54,22 @@ const FloatingSupplierList = ({
   };
 
   const getContent = () => {
+    if (isSelectAll) {
+      return (
+        `Add ${suppliers.length} suppliers`
+      );
+    }
+
+    if (selectedSuppliers.length === 0 && !isSelectAll) {
+      return (
+        'No supplier selected'
+      );
+    }
+
     if (selectedSuppliers.length === 1) {
       return `Add ${selectedSuppliers.length} supplier`;
     }
+
     return `Add ${selectedSuppliers.length} suppliers`;
   };
 
@@ -67,21 +91,16 @@ const FloatingSupplierList = ({
 					<div>Loading</div>
 				)}
 				<div className="m-t-30">
-					<Checkbox label="Select All" />
+					<Checkbox label="Select All" onChange={handleSelectAllSuppliers} />
 					<Divider type="thick" />
 					<div className="m-t-20">
-						<SupplierListItem
-							supplier={{}}
-							handleChange={(s) => handleSelectionChange(s)}
-						/>
-						<SupplierListItem
-							supplier={{}}
-							handleChange={(s) => handleSelectionChange(s)}
-						/>
-						<SupplierListItem
-							supplier={{}}
-							handleChange={(s) => handleSelectionChange(s)}
-						/>
+						{suppliers && suppliers.map((supplier) => (
+							<SupplierListItemFetch
+								id={supplier.uid}
+								handleChange={(s) => handleSelectionChange(s)}
+								isSelectAll={isSelectAll}
+							/>
+						))}
 					</div>
 				</div>
 			</div>
@@ -90,7 +109,7 @@ const FloatingSupplierList = ({
 			<div className="supplier-float__footer-content">
 				<Button
 					type="submit"
-					content={`${selectedSuppliers.length > 0 ? getContent() : 'No Supplier selected'}`}
+					content={getContent()}
 					className={`fluid green ${isLoading && 'loading'}`}
 					onClick={addNewSuppliers}
 				/>
