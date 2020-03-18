@@ -13,7 +13,7 @@ const QuestionCreator = ({ className, setQuestions }) => {
   const addNewSimpleQuestion = () => {
     // check if the most previous question is not empty
     if (simpleQuestions.length === 0 || (simpleQuestions[simpleQuestions.length - 1].question !== '')) {
-      setSimpleQuestions((questions) => [...questions, { id: shortid.generate(), question: 'dd' }]);
+      setSimpleQuestions((questions) => [{ id: shortid.generate(), question: '' }, ...questions]);
     }
   };
 
