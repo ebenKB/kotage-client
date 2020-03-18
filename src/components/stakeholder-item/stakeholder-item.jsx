@@ -51,7 +51,7 @@ StakeholderItem.defaultProps = {
 };
 
 const mapStateToProps = (state) => ({
-  currentUserId: state.user.currentUser.id,
+  currentUserId: (state.user.currentUser && state.user.currentUser.id),
 });
 
 export default connect(mapStateToProps, null)(StakeholderItem);

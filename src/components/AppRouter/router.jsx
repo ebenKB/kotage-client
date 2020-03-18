@@ -8,7 +8,7 @@ const PageNotFound = lazy(() => import('../../pages/_404'));
 const NewRequisition = lazy(() => import('../forms/requisitions/new/new-requisitions'));
 const Requisitions = lazy(() => import('../forms/requisitions/show/requisitions-index'));
 const Newquote = lazy(() => import('../forms/quotes/new/new-quote'));
-const RFX = lazy(() => import('../rfx/rfx'));
+const RFX = lazy(() => import('../rfx/show/rfx'));
 const Vendors = lazy(() => import('../forms/vendors/vendors'));
 const SignIn = lazy(() => import('../auth/sign-in/sign-in'));
 

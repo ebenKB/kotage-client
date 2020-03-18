@@ -1,45 +1,61 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable consistent-return */
-/* eslint-disable react/prop-types */
-/* eslint-disable jsx-a11y/no-static-element-interactions */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
-import React from 'react';
+
+import React, { useState } from 'react';
+import { PropTypes } from 'prop-types';
+import shortid from 'shortid';
 import './question-creator.scss';
-import { ReactComponent as Logo } from '../../../svg/bin.svg';
+import AddItem from '../add-item/add-item';
 import SimpleQuestion from './simple-question/simple-question';
-import { ReactComponent as Icon } from '../../../svg/plus.svg';
 
-const QuestionCreator = ({ type = 'simple', label }) => {
-  // const getQuestionType = () => {
-  //   if (type === 'simple') {
-  //     return (<span>Simple question creator</span>
-  //     );
-  //   }
-  // };
 
-  const addNewQuestion = () => {
-    console.log('we want to add a new question');
+const QuestionCreator = ({ className }) => {
+  const [simpleQuestions, setSimpleQuestions] = useState([]);
+
+  const addNewSimpleQuestion = () => {
+    // check if the most previous question is not empty
+    if (simpleQuestions.length === 0 || (simpleQuestions[simpleQuestions.length - 1].question !== '')) {
+      setSimpleQuestions((questions) => [...questions, { id: shortid.generate(), question: 'dd' }]);
+    }
+  };
+
+  const updateQuestion = (id, idx, newValue) => {
+    const questions = simpleQuestions;
+    questions[idx] = {
+      id,
+      question: newValue,
+    };
+    setSimpleQuestions(() => ([...questions]));
   };
 
   return (
-	<div>
-		<SimpleQuestion
-			label={label}
-			labelName="question"
-		/>
-		<SimpleQuestion
-			label={label}
-			labelName="question"
-		/>
-		<div
-			className="clickable m-t-15 m-b-30 kt-primary bold sm-caption"
-			onClick={addNewQuestion}
-		>
-			<Icon className="kt-logo__small kt-primary" />
-			<span>Add New</span>
+	<div className={`docs-group m-t-30 ${className}`}>
+		<div className="bold">Questionaire</div>
+		<div className="docs-wrapper">
+			<AddItem
+				title="Add New Question"
+				handleClick={addNewSimpleQuestion}
+			/>
+			<div>
+				{/* show all questions here */}
+				{simpleQuestions.map((q, idx) => (
+					<SimpleQuestion
+						index={idx}
+						key={q.id}
+						question={q}
+						handleChange={(id, value) => updateQuestion(id, idx, value)}
+					/>
+				))}
+			</div>
 		</div>
 	</div>
   );
+};
+
+QuestionCreator.propTypes = {
+  className: PropTypes.string,
+};
+
+QuestionCreator.defaultProps = {
+  className: '',
 };
 
 export default QuestionCreator;

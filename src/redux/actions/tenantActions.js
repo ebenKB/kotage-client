@@ -108,13 +108,13 @@ export const getSupplier = (uid, tenant_id) => async (dispatch) => (
   new Promise(async (resolve, reject) => {
     try {
       const { data } = await Axios.get(`/${tenant_id}/suppliers?uid=${uid}`);
+      const { supplier } = data;
       dispatch({
         type: GET_SUPPLIER,
-        payload: data.tenant,
+        payload: supplier,
       });
-      resolve(data.tenant);
+      resolve(supplier);
     } catch (error) {
-      console.log('an error occurred');
       reject(error);
     }
   }));

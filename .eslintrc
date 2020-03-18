@@ -30,6 +30,7 @@
       }
     ],
     "no-tabs": 0,
-    "react/jsx-indent-props": [1, 'tab']
+    "react/jsx-indent-props": [1, 'tab'],
+    // "react/forbid-prop-types": [0, { "forbid": [], "checkContextTypes": false, "checkChildContextTypes": false }]
   }
 }

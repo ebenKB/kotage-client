@@ -19,6 +19,7 @@ import SupplierListItem from '../../snippets/supplier-list-item/supplier-list-it
 import './rfp.scss';
 import StakeholderGroup from '../../stakeholder-group/stakeholder-group';
 import { createProposal } from '../../../redux/actions/rfpActions';
+import QuestionCreator from '../../snippets/question-creator/question-creator';
 
 class RFP extends React.Component {
   constructor(props) {
@@ -37,18 +38,18 @@ class RFP extends React.Component {
         rsvp_deadline_time: '',
         question_deadline_time: '',
         currency_id: null,
-        tenant_id: currentUser.tenant_id,
+        tenant_id: ((currentUser && currentUser.tenant_id) || null),
         suppliers: [],
         questions: null,
         files: [{ file: 'example@fileLocation.com' }],
         // an rfp has a default owner who is the current user
         stakeholders: [
           {
-            id: currentUser.id,
+            id: ((currentUser && currentUser.id) || null),
             access_level: 2,
-            firstname: currentUser.firstname,
-            lastname: currentUser.lastname,
-            email: currentUser.email,
+            firstname: ((currentUser && currentUser.firstname) || ''),
+            lastname: ((currentUser && currentUser.lastname) || ''),
+            email: ((currentUser && currentUser.email) || ''),
           },
         ],
         documents: [{
@@ -341,6 +342,9 @@ class RFP extends React.Component {
 						/>
 					</div>
 					<Divider type="thick" title="Response Sheet" classes="m-t-40" isNumbered number="3" />
+					<div className="m-b-10">
+						<QuestionCreator />
+					</div>
 					<KtDocsGroup
 						documents={newProposal.documents}
 						deleteDocument={(id) => deleteDocument(id)}
@@ -386,7 +390,7 @@ class RFP extends React.Component {
 									<Divider type="faint" title="" classes="m-t-8" isNumbered={false} />
 									<div className="items-group underline bottom">
 										{newProposal.suppliers && (newProposal.suppliers.map((supplier) => (
-											<SupplierListItem isInline supplier={supplier} />
+											<SupplierListItem isInline supplier={supplier} key={supplier.supplier_id} />
 										)))}
 									</div>
 								</div>

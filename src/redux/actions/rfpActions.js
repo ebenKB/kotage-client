@@ -13,7 +13,7 @@ export const createProposal = (proposal) => async (dispatch, getState) => {
    * proporties of the proposal
    */
   const newProposal = {
-    title: proposal.titile,
+    title: proposal.title,
     tenant_id: proposal.tenant_id,
     description: proposal.description,
     bid_deadline: mergeDateAndTime(proposal.bid_deadline_date,
@@ -25,7 +25,7 @@ export const createProposal = (proposal) => async (dispatch, getState) => {
     currency_id: proposal.currency_id,
     proposal_stakeholders_attributes: proposal.stakeholders
       .map((user) => ({ user_id: user.id, access_level: user.access_level })),
-    proposal_suppliers_attributes: proposal.suppliers.map((s) => ({ supplier_id: s.id })),
+    proposal_suppliers_attributes: proposal.suppliers.map((s) => ({ supplier_id: s.supplier_id })),
     proposal_attachments_attributes: proposal.files,
   };
 

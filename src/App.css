@@ -169,7 +169,8 @@ ul.custom {
 }
 
 .faint {
-  color: var(--kt-light);
+  /* color: var(--kt-light); */
+  color: var(--kt-dark);
 }
 
 svg.faint {

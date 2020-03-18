@@ -96,6 +96,7 @@ const FloatingSupplierList = ({
 					<div className="m-t-20">
 						{tempSuppliers && tempSuppliers.map((supplier) => (
 							<SupplierListItemFetch
+								key={supplier.uid}
 								uid={supplier.uid}
 								handleChange={(s) => handleSelectionChange(s)}
 								isSelectAll={isSelectAll}
