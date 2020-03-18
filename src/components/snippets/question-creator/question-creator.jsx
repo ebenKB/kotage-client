@@ -7,7 +7,7 @@ import AddItem from '../add-item/add-item';
 import SimpleQuestion from './simple-question/simple-question';
 
 
-const QuestionCreator = ({ className }) => {
+const QuestionCreator = ({ className, setQuestions }) => {
   const [simpleQuestions, setSimpleQuestions] = useState([]);
 
   const addNewSimpleQuestion = () => {
@@ -24,8 +24,14 @@ const QuestionCreator = ({ className }) => {
       question: newValue,
     };
     setSimpleQuestions(() => ([...questions]));
+    setQuestions(simpleQuestions);
   };
 
+  const deleteQuestion = (id) => {
+    const newQuestions = simpleQuestions.filter((q) => q.id !== id);
+    setSimpleQuestions(() => [...newQuestions]);
+    setQuestions(simpleQuestions);
+  };
   return (
 	<div className={`docs-group m-t-30 ${className}`}>
 		<div className="bold">Questionaire</div>
@@ -42,6 +48,7 @@ const QuestionCreator = ({ className }) => {
 						key={q.id}
 						question={q}
 						handleChange={(id, value) => updateQuestion(id, idx, value)}
+						deleteQuestion={(id) => deleteQuestion(id)}
 					/>
 				))}
 			</div>
@@ -52,6 +59,7 @@ const QuestionCreator = ({ className }) => {
 
 QuestionCreator.propTypes = {
   className: PropTypes.string,
+  setQuestions: PropTypes.func.isRequired,
 };
 
 QuestionCreator.defaultProps = {

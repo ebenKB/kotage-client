@@ -228,6 +228,15 @@ class RFP extends React.Component {
       }));
     };
 
+    const setQuestions = (questions) => {
+      const proposal = newProposal;
+      proposal.questions = questions;
+      this.setState((state) => ({
+        ...state,
+        newProposal: proposal,
+      }));
+    };
+
     const handlePublish = () => {
       createNewProposal(newProposal);
     };
@@ -343,7 +352,9 @@ class RFP extends React.Component {
 					</div>
 					<Divider type="thick" title="Response Sheet" classes="m-t-40" isNumbered number="3" />
 					<div className="m-b-10">
-						<QuestionCreator />
+						<QuestionCreator
+							setQuestions={(questions) => setQuestions(questions)}
+						/>
 					</div>
 					<KtDocsGroup
 						documents={newProposal.documents}

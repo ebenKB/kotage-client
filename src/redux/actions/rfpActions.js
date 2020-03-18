@@ -33,7 +33,8 @@ export const createProposal = (proposal) => async (dispatch, getState) => {
   newProposal.proposal_response_sheet_attributes = {
     proposal_document_requests_attributes: proposal.documents
       .map((doc) => ({ name: doc.name, description: doc.description })),
-    proposal_questions_attributes: proposal.questions,
+    proposal_questions_attributes: proposal.questions
+      .map((question) => ({ question: question.question })),
   };
 
   try {

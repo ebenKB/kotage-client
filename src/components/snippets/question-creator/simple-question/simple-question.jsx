@@ -3,13 +3,13 @@ import React from 'react';
 import { PropTypes } from 'prop-types';
 import '../question-creator.scss';
 import Input from '../../../form-fields/input/input';
-import { ReactComponent as Logo } from '../../../../svg/bin.svg';
+import DeleteButton from '../../../buttons/delete-button';
 
-const SimpleQuestion = ({ question, handleChange }) => {
+
+const SimpleQuestion = ({ question, handleChange, deleteQuestion }) => {
   const handleOnChange = (e) => {
     e.preventDefault();
     handleChange(question.id, e.target.value);
-    console.log(e.target.value);
   };
 
   return (
@@ -25,7 +25,10 @@ const SimpleQuestion = ({ question, handleChange }) => {
 				/>
 			</div>
 		</div>
-		<Logo className="kt-logo__small cta" />
+		<DeleteButton
+			type="icon"
+			handleAction={() => deleteQuestion(question.id)}
+		/>
 	</div>
   );
 };
@@ -33,6 +36,7 @@ const SimpleQuestion = ({ question, handleChange }) => {
 SimpleQuestion.propTypes = {
   question: PropTypes.object.isRequired,
   handleChange: PropTypes.func.isRequired,
+  deleteQuestion: PropTypes.func.isRequired,
 };
 
 export default SimpleQuestion;
