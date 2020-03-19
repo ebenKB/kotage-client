@@ -1,5 +1,13 @@
+/* eslint-disable no-async-promise-executor */
+/* eslint-disable no-await-in-loop */
+/* eslint-disable consistent-return */
+/* eslint-disable no-loop-func */
+/* eslint-disable array-callback-return */
+/* eslint-disable camelcase */
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable import/prefer-default-export */
+import shortid from 'shortid';
+
 export const isValidEmail = (email) => (/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(email));
 
 /**
@@ -40,6 +48,11 @@ export const getInitialNames = (value) => {
   return initials;
 };
 
+/**
+ * This function is used to merge rsvp date and time
+ * @param {*} date the date to merge
+ * @param {*} time the time to merge
+ */
 export const mergeDateAndTime = (date, time) => (`${date}T${time}`);
 
 /**
@@ -82,11 +95,42 @@ export const formatTime = (timeObj) => {
   return timeObj;
 };
 
+const uploadToS3 = (file, tenant_uid, rfp_id) => new Promise((resolve, reject) => {
+  import('react-s3').then((reactS3) => {
+    const config = {
+      bucketName: 'ebenkb',
+      dirName: `kotage/${tenant_uid}/rfx/${rfp_id}`,
+      region: 'us-east-2',
+      accessKeyId: process.env.REACT_APP_awsAccessKeyId,
+      secretAccessKey: process.env.REACT_APP_awsSecretAccessKey,
+      meta: {
+        owner: tenant_uid,
+      },
+    };
+    try {
+      reactS3.uploadFile(file, config)
+        .then((data) => resolve(data));
+    } catch (error) {
+      reject(error);
+    }
+  });
+});
+
 /**
- * This function is used to merge rsvp date and time
- * @param {*} date the date to merge
- * @param {*} time the time to merge
+ *
+ * @param {*} file the file to be uploaded to the server
+ * returns a reference to the file on the server
  */
-export const mergeDataAndTime = (date, time) => {
-  console.log('This is the date and time', date, time);
-};
+export const uploadFile = (files, tenant_uid) => new Promise(async (resolve, reject) => {
+  try {
+    let response = [];
+    const rfp_id = shortid.generate();
+    for (const file of files) {
+      const data = await uploadToS3(file, tenant_uid, rfp_id);
+      response = [...response, data];
+    }
+    resolve(response);
+  } catch (error) {
+    reject(error);
+  }
+});

@@ -20,6 +20,7 @@ import './rfp.scss';
 import StakeholderGroup from '../../stakeholder-group/stakeholder-group';
 import { createProposal } from '../../../redux/actions/rfpActions';
 import QuestionCreator from '../../snippets/question-creator/question-creator';
+import { uploadFile } from '../../../utils/app/index';
 
 class RFP extends React.Component {
   constructor(props) {
@@ -40,8 +41,8 @@ class RFP extends React.Component {
         currency_id: null,
         tenant_id: ((currentUser && currentUser.tenant_id) || null),
         suppliers: [],
-        questions: null,
-        files: [{ file: 'example@fileLocation.com' }],
+        questions: [],
+        files: [],
         // an rfp has a default owner who is the current user
         stakeholders: [
           {
@@ -83,7 +84,7 @@ class RFP extends React.Component {
     const {
       canShowSuplliers, newProposal, currencyOptions, shouldFetchData,
     } = this.state;
-    const { createNewProposal } = this.props;
+    const { createNewProposal, tenantUid, loading } = this.props;
 
     const handleSubmit = () => {
 
@@ -246,8 +247,22 @@ class RFP extends React.Component {
       }));
     };
 
-    const handlePublish = () => {
-      createNewProposal(newProposal);
+    const setFiles = (files) => {
+      if (files) {
+        const proposal = newProposal;
+        proposal.files = files;
+      }
+    };
+
+    const handlePublish = async () => {
+      const files = await uploadFile(newProposal.files, tenantUid);
+      console.log('These are the files', files);
+      const proposal = newProposal;
+      proposal.files = files;
+      this.setState((state) => ({
+        ...state,
+        newProposal: proposal,
+      }), () => createNewProposal(newProposal));
     };
 
     // use this function to open the floating supplier directory to select suppliers
@@ -280,8 +295,8 @@ class RFP extends React.Component {
 				canFilter={false}
 				canPerform
 				canPublish
-				isDisabled={false}
-				isLoading={false}
+				isDisabled={loading}
+				isLoading={loading}
 				cancelUrl="/rfx"
 				handleAction={handleSubmit}
 				handlePublishAction={handlePublish}
@@ -316,6 +331,7 @@ class RFP extends React.Component {
 							placeholder="Enter title"
 							label="Attach Files"
 							labelName="attachment"
+							onFilesChange={(files) => setFiles(files)}
 						/>
 					</div>
 					<div className="form-item m-t-30">
@@ -442,6 +458,8 @@ class RFP extends React.Component {
 const mapStateToProps = (state) => ({
   currentUser: state.user.currentUser,
   newProposal: state.rfp.newProposal,
+  tenantUid: state.tenant.currentTenant.account_id,
+  loading: state.rfp.loading,
 });
 
 const mapDispatchToProps = {

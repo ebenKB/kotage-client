@@ -185,7 +185,6 @@ export const getInvitations = () => async (dispatch, getState) => {
 export const getInvitation = (token, tenant_id) => async (dispatch) => {
   try {
     const { data } = await Axios.get(`/${tenant_id}/invitations?token=${token}`);
-    console.log('This is the inviation we got back', data);
     const { invitation } = data;
     return dispatch({
       type: GET_INVIATION,
@@ -208,7 +207,6 @@ export const getTenantID = (email) => async (dispatch) => {
       payload: data.tenant,
     });
   } catch (error) {
-    console.log('this is the error', { error });
     return dispatch({
       type: SET_APP_NOTIFICATION,
       payload: {

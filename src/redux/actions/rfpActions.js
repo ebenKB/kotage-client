@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 /* eslint-disable import/prefer-default-export */
 import {
-  CREATE_PROPOSAL,
+  CREATE_PROPOSAL, SET_RFP_LOADING, SET_RFP_DONE_LOADING,
 } from '../types/rfpTypes';
 import Axios from '../../utils/axios/axios';
 import { mergeDateAndTime } from '../../utils/app/index';
@@ -10,7 +10,8 @@ export const createProposal = (proposal) => async (dispatch, getState) => {
   /**
    * serialize proposal for the backend
    * This is important because the fontend uses different names for the
-   * proporties of the proposal
+   * proportiimport { SET_RFP_DONE_LOADING } from '../types/rfpTypes';
+es of the proposal
    */
   const newProposal = {
     title: proposal.title,
@@ -24,9 +25,18 @@ export const createProposal = (proposal) => async (dispatch, getState) => {
       proposal.question_deadline_time),
     currency_id: proposal.currency_id,
     proposal_stakeholders_attributes: proposal.stakeholders
-      .map((user) => ({ user_id: user.id, access_level: user.access_level })),
-    proposal_suppliers_attributes: proposal.suppliers.map((s) => ({ supplier_id: s.supplier_id })),
-    proposal_attachments_attributes: proposal.files,
+      .map((user) => (
+        {
+          user_id: user.id,
+          access_level: user.access_level,
+        })),
+    proposal_suppliers_attributes: proposal.suppliers.map((s) => (
+      {
+        supplier_id: s.supplier_id,
+      })),
+    proposal_attachments_attributes: proposal.files.map((f) => ({
+      file: f.location,
+    })),
   };
 
   // attach the response sheet
@@ -38,13 +48,20 @@ export const createProposal = (proposal) => async (dispatch, getState) => {
   };
 
   try {
+    dispatch({ type: SET_RFP_LOADING });
     const { user } = getState();
-    const data = Axios.post(`/${user.currentUser.tenant_id}/rfp`, newProposal);
+    const data = await Axios.post(`/${user.currentUser.tenant_id}/rfp`, newProposal);
     dispatch({
       type: CREATE_PROPOSAL,
       payload: data,
     });
+    dispatch({ type: SET_RFP_DONE_LOADING });
   } catch (error) {
+    dispatch({ type: SET_RFP_DONE_LOADING });
     console.log('an error occured while processing your request', error);
   }
 };
+
+export const setLoading = () => async (dispatch) => dispatch({
+  type: SET_RFP_LOADING,
+});

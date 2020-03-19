@@ -29,7 +29,6 @@ const FormGroup = ({
     },
   ], ...rest
 }) => {
-  console.log({ ...rest });
   const getElement = () => {
     if (type === 'text' || type === 'password' || type === 'number' || type === 'email') {
       return <InputValidator type={type} placeholder={placeholder} {...rest} />;
