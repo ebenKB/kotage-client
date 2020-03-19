@@ -3,16 +3,19 @@ import { Label } from 'semantic-ui-react';
 import { PropTypes } from 'prop-types';
 import { Link } from 'react-router-dom';
 import { ReactComponent as Logo } from '../../svg/cart.svg';
+import './rfx-item.scss';
 
 const RfpItem = ({ type }) => (
-	<div className="kt-list__item">
+	<div className="kt-list__item rfx-item">
 		<div className="icon-caption">
 			<Logo />
 		</div>
 		<div className="kt-list__item-content">
 			<div>
 				<span className="bold big-caption kt-primary clickable">
-					<Link to="/requisitions/id">Title of the Proposal</Link>
+					<Link to="/requisitions/id">
+						<h2 className="dis-inline-block">Title of the Proposal</h2>
+					</Link>
 				</span>
 				<Label
 					size="mini"

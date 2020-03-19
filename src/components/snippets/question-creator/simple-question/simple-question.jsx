@@ -26,6 +26,7 @@ const SimpleQuestion = ({ question, handleChange, deleteQuestion }) => {
 			</div>
 		</div>
 		<DeleteButton
+			classes="cta"
 			type="icon"
 			handleAction={() => deleteQuestion(question.id)}
 		/>

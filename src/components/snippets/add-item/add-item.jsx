@@ -14,8 +14,13 @@ const AddItem = ({ title, classes, handleClick }) => (
 
 AddItem.propTypes = {
   title: PropTypes.string.isRequired,
-  classes: PropTypes.string.isRequired,
+  classes: PropTypes.string,
   handleClick: PropTypes.func.isRequired,
+};
+
+
+AddItem.defaultProps = {
+  classes: '',
 };
 
 export default AddItem;

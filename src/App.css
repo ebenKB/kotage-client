@@ -164,9 +164,9 @@ ul.custom {
   /* border-radius: 4px; */
 }
 
-.kt-list__item-content div:not(:last-child) {
+/* .kt-list__item-content div:not(:last-child) {
   margin-bottom: 4px;
-}
+} */
 
 .faint {
   /* color: var(--kt-light); */
