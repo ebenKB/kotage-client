@@ -7,9 +7,10 @@ import React, { Fragment, useState } from 'react';
 import './supplier-list-item.scss';
 import { Checkbox } from 'semantic-ui-react';
 import { PropTypes } from 'prop-types';
+import DeleteButton from '../../buttons/delete-button';
 
 const SupplierListItem = ({
-  isInline, supplier, handleChange, isSelectAll,
+  isInline, supplier, handleChange, isSelectAll, deleteSupplier,
 }) => {
   const [isChecked, setIsChecked] = useState(false);
 
@@ -27,13 +28,20 @@ const SupplierListItem = ({
 			{ supplier && supplier.company_name }
 		</div>
 		<div>{supplier.email}</div>
+		<div>
+			<DeleteButton
+				type="icon"
+				classes="cta"
+				handleAction={() => deleteSupplier(supplier.supplier_id)}
+			/>
+		</div>
 	</div>
       );
     }
     return (
 	<Fragment>
 		{ supplier && (
-			<div className="supplier-list-item m-b-5 m-t-5">
+			<div className="supplier-list__item m-b-5 m-t-5">
 				<div className="m-r-10">
 					<Checkbox
 						checked={isSelectAll || isChecked}
@@ -65,6 +73,7 @@ SupplierListItem.propTypes = {
   supplier: PropTypes.object.isRequired,
   handleChange: PropTypes.func.isRequired,
   isSelectAll: PropTypes.bool.isRequired,
+  deleteSupplier: PropTypes.func.isRequired,
 };
 
 SupplierListItem.default = {

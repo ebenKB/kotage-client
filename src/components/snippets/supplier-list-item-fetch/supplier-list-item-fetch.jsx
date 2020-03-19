@@ -1,3 +1,4 @@
+/* eslint-disable react/boolean-prop-naming */
 /* eslint-disable camelcase */
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
@@ -37,6 +38,9 @@ SupplierListItemFetch.propTypes = {
   handleChange: PropTypes.func.isRequired,
   isSelectAll: PropTypes.bool.isRequired,
   fetchSupplier: PropTypes.func.isRequired,
+};
+
+SupplierListItemFetch.defaultProps = {
 };
 
 const mapDispatchToProps = {

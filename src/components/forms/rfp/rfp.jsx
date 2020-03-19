@@ -161,8 +161,6 @@ class RFP extends React.Component {
 
     const addSuppliers = (suppliers) => {
       if (suppliers && suppliers.length > 0) {
-        // const filteredSuppliers = newProposal.suppliers
-        //   .map((s) => suppliers.filter((f) => s.id !== f.id));
         let filteredSuppliers = [];
         for (const supplier of suppliers) {
           const found = newProposal.suppliers.find((x) => x.id === supplier.id);
@@ -181,6 +179,17 @@ class RFP extends React.Component {
       }
     };
 
+    const deleteSupplier = (id) => {
+      if (id) {
+        const newSuppliers = newProposal.suppliers.filter((s) => s.supplier_id !== id);
+        const proposal = newProposal;
+        proposal.suppliers = newSuppliers;
+        this.setState((state) => ({
+          ...state,
+          newProposal: proposal,
+        }));
+      }
+    };
     const addNewStakeholder = (stakeholder, access) => {
       if (stakeholder && access) {
         const proposal = newProposal;
@@ -401,7 +410,12 @@ class RFP extends React.Component {
 									<Divider type="faint" title="" classes="m-t-8" isNumbered={false} />
 									<div className="items-group underline bottom">
 										{newProposal.suppliers && (newProposal.suppliers.map((supplier) => (
-											<SupplierListItem isInline supplier={supplier} key={supplier.supplier_id} />
+											<SupplierListItem
+												isInline
+												supplier={supplier}
+												key={supplier.supplier_id}
+												deleteSupplier={(id) => deleteSupplier(id)}
+											/>
 										)))}
 									</div>
 								</div>

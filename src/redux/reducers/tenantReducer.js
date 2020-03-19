@@ -83,10 +83,14 @@ export default (state = initialState, action) => {
     case GET_SUPPLIER: {
       if (action.payload) {
         if (state.suppliers) {
-          return {
-            ...state,
-            suppliers: [...state.suppliers, action.payload],
-          };
+          const existing = state.suppliers
+            .find((s) => s.supplier_id === action.payload.supplier_id);
+          if (existing === null || existing === undefined) {
+            return {
+              ...state,
+              suppliers: [...state.suppliers, action.payload],
+            };
+          }
         }
         return {
           ...state,
