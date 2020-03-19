@@ -163,7 +163,7 @@ class RFP extends React.Component {
       if (suppliers && suppliers.length > 0) {
         let filteredSuppliers = [];
         for (const supplier of suppliers) {
-          const found = newProposal.suppliers.find((x) => x.id === supplier.id);
+          const found = newProposal.suppliers.find((x) => x.supplier_id === supplier.id);
           if (found === null || found === undefined) {
             filteredSuppliers = [...filteredSuppliers, supplier];
           }
