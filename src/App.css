@@ -64,6 +64,11 @@ p {
   color: var(--kt-blue);
 }
 
+button.cta.kt-primary,
+button.cta.kt-primary:hover  {
+  color: var(--kt-blue);
+}
+
 .kt-success {
   color: var(--kt-green);
 }
