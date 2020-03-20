@@ -23,7 +23,7 @@ const RFX = ({ getProposals, proposals, meta }) => {
     &nbsp;
 		{meta.items}
     &nbsp;
-    request for proposals out of
+    out of
 		&nbsp;
 		{ meta.count }
 		&nbsp;
