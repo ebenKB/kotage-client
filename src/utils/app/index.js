@@ -134,3 +134,12 @@ export const uploadFile = (files, tenant_uid) => new Promise(async (resolve, rej
     reject(error);
   }
 });
+
+export const getToken = () => {
+  const ktToken = localStorage.getItem('kotage-auth');
+  if (ktToken != null) {
+    const { token } = JSON.parse(ktToken);
+    return token;
+  }
+  return undefined;
+};

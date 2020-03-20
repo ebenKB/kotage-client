@@ -47,7 +47,7 @@ export const createProposal = (proposal) => async (dispatch, getState) => new Pr
       .map((question) => ({ question: question.question })),
   };
   const { user } = getState();
-  Axios.post(`/${user.currentUser.tenant_id}/rfp`, newProposal)
+  Axios.post(`/v1/${user.currentUser.tenant_id}/rfp`, newProposal)
     .then((data) => {
       dispatch({
         type: CREATE_PROPOSAL,
@@ -61,6 +61,11 @@ export const createProposal = (proposal) => async (dispatch, getState) => new Pr
       console.log(err);
     });
 });
+
+export const getUsers = () => async () => {
+  console.log('We are getting users');
+};
+
 
 export const setLoading = () => async (dispatch) => dispatch({
   type: SET_RFP_LOADING,

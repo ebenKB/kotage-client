@@ -1,24 +1,30 @@
+/* eslint-disable dot-notation */
 /* eslint-disable consistent-return */
 /* eslint-disable camelcase */
 /* eslint-disable no-use-before-define */
 /* eslint-disable no-async-promise-executor */
-/* eslint-disable max-len */
 import Axios from '../../utils/axios/axios';
+import { getToken } from '../../utils/app/index';
+import { SET_APP_NOTIFICATION } from '../types/appTypes';
 import {
   SET_USER_LOADING, DONE_LOADING, LOGIN, GET_INVIATION, GET_USERS,
-  GET_TENANT_ID, CREATE_USER, MAKE_ADMIN, GET_INVIATIONS, INVITE_USER, DELETE_USER, RESEND_INVITATION, DELETE_INVITATION, LOGOUT,
+  GET_TENANT_ID, CREATE_USER, MAKE_ADMIN, GET_INVIATIONS, INVITE_USER, DELETE_USER,
+  RESEND_INVITATION, DELETE_INVITATION, LOGOUT,
 } from '../types/userTypes';
-import { SET_APP_NOTIFICATION } from '../types/appTypes';
+
+// SET default token for application
+Axios.defaults.headers.common['Authorization'] = `Bearer ${getToken()}`;
 
 /**
  * This function is used to send a new invitation to a user
  * @param {*} invitation the invitation to send to the user
  */
-export const inviteUser = (invitation) => async (dispatch, getState) => new Promise(async (resolve) => {
+export const inviteUser = (invitation) => async (dispatch, getState) => new
+Promise(async (resolve) => {
   dispatch(setLoading());
   try {
     const { user } = getState();
-    const { data } = await Axios.post(`/${user.currentUser.tenant_id}/invitations`, invitation);
+    const { data } = await Axios.post(`/v1/${user.currentUser.tenant_id}/invitations`, invitation);
     dispatch(doneLoading());
     dispatch({
       type: INVITE_USER,
@@ -26,7 +32,6 @@ export const inviteUser = (invitation) => async (dispatch, getState) => new Prom
     });
     resolve(data);
   } catch (error) {
-    console.log('This is the error that occurred', { error });
     dispatch(doneLoading());
     return dispatch({
       type: SET_APP_NOTIFICATION,
@@ -39,10 +44,8 @@ export const inviteUser = (invitation) => async (dispatch, getState) => new Prom
 });
 
 export const resendUserInvitation = (invitation) => async (dispatch, getState) => {
-  console.log('we want to resend this invitation', invitation);
   const { user } = getState();
-  const { data } = await Axios.post(`/${user.currentUser.tenant_id}/invitations?type=resend`, invitation);
-  console.log('we are done RESENDING AN INVITATION AND THIS IS THE FEEDBACK', data);
+  await Axios.post(`/v1/${user.currentUser.tenant_id}/invitations?type=resend`, invitation);
   dispatch({
     type: RESEND_INVITATION,
   });
@@ -68,7 +71,7 @@ export const resendUserInvitation = (invitation) => async (dispatch, getState) =
 export const createUser = (newUser, token, tenant_id) => async (dispatch) => {
   try {
     dispatch(setLoading());
-    const { data } = await Axios.post(`/${tenant_id}/users`, newUser);
+    const { data } = await Axios.post(`/v1/${tenant_id}/users`, newUser);
     dispatch(doneLoading());
     return dispatch({
       type: CREATE_USER,
@@ -86,18 +89,18 @@ export const createUser = (newUser, token, tenant_id) => async (dispatch) => {
  * @param {*} email the email of the user
  * @param {*} password  the password of the user
  */
-export const login = (email, password) => async (dispatch, getState) => new Promise(async (resolve, reject) => {
+export const login = (email, password) => async (dispatch, getState) => new
+Promise(async (resolve, reject) => {
   try {
     dispatch(setLoading());
     // get the tenant that the user belongs to
     const { user } = getState();
     if (user.currentUser) {
-      const { data } = await Axios.post(`/${user.currentUser.tenant_id}/users/login`, { email, password });
+      const { data } = await Axios.post(`/v1/${user.currentUser.tenant_id}/users/login`, { email, password });
       dispatch(doneLoading());
       const { access_token } = data;
       if (access_token && access_token.length > 0) {
         dispatch(setAuthUser(access_token[0]));
-        // save the user to local storage
         localStorage.setItem('kotage-auth',
           JSON.stringify({
             token: access_token[0].token,
@@ -122,10 +125,6 @@ export const logout = () => async (dispatch) => {
   });
 };
 
-export const setToken = () => async () => {
-  console.log('We are trying to set the token to the localhost');
-};
-
 export const setLoading = () => async (dispatch) => dispatch({
   type: SET_USER_LOADING,
 });
@@ -146,7 +145,7 @@ export const getUsers = () => async (dispatch, getState) => {
   try {
     const { user } = getState();
     if (user.currentUser.tenant_id) {
-      const { data } = await Axios.get(`/${user.currentUser.tenant_id}/users`);
+      const { data } = await Axios.get(`/v1/${user.currentUser.tenant_id}/users`);
       const { users } = data;
 
       return dispatch({
@@ -166,7 +165,7 @@ export const getInvitations = () => async (dispatch, getState) => {
   try {
     const { user } = getState();
     if (user.currentUser.tenant_id) {
-      const { data } = await Axios.get(`/${user.currentUser.tenant_id}/invitations`);
+      const { data } = await Axios.get(`/v1/${user.currentUser.tenant_id}/invitations`);
       return dispatch({
         type: GET_INVIATIONS,
         payload: data.invitations,
@@ -184,7 +183,7 @@ export const getInvitations = () => async (dispatch, getState) => {
  */
 export const getInvitation = (token, tenant_id) => async (dispatch) => {
   try {
-    const { data } = await Axios.get(`/${tenant_id}/invitations?token=${token}`);
+    const { data } = await Axios.get(`/v1/${tenant_id}/invitations?token=${token}`);
     const { invitation } = data;
     return dispatch({
       type: GET_INVIATION,
@@ -201,7 +200,7 @@ export const getInvitation = (token, tenant_id) => async (dispatch) => {
  */
 export const getTenantID = (email) => async (dispatch) => {
   try {
-    const { data } = await Axios.get(`/users/check_tenant?email=${email}`);
+    const { data } = await Axios.get(`/v1/users/check_tenant?email=${email}`);
     return dispatch({
       type: GET_TENANT_ID,
       payload: data.tenant,
@@ -224,7 +223,7 @@ export const getTenantID = (email) => async (dispatch) => {
 export const setAdminStatus = (newUser) => async (dispatch, getState) => {
   try {
     const { user } = getState();
-    const { data } = await Axios.put(`/${user.currentUser.tenant_id}/users/${newUser.id}`, newUser);
+    const { data } = await Axios.put(`/v1/${user.currentUser.tenant_id}/users/${newUser.id}`, newUser);
     if (data) {
       return dispatch({
         type: MAKE_ADMIN,
@@ -243,7 +242,7 @@ export const setAdminStatus = (newUser) => async (dispatch, getState) => {
 export const sendPasswordResetToken = (email) => async (dispatch, getState) => {
   try {
     const { user } = getState();
-    await Axios.post(`/${user.currentUser.tenant_id}/users/password_reset`, { email });
+    await Axios.post(`/v1/${user.currentUser.tenant_id}/users/password_reset`, { email });
     dispatch({
       type: SET_APP_NOTIFICATION,
       payload: {
@@ -271,9 +270,10 @@ export const sendPasswordResetToken = (email) => async (dispatch, getState) => {
  * @param {*} token the token to be used to reset the password
  * @param {*} tenant_id the tenant that the user belongs to
  */
-export const resetUserPassword = (password, password_confirmation, token, tenant_id) => async (dispatch) => new Promise(async (resolve, reject) => {
+export const resetUserPassword = (password, password_confirmation,
+  token, tenant_id) => async (dispatch) => new Promise(async (resolve, reject) => {
   try {
-    const { data } = await Axios.put(`/${tenant_id}/users/password_update`, { password, password_confirmation, token });
+    const { data } = await Axios.put(`/v1/${tenant_id}/users/password_update`, { password, password_confirmation, token });
     if (data.status === 200) {
       dispatch({
         type: SET_APP_NOTIFICATION,
@@ -306,7 +306,7 @@ export const resetUserPassword = (password, password_confirmation, token, tenant
 export const softDeleteUser = (user_id, type = 'normal') => async (dispatch, getState) => {
   try {
     const { user } = getState();
-    const data = await Axios.delete(`/${user.currentUser.tenant_id}/users/${user_id}?type=${type}`);
+    const data = await Axios.delete(`/v1/${user.currentUser.tenant_id}/users/${user_id}?type=${type}`);
     if (data.status === 200) {
       dispatch({
         type: DELETE_USER,
@@ -335,7 +335,7 @@ export const softDeleteUser = (user_id, type = 'normal') => async (dispatch, get
 export const softDeleteInvitation = (invitation_id) => async (dispatch, getState) => {
   try {
     const { user } = getState();
-    const data = await Axios.delete(`/${user.currentUser.tenant_id}/invitations/${invitation_id}?type=forever`);
+    const data = await Axios.delete(`/v1/${user.currentUser.tenant_id}/invitations/${invitation_id}?type=forever`);
     if (data.status === 200) {
       dispatch({
         type: DELETE_INVITATION,

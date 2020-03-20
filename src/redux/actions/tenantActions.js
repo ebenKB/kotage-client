@@ -28,7 +28,7 @@ export const getTenant = (tenant_id) => async (dispatch, getState) => {
   const { tenant } = getState();
   if (tenant.currentTenant == null) {
     try {
-      const { data } = await Axios.get(`/${tenant_id}`);
+      const { data } = await Axios.get(`/v1/${tenant_id}`);
       return dispatch({
         type: GET_TENANT,
         payload: data.tenant,
@@ -55,7 +55,7 @@ export const validateDomain = (domain) => async (dispatch) => (
   new Promise(async (resolve, reject) => {
     try {
       dispatch(setLoading);
-      const { data, status } = await Axios.get(`/tenants/check_domain?domain=${domain}`);
+      const { data, status } = await Axios.get(`/v1/tenants/check_domain?domain=${domain}`);
       dispatch(doneLoading);
       if (status === 200 && data.exists === 'true') {
         resolve(true);
@@ -78,7 +78,7 @@ export const searchSupplier = (tenant_id, uid) => async (dispatch) => (
   new Promise(async (resolve, reject) => {
     dispatch(setLoading);
     try {
-      const { data } = await Axios.get(`/${tenant_id}/suppliers?uid=${uid}`);
+      const { data } = await Axios.get(`/v1/${tenant_id}/suppliers?uid=${uid}`);
       resolve(data.tenant);
       dispatch(doneLoading);
     } catch (error) {
@@ -92,7 +92,7 @@ export const getAllSuppliers = () => async (dispatch, getState) => {
   dispatch(setLoading);
   const { user } = getState();
   try {
-    const { data } = await Axios.get(`/${user.currentUser.tenant_id}/suppliers`);
+    const { data } = await Axios.get(`/v1/${user.currentUser.tenant_id}/suppliers`);
     dispatch({
       type: GET_SUPPLIERS,
       payload: data.suppliers,
@@ -107,7 +107,7 @@ export const getAllSuppliers = () => async (dispatch, getState) => {
 export const getSupplier = (uid, tenant_id) => async (dispatch) => (
   new Promise(async (resolve, reject) => {
     try {
-      const { data } = await Axios.get(`/${tenant_id}/suppliers?uid=${uid}`);
+      const { data } = await Axios.get(`/v1/${tenant_id}/suppliers?uid=${uid}`);
       const { supplier } = data;
       dispatch({
         type: GET_SUPPLIER,
@@ -122,7 +122,7 @@ export const getSupplier = (uid, tenant_id) => async (dispatch) => (
 export const addSupplier = (tenant_id, uid) => async (dispatch) => (
   new Promise(async (resolve) => {
     try {
-      const { data } = await Axios.post(`/${tenant_id}/suppliers`, { tenant_id, uid });
+      const { data } = await Axios.post(`/v1/${tenant_id}/suppliers`, { tenant_id, uid });
       dispatch({
         type: ADD_SUPPLIER,
         payload: data.tenant,

@@ -10,7 +10,7 @@ export const getRequisitions = () => async (dispatch) => {
   try {
     setLoading(dispatch);
     // make a get request for the requisitions from the api
-    const res = await fetch('/requisitions');
+    const res = await fetch('/v1/requisitions');
     const data = await res.json();
 
     // dispatch the data to the reducer
