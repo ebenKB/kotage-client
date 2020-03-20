@@ -14,7 +14,7 @@ const RfpItem = ({ type }) => (
 			<div>
 				<span className="bold big-caption kt-primary clickable">
 					<Link to="/requisitions/id">
-						<h2 className="dis-inline-block">Title of the Proposal</h2>
+						<div className="dis-inline-block bold big-caption kt-primary clickable">Title of the Proposal</div>
 					</Link>
 				</span>
 				<Label

@@ -3,6 +3,7 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable react/jsx-fragments */
 import React, { Fragment } from 'react';
+import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import shortid from 'shortid';
 import { ValidatorForm } from 'react-form-validator-core';
@@ -84,7 +85,9 @@ class RFP extends React.Component {
     const {
       canShowSuplliers, newProposal, currencyOptions, shouldFetchData,
     } = this.state;
-    const { createNewProposal, tenantUid, loading } = this.props;
+    const {
+      createNewProposal, tenantUid, loading, history,
+    } = this.props;
 
     const handleSubmit = () => {
 
@@ -256,13 +259,14 @@ class RFP extends React.Component {
 
     const handlePublish = async () => {
       const files = await uploadFile(newProposal.files, tenantUid);
-      console.log('These are the files', files);
       const proposal = newProposal;
       proposal.files = files;
       this.setState((state) => ({
         ...state,
         newProposal: proposal,
-      }), () => createNewProposal(newProposal));
+      }), () => {
+        createNewProposal(newProposal).then(() => history.push('/rfx'));
+      });
     };
 
     // use this function to open the floating supplier directory to select suppliers
@@ -466,4 +470,4 @@ const mapDispatchToProps = {
   createNewProposal: createProposal,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(RFP);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(RFP));

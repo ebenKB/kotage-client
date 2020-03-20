@@ -4,6 +4,7 @@ import KtWrapper from '../../kt-wrapper/kt-wrapper';
 import help from '../../../utils/requisitions/index/help';
 import RfxItem from '../../rfx-item/rfx-item';
 import '../rfx.scss';
+import Divider from '../../kt-divider/divider';
 
 const RFX = () => (
 	<MainContent
@@ -18,11 +19,17 @@ const RFX = () => (
 			linkName="New"
 		>
 			<RfxItem type="Published" />
+			<Divider type="faint" />
 			<RfxItem type="Published" />
+			<Divider type="faint" />
 			<RfxItem type="Draft" />
+			<Divider type="faint" />
 			<RfxItem type="Published" />
+			<Divider type="faint" />
 			<RfxItem type="Published" />
+			<Divider type="faint" />
 			<RfxItem type="Draft" />
+			<Divider type="faint" />
 		</KtWrapper>
 	</MainContent>
 );

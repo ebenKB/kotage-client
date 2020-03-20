@@ -6,12 +6,12 @@ import {
 import Axios from '../../utils/axios/axios';
 import { mergeDateAndTime } from '../../utils/app/index';
 
-export const createProposal = (proposal) => async (dispatch, getState) => {
+export const createProposal = (proposal) => async (dispatch, getState) => new Promise((resolve) => {
+  dispatch({ type: SET_RFP_LOADING });
   /**
    * serialize proposal for the backend
    * This is important because the fontend uses different names for the
-   * proportiimport { SET_RFP_DONE_LOADING } from '../types/rfpTypes';
-es of the proposal
+   * proposal
    */
   const newProposal = {
     title: proposal.title,
@@ -46,21 +46,21 @@ es of the proposal
     proposal_questions_attributes: proposal.questions
       .map((question) => ({ question: question.question })),
   };
-
-  try {
-    dispatch({ type: SET_RFP_LOADING });
-    const { user } = getState();
-    const data = await Axios.post(`/${user.currentUser.tenant_id}/rfp`, newProposal);
-    dispatch({
-      type: CREATE_PROPOSAL,
-      payload: data,
+  const { user } = getState();
+  Axios.post(`/${user.currentUser.tenant_id}/rfp`, newProposal)
+    .then((data) => {
+      dispatch({
+        type: CREATE_PROPOSAL,
+        payload: data,
+      });
+      dispatch({ type: SET_RFP_DONE_LOADING });
+      resolve(data);
+    })
+    .catch((err) => {
+      dispatch({ type: SET_RFP_DONE_LOADING });
+      console.log(err);
     });
-    dispatch({ type: SET_RFP_DONE_LOADING });
-  } catch (error) {
-    dispatch({ type: SET_RFP_DONE_LOADING });
-    console.log('an error occured while processing your request', error);
-  }
-};
+});
 
 export const setLoading = () => async (dispatch) => dispatch({
   type: SET_RFP_LOADING,
