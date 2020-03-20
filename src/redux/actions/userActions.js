@@ -1,19 +1,14 @@
-/* eslint-disable dot-notation */
 /* eslint-disable consistent-return */
 /* eslint-disable camelcase */
 /* eslint-disable no-use-before-define */
 /* eslint-disable no-async-promise-executor */
 import Axios from '../../utils/axios/axios';
-import { getToken } from '../../utils/app/index';
 import { SET_APP_NOTIFICATION } from '../types/appTypes';
 import {
   SET_USER_LOADING, DONE_LOADING, LOGIN, GET_INVIATION, GET_USERS,
   GET_TENANT_ID, CREATE_USER, MAKE_ADMIN, GET_INVIATIONS, INVITE_USER, DELETE_USER,
   RESEND_INVITATION, DELETE_INVITATION, LOGOUT,
 } from '../types/userTypes';
-
-// SET default token for application
-Axios.defaults.headers.common['Authorization'] = `Bearer ${getToken()}`;
 
 /**
  * This function is used to send a new invitation to a user

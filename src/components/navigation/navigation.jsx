@@ -44,7 +44,7 @@ class AccordionStandard extends Component {
 					<Link to="/rfx">RFx</Link>
 				</Accordion.Content>
 				<Accordion.Content active={activeIndex === 0} className="menu-option">
-					<Link to="/quotes/new">New Quote</Link>
+					<Link to="/quotes/news">New Quote</Link>
 				</Accordion.Content>
 				<Accordion.Content active={activeIndex === 0} className="menu-option">
 					<Link to="/vendors/new">Vendors</Link>

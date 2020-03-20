@@ -1,10 +1,14 @@
+/* eslint-disable dot-notation */
 /* eslint-disable camelcase */
 /* eslint-disable import/prefer-default-export */
 import {
   CREATE_PROPOSAL, SET_RFP_LOADING, SET_RFP_DONE_LOADING,
 } from '../types/rfpTypes';
 import Axios from '../../utils/axios/axios';
-import { mergeDateAndTime } from '../../utils/app/index';
+import { mergeDateAndTime, getToken } from '../../utils/app/index';
+
+// set default auth token
+Axios.defaults.headers.common['Authorization'] = `Bearer ${getToken()}`;
 
 export const createProposal = (proposal) => async (dispatch, getState) => new Promise((resolve) => {
   dispatch({ type: SET_RFP_LOADING });
@@ -64,6 +68,7 @@ export const createProposal = (proposal) => async (dispatch, getState) => new Pr
 
 export const getUsers = () => async () => {
   console.log('We are getting users');
+  // const { data } = await Axios.get();
 };
 
 
