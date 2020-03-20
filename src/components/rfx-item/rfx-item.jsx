@@ -1,3 +1,4 @@
+/* eslint-disable react/forbid-prop-types */
 import React from 'react';
 import { Label } from 'semantic-ui-react';
 import { PropTypes } from 'prop-types';
@@ -5,7 +6,7 @@ import { Link } from 'react-router-dom';
 import { ReactComponent as Logo } from '../../svg/cart.svg';
 import './rfx-item.scss';
 
-const RfpItem = ({ type }) => (
+const RfpItem = ({ type, proposal }) => (
 	<div className="kt-list__item rfx-item">
 		<div className="icon-caption">
 			<Logo />
@@ -14,7 +15,10 @@ const RfpItem = ({ type }) => (
 			<div>
 				<span className="bold big-caption kt-primary clickable">
 					<Link to="/requisitions/id">
-						<div className="dis-inline-block bold big-caption kt-primary clickable">Title of the Proposal</div>
+						<div className="dis-inline-block bold big-caption kt-primary clickable">
+							{(((proposal && proposal.title === null) || (proposal === null)) && ('Title of the Proposal'))}
+							{ proposal && proposal.title }
+						</div>
 					</Link>
 				</span>
 				<Label
@@ -24,7 +28,7 @@ const RfpItem = ({ type }) => (
 				>
 					{ type }
 				</Label>
-				<div>
+				<div className="sm-caption">
           This proposal was created by
 					{' '}
 					<span className="bold">Alexander Churchill</span>
@@ -46,6 +50,7 @@ const RfpItem = ({ type }) => (
 
 RfpItem.propTypes = {
   type: PropTypes.string.isRequired,
+  proposal: PropTypes.object.isRequired,
 };
 
 export default RfpItem;

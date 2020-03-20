@@ -2,7 +2,7 @@
 /* eslint-disable camelcase */
 /* eslint-disable import/prefer-default-export */
 import {
-  CREATE_PROPOSAL, SET_RFP_LOADING, SET_RFP_DONE_LOADING,
+  CREATE_PROPOSAL, SET_RFP_LOADING, SET_RFP_DONE_LOADING, GET_RFP,
 } from '../types/rfpTypes';
 import Axios from '../../utils/axios/axios';
 import { mergeDateAndTime, getToken } from '../../utils/app/index';
@@ -66,9 +66,20 @@ export const createProposal = (proposal) => async (dispatch, getState) => new Pr
     });
 });
 
-export const getUsers = () => async () => {
-  console.log('We are getting users');
-  // const { data } = await Axios.get();
+export const getRequestForProposals = () => async (dispatch, getState) => {
+  dispatch({ type: SET_RFP_LOADING });
+  const { user } = getState();
+  const { data } = await Axios.get(`/v1/${user.currentUser.tenant_id}/rfp`);
+  const { proposal_requests, meta } = data;
+  const { pagination } = meta;
+  dispatch({
+    type: GET_RFP,
+    payload: {
+      proposals: proposal_requests,
+      meta: pagination,
+    },
+  });
+  dispatch({ type: SET_RFP_DONE_LOADING });
 };
 
 

@@ -1,10 +1,11 @@
 import {
-  CREATE_PROPOSAL, SET_RFP_LOADING, SET_RFP_DONE_LOADING,
+  CREATE_PROPOSAL, SET_RFP_LOADING, SET_RFP_DONE_LOADING, GET_RFP,
 } from '../types/rfpTypes';
 
 const initialState = {
   loading: false,
   proposals: [],
+  meta: null,
 };
 
 export default (state = initialState, action) => {
@@ -30,6 +31,15 @@ export default (state = initialState, action) => {
       return {
         ...state,
         loading: false,
+      };
+    }
+
+    case GET_RFP: {
+      const { proposals } = action.payload;
+      return {
+        ...state,
+        proposals: [...state.proposals, ...proposals],
+        meta: action.payload.meta,
       };
     }
 
