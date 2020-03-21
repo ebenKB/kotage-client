@@ -79,7 +79,7 @@ export const searchSupplier = (tenant_id, uid) => async (dispatch) => (
     dispatch(setLoading);
     try {
       const { data } = await Axios.get(`/v1/${tenant_id}/suppliers?uid=${uid}`);
-      resolve(data.tenant);
+      resolve(data.supplier);
       dispatch(doneLoading);
     } catch (error) {
       dispatch(doneLoading);

@@ -95,6 +95,11 @@ export const formatTime = (timeObj) => {
   return timeObj;
 };
 
+export const getNameFromFileName = (fileName) => {
+  const newName = fileName.split('.')[0].toUpperCase();
+  return newName.replace(new RegExp('[-_]', 'g'), ' ');
+};
+
 const uploadToS3 = (file, tenant_uid, rfp_id) => new Promise((resolve, reject) => {
   import('react-s3').then((reactS3) => {
     const config = {

@@ -9,6 +9,7 @@ import { ReactComponent as JPEG } from '../../../svg/jpg.svg';
 import { ReactComponent as EXCEL } from '../../../svg/excel.svg';
 import { ReactComponent as WORD } from '../../../svg/word.svg';
 import { ReactComponent as CSV } from '../../../svg/csv.svg';
+import { getNameFromFileName } from '../../../utils/app/index';
 
 
 const DropzoneItem = ({ file, deleteFile, idx }) => {
@@ -57,8 +58,8 @@ const DropzoneItem = ({ file, deleteFile, idx }) => {
 			<Menu className="small logo" />
 		</div>
 		<div>
-			<div className="bold">{file.name.split('.')[0].toUpperCase()}</div>
-			<div className="light-caption sm-caption">
+			<div className="bold xsm-caption">{getNameFromFileName(file.name).toUpperCase()}</div>
+			<div className="light-caption xsm-caption">
 				{file && file.name}
 			</div>
 		</div>

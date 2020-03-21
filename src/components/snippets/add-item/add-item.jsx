@@ -2,10 +2,11 @@ import React from 'react';
 import { Button } from 'semantic-ui-react';
 import { PropTypes } from 'prop-types';
 import { ReactComponent as Logo } from '../../../svg/plus.svg';
+import './add-item.scss';
 
 
 const AddItem = ({ title, classes, handleClick }) => (
-	<Button className={`cta kt-transparent clickable kt-primary bold sm-caption ${classes}`} onClick={handleClick}>
+	<Button className={`add-item cta kt-transparent clickable kt-primary bold sm-caption ${classes}`} onClick={handleClick}>
 		<Logo className="kt-logo__small kt-primary" />
 		<span>{title}</span>
 	</Button>

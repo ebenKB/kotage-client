@@ -65,7 +65,8 @@ p {
 }
 
 button.cta.kt-primary,
-button.cta.kt-primary:hover  {
+button.cta.kt-primary:hover,
+button.cta.kt-primary:focus {
   color: var(--kt-blue);
 }
 

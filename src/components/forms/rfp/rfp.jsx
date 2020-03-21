@@ -380,7 +380,7 @@ class RFP extends React.Component {
 						/>
 					</div>
 					<Divider type="thick" title="Response Sheet" classes="m-t-40" isNumbered number="3" />
-					<div className="m-b-10">
+					<div className="m-b-20 m-t-20">
 						<QuestionCreator
 							setQuestions={(questions) => setQuestions(questions)}
 						/>
@@ -393,7 +393,7 @@ class RFP extends React.Component {
 					/>
 					<Divider type="thick" title="Invite Suppliers" classes="m-t-40" isNumbered number="4" />
 					<div className="form-item">
-						<div className="flex-inline m-t-20">
+						<div className="flex-inline m-t-30 m-b-30">
 							<div>Open your supplier directory to add suppliers</div>
 							<div className="">
 								<Button
@@ -413,21 +413,21 @@ class RFP extends React.Component {
 						</div>
 						{newProposal.suppliers && newProposal.suppliers.length > 0 && (
 							<Fragment>
-								<Divider type="faint" title="" classes="m-t-20" isNumbered={false} />
+								{/* <Divider type="faint" title="" classes="m-t-20" isNumbered={false} /> */}
 								<div>
 									<div className="bold faint-caption m-t-8 m-b-8">
 										{ newProposal.suppliers.length }
 										{' '}
                     ADDED SUPPLIER(S)
 									</div>
-									<Divider type="faint" title="" classes="m-t-8" isNumbered={false} />
+									<Divider type="thick" title="" classes="m-t-8" isNumbered={false} />
 									<div className="xsm-caption supplier-content__heading faint-caption m-t-8 m-b-8">
 										<div>
 											<div>SUPPLIER NAME</div>
 										</div>
 										<div>CONTACT</div>
 									</div>
-									<Divider type="faint" title="" classes="m-t-8" isNumbered={false} />
+									<Divider type="thick" title="" classes="m-t-8" isNumbered={false} />
 									<div className="items-group underline bottom">
 										{newProposal.suppliers && (newProposal.suppliers.map((supplier) => (
 											<SupplierListItem

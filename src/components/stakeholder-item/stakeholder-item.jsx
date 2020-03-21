@@ -22,7 +22,7 @@ const StakeholderItem = ({ stakeholder, currentUserId, removeStakeholder }) => {
 					{ stakeholder.lastname }
 				</span>
 				<span>
-					<span> ,</span>
+					<span>, </span>
 					{ stakeholder.email }
 				</span>
 			</div>

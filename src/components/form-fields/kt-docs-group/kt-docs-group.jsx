@@ -1,20 +1,14 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable jsx-a11y/interactive-supports-focus */
 import React from 'react';
-import { ReactComponent as Logo } from '../../../svg/plus.svg';
+import AddItem from '../../snippets/add-item/add-item';
 import KtDoc from './kt-docs';
 
 import './kt-docs.scss';
 
 const KtDocs = ({
   className, documents, deleteDocument, addNewDocument, updateDocument,
-}) => {
-  // const [document, setDocument] = useState({ name: '', description: '' });
-  const handleClick = () => {
-
-  };
-
-  return (
+}) => (
 	<div className={`docs-group m-t-30 ${className}`}>
 		<div className="bold">Documents</div>
 		<div className="docs-wrapper">
@@ -32,19 +26,15 @@ const KtDocs = ({
 					updateDocument={(index, newDoc) => updateDocument(index, newDoc)}
 				/>
 			))}
-			<div
-				className="clickable m-t-20 kt-primary bold sm-caption flex-center"
-				role="button"
-				onClick={addNewDocument}
-				onKeyDown={handleClick}
-			>
-				<Logo className="kt-logo__small kt-primary" />
-				<span>Request New Document</span>
+			<div className="m-t-20">
+				<AddItem
+					title="Request New Document"
+					handleClick={addNewDocument}
+				/>
 			</div>
 		</div>
 	</div>
-  );
-};
+);
 
 
 export default KtDocs;
