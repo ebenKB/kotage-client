@@ -6,16 +6,19 @@ import {
 } from '../types/rfpTypes';
 import Axios from '../../utils/axios/axios';
 import { mergeDateAndTime, getToken } from '../../utils/app/index';
+import { setNotification } from './appActions';
 
 // set default auth token
 Axios.defaults.headers.common['Authorization'] = `Bearer ${getToken()}`;
 
-export const createProposal = (proposal) => async (dispatch, getState) => new Promise((resolve) => {
+export const createProposal = (proposal) => async (dispatch, getState) => new
+Promise((resolve, reject) => {
   dispatch({ type: SET_RFP_LOADING });
   /**
    * serialize proposal for the backend
    * This is important because the fontend uses different names for the
-   * proposal
+   * proposalimport { setNotification } from './appActions';
+
    */
   const newProposal = {
     title: proposal.title,
@@ -58,11 +61,12 @@ export const createProposal = (proposal) => async (dispatch, getState) => new Pr
         payload: data,
       });
       dispatch({ type: SET_RFP_DONE_LOADING });
+      dispatch(setNotification({ message: 'New Rfp has been created' }, 'success'));
       resolve(data);
     })
     .catch((err) => {
       dispatch({ type: SET_RFP_DONE_LOADING });
-      console.log(err);
+      reject(err);
     });
 });
 

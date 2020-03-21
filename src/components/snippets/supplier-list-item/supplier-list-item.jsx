@@ -14,10 +14,12 @@ const SupplierListItem = ({
 }) => {
   const [isChecked, setIsChecked] = useState(false);
 
-  const handleOnChange = () => {
+  const handleOnChange = (e) => {
+    e.preventDefault();
     if (!isSelectAll) {
-      setIsChecked(!isChecked);
+      console.log('This supplier changes', supplier);
       handleChange(supplier);
+      setIsChecked(!isChecked);
     }
   };
   const getForm = () => {
@@ -46,7 +48,7 @@ const SupplierListItem = ({
 					<Checkbox
 						checked={isSelectAll || isChecked}
 						disabled={isSelectAll}
-						onChange={() => handleOnChange()}
+						onChange={(e) => handleOnChange(e)}
 					/>
 				</div>
 				<div>
@@ -72,7 +74,7 @@ SupplierListItem.propTypes = {
   isInline: PropTypes.bool,
   supplier: PropTypes.object.isRequired,
   handleChange: PropTypes.func.isRequired,
-  isSelectAll: PropTypes.bool.isRequired,
+  isSelectAll: PropTypes.bool,
   deleteSupplier: PropTypes.func.isRequired,
 };
 

@@ -10,7 +10,8 @@ import './navigation.scss';
 class AccordionStandard extends Component {
   constructor(props) {
     super(props);
-    this.state = { activeIndex: 0 };
+    // set activeIndex to 0 to open the first item by default
+    this.state = { activeIndex: -1 };
   }
 
   handleClick = (e, titleProps) => {
@@ -28,7 +29,7 @@ class AccordionStandard extends Component {
 		<div className="m-l-16 m-b-15 content menu-option bold">
 			<Link to="/">
 				<Logo className="kt-logo__small" />
-          Home
+        Welcome
 			</Link>
 		</div>
 		<Accordion as={Menu} vertical>
@@ -38,10 +39,13 @@ class AccordionStandard extends Component {
 					content="Source"
 					index={0}
 					onClick={this.handleClick}
-					className="m-b-10 bold"
+					className="m-b-10"
 				/>
 				<Accordion.Content active={activeIndex === 0} className="menu-option">
 					<Link to="/rfx">RFx</Link>
+				</Accordion.Content>
+				<Accordion.Content active={activeIndex === 0} className="menu-option">
+					<Link to="/rfx/new">New Event</Link>
 				</Accordion.Content>
 				<Accordion.Content active={activeIndex === 0} className="menu-option">
 					<Link to="/quotes/news">New Quote</Link>
@@ -58,7 +62,7 @@ class AccordionStandard extends Component {
 					content="Procure"
 					index={1}
 					onClick={this.handleClick}
-					className="m-b-10 bold"
+					className="m-b-10"
 				/>
 				{currentTenant && (
 					<Accordion.Content active={activeIndex === 1} className="menu-option">
@@ -74,7 +78,7 @@ class AccordionStandard extends Component {
 					content="Pay"
 					index={0}
 					onClick={this.handleClick}
-					className="m-b-10 bold"
+					className="m-b-10"
 				/>
 			</Menu.Item>
 		</Accordion>
@@ -85,7 +89,7 @@ class AccordionStandard extends Component {
 					content="Reports"
 					index={0}
 					onClick={this.handleClick}
-					className="m-b-10 bold"
+					className="m-b-10"
 				/>
 			</Menu.Item>
 		</Accordion>

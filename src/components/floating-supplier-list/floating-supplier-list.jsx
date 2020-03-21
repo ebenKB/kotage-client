@@ -24,16 +24,19 @@ const FloatingSupplierList = ({
   const [isSelectAll, setSelectAll] = useState(false);
 
   const handleSelectionChange = (supplier) => {
-    if (selectedSuppliers.includes(supplier)) {
-      // remove the supplier from the selection
-      const newSuppliers = selectedSuppliers.filter((s) => s.id !== supplier.id);
-      setSelectedSuppliers(() => newSuppliers);
-    } else {
+    const existing = selectedSuppliers.find((s) => s.supplier_id === supplier.supplier_id);
+    if (existing === null || existing === undefined) {
       // add the supplier to the selection
-      setSelectedSuppliers((state) => ([
-        ...state,
+      setSelectedSuppliers([
+        ...selectedSuppliers,
         supplier,
-      ]));
+      ]);
+    } else {
+      // remove the supplier from the selection
+      const newSuppliers = selectedSuppliers.filter((s) => s.supplier_id !== supplier.supplier_id);
+      setSelectedSuppliers([
+        ...newSuppliers,
+      ]);
     }
   };
 

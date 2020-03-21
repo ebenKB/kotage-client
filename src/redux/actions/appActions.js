@@ -8,8 +8,17 @@ export const clearNotification = () => async (dispatch) => (
   })
 );
 
+// // set notification to the app state
+// export const setNotification = (notification) => async (dispatch) => dispatch({
+//   type: SET_APP_NOTIFICATION,
+//   payload: notification,
+// });
+
 // set notification to the app state
-export const setNotification = (notification) => async (dispatch) => dispatch({
+export const setNotification = (notification, type) => async (dispatch) => dispatch({
   type: SET_APP_NOTIFICATION,
-  payload: notification,
+  payload: {
+    type: `${type}`,
+    notification,
+  },
 });

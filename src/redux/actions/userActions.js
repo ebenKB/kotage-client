@@ -9,6 +9,7 @@ import {
   GET_TENANT_ID, CREATE_USER, MAKE_ADMIN, GET_INVIATIONS, INVITE_USER, DELETE_USER,
   RESEND_INVITATION, DELETE_INVITATION, LOGOUT,
 } from '../types/userTypes';
+import { setNotification } from './appActions';
 
 /**
  * This function is used to send a new invitation to a user
@@ -110,7 +111,10 @@ Promise(async (resolve, reject) => {
     }
   } catch (error) {
     dispatch(doneLoading());
-    reject(error);
+    const { response } = error;
+    if (response.status === 401) {
+      dispatch(setNotification({ message: 'No credentials found for this user' }, 'error'));
+    }
   }
 });
 
@@ -149,7 +153,7 @@ export const getUsers = () => async (dispatch, getState) => {
       });
     }
   } catch (error) {
-    console.log('an error occurred', error);
+    dispatch(setNotification({ message: 'an error occured while trying to fetch users' }, 'error'));
   }
 };
 
@@ -167,7 +171,7 @@ export const getInvitations = () => async (dispatch, getState) => {
       });
     }
   } catch (error) {
-    console.log('an error occured', error);
+    dispatch(setNotification({ message: 'an error occured while trying to fetch the invitation' }, 'error'));
   }
 };
 
@@ -185,7 +189,7 @@ export const getInvitation = (token, tenant_id) => async (dispatch) => {
       payload: invitation,
     });
   } catch (err) {
-    console.log('an error occured while trying to fetch the user');
+    dispatch(setNotification({ message: 'an error occured while trying to fetch the user' }, 'error'));
   }
 };
 
@@ -201,13 +205,14 @@ export const getTenantID = (email) => async (dispatch) => {
       payload: data.tenant,
     });
   } catch (error) {
-    return dispatch({
-      type: SET_APP_NOTIFICATION,
-      payload: {
-        type: 'error',
-        notification: error,
-      },
-    });
+    dispatch(setNotification(error, 'error'));
+    // return dispatch({
+    //   type: SET_APP_NOTIFICATION,
+    //   payload: {
+    //     type: 'error',
+    //     notification: error,
+    //   },
+    // });
   }
 };
 
@@ -238,23 +243,27 @@ export const sendPasswordResetToken = (email) => async (dispatch, getState) => {
   try {
     const { user } = getState();
     await Axios.post(`/v1/${user.currentUser.tenant_id}/users/password_reset`, { email });
-    dispatch({
-      type: SET_APP_NOTIFICATION,
-      payload: {
-        type: 'success',
-        notification: {
-          message: 'Instructions for password reset has been sent to this user',
-        },
-      },
-    });
+    dispatch(setNotification({ message: 'Instructions for password reset has been sent to this user' }, 'success'));
+
+    // dispatch({
+    //   type: SET_APP_NOTIFICATION,
+    //   payload: {
+    //     type: 'success',
+    //     notification: {
+    //       message: 'Instructions for password reset has been sent to this user',
+    //     },
+    //   },
+    // });
   } catch (error) {
-    dispatch({
-      type: SET_APP_NOTIFICATION,
-      payload: {
-        type: 'error',
-        notification: 'an error occurred while sending the notification',
-      },
-    });
+    dispatch(setNotification({ message: 'an error occurred while sending the notification' }, 'error'));
+
+    // dispatch({
+    //   type: SET_APP_NOTIFICATION,
+    //   payload: {
+    //     type: 'error',
+    //     notification: 'an error occurred while sending the notification',
+    //   },
+    // });
   }
 };
 
@@ -270,23 +279,26 @@ export const resetUserPassword = (password, password_confirmation,
   try {
     const { data } = await Axios.put(`/v1/${tenant_id}/users/password_update`, { password, password_confirmation, token });
     if (data.status === 200) {
-      dispatch({
-        type: SET_APP_NOTIFICATION,
-        payload: {
-          type: 'success',
-          notification: 'Instructions for password reset has been sent to this user',
-        },
-      });
+      dispatch(setNotification({ message: 'Instructions for password reset has been sent to this user' }, 'success'));
+
+      // dispatch({
+      //   type: SET_APP_NOTIFICATION,
+      //   payload: {
+      //     type: 'success',
+      //     notification: 'Instructions for password reset has been sent to this user',
+      //   },
+      // });
     }
     resolve(data);
   } catch (error) {
-    dispatch({
-      type: SET_APP_NOTIFICATION,
-      payload: {
-        type: 'error',
-        notification: 'an error occurred while sending password reset instructions',
-      },
-    });
+    dispatch(setNotification({ message: 'an error occurred while sending password reset instructions' }, 'error'));
+    // dispatch({
+    //   type: SET_APP_NOTIFICATION,
+    //   payload: {
+    //     type: 'error',
+    //     notification: 'an error occurred while sending password reset instructions',
+    //   },
+    // });
     reject(error);
   }
 });
@@ -307,16 +319,17 @@ export const softDeleteUser = (user_id, type = 'normal') => async (dispatch, get
         type: DELETE_USER,
         payload: user_id,
       });
+      dispatch(setNotification({ message: 'User has been deleted' }, 'success'));
 
-      dispatch({
-        type: SET_APP_NOTIFICATION,
-        payload: {
-          type: 'success',
-          notification: {
-            message: 'User has been deleted',
-          },
-        },
-      });
+      // dispatch({
+      //   type: SET_APP_NOTIFICATION,
+      //   payload: {
+      //     type: 'success',
+      //     notification: {
+      //       message: 'User has been deleted',
+      //     },
+      //   },
+      // });
     }
   } catch (error) {
     console.log('an error occured', { error });
@@ -337,26 +350,28 @@ export const softDeleteInvitation = (invitation_id) => async (dispatch, getState
         payload: invitation_id,
       });
 
-      dispatch({
-        type: SET_APP_NOTIFICATION,
-        payload: {
-          type: 'success',
-          notification: {
-            message: 'User has been deleted',
-          },
-        },
-      });
+      dispatch(setNotification({ message: 'User has been deleted' }, 'success'));
+      // dispatch({
+      //   type: SET_APP_NOTIFICATION,
+      //   payload: {
+      //     type: 'success',
+      //     notification: {
+      //       message: 'User has been deleted',
+      //     },
+      //   },
+      // });
     }
   } catch (error) {
-    dispatch({
-      type: SET_APP_NOTIFICATION,
-      payload: {
-        type: 'error',
-        notification: {
-          message: 'an error occurred while deleting the user',
-        },
-      },
-    });
+    dispatch(setNotification({ message: 'an error occurred while deleting the user' }, 'error'));
+    // dispatch({
+    //   type: SET_APP_NOTIFICATION,
+    //   payload: {
+    //     type: 'error',
+    //     notification: {
+    //       message: 'an error occurred while deleting the user',
+    //     },
+    //   },
+    // });
   }
 };
 
