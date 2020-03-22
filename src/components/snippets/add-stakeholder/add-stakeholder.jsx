@@ -5,10 +5,8 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { Dropdown, Button } from 'semantic-ui-react';
-// import { ReactComponent as Logo } from '../../../svg/plus.svg';
 import { getUsers } from '../../../redux/actions/userActions';
 import './add-stakeholder.scss';
-// import { addStakeholder } from '../../../redux/actions/rfpActions';
 
 const Stakeholders = ({
   className, getAllUsers, users, currentUser, addNewStakeholder, shouldFetchData = false, loading,
@@ -94,6 +92,7 @@ const Stakeholders = ({
 				</div>
 				<div>
 					<Dropdown
+						className="fluid"
 						selection
 						default="Read"
 						options={options}
@@ -109,11 +108,6 @@ const Stakeholders = ({
 					/>
 				</div>
 			</div>
-			{/* <div className="clickable m-t-20 kt-primary bold sm-caption flex-center"
-        onClick={handleClick}>
-				<Logo className="kt-logo__small kt-primary" />
-				<span>Invite Stakeholder</span>
-			</div> */}
 		</div>
 	</div>
   );
@@ -127,7 +121,6 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
   getAllUsers: getUsers,
-  // addNewStakeholder: addStakeholder,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Stakeholders);

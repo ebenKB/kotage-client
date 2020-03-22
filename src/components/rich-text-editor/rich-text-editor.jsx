@@ -16,6 +16,9 @@ const RichTextEditor = ({ onChange }) => {
     onChange(htmlContent);
   };
 
+  // return false to inherit default editor behaviour
+  const handlePastedText = () => false;
+
   const options = ['inline', 'list', 'textAlign', 'link', 'blockType', 'history'];
 
   const toolbarOptions = {
@@ -44,6 +47,7 @@ const RichTextEditor = ({ onChange }) => {
 		editorState={editorState}
 		onEditorStateChange={handleEditorChange}
 		toolbar={toolbarOptions}
+		handlePastedText={handlePastedText}
 	/>
   );
 };
@@ -51,4 +55,5 @@ const RichTextEditor = ({ onChange }) => {
 RichTextEditor.propTypes = {
   onChange: PropTypes.func.isRequired,
 };
+
 export default RichTextEditor;

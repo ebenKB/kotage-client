@@ -112,7 +112,7 @@ Promise(async (resolve, reject) => {
   } catch (error) {
     dispatch(doneLoading());
     const { response } = error;
-    if (response.status === 401) {
+    if (response && response.status === 401) {
       dispatch(setNotification({ message: 'No credentials found for this user' }, 'error'));
     }
   }

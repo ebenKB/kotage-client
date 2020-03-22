@@ -3,6 +3,7 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
 import Divider from '../kt-divider/divider';
+import './kt-main-content.scss';
 
 const MainContent = (props) => {
   const { help, classes } = props;

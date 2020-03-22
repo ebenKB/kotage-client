@@ -88,12 +88,6 @@ button.cta.kt-primary:focus {
   /* animation: fadeOut 3s ease-in-out 1 forwards normal; */
 }
 
-.kt-main__content {
-  display: grid;
-  grid-template-columns: 3fr 1fr;
-  grid-column-gap: 20px;
-}
-
 ul.custom {
   list-style: none;
   padding-inline-start: 0;
