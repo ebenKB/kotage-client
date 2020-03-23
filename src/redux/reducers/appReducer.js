@@ -2,6 +2,7 @@ import { SET_APP_NOTIFICATION, CLEAR_NOTIFICATION } from '../types/appTypes';
 
 const initialState = {
   notification: null,
+  currencyOptions: null,
 };
 
 export default (state = initialState, action) => {

@@ -3,68 +3,33 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable react/jsx-fragments */
 import React, { Fragment } from 'react';
-import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
-import shortid from 'shortid';
+import { shortid } from 'shortid';
 import { ValidatorForm } from 'react-form-validator-core';
 import { Button } from 'semantic-ui-react';
-import MainContent from '../../kt-main-content/mainContent';
-import KtWrapper from '../../kt-wrapper/kt-wrapper';
-import Divider from '../../kt-divider/divider';
-import FormGroup from '../../form-fields/form-group/form-group';
-import DateTimeGroup from '../../form-fields/date-time-form-group/date-time-group';
-import KtDocsGroup from '../../form-fields/kt-docs-group/kt-docs-group';
-import FloatingSupplierList from '../../floating-supplier-list/floating-supplier-list';
-import Help from '../../../utils/requisitions/new/help';
-import SupplierListItem from '../../snippets/supplier-list-item/supplier-list-item';
-import './rfp.scss';
-import StakeholderGroup from '../../stakeholder-group/stakeholder-group';
-import { createProposal } from '../../../redux/actions/rfpActions';
-import QuestionCreator from '../../snippets/question-creator/question-creator';
-import { uploadFile } from '../../../utils/app/index';
+import MainContent from '../kt-main-content/mainContent';
+import KtWrapper from '../kt-wrapper/kt-wrapper';
+import Divider from '../kt-divider/divider';
+import FormGroup from '../form-fields/form-group/form-group';
+import DateTimeGroup from '../form-fields/date-time-form-group/date-time-group';
+import KtDocsGroup from '../form-fields/kt-docs-group/kt-docs-group';
+import FloatingSupplierList from '../floating-supplier-list/floating-supplier-list';
+import Help from '../../utils/requisitions/new/help';
+import SupplierListItem from '../snippets/supplier-list-item/supplier-list-item';
+import StakeholderGroup from '../stakeholder-group/stakeholder-group';
+import { createProposal } from '../../redux/actions/rfpActions';
+import QuestionCreator from '../snippets/question-creator/question-creator';
+import { uploadFile } from '../../utils/app/index';
+import './rfp-editor.scss';
 
-class RFP extends React.Component {
+class RfpEditor extends React.Component {
   constructor(props) {
     super(props);
-    const { currentUser } = this.props;
-    this.myRef = React.createRef();
+    const { proposal, options } = this.props;
     this.state = {
-      canShowSuplliers: false,
-      newProposal: {
-        title: '',
-        description: '',
-        bid_deadline_date: '',
-        rsvp_deadline_date: '',
-        question_deadline_date: '',
-        bid_deadline_time: '',
-        rsvp_deadline_time: '',
-        question_deadline_time: '',
-        currency_id: null,
-        tenant_id: currentUser.tenant_id,
-        suppliers: [],
-        questions: [],
-        files: [],
-        // an rfp has a default owner who is the current user
-        stakeholders: [
-          {
-            id: currentUser.id,
-            access_level: 2,
-            firstname: currentUser.firstname,
-            lastname: currentUser.lastname,
-            email: currentUser.email,
-          },
-        ],
-        documents: [{
-          id: shortid.generate(),
-          name: '',
-          description: '',
-        }],
-        proposal_attachments_attributes: null,
-        proposal_response_sheet_attributes: {
-          proposal_question_attributes: null,
-          proposal_document_requests_attributes: null,
-        },
-      },
+      newProposal: proposal,
+      ...options,
+      shouldFetchData: false,
       currencyOptions: [
         {
           key: '1',
@@ -77,11 +42,11 @@ class RFP extends React.Component {
           value: '2',
         },
       ],
-      shouldFetchData: false,
     };
   }
 
   render() {
+    console.log('These are the options', this.state);
     const {
       canShowSuplliers, newProposal, currencyOptions, shouldFetchData,
     } = this.state;
@@ -144,7 +109,7 @@ class RFP extends React.Component {
     };
 
     const addNewDocument = () => {
-      // check if the previous document is not empty
+    // check if the previous document is not empty
       const docSize = newProposal.documents.length;
       const prevDoc = newProposal.documents[docSize - 1];
       if ((prevDoc && (prevDoc.name !== '' && prevDoc.description !== '')) || (!prevDoc)) {
@@ -269,7 +234,7 @@ class RFP extends React.Component {
           .then(() => history.push('/rfx'))
           .catch(() => {
             console.log('an error occured');
-            // remove files from s3
+          // remove files from s3
           });
       });
     };
@@ -418,6 +383,7 @@ class RFP extends React.Component {
 						</div>
 						{newProposal.suppliers && newProposal.suppliers.length > 0 && (
 							<Fragment>
+								{/* <Divider type="faint" title="" classes="m-t-20" isNumbered={false} /> */}
 								<div>
 									<div className="bold faint-caption m-t-8 m-b-8">
 										{ newProposal.suppliers.length }
@@ -474,4 +440,4 @@ const mapDispatchToProps = {
   createNewProposal: createProposal,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(RFP));
+export default connect(mapStateToProps, mapDispatchToProps)(RfpEditor);

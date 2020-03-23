@@ -25,6 +25,7 @@ const KtDocs = ({
 				value={doc.name}
 				name="name"
 				onChange={handleTextChange}
+				className="fluid"
 			/>
 		</div>
 		<div>

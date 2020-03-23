@@ -11,6 +11,7 @@ import Divider from '../kt-divider/divider';
 import SupplierListItemFetch from '../snippets/supplier-list-item-fetch/supplier-list-item-fetch';
 import { ReactComponent as Icon } from '../../svg/close.svg';
 import { getAllSuppliers } from '../../redux/actions/tenantActions';
+import SupplierListItem from '../snippets/supplier-list-item/supplier-list-item';
 
 const FloatingSupplierList = ({
   isLoading, isVisible, closeForm, suppliers, tempSuppliers, getSuppliers, loading, handleAction,
@@ -22,6 +23,9 @@ const FloatingSupplierList = ({
   }, [isVisible]);
   const [selectedSuppliers, setSelectedSuppliers] = useState([]);
   const [isSelectAll, setSelectAll] = useState(false);
+  const [filteredSuppliers, setFilteredSuppliers] = useState([]);
+  const [isSearching, setIsSearching] = useState(false);
+  const [searchKey, setSearchKey] = useState('');
 
   const handleSelectionChange = (supplier) => {
     const existing = selectedSuppliers.find((s) => s.supplier_id === supplier.supplier_id);
@@ -38,6 +42,17 @@ const FloatingSupplierList = ({
         ...newSuppliers,
       ]);
     }
+  };
+
+  const handleSearch = (value) => {
+    setSearchKey(value);
+    if (value !== '') {
+      setIsSearching(true);
+    } else { setIsSearching(false); }
+    const newSuppliers = suppliers
+      .filter((s) => (s.company_name.toLowerCase().match(value.trim()))
+        || (s.email.toLowerCase().match(value.trim())));
+    setFilteredSuppliers(newSuppliers);
   };
 
   const addNewSuppliers = () => {
@@ -89,7 +104,10 @@ const FloatingSupplierList = ({
 				</Button>
 			</div>
 			<div className="supplier-float__content">
-				<SearchField />
+				<SearchField
+					onChange={(value) => handleSearch(value)}
+					searchKey={searchKey}
+				/>
 				{loading && (
 					<div>Loading</div>
 				)}
@@ -97,12 +115,20 @@ const FloatingSupplierList = ({
 					<Checkbox label="Select All" onChange={handleSelectAllSuppliers} />
 					<Divider type="thick" />
 					<div className="m-t-20">
-						{tempSuppliers && tempSuppliers.map((supplier) => (
+						{!isSearching && tempSuppliers && tempSuppliers.map((supplier) => (
 							<SupplierListItemFetch
 								key={supplier.uid}
 								uid={supplier.uid}
 								handleChange={(s) => handleSelectionChange(s)}
 								isSelectAll={isSelectAll}
+							/>
+						))}
+						{isSearching && filteredSuppliers && filteredSuppliers.map((supplier) => (
+							<SupplierListItem
+								key={supplier.supplier_id}
+								handleChange={(s) => handleSelectionChange(s)}
+								isSelectAll={isSelectAll}
+								supplier={supplier}
 							/>
 						))}
 					</div>

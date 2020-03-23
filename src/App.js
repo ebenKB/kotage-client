@@ -114,13 +114,7 @@ function App() {
 			<Route exact path="/tenant/signup">
 				<CreateNewTenant />
 			</Route>
-			<Suspense fallback={(
-				<Layout>
-					<h1> loading ...</h1>
-					{' '}
-				</Layout>
-			)}
-			>
+			<Suspense fallback={null}>
 				<Layout>
 					{routes.map((route, index) => (
 					// Render more <Route>s with the same paths as

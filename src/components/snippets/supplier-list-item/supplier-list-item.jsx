@@ -17,7 +17,6 @@ const SupplierListItem = ({
   const handleOnChange = (e) => {
     e.preventDefault();
     if (!isSelectAll) {
-      console.log('This supplier changes', supplier);
       handleChange(supplier);
       setIsChecked(!isChecked);
     }
