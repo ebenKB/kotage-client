@@ -6,6 +6,7 @@ import { SET_APP_NOTIFICATION } from '../types/appTypes';
 import {
   SET_LOADING, DONE_LOADING, SET_ERROR, GET_TENANT, ADD_SUPPLIER, GET_SUPPLIER, GET_SUPPLIERS,
 } from '../types/tenantTypes';
+import deserializeSupplier from '../../serializers/supplier-serializer';
 
 /**
  * this function creates a new tenant
@@ -79,7 +80,7 @@ export const searchSupplier = (tenant_id, uid) => async (dispatch) => (
     dispatch(setLoading);
     try {
       const { data } = await Axios.get(`/v1/${tenant_id}/suppliers?uid=${uid}`);
-      resolve(data.supplier);
+      resolve(data.tenant);
       dispatch(doneLoading);
     } catch (error) {
       dispatch(doneLoading);
@@ -93,9 +94,10 @@ export const getAllSuppliers = () => async (dispatch, getState) => {
   const { user } = getState();
   try {
     const { data } = await Axios.get(`/v1/${user.currentUser.tenant_id}/suppliers`);
+    const newSuppliers = data.suppliers.map((s) => deserializeSupplier(s));
     dispatch({
       type: GET_SUPPLIERS,
-      payload: data.suppliers,
+      payload: newSuppliers,
     });
     dispatch(doneLoading);
   } catch (error) {

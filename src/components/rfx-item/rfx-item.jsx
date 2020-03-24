@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import { ReactComponent as Logo } from '../../svg/cart.svg';
 import './rfx-item.scss';
 
-const RfpItem = ({ type, proposal }) => (
+const RfpItem = ({ type, proposal }) => (proposal && (
 	<div className="kt-list__item rfx-item">
 		<div className="icon-caption">
 			<Logo />
@@ -14,7 +14,7 @@ const RfpItem = ({ type, proposal }) => (
 		<div className="kt-list__item-content">
 			<div>
 				<span className="bold big-caption kt-primary clickable">
-					<Link to="/requisitions/id">
+					<Link to={`/rfx/proposal/${proposal.id}`}>
 						<div className="dis-inline-block bold big-caption kt-primary clickable">
 							{(((proposal && proposal.title === null) || (proposal === null)) && ('Title of the Proposal'))}
 							{ proposal && proposal.title }
@@ -46,7 +46,7 @@ const RfpItem = ({ type, proposal }) => (
 			</div>
 		</div>
 	</div>
-);
+));
 
 RfpItem.propTypes = {
   type: PropTypes.string.isRequired,

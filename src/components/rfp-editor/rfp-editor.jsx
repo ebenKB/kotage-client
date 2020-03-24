@@ -28,7 +28,8 @@ class RfpEditor extends React.Component {
     const { proposal, options } = this.props;
     this.state = {
       newProposal: proposal,
-      ...options,
+      type: options.type,
+      heading: options.heading,
       shouldFetchData: false,
       currencyOptions: [
         {
@@ -46,9 +47,8 @@ class RfpEditor extends React.Component {
   }
 
   render() {
-    console.log('These are the options', this.state);
     const {
-      canShowSuplliers, newProposal, currencyOptions, shouldFetchData,
+      canShowSuplliers, newProposal, currencyOptions, shouldFetchData, type, heading,
     } = this.state;
     const {
       createNewProposal, tenantUid, loading, history,
@@ -132,7 +132,7 @@ class RfpEditor extends React.Component {
       if (suppliers && suppliers.length > 0) {
         let filteredSuppliers = [];
         for (const supplier of suppliers) {
-          const found = newProposal.suppliers.find((x) => x.supplier_id === supplier.id);
+          const found = newProposal.suppliers.find((x) => x.supplier_id === supplier.supplier_id);
           if (found === null || found === undefined) {
             filteredSuppliers = [...filteredSuppliers, supplier];
           }
@@ -265,10 +265,10 @@ class RfpEditor extends React.Component {
 			help={Help}
 		>
 			<KtWrapper
-				header="New Proposal"
+				header={heading}
 				canFilter={false}
 				canPerform
-				canPublish
+				canPublish={type === 'create'}
 				isDisabled={loading}
 				isLoading={loading}
 				cancelUrl="/rfx"

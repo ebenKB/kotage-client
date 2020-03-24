@@ -1,10 +1,11 @@
 import {
-  CREATE_PROPOSAL, SET_RFP_LOADING, SET_RFP_DONE_LOADING, GET_RFP,
+  CREATE_PROPOSAL, SET_RFP_LOADING, SET_RFP_DONE_LOADING, GET_RFP, GET_PROPOSAL_BY_ID,
 } from '../types/rfpTypes';
 
 const initialState = {
   loading: false,
   proposals: [],
+  currentProposal: null,
   meta: null,
 };
 
@@ -40,6 +41,15 @@ export default (state = initialState, action) => {
         ...state,
         proposals: [...state.proposals, ...proposals],
         meta: action.payload.meta,
+      };
+    }
+
+    case GET_PROPOSAL_BY_ID: {
+      const proposal = state.proposals.find((p) => parseInt(p.id, 10)
+        === parseInt(action.payload, 10));
+      return {
+        ...state,
+        currentProposal: proposal,
       };
     }
 

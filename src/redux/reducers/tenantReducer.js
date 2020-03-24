@@ -76,7 +76,8 @@ export default (state = initialState, action) => {
       }
       return {
         ...state,
-        tempSuppliers: newSuppliers,
+        // tempSuppliers: newSuppliers,
+        suppliers: newSuppliers,
       };
     }
 

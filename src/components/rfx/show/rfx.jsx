@@ -66,12 +66,8 @@ const RFX = ({ getProposals, proposals, meta }) => {
 		>
 			<div>
 				{meta && getDescription()}
-				<RfxItem type="Published" proposal={null} />
-				<Divider type="faint" />
-				<RfxItem type="Published" proposal={null} />
-				<Divider type="faint" />
 				{ proposals && proposals.map((proposal) => (
-					<div>
+					<div key={proposal.id}>
 						<RfxItem type={proposal.published_at !== null ? 'Published' : 'Draft'} proposal={proposal} />
 						<Divider type="faint" />
 					</div>
