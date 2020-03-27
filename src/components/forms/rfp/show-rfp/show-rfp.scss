@@ -9,7 +9,7 @@
 
 .bid-caption-item {
   display: grid;
-  grid-template-columns: repeat(3, 70px);
+  grid-template-columns: repeat(3, 60px);
   column-gap: 30px;
 }
 
@@ -78,7 +78,7 @@
     grid-template-columns: repeat(3, 50px);
     column-gap: 10px;
   }
-  
+
   .rfp-suppliers__item {
     font-size: 0.9rem;
   }
