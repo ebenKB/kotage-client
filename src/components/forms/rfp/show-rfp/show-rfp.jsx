@@ -66,12 +66,12 @@ const ShowRfp = ({ match, getProposal, proposal }) => {
 											<div className="text-center">
 												<div className="xsm-caption m-b-10">Intend to Bid</div>
 												<CircularProgressbar value={60} text={`${3}`} className="bold kt-circular-progress" />
-												<div className="xsm-caption m-t-10">(3 out of 4)</div>
+												<div className="xsm-caption m-t-10">(3 of 4)</div>
 											</div>
 											<div className="text-center">
 												<div className="xsm-caption m-b-10">Bids Received</div>
 												<CircularProgressbar value={75} text={`${3}`} className="bold kt-circular-progress" />
-												<div className="xsm-caption m-t-10">(3 out of 4)</div>
+												<div className="xsm-caption m-t-10">(3 of 4)</div>
 											</div>
 										</div>
 									</div>
