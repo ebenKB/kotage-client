@@ -101,7 +101,7 @@ const ShowRfp = ({ match, getProposal, proposal }) => {
 								</div>
 							</div>
 						</section>
-						<section className="rfp-suppliers">
+						<section className="rfp-suppliers m-t-40">
 							<div>
 								<Divider type="thick" title="INVITED SUPPLIERS" classes="m-t-10 m-b-10" />
 							</div>
