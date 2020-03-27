@@ -29,7 +29,7 @@
 
 .ui.button {
   background: #FBFCFD;
-  border: 1px solid #D9E2E8;
+  /* border: 1px solid #D9E2E8; */
   box-sizing: border-box;
   border-radius: 4px;
 }
