@@ -33,7 +33,7 @@ const SupplierListItem = ({
 			<DeleteButton
 				type="icon"
 				classes="cta"
-				handleAction={() => deleteSupplier(supplier.supplier_id)}
+				handleAction={() => deleteSupplier(supplier.id)}
 			/>
 		</div>
 	</div>

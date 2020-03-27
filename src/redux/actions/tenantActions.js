@@ -7,6 +7,7 @@ import {
   SET_LOADING, DONE_LOADING, SET_ERROR, GET_TENANT, ADD_SUPPLIER, GET_SUPPLIER, GET_SUPPLIERS,
 } from '../types/tenantTypes';
 import deserializeSupplier from '../../serializers/supplier-serializer';
+// import { deserializeSupplier } from '../../../serializers/supplier-serializer';
 
 /**
  * this function creates a new tenant
@@ -113,7 +114,7 @@ export const getSupplier = (uid, tenant_id) => async (dispatch) => (
       const { supplier } = data;
       dispatch({
         type: GET_SUPPLIER,
-        payload: supplier,
+        payload: deserializeSupplier(supplier),
       });
       resolve(supplier);
     } catch (error) {

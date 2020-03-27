@@ -8,16 +8,16 @@ import './floating-supplier-list.scss';
 import { Checkbox, Button } from 'semantic-ui-react';
 import SearchField from '../form-fields/search-field/search-field';
 import Divider from '../kt-divider/divider';
-import SupplierListItemFetch from '../snippets/supplier-list-item-fetch/supplier-list-item-fetch';
+// import SupplierListItem from '../snippets/supplier-list-item/supplier-list-item';
 import { ReactComponent as Icon } from '../../svg/close.svg';
 import { getAllSuppliers } from '../../redux/actions/tenantActions';
 import SupplierListItem from '../snippets/supplier-list-item/supplier-list-item';
 
 const FloatingSupplierList = ({
-  isLoading, isVisible, closeForm, suppliers, tempSuppliers, getSuppliers, loading, handleAction,
+  isLoading, isVisible, closeForm, suppliers, getSuppliers, loading, handleAction,
 }) => {
   useEffect(() => {
-    if (!tempSuppliers || tempSuppliers.length === 0) {
+    if (!suppliers || suppliers.length === 0) {
       getSuppliers();
     }
   }, [isVisible]);
@@ -28,7 +28,7 @@ const FloatingSupplierList = ({
   const [searchKey, setSearchKey] = useState('');
 
   const handleSelectionChange = (supplier) => {
-    const existing = selectedSuppliers.find((s) => s.supplier_id === supplier.supplier_id);
+    const existing = selectedSuppliers.find((s) => s.id === supplier.id);
     if (existing === null || existing === undefined) {
       // add the supplier to the selection
       setSelectedSuppliers([
@@ -37,7 +37,7 @@ const FloatingSupplierList = ({
       ]);
     } else {
       // remove the supplier from the selection
-      const newSuppliers = selectedSuppliers.filter((s) => s.supplier_id !== supplier.supplier_id);
+      const newSuppliers = selectedSuppliers.filter((s) => s.id !== supplier.id);
       setSelectedSuppliers([
         ...newSuppliers,
       ]);
@@ -115,17 +115,17 @@ const FloatingSupplierList = ({
 					<Checkbox label="Select All" onChange={handleSelectAllSuppliers} />
 					<Divider type="thick" />
 					<div className="m-t-20">
-						{!isSearching && tempSuppliers && tempSuppliers.map((supplier) => (
-							<SupplierListItemFetch
-								key={supplier.uid}
-								uid={supplier.uid}
+						{!isSearching && suppliers && suppliers.map((supplier) => (
+							<SupplierListItem
+								key={supplier.id}
+								supplier={supplier}
 								handleChange={(s) => handleSelectionChange(s)}
 								isSelectAll={isSelectAll}
 							/>
 						))}
 						{isSearching && filteredSuppliers && filteredSuppliers.map((supplier) => (
 							<SupplierListItem
-								key={supplier.supplier_id}
+								key={supplier.id}
 								handleChange={(s) => handleSelectionChange(s)}
 								isSelectAll={isSelectAll}
 								supplier={supplier}
@@ -160,7 +160,7 @@ const mapDispatchToProps = {
 };
 
 const mapStateToProps = (state) => ({
-  tempSuppliers: state.tenant.tempSuppliers,
+  // tempSuppliers: state.tenant.tempSuppliers,
   suppliers: state.tenant.suppliers,
   loading: state.tenant.loading,
 });

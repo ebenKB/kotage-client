@@ -7,7 +7,7 @@ import {
 import Axios from '../../utils/axios/axios';
 import { getToken } from '../../utils/app/index';
 import { setNotification } from './appActions';
-import { serializeProposal } from '../../serializers/rfp-serializer';
+import { serializeProposal, deserializeProposal } from '../../serializers/rfp-serializer';
 
 // set default auth token
 Axios.defaults.headers.common['Authorization'] = `Bearer ${getToken()}`;
@@ -19,6 +19,8 @@ Promise((resolve, reject) => {
    * serialize proposal for the backend
    * This is important because the fontend uses different names for the
    * proposalimport { setNotification } from './appActions';
+import { deserializeProposal } from '../../serializers/rfp-serializer';
+import { deserializeProposal } from '../../serializers/rfp-serializer';
 
    */
   // const newProposal = {
@@ -40,7 +42,7 @@ Promise((resolve, reject) => {
   //       })),
   //   proposal_suppliers_attributes: proposal.suppliers.map((s) => (
   //     {
-  //       supplier_id: s.supplier_id,
+  //       id: s.id,
   //     })),
   //   proposal_attachments_attributes: proposal.files.map((f) => ({
   //     file: f.location,
@@ -77,11 +79,13 @@ export const getRequestForProposals = () => async (dispatch, getState) => {
   const { user } = getState();
   const { data } = await Axios.get(`/v1/${user.currentUser.tenant_id}/rfp`);
   const { proposal_requests, meta } = data;
+  const deserializedProposals = proposal_requests.map((proposal) => deserializeProposal(proposal));
+  console.log(deserializedProposals);
   const { pagination } = meta;
   dispatch({
     type: GET_RFP,
     payload: {
-      proposals: proposal_requests,
+      proposals: deserializedProposals,
       meta: pagination,
     },
   });

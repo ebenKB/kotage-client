@@ -11,7 +11,6 @@ const deserializeSupplier = (supplier) => {
     country: tenant.country,
     timezone: tenant.timezone,
   };
-  console.log('This is the new supplier', newSupplier);
   return newSupplier;
 };
 export default deserializeSupplier;

@@ -85,7 +85,7 @@ export default (state = initialState, action) => {
       if (action.payload) {
         if (state.suppliers) {
           const existing = state.suppliers
-            .find((s) => s.supplier_id === action.payload.supplier_id);
+            .find((s) => s.id === action.payload.id);
           if (existing === null || existing === undefined) {
             return {
               ...state,

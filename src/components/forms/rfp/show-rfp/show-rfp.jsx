@@ -4,8 +4,20 @@ import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router';
 import { PropTypes } from 'prop-types';
 import { connect } from 'react-redux';
+import { Button } from 'semantic-ui-react';
+import { CircularProgressbar } from 'react-circular-progressbar';
 import { getCurrentProposal } from '../../../../redux/actions/rfpActions';
 import Divider from '../../../kt-divider/divider';
+import 'react-circular-progressbar/dist/styles.css';
+import './show-rfp.scss';
+import MainContent from '../../../kt-main-content/mainContent';
+import Help from '../../../../utils/requisitions/new/help';
+import KtWrapperLite from '../../../kt-wrapper-lite/kt-wrapper-lite';
+import StakeholderGroup from '../../../stakeholder-group/stakeholder-group';
+import QuestionListGroup from '../../../question-list-group/question-list-group';
+import DocumentListGroup from '../../../document-list-group/document-list-group';
+import { ReactComponent as MessageIcon } from '../../../../svg/mail.svg';
+import AttachmentListGroup from '../../../attachment-list-group/attachment-list-group';
 
 const ShowRfp = ({ match, getProposal, proposal }) => {
   const { params } = match;
@@ -14,92 +26,157 @@ const ShowRfp = ({ match, getProposal, proposal }) => {
     getProposal(id);
   }, [id]);
   return (
-	<div>
-		{proposal && (
-			<div style={{ width: '60%' }}>
-				<h1>{proposal.title}</h1>
-				<p className="bold" dangerouslySetInnerHTML={{ __html: proposal.description }} />
-				<div>
-					<Divider type="thick" title="Timeline" classes="m-t-10 m-b-10" />
-					<div className="sm-caption">
+	<MainContent
+		help={Help}
+	>
+		<KtWrapperLite>
+			<div>
+				{proposal && (
+					<div>
 						<div>
-              Bid Deadline :
-							{proposal.bid_deadline}
+							<div className="big-caption bold">{proposal.title}</div>
+							<Divider type="thick" title="" classes="m-t-10 m-b-10" />
 						</div>
 						<div>
-              RSVP Deadline :
-							{proposal.bid_deadline}
+							<div className="kt-primary">
+                Bids due : 02/04/2020 @ 12:30pm UTC (in 6 days)
+							</div>
+							{/* <span className="kt-primary">
+                Bids due:
+								&nbsp;
+								{ proposal.bid_deadline_date }
+								&nbsp;
+                @
+								&nbsp;
+								{ proposal.bid_deadline_time }
+								{' '}
+                UTC (in 6 days)
+							</span> */}
+							<Divider type="faint" title="" classes="m-t-10 m-b-10" />
 						</div>
-						<div>
-              Question Deadline :
-							{proposal.bid_deadline}
-						</div>
-						<div>
-							<Divider type="thick" title="Currency" classes="m-t-10 m-b-10" />
-							All prices should be presented in
-							{' '}
-							{proposal.currency.name}
-							{' '}
-							{proposal.currency.symbol}
-						</div>
-						<div>
-							<Divider type="thick" title="Suppliers" classes="m-t-10 m-b-10" />
-							{proposal.proposal_suppliers && proposal.proposal_suppliers.map((s) => (
-								<div>
+						<section className="kt-opaque">
+							<div className="bid-caption__wrapper">
+								<div className="bid-caption">
 									<div>
-										{' '}
-										{s.id}
+										<div className="bid-caption-item">
+											<div className="text-center">
+												<div className="xsm-caption m-b-10">Invited Suppliers</div>
+												<CircularProgressbar value={100} text={`${4}`} className="bold kt-circular-progress" />
+											</div>
+											<div className="text-center">
+												<div className="xsm-caption m-b-10">Intend to Bid</div>
+												<CircularProgressbar value={60} text={`${3}`} className="bold kt-circular-progress" />
+												<div className="xsm-caption m-t-10">(3 out of 4)</div>
+											</div>
+											<div className="text-center">
+												<div className="xsm-caption m-b-10">Bids Received</div>
+												<CircularProgressbar value={75} text={`${3}`} className="bold kt-circular-progress" />
+												<div className="xsm-caption m-t-10">(3 out of 4)</div>
+											</div>
+										</div>
 									</div>
-									<div>{s.supplier_id}</div>
+									<div className="m-t-20">
+                    All Bids are due in
+										{' '}
+										<span className="bold">6</span>
+										{' '}
+                    days
+									</div>
 								</div>
-							))}
-						</div>
-						<div>
-							<Divider type="thick" title="Stakeholders" classes="m-t-10 m-b-10" />
-							{proposal.proposal_stakeholders && proposal.proposal_stakeholders.map((s) => (
 								<div>
-									<div>{s.id}</div>
-									<div>{s.user_id}</div>
-									<div>{s.access_level}</div>
+									<Divider type="faint" title="MESSAGE CENTER" classes="m-t-10 m-b-10" />
+									<div>
+										<span>
+											<span className="bold">3 QUESTIONS</span>
+											{' '}
+                      need your attention
+										</span>
+									</div>
+									<div className="m-t-20">
+										<Button size="small" className="green flex flex-center">
+											<MessageIcon className="dark small logo m-r-10" />
+                        Message Center
+										</Button>
+									</div>
 								</div>
-							))}
-						</div>
-						<div>
-							<Divider type="thick" title="Attachments" classes="m-t-10 m-b-10" />
-							<div>
-								{proposal.proposal_response_sheet
-                  && proposal.proposal_response_sheet.proposal_document_requests
-                  && proposal.proposal_response_sheet.proposal_document_requests.map((s) => (
-	<div>
-		<div>
-      Name:
-			{s.document_name}
-		</div>
-		<div>
-      Description:
-			{s.description}
-		</div>
-	</div>
-                  ))}
 							</div>
-						</div>
-						<div>
-							<Divider type="thick" title="Questions" classes="m-t-10 m-b-10" />
+						</section>
+						<section className="rfp-suppliers">
 							<div>
-								{proposal.proposal_response_sheet
-                  && proposal.proposal_response_sheet.proposal_questions
-                  && proposal.proposal_response_sheet.proposal_questions
-                    .map((s) => (<div>{s.id}</div>))}
+								<Divider type="thick" title="INVITED SUPPLIERS" classes="m-t-10 m-b-10" />
 							</div>
-						</div>
+							<div className="rfp-suppliers__heading">
+								<div>COMPANY</div>
+								<div>STATUS</div>
+							</div>
+							<div className="rfp-suppliers__item m-b-10 m-t-10 active">
+								<div className="bold">APOTICA COMPANY LIMITED</div>
+								<div>Submitted on 24/04/2020 @5:30pm</div>
+								<div className="text-right">
+									<Link to="/" className="kt-primary">
+										<Button className="default" size="small" content="View Bid" />
+									</Link>
+								</div>
+							</div>
+							<div className="rfp-suppliers__item m-b-10 m-t-10 active">
+								<div className="bold">ASA SAVINGS AND LOANS</div>
+								<div>Submitted on 24/04/2020 @5:30pm</div>
+								<div className="text-right">
+									<Link to="/" className="kt-primary">
+										<Button className="default" size="small" content="View Bid" />
+									</Link>
+								</div>
+							</div>
+							<div className="rfp-suppliers__item m-b-10 m-t-10">
+								<div className="bold">MTN GHANA LIMITED</div>
+								<div>Not submitted</div>
+								<div className="text-right">
+									<Link to="/" className="kt-primary">
+										<Button className="default" size="small" content="View Bid" />
+									</Link>
+								</div>
+							</div>
+						</section>
+						<section className="m-t-40">
+							<div>
+								<Divider type="thick" title="STAKEHOLDERS" classes="" />
+								{proposal.stakeholders && (
+									<div className="kt-opaque">
+										<StakeholderGroup
+											shouldFetchData
+											stakeholders={proposal.stakeholders}
+											mode="readonly"
+											classes="m-b-10"
+										/>
+									</div>
+								)}
+							</div>
+						</section>
+						<section className="m-t-40">
+							<AttachmentListGroup
+								files={proposal.files}
+							/>
+						</section>
+						<section className="m-t-40">
+							<QuestionListGroup
+								questions={proposal.questions}
+							/>
+						</section>
+						<section className="m-t-40">
+							<DocumentListGroup
+								documents={proposal.documents}
+							/>
+						</section>
 					</div>
-				</div>
+				)}
+				<section className="m-t-40">
+					<Link to={`/rfx/proposal/${params.id}/edit`}>
+						<Button content="Edit proposal" className="green" />
+					</Link>
+				</section>
 			</div>
-		)}
-		<Link to={`/rfx/proposal/${params.id}/edit`}>
-      Edit this proposal
-		</Link>
-	</div>
+		</KtWrapperLite>
+	</MainContent>
   );
 };
 

@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 /* eslint-disable react/boolean-prop-naming */
 /* eslint-disable react/forbid-prop-types */
 import React from 'react';
@@ -6,34 +7,46 @@ import AddStakeholder from '../snippets/add-stakeholder/add-stakeholder';
 import Divider from '../kt-divider/divider';
 import './stakeholder.scss';
 import StakeholderItem from '../stakeholder-item/stakeholder-item';
+import StakeholderItemFetch from '../stakeholder-item-fetch/stakeholder-item-fetch';
 
-
+// m-t-20 m-b-10 -- remove later
 const StakeholderGroup = ({
-  stakeholders, addStakeholder, shouldFetchData, removeStakeholder,
+  stakeholders, addStakeholder, shouldFetchData, removeStakeholder, mode, classes,
 }) => (
 	<div>
 		<div>
-			<div className="sm-caption faint m-t-20 m-b-10 form-item stakeholder-group">
+			<div className={`sm-caption faint ${classes} form-item stakeholder-group`}>
 				<div className="faint-caption">NAME OR EMAIL</div>
 				<div className="light-caption">PERMISSIONS</div>
-				<div className="light-caption">ACTION</div>
+				{mode !== 'readonly' && (
+					<div className="light-caption">ACTION</div>
+				)}
 			</div>
 			<Divider type="faint" title="" classes="form-item m-t-8" isNumbered={false} />
-			{stakeholders && stakeholders.map((stakeholder) => (
+			{mode === 'write' && stakeholders && stakeholders.map((stakeholder) => (
 				<div key={stakeholder.id}>
 					<StakeholderItem
 						stakeholder={stakeholder}
 						removeStakeholder={(id) => removeStakeholder(id)}
+						mode={mode}
 					/>
 					<Divider type="faint" title="" classes="form-item m-t-8" isNumbered={false} />
 				</div>
 			))}
+			{mode === 'readonly' && stakeholders && stakeholders.map((stakeholder) => (
+				<StakeholderItemFetch
+					mode={mode}
+					stakeholderObj={stakeholder}
+				/>
+			))}
 		</div>
-		<AddStakeholder
-			shouldFetchData={shouldFetchData}
-			className="form-item"
-			addNewStakeholder={(stakeholder, access) => addStakeholder(stakeholder, access)}
-		/>
+		{mode === 'write' && (
+			<AddStakeholder
+				shouldFetchData={shouldFetchData}
+				className="form-item"
+				addNewStakeholder={(stakeholder, access) => addStakeholder(stakeholder, access)}
+			/>
+		)}
 	</div>
 );
 
@@ -42,7 +55,13 @@ StakeholderGroup.propTypes = {
   addStakeholder: PropTypes.func.isRequired,
   shouldFetchData: PropTypes.bool.isRequired,
   removeStakeholder: PropTypes.func.isRequired,
+  classes: PropTypes.string,
+  mode: PropTypes.string,
 };
 
+StakeholderGroup.defaultProps = {
+  mode: 'write',
+  classes: '',
+};
 
 export default StakeholderGroup;

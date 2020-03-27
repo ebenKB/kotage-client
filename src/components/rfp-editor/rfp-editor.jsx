@@ -132,7 +132,7 @@ class RfpEditor extends React.Component {
       if (suppliers && suppliers.length > 0) {
         let filteredSuppliers = [];
         for (const supplier of suppliers) {
-          const found = newProposal.suppliers.find((x) => x.supplier_id === supplier.supplier_id);
+          const found = newProposal.suppliers.find((x) => x.id === supplier.id);
           if (found === null || found === undefined) {
             filteredSuppliers = [...filteredSuppliers, supplier];
           }
@@ -150,7 +150,7 @@ class RfpEditor extends React.Component {
 
     const deleteSupplier = (id) => {
       if (id) {
-        const newSuppliers = newProposal.suppliers.filter((s) => s.supplier_id !== id);
+        const newSuppliers = newProposal.suppliers.filter((s) => s.id !== id);
         const proposal = newProposal;
         proposal.suppliers = newSuppliers;
         this.setState((state) => ({
@@ -403,7 +403,7 @@ class RfpEditor extends React.Component {
 											<SupplierListItem
 												isInline
 												supplier={supplier}
-												key={supplier.supplier_id}
+												key={supplier.id}
 												deleteSupplier={(id) => deleteSupplier(id)}
 											/>
 										)))}
@@ -419,6 +419,7 @@ class RfpEditor extends React.Component {
 							stakeholders={newProposal.stakeholders}
 							addStakeholder={(stakeholder, access) => addNewStakeholder(stakeholder, access)}
 							removeStakeholder={(id) => removeStakeholder(id)}
+							classes="m-t-20 m-b-10 "
 						/>
 					)}
 				</div>

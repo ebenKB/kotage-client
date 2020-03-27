@@ -70,3 +70,7 @@
 .xsm-caption .ui.checkbox label {
   font-size: 0.85rem;
 }
+
+.ui.button.flex {
+  display: flex;
+};

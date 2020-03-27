@@ -5,6 +5,7 @@ export const LOGOUT = 'LOGOUT';
 export const SET_USER_LOADING = 'SET_USER_LOADING';
 export const DONE_LOADING = 'DONE_LOADING';
 export const GET_USERS = 'GET_USERS';
+export const GET_USER = 'GET_USER';
 export const GET_INVIATION = 'GET_INVITATION';
 export const GET_INVIATIONS = 'GET_INVITATIONS';
 export const CREATE_USER = 'CREATE_USER';

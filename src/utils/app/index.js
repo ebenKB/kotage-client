@@ -56,6 +56,26 @@ export const getInitialNames = (value) => {
 export const mergeDateAndTime = (date, time) => (`${date}T${time}`);
 
 /**
+ * get date from date and time object
+ * @param {*} date the date and time object
+ */
+export const getDateOnly = (date) => {
+  if (date !== null && date !== undefined) {
+    return date.split('T')[0];
+  }
+};
+
+/**
+ * get time from date and time object
+ * @param {*} date the date and time object
+ */
+export const getTimeOnly = (date) => {
+  if (date !== null && date !== undefined) {
+    return date.split('T')[1];
+  }
+};
+
+/**
  * formate date to month-day-year e.g mm-dd-yyyy
  * @param {*} dateObj the date to format
  */

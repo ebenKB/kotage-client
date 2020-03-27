@@ -26,7 +26,7 @@ const Rfx = () => {
       if (selected === 'quote') {
         history.push('/rfx/quote/new');
       } else if (selected === 'proposal') {
-        history.push('/rfx/proposal/new/test');
+        history.push('/rfx/proposal/create/new');
       } else if (selected === 'information') {
         history.push('/rfx/information/new');
       }

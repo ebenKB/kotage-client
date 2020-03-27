@@ -24,7 +24,6 @@ const Users = lazy(() => import('./components/forms/user/show-users/show-users')
 const NewProposal = lazy(() => import('./components/forms/rfp/rfp'));
 const EditProposal = lazy(() => import('./components/forms/rfp/edit-rfp/edit-rfp'));
 const ShowProposal = lazy(() => import('./components/forms/rfp/show-rfp/show-rfp'));
-const NewProposalTest = lazy(() => import('./components/forms/rfp/test'));
 const InviteSupplier = lazy(() => import('./components/invite-supplier/invite-supplier'));
 const RFxNew = lazy(() => import('./components/rfx/rfx-new/rfx-new'));
 
@@ -94,7 +93,7 @@ const routes = [
   },
   {
     exact: true,
-    path: '/rfx/proposal/new',
+    path: '/rfx/proposal/create/new',
     main: () => <NewProposal />,
   },
   {
@@ -106,11 +105,6 @@ const routes = [
     exact: true,
     path: '/rfx/proposal/:id/edit',
     main: () => <EditProposal />,
-  },
-  {
-    exact: true,
-    path: '/rfx/proposal/new/test',
-    main: () => <NewProposalTest />,
   },
 ];
 

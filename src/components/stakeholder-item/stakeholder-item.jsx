@@ -5,7 +5,9 @@ import { connect } from 'react-redux';
 import DeleteButton from '../buttons/delete-button';
 
 
-const StakeholderItem = ({ stakeholder, currentUserId, removeStakeholder }) => {
+const StakeholderItem = ({
+  stakeholder, currentUserId, removeStakeholder, mode,
+}) => {
   const getAccessType = () => {
     if (parseInt(stakeholder.access_level, 10) === 2) {
       return (<div>Read & Write</div>);
@@ -27,7 +29,7 @@ const StakeholderItem = ({ stakeholder, currentUserId, removeStakeholder }) => {
 				</span>
 			</div>
 			<div className="faint">{stakeholder.id === currentUserId ? 'RFP Owner' : getAccessType()}</div>
-			{ currentUserId !== stakeholder.id && (
+			{ mode !== 'readonly' && currentUserId !== stakeholder.id && (
 				<div>
 					<DeleteButton
 						type="icon"
@@ -44,10 +46,12 @@ StakeholderItem.propTypes = {
   stakeholder: PropTypes.object.isRequired,
   currentUserId: PropTypes.number,
   removeStakeholder: PropTypes.func.isRequired,
+  mode: PropTypes.string,
 };
 
 StakeholderItem.defaultProps = {
   currentUserId: null,
+  mode: 'write',
 };
 
 const mapStateToProps = (state) => ({

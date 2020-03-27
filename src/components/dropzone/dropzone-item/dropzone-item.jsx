@@ -49,7 +49,6 @@ const DropzoneItem = ({ file, deleteFile, idx }) => {
     if (file.type === 'application/pptx') {
       return (<PowerPoint className="dark medium logo" />);
     }
-
     return (<PowerPoint className="dark medium logo" />);
   };
   return (
