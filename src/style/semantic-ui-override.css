@@ -34,6 +34,10 @@
   border-radius: 4px;
 }
 
+/* .ui.button:hover {
+  box-shadow: 0 4px 4px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+} */
+
 /* override the defualt size for dropdowns  */
 .ui.search.selection.dropdown.small {
   width: 30px;

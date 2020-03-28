@@ -93,7 +93,10 @@
 }
 
 @media only screen and (max-width: 1440px) {
-
+  .bid-caption-item {
+    // grid-template-columns: repeat(3, 60px);
+    column-gap: 20px;
+  }
 }
 
 /* for large screens */

@@ -5,7 +5,6 @@
 @import "./style//semantic-ui-override.css";
 
 body {
-  /* font-size: 16px; */
   font-size: 100%;
   font-family: 'Open Sans', sans-serif;
   background: rgba(235, 238, 235, 0.35);
@@ -251,7 +250,23 @@ svg.faint {
 
 
 @media only screen and (max-width: 1440px) {
+  body {
+    font-size: 90%;
+  }
 
+  .big-caption {
+    font-size: 1.20rem;
+  }
+}
+
+@media only screen and (max-width: 1280px) {
+  body {
+    font-size: 85%;
+  }
+
+  .big-caption {
+    font-size: 1.15rem;
+  }
 }
 
 /* for large screens */
@@ -264,4 +279,3 @@ svg.faint {
 @media only screen and (min-width: 1920px) {
 
 }
-/* 6048226911-ubc */

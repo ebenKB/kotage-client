@@ -1,9 +1,10 @@
 /* eslint-disable react/forbid-prop-types */
 import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router';
 import { PropTypes } from 'prop-types';
 import { connect } from 'react-redux';
-import { Button } from 'semantic-ui-react';
+import { Button, Checkbox } from 'semantic-ui-react';
 import { CircularProgressbar } from 'react-circular-progressbar';
 import { getCurrentProposal } from '../../redux/actions/rfpActions';
 import Divider from '../kt-divider/divider';
@@ -14,6 +15,7 @@ import Help from '../../utils/requisitions/new/help';
 import KtWrapperLite from '../kt-wrapper-lite/kt-wrapper-lite';
 import KtTransparentInput from '../form-fields/kt-transparent-search-input/kt-trans-input';
 import ButtonGroup from '../form-fields/button-group/button-group';
+import FormGroup from '../form-fields/form-group/form-group';
 
 const ShowRfp = ({ match, getProposal, proposal }) => {
   const { params } = match;
@@ -36,10 +38,7 @@ const ShowRfp = ({ match, getProposal, proposal }) => {
 							<Divider type="thick" title="" classes="m-b-10" />
 						</div>
 						<div>
-							<div>
-                Bids due : 02/04/2020 @ 12:30pm UTC (in 6 days)
-							</div>
-							{/* <span className="kt-primary">
+							<span className="kt-primary">
                 Bids due:
 								&nbsp;
 								{ proposal.bid_deadline_date }
@@ -49,7 +48,7 @@ const ShowRfp = ({ match, getProposal, proposal }) => {
 								{ proposal.bid_deadline_time }
 								{' '}
                 UTC (in 6 days)
-							</span> */}
+							</span>
 							<Divider type="faint" title="" classes="m-t-10 m-b-10" />
 						</div>
 						<section>
@@ -104,7 +103,7 @@ const ShowRfp = ({ match, getProposal, proposal }) => {
 					<KtWrapperLite classes="m-t-20">
 						<section className="rfp-suppliers">
 							<div>
-								<Divider type="thick" title="INVITED SUPPLIERS" classes="m-t-10 m-b-10" />
+								<Divider type="faint" title="INVITED SUPPLIERS" classes="m-t-10 m-b-10 p-b-10" />
 							</div>
 							<div className="text-right m-t-20">
 								<Button content="Compare Bids" color="green" size="tiny" />
@@ -123,7 +122,7 @@ const ShowRfp = ({ match, getProposal, proposal }) => {
 								</div>
 								<div className="rfp-suppliers__item m-b-10 m-t-10 active">
 									<div className="bold">APOTICA COMPANY LIMITED</div>
-									<div>Submitted on 24/04/2020 @5:30pm</div>
+									<div>Submitted on 24/04/2020</div>
 									<div className="text-right">
 										<ButtonGroup>
 											<Button content="View Bid" />
@@ -133,7 +132,7 @@ const ShowRfp = ({ match, getProposal, proposal }) => {
 								</div>
 								<div className="rfp-suppliers__item m-b-10 m-t-10 active">
 									<div className="bold">ASA SAVINGS AND LOANS</div>
-									<div>Submitted on 24/04/2020 @5:30pm</div>
+									<div>Submitted on 24/04/2020</div>
 									<div className="text-right">
 										<ButtonGroup>
 											<Button content="View Bid" />
@@ -144,12 +143,6 @@ const ShowRfp = ({ match, getProposal, proposal }) => {
 								<div className="rfp-suppliers__item m-b-10 m-t-10">
 									<div className="bold">MTN GHANA LIMITED</div>
 									<div>Not submitted</div>
-									<div className="text-right">
-										<ButtonGroup>
-											<Button content="View Bid" />
-											<Button content="Bid Action" />
-										</ButtonGroup>
-									</div>
 								</div>
 								<div className="text-right m-t-20">
 									<Button content="Add Supplier" color="green" />
@@ -157,6 +150,32 @@ const ShowRfp = ({ match, getProposal, proposal }) => {
 							</div>
 						</section>
 					</KtWrapperLite>
+					<KtWrapperLite classes="m-t-20">
+						<Divider type="faint" title="RFP OPTIONS" classes="m-t-20 m-b-20 p-b-10" />
+						<div className="m-t-20">
+							<FormGroup
+								label="Allow Late Bids:"
+							>
+								<Checkbox label="Allow suppliers to submit their Bids after submission deadline" />
+							</FormGroup>
+							<FormGroup
+								label="Revise Bids:"
+								classes="m-t-20"
+							>
+								<Checkbox label="Allow suppliers to revise their Bids after submission deadline" />
+							</FormGroup>
+						</div>
+					</KtWrapperLite>
+					<div className="footer">
+						<div className="m-t-20">
+							{/* <Link to={`/rfx/proposal/show/${proposal.id}`}>
+								<Button content="VIEW RFP" color="green" />
+							</Link> */}
+							<Link to="/">
+								<Button content="VIEW RFP" color="green" className="sm-caption" />
+							</Link>
+						</div>
+					</div>
 				</div>
 			)}
 		</div>
