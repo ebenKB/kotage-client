@@ -14,8 +14,9 @@ import MainContent from '../kt-main-content/mainContent';
 import Help from '../../utils/requisitions/new/help';
 import KtWrapperLite from '../kt-wrapper-lite/kt-wrapper-lite';
 import KtTransparentInput from '../form-fields/kt-transparent-search-input/kt-trans-input';
-import ButtonGroup from '../form-fields/button-group/button-group';
+// import ButtonGroup from '../form-fields/button-group/button-group';
 import FormGroup from '../form-fields/form-group/form-group';
+import SupplierDetailsCaptionGroup from '../snippets/supplier-details-caption-group/supplier-details-caption-group';
 
 const ShowRfp = ({ match, getProposal, proposal }) => {
   const { params } = match;
@@ -115,39 +116,7 @@ const ShowRfp = ({ match, getProposal, proposal }) => {
 								/>
 								<Divider type="faint" title="" classes="m-t-4" />
 							</div>
-							<div className="m-t-40">
-								<div className="rfp-suppliers__heading m-t-20">
-									<div>COMPANY</div>
-									<div>STATUS</div>
-								</div>
-								<div className="rfp-suppliers__item m-b-10 m-t-10 active">
-									<div className="bold">APOTICA COMPANY LIMITED</div>
-									<div>Submitted on 24/04/2020</div>
-									<div className="text-right">
-										<ButtonGroup>
-											<Button content="View Bid" />
-											<Button content="Bid Action" />
-										</ButtonGroup>
-									</div>
-								</div>
-								<div className="rfp-suppliers__item m-b-10 m-t-10 active">
-									<div className="bold">ASA SAVINGS AND LOANS</div>
-									<div>Submitted on 24/04/2020</div>
-									<div className="text-right">
-										<ButtonGroup>
-											<Button content="View Bid" />
-											<Button content="Bid Action" />
-										</ButtonGroup>
-									</div>
-								</div>
-								<div className="rfp-suppliers__item m-b-10 m-t-10">
-									<div className="bold">MTN GHANA LIMITED</div>
-									<div>Not submitted</div>
-								</div>
-								<div className="text-right m-t-20">
-									<Button content="Add Supplier" color="green" />
-								</div>
-							</div>
+							<SupplierDetailsCaptionGroup />
 						</section>
 					</KtWrapperLite>
 					<KtWrapperLite classes="m-t-20">
@@ -168,11 +137,8 @@ const ShowRfp = ({ match, getProposal, proposal }) => {
 					</KtWrapperLite>
 					<div className="footer">
 						<div className="m-t-20">
-							{/* <Link to={`/rfx/proposal/show/${proposal.id}`}>
+							<Link to={`/rfx/proposal/show/${proposal.id}`}>
 								<Button content="VIEW RFP" color="green" />
-							</Link> */}
-							<Link to="/">
-								<Button content="VIEW RFP" color="green" className="sm-caption" />
 							</Link>
 						</div>
 					</div>

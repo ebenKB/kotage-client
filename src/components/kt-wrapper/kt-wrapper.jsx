@@ -12,12 +12,15 @@ import { Button, Dropdown } from 'semantic-ui-react';
 import './kt-wrapper.scss';
 import SearcFilter from '../search-filter/filter';
 
+/**
+ * This is a general wrapper for form elements
+ */
 class KtWrapper extends React.Component {
   render() {
     const {
       header, canFilter, canPerform, handleAction, cancelUrl = '/', isLoading = false,
       actionName, isDisabled = false, canPublish = false, children, saveBtnClasses,
-      handlePublishAction,
+      handlePublishAction, isLite,
     } = this.props;
     let {
       link = '', linkName = '',
@@ -51,22 +54,25 @@ class KtWrapper extends React.Component {
 
     return (
 	<div className="kt-wrapper">
-		<div className="kt-wrapper__header bold">
-			<h2>{header}</h2>
-			<div>
+		{!isLite && (
+			<div className={`kt-wrapper__header ${!isLite && 'bold'}`}>
+				{!isLite && (<h2>{header}</h2>)}
+				{isLite && (<>{header}</>)}
 				<div>
-					{canFilter && (
-						<Dropdown placeholder="Filter records" selection options={options} onChange={handleChange} className="m-r-20 " />
-					)}
-					{linkName.length > 0 && (
-						<Link to={link} className="action-link green ui button">
-							{linkName}
-						</Link>
-					)}
-				</div>
+					<div>
+						{canFilter && (
+							<Dropdown placeholder="Filter records" selection options={options} onChange={handleChange} className="m-r-20 " />
+						)}
+						{linkName.length > 0 && (
+							<Link to={link} className="action-link green ui button">
+								{linkName}
+							</Link>
+						)}
+					</div>
 
+				</div>
 			</div>
-		</div>
+		)}
 		<div className="kt-wrapper__body">
 			{ canFilter && <SearcFilter /> }
 			<div className="kt-wrapper__content">
@@ -118,6 +124,7 @@ KtWrapper.propTypes = {
   canPublish: PropTypes.bool,
   saveBtnClasses: PropTypes.string,
   handlePublishAction: PropTypes.func,
+  isLite: PropTypes.bool,
 };
 
 KtWrapper.defaultProps = {
@@ -129,6 +136,7 @@ KtWrapper.defaultProps = {
   handleAction: null,
   saveBtnClasses: 'green',
   handlePublishAction: null,
+  isLite: false,
 };
 
 export default KtWrapper;

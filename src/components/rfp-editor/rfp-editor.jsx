@@ -2,25 +2,26 @@
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/prop-types */
 /* eslint-disable react/jsx-fragments */
-import React, { Fragment } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { shortid } from 'shortid';
 import { ValidatorForm } from 'react-form-validator-core';
-import { Button } from 'semantic-ui-react';
+// import { Button } from 'semantic-ui-react';
 import MainContent from '../kt-main-content/mainContent';
 import KtWrapper from '../kt-wrapper/kt-wrapper';
 import Divider from '../kt-divider/divider';
 import FormGroup from '../form-fields/form-group/form-group';
 import DateTimeGroup from '../form-fields/date-time-form-group/date-time-group';
 import KtDocsGroup from '../form-fields/kt-docs-group/kt-docs-group';
-import FloatingSupplierList from '../floating-supplier-list/floating-supplier-list';
+// import FloatingSupplierList from '../floating-supplier-list/floating-supplier-list';
 import Help from '../../utils/requisitions/new/help';
-import SupplierListItem from '../snippets/supplier-list-item/supplier-list-item';
+// import SupplierListItem from '../snippets/supplier-list-item/supplier-list-item';
 import StakeholderGroup from '../stakeholder-group/stakeholder-group';
 import { createProposal } from '../../redux/actions/rfpActions';
 import QuestionCreator from '../snippets/question-creator/question-creator';
 import { uploadFile } from '../../utils/app/index';
 import './rfp-editor.scss';
+import SupplierDirectorySection from '../supplier-directory-section/supplier-directory-section';
 
 class RfpEditor extends React.Component {
   constructor(props) {
@@ -48,8 +49,9 @@ class RfpEditor extends React.Component {
 
   render() {
     const {
-      canShowSuplliers, newProposal, currencyOptions, shouldFetchData, type, heading,
+      newProposal, currencyOptions, shouldFetchData, type, heading,
     } = this.state;
+
     const {
       createNewProposal, tenantUid, loading, history,
     } = this.props;
@@ -240,20 +242,20 @@ class RfpEditor extends React.Component {
     };
 
     // use this function to open the floating supplier directory to select suppliers
-    const openSupplierDirectory = () => {
-      this.setState((state) => ({
-        ...state,
-        canShowSuplliers: true,
-      }));
-    };
+    // const openSupplierDirectory = () => {
+    //   this.setState((state) => ({
+    //     ...state,
+    //     canShowSuplliers: true,
+    //   }));
+    // };
 
     // use this function to hide the floating suppplier list items
-    const hideSuppliers = () => {
-      this.setState((state) => ({
-        ...state,
-        canShowSuplliers: false,
-      }));
-    };
+    // const hideSuppliers = () => {
+    //   this.setState((state) => ({
+    //     ...state,
+    //     canShowSuplliers: false,
+    //   }));
+    // };
 
     return (
 	<ValidatorForm
@@ -363,12 +365,18 @@ class RfpEditor extends React.Component {
 					/>
 					<Divider type="thick" title="Invite Suppliers" classes="m-t-40" isNumbered number="4" />
 					<div className="form-item">
-						<div className="flex-inline m-t-30 m-b-30">
+						<SupplierDirectorySection
+							proposal={newProposal}
+							deleteSupplier={(id) => deleteSupplier(id)}
+							addSupplier={(suppliers) => addSuppliers(suppliers)}
+						/>
+						{/* <div className="flex-inline m-t-30 m-b-30">
 							<div>Open your supplier directory to add suppliers</div>
 							<div className="">
 								<Button
 									onClick={openSupplierDirectory}
-									className="flex-center kt-transparent kt-primary clickable m-t-20 kt-primary bold sm-caption flex-center"
+									className="flex-center
+                  kt-transparent kt-primary clickable m-t-20 kt-primary bold sm-caption flex-center"
 								>
 									<span className="kt-primary">Open Supplier Directory</span>
 								</Button>
@@ -383,7 +391,6 @@ class RfpEditor extends React.Component {
 						</div>
 						{newProposal.suppliers && newProposal.suppliers.length > 0 && (
 							<Fragment>
-								{/* <Divider type="faint" title="" classes="m-t-20" isNumbered={false} /> */}
 								<div>
 									<div className="bold faint-caption m-t-8 m-b-8">
 										{ newProposal.suppliers.length }
@@ -410,7 +417,7 @@ class RfpEditor extends React.Component {
 									</div>
 								</div>
 							</Fragment>
-						)}
+						)} */}
 					</div>
 					<Divider type="thick" title="Invite Stakeholders" classes="m-t-40" isNumbered number="5" />
 					{newProposal.stakeholders && (

@@ -1,73 +1,77 @@
-.bid-caption {
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: auto;
-  width: 90%;
-  padding-right: 30px;
-  border-right: 1px solid #DFDFDF;
-}
+// .bid-caption {
+//   display: grid;
+//   grid-template-columns: 1fr;
+//   grid-template-rows: auto;
+//   width: 90%;
+//   padding-right: 30px;
+//   border-right: 1px solid #DFDFDF;
+// }
 
-.bid-caption-item {
-  display: grid;
-  grid-template-columns: repeat(3, 60px);
-  column-gap: 30px;
-}
+// .bid-caption-item {
+//   display: grid;
+//   grid-template-columns: repeat(3, 60px);
+//   column-gap: 30px;
+// }
 
-.bid-caption__wrapper {
-  display: grid;
-  grid-template-columns: 1.15fr 1.5fr;
-  column-gap: 20px;
-  padding: 20px 0;
-}
+// .bid-caption__wrapper {
+//   display: grid;
+//   grid-template-columns: 1.15fr 1.5fr;
+//   column-gap: 20px;
+//   padding: 20px 0;
+// }
 
-.kt-circular-progress.CircularProgressbar .CircularProgressbar-path{
-  stroke: var(--kt-green);
-}
+// .kt-circular-progress.CircularProgressbar .CircularProgressbar-path{
+//   stroke: var(--kt-green);
+// }
 
-.CircularProgressbar.kt-circular-progress {
-  width: 70%;
-}
+// .CircularProgressbar.kt-circular-progress {
+//   width: 70%;
+// }
 
-.kt-circular-progress.CircularProgressbar .CircularProgressbar-text {
-  font-size: 3rem;
-  fill: var(--kt-dark);
-}
+// .kt-circular-progress.CircularProgressbar .CircularProgressbar-text {
+//   font-size: 3rem;
+//   fill: var(--kt-dark);
+// }
 
-.rfp-suppliers__heading {
-  display: grid;
-  width: 100%;
-  grid-template-columns: 40% 40%;
-  padding: 15px 0;
-}
+// .rfp-suppliers__heading {
+//   display: grid;
+//   width: 100%;
+//   grid-template-columns: 40% 40%;
+//   padding: 15px 0;
+// }
 
-.rfp-suppliers__item {
-  display: grid;
-  width: 100%;
-  grid-template-columns: 40% 40% 20%;
-  padding: 15px;
-  border: 1px solid #DFDFDF;
-  border-left: 4px solid var(--kt-light);
-  border-radius: 2px;
-  align-items: center;
-}
+// .rfp-suppliers__item {
+//   display: grid;
+//   width: 100%;
+//   grid-template-columns: 40% 40% 20%;
+//   padding: 15px;
+//   border: 1px solid #DFDFDF;
+//   border-left: 4px solid var(--kt-light);
+//   border-radius: 2px;
+//   align-items: center;
+// }
 
-.rfp-suppliers__item.active {
-  border-left: 4px solid var(--kt-green);
-}
+// .rfp-suppliers__item.active {
+//   border-left: 4px solid var(--kt-green);
+// }
 
-.kt-opaque {
-  background: #f8f9f8;
+// .kt-opaque {
+//   background: #f8f9f8;
+//   padding: 20px;
+// }
+
+
+
+// .kt-doc-list__heading,
+// .kt-doc-list__content {
+//   display: grid;
+//   grid-template-columns: repeat(2, 1fr);
+// }
+
+.kt-text-caption__wrapper {
   padding: 20px;
+  width: 100%;
 }
-
-
-
-.kt-doc-list__heading,
-.kt-doc-list__content {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-}
-
 // media queries
 @media only screen and (max-width: 600px) {
   
