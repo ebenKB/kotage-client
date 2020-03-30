@@ -10,6 +10,8 @@ import Divider from '../../kt-divider/divider';
 import { ReactComponent as QuoteIcon } from '../../../svg/quote.svg';
 import { ReactComponent as ProposalIcon } from '../../../svg/proposal.svg';
 import { ReactComponent as InformationIcon } from '../../../svg/information.svg';
+import { ReactComponent as Check } from '../../../svg/check.svg';
+
 import Help from '../../../utils/requisitions/new/help';
 
 import '../rfx.scss';
@@ -67,6 +69,9 @@ const Rfx = () => {
 								title="Request for Quote"
 							>
 								<QuoteIcon className="kt-rfx__icon" />
+								<div className="rfx-wrapper__caption">
+									<Check className="small logo" />
+								</div>
 							</RfxOption>
 						</Button>
 					</li>
@@ -79,6 +84,9 @@ const Rfx = () => {
 								title="Request for Proposal"
 							>
 								<ProposalIcon className="kt-rfx__icon" />
+								<div className="rfx-wrapper__caption">
+									<Check className="small logo" />
+								</div>
 							</RfxOption>
 						</Button>
 					</li>
@@ -91,6 +99,9 @@ const Rfx = () => {
 								title="Request for Information"
 							>
 								<InformationIcon className="kt-rfx__icon" />
+								<div className="rfx-wrapper__caption">
+									<Check className="small logo" />
+								</div>
 							</RfxOption>
 						</Button>
 					</li>
