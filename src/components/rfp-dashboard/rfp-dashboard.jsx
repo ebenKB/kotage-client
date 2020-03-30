@@ -63,12 +63,12 @@ const ShowRfp = ({ match, getProposal, proposal }) => {
 											</div>
 											<div className="text-center">
 												<div className="xsm-caption m-b-10">Intend to Bid</div>
-												<CircularProgressbar value={60} text={`${3}`} className="bold kt-circular-progress" />
+												<CircularProgressbar value={60} text={`${3}`} className="bold kt-circular-progress" strokeWidth={12} />
 												<div className="xsm-caption m-t-10">(3 of 4)</div>
 											</div>
 											<div className="text-center">
 												<div className="xsm-caption m-b-10">Bids Received</div>
-												<CircularProgressbar value={75} text={`${3}`} className="bold kt-circular-progress" />
+												<CircularProgressbar value={75} text={`${3}`} className="bold kt-circular-progress" strokeWidth={12} />
 												<div className="xsm-caption m-t-10">(3 of 4)</div>
 											</div>
 										</div>
@@ -124,12 +124,13 @@ const ShowRfp = ({ match, getProposal, proposal }) => {
 						<div className="m-t-20">
 							<FormGroup
 								label="Allow Late Bids:"
+								classes="custom"
 							>
 								<Checkbox label="Allow suppliers to submit their Bids after submission deadline" />
 							</FormGroup>
 							<FormGroup
 								label="Revise Bids:"
-								classes="m-t-20"
+								classes="m-t-20 custom"
 							>
 								<Checkbox label="Allow suppliers to revise their Bids after submission deadline" />
 							</FormGroup>
