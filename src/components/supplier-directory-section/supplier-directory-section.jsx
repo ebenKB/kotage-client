@@ -1,3 +1,4 @@
+/* eslint-disable no-mixed-spaces-and-tabs */
 /* eslint-disable react/forbid-prop-types */
 import React, { useState } from 'react';
 import { PropTypes } from 'prop-types';
@@ -5,7 +6,7 @@ import { Button } from 'semantic-ui-react';
 import Divider from '../kt-divider/divider';
 import SupplierListItem from '../snippets/supplier-list-item/supplier-list-item';
 import FloatingSupplierList from '../floating-supplier-list/floating-supplier-list';
-
+import './supplier-directory-section.scss';
 
 const SupplierDirectorySection = ({
   proposal, deleteSupplier, addSupplier,
@@ -13,6 +14,11 @@ const SupplierDirectorySection = ({
   const [canShowSuppliers, setShowSuppliers] = useState(false);
 
   const hideSuppliers = () => {
+    setShowSuppliers(false);
+  };
+
+  const handleAddSuppliers = (suppliers) => {
+    addSupplier(suppliers);
     setShowSuppliers(false);
   };
 
@@ -35,7 +41,7 @@ const SupplierDirectorySection = ({
 					<FloatingSupplierList
 						isVisible={canShowSuppliers}
 						closeForm={hideSuppliers}
-						handleAction={(suppliers) => addSupplier(suppliers)}
+						handleAction={(suppliers) => handleAddSuppliers(suppliers)}
 					/>
 				)}
 			</div>
@@ -56,6 +62,7 @@ const SupplierDirectorySection = ({
 				</div>
 				<Divider type="thick" title="" classes="m-t-8" isNumbered={false} />
 				<div className="items-group underline bottom">
+					{/* use this when we do not need to fetch the supplier record */}
 					{proposal.suppliers && (proposal.suppliers.map((supplier) => (
 						<SupplierListItem
 							isInline

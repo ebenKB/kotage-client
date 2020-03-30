@@ -28,7 +28,9 @@ const ShowRfp = ({ match, getProposal, proposal }) => {
     getProposal(id);
   }, [id]);
 
-  const getDescription = () => proposal.description;
+  // eslint-disable-next-line react/no-danger
+  const getDescription = () => (<div dangerouslySetInnerHTML={{ __html: proposal.description }} />
+  );
   const getTitle = () => <div className="very-big-caption">{proposal.title}</div>;
 
   return (
@@ -56,17 +58,6 @@ const ShowRfp = ({ match, getProposal, proposal }) => {
 						<Divider type="faint" title="RFP DETAILS" classes="" isNumbered number="1" />
 						<div className="m-t-20 m-b-20 kt-bg-shadow kt-text-caption__wrapper">
 							{getDescription()}
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Odit unde rerum dolorem recusandae beatae nostrum obcaecati
-              nihil et est cupiditate, illum minima. Praesentium quo earum
-              non quos, odio velit consectetur.
-
-							<p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Odit unde rerum dolorem recusandae beatae nostrum obcaecati
-                nihil et est cupiditate, illum minima. Praesentium quo earum
-                non quos, odio velit consectetur.
-							</p>
 						</div>
 						<div className="m-t-40">
 							<Divider type="faint" title="EVENT TIMELINE" classes="" isNumbered number="2" />
@@ -77,6 +68,7 @@ const ShowRfp = ({ match, getProposal, proposal }) => {
 								proposal={proposal}
 								deleteSupplier={() => console.log('we can delete the supplier')}
 								addSupplier={(suppliers) => console.log('We want to add the suppliers', suppliers)}
+								type="fetch"
 							/>
 						</div>
 						<div className="m-t-40">

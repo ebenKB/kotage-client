@@ -22,7 +22,16 @@ export const deserializeProposal = (proposal) => {
       title: req.title,
       file: req.file,
     }))),
-    suppliers: proposal.proposal_suppliers,
+    suppliers: (proposal.proposal_suppliers && proposal.proposal_suppliers.map((s) => ({
+      id: s.id,
+      uid: s.uid,
+      email: (s.tenant_supplier && s.tenant_supplier.tenant.email),
+      phone: (s.tenant_supplier && s.tenant_supplier.tenant.phone),
+      company_name: (s.tenant_supplier && s.tenant_supplier.tenant.company_name),
+      account_id: (s.tenant_supplier && s.tenant_supplier.tenant.account_id),
+      country: (s.tenant_supplier && s.tenant_supplier.tenant.country),
+      timezone: (s.tenant_supplier && s.tenant_supplier.tenant.timezone),
+    }))),
     stakeholders: (proposal.proposal_stakeholders && proposal.proposal_stakeholders.map((s) => ({
       id: s.id,
       user_id: s.user_id,
