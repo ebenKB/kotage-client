@@ -93,9 +93,11 @@ const ShowRfp = ({ match, getProposal, proposal }) => {
 										</span>
 									</div>
 									<div className="m-t-20">
-										<Button size="tiny" className="green flex flex-center">
-                      Message Center
-										</Button>
+										<Link to={`/rfx/proposal/${proposal.id}/message`}>
+											<Button size="tiny" className="green flex flex-center">
+                        Message Center
+											</Button>
+										</Link>
 									</div>
 								</div>
 							</div>
