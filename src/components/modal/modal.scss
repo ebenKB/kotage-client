@@ -1,0 +1,21 @@
+.modal-wrapper {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  background: var(--kt-black);
+  opacity: .05;
+  z-index: 200;
+}
+
+.modal {
+  width: 360px;
+  min-height: 150px;
+  background: var(--kt-white);
+  position: fixed;
+  top: 30vh;
+  left: calc((100vw - 360px) / 2);
+  right: auto;
+  border-radius: 4px;
+  padding: 20px;
+  opacity: 1;
+}
