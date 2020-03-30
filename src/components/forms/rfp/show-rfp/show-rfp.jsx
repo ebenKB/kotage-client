@@ -20,6 +20,7 @@ import Help from '../../../../utils/requisitions/new/help';
 // import AttachmentListGroup from '../../../attachment-list-group/attachment-list-group';
 import KtWrapper from '../../../kt-wrapper/kt-wrapper';
 import SupplierDirectorySection from '../../../supplier-directory-section/supplier-directory-section';
+import QuestionListGroup from '../../../question-list-group/question-list-group';
 
 const ShowRfp = ({ match, getProposal, proposal }) => {
   const { params } = match;
@@ -63,16 +64,20 @@ const ShowRfp = ({ match, getProposal, proposal }) => {
 							<Divider type="faint" title="EVENT TIMELINE" classes="" isNumbered number="2" />
 						</div>
 						<div className="m-t-40">
-							<Divider type="faint" title="INVITED SUPPLIERS" classes="" isNumbered number="3" />
+							<Divider type="faint" title="RESPONSE SHEET" classes="" isNumbered number="3" />
+							<section className="m-t-20">
+								<QuestionListGroup
+									questions={proposal.questions}
+								/>
+							</section>
+						</div>
+						<div className="m-t-40">
+							<Divider type="faint" title="INVITED SUPPLIERS" classes="" isNumbered number="4" />
 							<SupplierDirectorySection
 								proposal={proposal}
 								deleteSupplier={() => console.log('we can delete the supplier')}
 								addSupplier={(suppliers) => console.log('We want to add the suppliers', suppliers)}
-								type="fetch"
 							/>
-						</div>
-						<div className="m-t-40">
-							<Divider type="faint" title="REQUESTED DOCUMENTS" classes="" isNumbered number="4" />
 						</div>
 						<div className="m-t-40">
 							<Divider type="faint" title="STAKEHOLDERS" classes="" isNumbered number="5" />

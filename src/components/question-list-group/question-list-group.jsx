@@ -1,14 +1,14 @@
 /* eslint-disable react/forbid-prop-types */
 import React from 'react';
 import { PropTypes } from 'prop-types';
-import Divider from '../kt-divider/divider';
 import QuestionListItem from '../question-list-item/question-list-item';
+import './question-list-group.scss';
 
 
 const QuestionListGroup = ({ questions }) => (
-	<div>
-		<Divider type="thick" title="QUESTIONS" />
-		<div className="kt-opaque">
+	<div className="question-list-group">
+		<div className="bold">Questions</div>
+		<div>
 			{((questions === null) || (questions && questions.length === 0)) && (
 				<div>There is no question attached to this proposal</div>
 			)}
