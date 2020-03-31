@@ -7,12 +7,10 @@ import Header from '../header/header';
 import SideBar from '../navigation/navigation';
 import Message from '../kt-floating-message/message';
 import Notification from '../Notification/notification';
-import Modal from '../modal/modal';
 
 
 const Layout = (props) => (
 	<div className="App light-theme">
-		<Modal />
 		<Header />
 		<div className="header-offset" />
 		<div className="app-container main-layout">

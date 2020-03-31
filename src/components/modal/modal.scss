@@ -4,18 +4,30 @@
   height: 100vh;
   background: var(--kt-black);
   opacity: .05;
-  z-index: 200;
+  z-index: 101;
+  left: 0;
+  top: 0;
 }
 
 .modal {
-  width: 360px;
+  width: 440px;
   min-height: 150px;
   background: var(--kt-white);
   position: fixed;
-  top: 30vh;
-  left: calc((100vw - 360px) / 2);
+  top: 25vh;
+  left: calc((100vw - 440px) / 2);
   right: auto;
   border-radius: 4px;
-  padding: 20px;
   opacity: 1;
+  z-index: 102;
+}
+
+.modal .modal-title,
+.modal .modal-body,
+.modal .modal-footer {
+  padding: 15px;
+}
+
+.modal-title svg {
+  fill: var(--kt-light)
 }

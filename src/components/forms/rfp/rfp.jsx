@@ -8,6 +8,7 @@ import { connect } from 'react-redux';
 import shortid from 'shortid';
 import { createProposal } from '../../../redux/actions/rfpActions';
 import RfpEditor from '../../rfp-editor/rfp-editor';
+import Modal from '../../modal/modal';
 
 class RFP extends React.Component {
   constructor(props) {
@@ -50,19 +51,48 @@ class RFP extends React.Component {
           proposal_document_requests_attributes: null,
         },
       },
+      canShowModal: false,
+      hasConfirmedPublish: false,
     };
   }
 
   render() {
+    const handleConfirmPublish = () => {
+      this.setState((state) => ({
+        ...state,
+        hasConfirmedPublish: true,
+      }));
+    };
+
     const {
       newProposal,
+      canShowModal,
     } = this.state;
 
     return (
-	<RfpEditor
-		proposal={newProposal}
-		options={{ type: 'create', heading: 'New Proposal' }}
-	/>
+	<div>
+		{canShowModal && (
+			<Modal
+				heading="Save RFP?"
+				type="success"
+				confirmActionText="Publish RFP to suppliers"
+				handleConfirmAction={handleConfirmPublish}
+			>
+				<div>
+					<p>Did you remember to:</p>
+					<ol>
+						<li>Change the title?</li>
+						<li>Update the scope of the work?</li>
+						<li>Thank your boss for letting you use Kotage?</li>
+					</ol>
+				</div>
+			</Modal>
+		)}
+		<RfpEditor
+			proposal={newProposal}
+			options={{ type: 'create', heading: 'New Proposal' }}
+		/>
+	</div>
     );
   }
 }

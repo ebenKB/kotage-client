@@ -13,6 +13,7 @@ import CreateNewTenant from './components/forms/tenant/create-new-tenant';
 import CreateUser from './components/forms/user/create-user/create-user';
 import ResetPassword from './components/forms/user/reset-password/reset-password';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
+import KtLoader from './components/loader/loader';
 
 const Home = lazy(() => import('./pages/home'));
 const NewRequisition = lazy(() => import('./components/forms/requisitions/new/new-requisitions'));
@@ -132,7 +133,12 @@ function App() {
 			<Route exact path="/tenant/signup">
 				<CreateNewTenant />
 			</Route>
-			<Suspense fallback={null}>
+			<Suspense fallback={(
+				<Layout>
+					<KtLoader />
+				</Layout>
+			)}
+			>
 				<Layout>
 					{routes.map((route, index) => (
 					// Render more <Route>s with the same paths as
