@@ -4,7 +4,7 @@
 /* eslint-disable react/jsx-fragments */
 import React from 'react';
 import { connect } from 'react-redux';
-import { shortid } from 'shortid';
+import shortid from 'shortid';
 import { ValidatorForm } from 'react-form-validator-core';
 // import { Button } from 'semantic-ui-react';
 import MainContent from '../kt-main-content/mainContent';
