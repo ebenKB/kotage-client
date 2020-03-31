@@ -21,6 +21,9 @@ import Help from '../../../../utils/requisitions/new/help';
 import KtWrapper from '../../../kt-wrapper/kt-wrapper';
 import SupplierDirectorySection from '../../../supplier-directory-section/supplier-directory-section';
 import QuestionListGroup from '../../../question-list-group/question-list-group';
+import TimelineItem from '../../../timeline-item/timeline-item';
+import StakeholderGroup from '../../../stakeholder-group/stakeholder-group';
+import DocumentListGroup from '../../../document-list-group/document-list-group';
 
 const ShowRfp = ({ match, getProposal, proposal }) => {
   const { params } = match;
@@ -57,30 +60,63 @@ const ShowRfp = ({ match, getProposal, proposal }) => {
 				{proposal && (
 					<div>
 						<Divider type="faint" title="RFP DETAILS" classes="" isNumbered number="1" />
-						<div className="m-t-20 m-b-20 kt-bg-shadow kt-text-caption__wrapper">
+						<div className="m-t-20 m-b-20 kt-bg-shadow kt-text-caption__wrapper kt-move-left">
 							{getDescription()}
 						</div>
 						<div className="m-t-40">
 							<Divider type="faint" title="EVENT TIMELINE" classes="" isNumbered number="2" />
+							<div className="kt-pad-left">
+								<TimelineItem
+									label="Bid Deadline:"
+									dateValue="02/20/2020"
+								/>
+								<TimelineItem
+									label="RSVP Deadline:"
+									dateValue="02/20/2020"
+								/>
+								<TimelineItem
+									label="Question Deadline:"
+									dateValue="02/20/2020"
+								/>
+							</div>
 						</div>
 						<div className="m-t-40">
 							<Divider type="faint" title="RESPONSE SHEET" classes="" isNumbered number="3" />
-							<section className="m-t-20">
+							<section className="m-t-20 kt-pad-left">
 								<QuestionListGroup
 									questions={proposal.questions}
 								/>
+								<div className="m-t-20">
+									<DocumentListGroup
+										documents={proposal.documents}
+									/>
+								</div>
 							</section>
 						</div>
 						<div className="m-t-40">
 							<Divider type="faint" title="INVITED SUPPLIERS" classes="" isNumbered number="4" />
-							<SupplierDirectorySection
-								proposal={proposal}
-								deleteSupplier={() => console.log('we can delete the supplier')}
-								addSupplier={(suppliers) => console.log('We want to add the suppliers', suppliers)}
-							/>
+							<div className="kt-pad-left">
+								<SupplierDirectorySection
+									proposal={proposal}
+									deleteSupplier={() => console.log('we can delete the supplier')}
+									addSupplier={(suppliers) => console.log('We want to add the suppliers', suppliers)}
+								/>
+							</div>
 						</div>
 						<div className="m-t-40">
 							<Divider type="faint" title="STAKEHOLDERS" classes="" isNumbered number="5" />
+							<div className="kt-pad-left">
+								{proposal.stakeholders && (
+									<div className="m-t-20">
+										<StakeholderGroup
+											shouldFetchData
+											stakeholders={proposal.stakeholders}
+											mode="readonly"
+											classes="m-b-10"
+										/>
+									</div>
+								)}
+							</div>
 						</div>
 
 						{/* <section className="m-t-40">

@@ -1,3 +1,4 @@
+/* eslint-disable react/forbid-prop-types */
 // import 'date-fns';
 import React from 'react';
 import { PropTypes } from 'prop-types';
@@ -11,9 +12,9 @@ import {
 } from '@material-ui/pickers';
 import { formatDate } from '../../utils/app';
 
-export default function MaterialUIPickers({ handleChange, isDisablePast }) {
+export default function MaterialUIPickers({ handleChange, isDisablePast, value }) {
   // The first commit of Material-UI
-  const [selectedDate, setSelectedDate] = React.useState(null);
+  const [selectedDate, setSelectedDate] = React.useState(value);
 
   const handleDateChange = (date) => {
     const newDate = formatDate(date);
@@ -47,8 +48,10 @@ export default function MaterialUIPickers({ handleChange, isDisablePast }) {
 MaterialUIPickers.propTypes = {
   isDisablePast: PropTypes.bool,
   handleChange: PropTypes.func.isRequired,
+  value: PropTypes.any,
 };
 
 MaterialUIPickers.defaultProps = {
   isDisablePast: true,
+  value: null,
 };

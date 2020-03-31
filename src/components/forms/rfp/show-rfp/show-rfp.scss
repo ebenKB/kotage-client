@@ -60,18 +60,26 @@
 //   padding: 20px;
 // }
 
-
-
 // .kt-doc-list__heading,
 // .kt-doc-list__content {
 //   display: grid;
 //   grid-template-columns: repeat(2, 1fr);
 // }
 
+.kt-pad-left {
+  padding-left: 55px;
+}
+
+.kt-move-left {
+  margin-left: 55px;
+}
+
 .kt-text-caption__wrapper {
   padding: 20px;
-  width: 100%;
+  width: calc(100% - 55px);
 }
+
+
 // media queries
 @media only screen and (max-width: 600px) {
   
