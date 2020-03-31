@@ -73,5 +73,3 @@ Modal.propTypes = {
   handleDeclineAction: PropTypes.func.isRequired,
 };
 export default Modal;
-
-// 0552222004
