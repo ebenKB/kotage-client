@@ -8,24 +8,24 @@ import './modal.scss';
 
 
 const Modal = ({
-  heading, children, confirmActionText, handleConfirmAction, type,
+  heading, children, confirmActionText, handleConfirmAction, handleDeclineAction, type,
 }) => {
   const [canShowModal, setCanShowModal] = useState(true);
   const closeModal = () => {
     setCanShowModal(false);
+    handleDeclineAction();
   };
 
   const getColor = () => {
     if (type.toLowerCase() === 'success') {
       return 'green';
     }
-
     if (type.toLowerCase() === 'primary') {
       return 'primary';
     }
-
     return 'default';
   };
+
   return (
 	<div className={`${!canShowModal && 'hide'}`}>
 		<div className="modal-wrapper xsm-caption" />
@@ -42,21 +42,21 @@ const Modal = ({
 			<Divider type="faint" classes="" />
 			<div className="modal-body">
 				{children}
-				{/* <p>Did you remember to:</p>
-				<ol>
-					<li>Change the title?</li>
-					<li>Update the scope of the work?</li>
-					<li>Thank your boss for letting you use Kotage?</li>
-				</ol> */}
 			</div>
 			<Divider type="faint" classes="" />
-			<div className="text-right modal-footer ">
-				<Button content="Cancel" size="small" default />
+			<div className="modal-footer ">
 				<Button
 					content={confirmActionText}
 					color={getColor()}
 					size="small"
 					onClick={handleConfirmAction}
+				/>
+				<span className="m-l-5 m-r-5">or</span>
+				<Button
+					content="Cancel"
+					size="small"
+					default
+					onClick={closeModal}
 				/>
 			</div>
 		</div>
@@ -70,6 +70,7 @@ Modal.propTypes = {
   handleConfirmAction: PropTypes.func.isRequired,
   children: PropTypes.object.isRequired,
   heading: PropTypes.string.isRequired,
+  handleDeclineAction: PropTypes.func.isRequired,
 };
 export default Modal;
 

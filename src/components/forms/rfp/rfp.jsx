@@ -9,6 +9,7 @@ import shortid from 'shortid';
 import { createProposal } from '../../../redux/actions/rfpActions';
 import RfpEditor from '../../rfp-editor/rfp-editor';
 import Modal from '../../modal/modal';
+import { uploadFile } from '../../../utils/app/index';
 
 class RFP extends React.Component {
   constructor(props) {
@@ -52,31 +53,61 @@ class RFP extends React.Component {
         },
       },
       canShowModal: false,
-      hasConfirmedPublish: false,
     };
   }
 
   render() {
-    const handleConfirmPublish = () => {
-      this.setState((state) => ({
-        ...state,
-        hasConfirmedPublish: true,
-      }));
-    };
-
     const {
       newProposal,
       canShowModal,
     } = this.state;
 
+    const { createNewProposal, history, tenantUid } = this.props;
+
+    const handleConfirmPublish = () => {
+      this.setState((state) => ({
+        ...state,
+        canShowModal: true,
+      }));
+    };
+
+    const declinePublishAction = () => {
+      this.setState((state) => ({
+        ...state,
+        canShowModal: false,
+      }));
+    };
+
+    const handlePublish = async () => {
+      this.setState((state) => ({
+        ...state,
+        canShowModal: false,
+      }));
+      const files = await uploadFile(newProposal.files, tenantUid);
+      const proposal = newProposal;
+      proposal.files = files;
+      this.setState((state) => ({
+        ...state,
+        newProposal: proposal,
+      }), () => {
+        createNewProposal(newProposal)
+          .then(() => history.push('/rfx'))
+          .catch(() => {
+            console.log('an error occured');
+            // remove files from s3
+          });
+      });
+    };
+
     return (
 	<div>
 		{canShowModal && (
 			<Modal
-				heading="Save RFP?"
+				heading="Before you publish this RFP to suppliers"
 				type="success"
-				confirmActionText="Publish RFP to suppliers"
-				handleConfirmAction={handleConfirmPublish}
+				confirmActionText="Confirm and publish RFP to suppliers"
+				handleConfirmAction={handlePublish}
+				handleDeclineAction={declinePublishAction}
 			>
 				<div>
 					<p>Did you remember to:</p>
@@ -91,6 +122,7 @@ class RFP extends React.Component {
 		<RfpEditor
 			proposal={newProposal}
 			options={{ type: 'create', heading: 'New Proposal' }}
+			publishAction={handleConfirmPublish}
 		/>
 	</div>
     );

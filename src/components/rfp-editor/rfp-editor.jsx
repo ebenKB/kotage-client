@@ -19,7 +19,6 @@ import Help from '../../utils/requisitions/new/help';
 import StakeholderGroup from '../stakeholder-group/stakeholder-group';
 import { createProposal } from '../../redux/actions/rfpActions';
 import QuestionCreator from '../snippets/question-creator/question-creator';
-import { uploadFile } from '../../utils/app/index';
 import './rfp-editor.scss';
 import SupplierDirectorySection from '../supplier-directory-section/supplier-directory-section';
 
@@ -53,7 +52,7 @@ class RfpEditor extends React.Component {
     } = this.state;
 
     const {
-      createNewProposal, tenantUid, loading, history,
+      loading, publishAction,
     } = this.props;
 
     const handleSubmit = () => {
@@ -224,23 +223,6 @@ class RfpEditor extends React.Component {
       }
     };
 
-    const handlePublish = async () => {
-      const files = await uploadFile(newProposal.files, tenantUid);
-      const proposal = newProposal;
-      proposal.files = files;
-      this.setState((state) => ({
-        ...state,
-        newProposal: proposal,
-      }), () => {
-        createNewProposal(newProposal)
-          .then(() => history.push('/rfx'))
-          .catch(() => {
-            console.log('an error occured');
-          // remove files from s3
-          });
-      });
-    };
-
     // use this function to open the floating supplier directory to select suppliers
     // const openSupplierDirectory = () => {
     //   this.setState((state) => ({
@@ -275,7 +257,7 @@ class RfpEditor extends React.Component {
 				isLoading={loading}
 				cancelUrl="/rfx"
 				handleAction={handleSubmit}
-				handlePublishAction={handlePublish}
+				handlePublishAction={publishAction}
 				saveBtnClasses="default"
 			>
 				<Divider type="thick" title="Setup Your Event" classes="m-t-10" isNumbered number="1" />
