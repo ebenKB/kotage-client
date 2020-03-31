@@ -10,12 +10,14 @@ const QuestionListGroup = ({ questions }) => (
 		<div className="bold">Questions</div>
 		<div>
 			{((questions === null) || (questions && questions.length === 0)) && (
-				<div>There is no question attached to this proposal</div>
+				<div className="m-t-10">There is no question attached to this proposal</div>
 			)}
 			{questions && questions.length > 0 && questions.map((q) => (
-				<QuestionListItem
-					question={q}
-				/>
+				<div className="m-t-10">
+					<QuestionListItem
+						question={q}
+					/>
+				</div>
 			))}
 		</div>
 	</div>

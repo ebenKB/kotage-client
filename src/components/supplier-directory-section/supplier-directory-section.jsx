@@ -28,7 +28,7 @@ const SupplierDirectorySection = ({
   };
   return (
 	<div>
-		<div className="flex-inline m-t-30 m-b-30">
+		<div className="flex-inline m-t-20 m-b-30">
 			<div>Open your supplier directory to add suppliers</div>
 			<div className="">
 				<Button

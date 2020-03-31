@@ -6,8 +6,9 @@ import Divider from '../kt-divider/divider';
 
 const DocumentListGroup = ({ documents }) => (
 	<div className="kt-doc-list__group">
-		<Divider type="thick" title="REQUESTED DOCUMENTS" />
-		<div className="kt-opaque">
+		{/* <Divider type="thick" title="Requested Documents" /> */}
+		<div className="bold">Requested Documents</div>
+		<div>
 			<div className="kt-doc-list__heading">
 				<div>NAME</div>
 				<div>DESCRIPTION</div>

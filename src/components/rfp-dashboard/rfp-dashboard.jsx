@@ -140,12 +140,12 @@ const RfpDashboard = ({ match, getProposal, proposal }) => {
 					</KtWrapperLite>
 					<div className="footer">
 						<div className="m-t-20">
-							{/* <Link to={`/rfx/proposal/show/${proposal.id}`}>
-								<Button content="VIEW RFP" color="green" />
-							</Link> */}
-							<Link to="/">
+							<Link to={`/rfx/proposal/show/${proposal.id}`}>
 								<Button content="VIEW RFP" color="green" />
 							</Link>
+							{/* <Link to="/">
+								<Button content="VIEW RFP" color="green" />
+							</Link> */}
 						</div>
 					</div>
 				</div>
