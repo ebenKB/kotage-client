@@ -67,6 +67,10 @@ p {
   color: var(--kt-blue);
 }
 
+svg.kt-primary{
+  fill: var(--kt-blue);
+}
+
 button.cta.kt-primary,
 button.cta.kt-primary:hover,
 button.cta.kt-primary:focus {
@@ -133,6 +137,10 @@ ul.custom {
 
 .logo.dark {
   fill: var(--kt-dark);
+}
+
+.auto-height {
+  height: auto;
 }
 
 .icon-caption {

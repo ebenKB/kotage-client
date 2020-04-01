@@ -6,9 +6,11 @@
   box-sizing: border-box;
 }
 
-.ui.form .kt-textarea__wrapper textarea {
+.kt-textarea__wrapper textarea {
   min-height: 180px;
   border-radius: 2px;
-  // border-top-left-radius: 0;
-  // border-top-right-radius: 0;
+}
+
+.kt-textarea__wrapper textarea:focus{
+  outline: 1px solid var(--kt-light);
 }
