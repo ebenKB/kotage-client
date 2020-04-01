@@ -1,0 +1,21 @@
+.message-center__heading {
+  padding: 15px;
+  background: #F1F1F1;
+}
+
+.message-center__heading,
+.message-item {
+  display: grid;
+  grid-template-columns: 80% 20%;
+}
+
+.message-item {
+  padding: 0 15px;
+}
+.message-center__heading h4 {
+  display: inline-block;
+  margin: 0;
+}
+.message-center__body {
+  min-height: 200px;
+}
