@@ -3,13 +3,14 @@ import React from 'react';
 import { PropTypes } from 'prop-types';
 import DocumentListItem from '../document-list-item/document-list-item';
 import Divider from '../kt-divider/divider';
+import './document-list.scss';
 
 const DocumentListGroup = ({ documents }) => (
 	<div className="kt-doc-list__group">
 		{/* <Divider type="thick" title="Requested Documents" /> */}
 		<div className="bold">Requested Documents</div>
 		<div>
-			<div className="kt-doc-list__heading">
+			<div className="kt-doc-list__heading m-t-10">
 				<div>NAME</div>
 				<div>DESCRIPTION</div>
 			</div>

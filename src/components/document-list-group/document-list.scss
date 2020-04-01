@@ -1,0 +1,5 @@
+.kt-doc-list__heading,
+.kt-doc-list__content {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
