@@ -6,7 +6,7 @@ import { TextArea } from 'semantic-ui-react';
 import './kt-textarea.scss';
 
 const KtTextArea = ({
-  placeholder, onChange, rows, classes,
+  placeholder, onChange, rows, classes, value,
 }) => (
 	<div className="kt-textarea__wrapper">
 		<TextArea
@@ -14,6 +14,7 @@ const KtTextArea = ({
 			onChange={(e, data) => onChange(data.value)}
 			rows={rows}
 			className={classes}
+			value={value}
 		/>
 	</div>
 );

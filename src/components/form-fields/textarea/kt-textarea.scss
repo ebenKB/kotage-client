@@ -9,6 +9,9 @@
 .kt-textarea__wrapper textarea {
   min-height: 180px;
   border-radius: 2px;
+  padding: 20px;
+  max-width: 100%;
+  min-width: 100%;
 }
 
 .kt-textarea__wrapper textarea:focus{

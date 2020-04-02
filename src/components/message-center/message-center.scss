@@ -1,3 +1,16 @@
+.message-wrapper {
+  position: relative;
+}
+
+.message-preview {
+  position: absolute;
+  background: var(--kt-white);
+  min-height: 460px;
+  top: 20px;
+  left: 0;
+  padding: 40px;
+}
+
 .message-center__heading {
   padding: 15px;
   background: #F1F1F1;
@@ -12,6 +25,18 @@
 .message-item {
   padding: 0 15px;
 }
+
+.ui.button.message-item__wrapper:hover {
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.1);
+  border-left: 2px solid var(--kt-light);
+}
+
+.ui.button.message-item__wrapper {
+  text-align: left;
+  font-family: 'Open sans';
+  font-weight: 300;
+}
+
 .message-center__heading h4 {
   display: inline-block;
   margin: 0;
@@ -33,10 +58,29 @@
   min-height: 2.0em;
 }
 
-.message-wrapper .blue .dropdown.icon {
-  color: var(--kt-blue);
-}
+// .message-wrapper .blue .dropdown.icon {
+//   color: var(--kt-blue);
+// }
 
 .message-box.fluid {
   width: 100%;
+}
+
+.attachment-wrapper .attachment {
+  fill: var(--kt-dark);
+}
+
+
+.attachment-wrapper input[type=file]{
+  opacity: 0;
+  width: 40px;
+}
+
+.attachment-wrapper {
+  position: relative;
+}
+
+.attachment-label {
+  position: absolute;
+  padding: 4px;
 }
