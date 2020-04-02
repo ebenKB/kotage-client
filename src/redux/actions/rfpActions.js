@@ -115,6 +115,13 @@ export const getCurrentProposal = (id) => async (dispatch) => {
   // dispatch(findProposal(id));
 };
 
+
+export const getRfpInbox = () => async (dispatch) => {
+  dispatch({ type: SET_RFP_LOADING });
+
+  setTimeout(() => { dispatch({ type: SET_RFP_DONE_LOADING }); }, 9000);
+};
+
 export const setLoading = () => async (dispatch) => dispatch({
   type: SET_RFP_LOADING,
 });

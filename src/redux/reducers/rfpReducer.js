@@ -6,6 +6,8 @@ const initialState = {
   loading: false,
   proposals: [],
   currentProposal: null,
+  rfpInbox: null,
+  rfpOutbox: null,
   meta: null,
 };
 
