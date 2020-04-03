@@ -152,7 +152,7 @@ const MessageCenter = ({ isLoading, getInbox }) => {
 									handleAction={(message) => handleMessagePreview(message)}
 								/>
 							))}
-							<p className="kt-primary m-t-20">View 9 more messages</p>
+							<p className="kt-primary m-t-40">View 9 more messages</p>
 						</div>
 					)}
 				</div>

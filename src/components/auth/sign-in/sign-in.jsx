@@ -103,8 +103,7 @@ const SignIn = ({
       } else {
         getCurrentTenant(currentUser.tenant_id);
         // clear any errors or notifications that were caught before successful login
-        clearAppNotifications();
-        history.push('/');
+        clearAppNotifications().then(() => history.push('/'));
       }
     } catch (error) {
       console.log(error.message);
