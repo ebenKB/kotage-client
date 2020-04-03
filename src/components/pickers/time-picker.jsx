@@ -28,7 +28,7 @@ export default function MaterialUIPickers({ handleChange }) {
 				id="time-picker"
 				label=""
 				value={selectedDate}
-				onChange={handleTimeChange}
+				onChange={(time) => handleTimeChange(time)}
 				KeyboardButtonProps={{ 'aria-label': 'change time' }}
 				placeholder="Time"
 				emptyLabel=""

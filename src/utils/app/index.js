@@ -97,6 +97,27 @@ export const formatDate = (dateObj) => {
 };
 
 /**
+ * change the time to a format that is readable by the user
+ * @param {*} time the time to convert
+ */
+export const convertTimeToDisplay = (time) => {
+  if (time !== null && time !== undefined) {
+    const newTime = time.split(':');
+    let hrs = newTime[0];
+    const mins = newTime[1];
+    const secs = newTime[2];
+    let format = 'am';
+    if (hrs >= 12) {
+      format = 'pm';
+      if (hrs > 12) {
+        hrs -= 12;
+      }
+    }
+    return `${hrs}:${mins}:${secs} ${format}`;
+  }
+  return time;
+};
+/**
  * all time records will be formeatted to hh:mm using the 24 hour format
  * @param {*} timeObj the time to format
  */
@@ -119,6 +140,7 @@ export const getNameFromFileName = (fileName) => {
   const newName = fileName.split('.')[0].toUpperCase();
   return newName.replace(new RegExp('[-_]', 'g'), ' ');
 };
+
 /**
  * Use this function to upload a single file to s3
  * @param {*} file the file to upload

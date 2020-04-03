@@ -3,9 +3,8 @@ import { PropTypes } from 'prop-types';
 import './timeline-item.scss';
 import format from 'date-fns/format';
 
-const TimelineItem = ({ label, dateValue }) => {
+const TimelineItem = ({ label, dateValue, timeValue }) => {
   const getDate = () => format(new Date(dateValue), 'EEEE, io MMMM, yyyy');
-  const getTime = () => format(15, 'H aaaa');
 
   return (
 	<div className="timeline-wrapper m-t-20">
@@ -16,7 +15,7 @@ const TimelineItem = ({ label, dateValue }) => {
 			{getDate()}
       @
 			{' '}
-			{getTime()}
+			{timeValue}
 		</div>
 	</div>
   );
@@ -25,7 +24,7 @@ const TimelineItem = ({ label, dateValue }) => {
 TimelineItem.propTypes = {
   label: PropTypes.string.isRequired,
   dateValue: PropTypes.string.isRequired,
-  // timeValue: PropTypes.string.isRequired,
+  timeValue: PropTypes.string.isRequired,
 };
 
 export default TimelineItem;

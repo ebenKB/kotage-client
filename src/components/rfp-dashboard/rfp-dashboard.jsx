@@ -24,6 +24,12 @@ const RfpDashboard = ({ match, getProposal, proposal }) => {
   useEffect(() => {
     getProposal(id);
   }, [id]);
+
+  const handleSearch = (val) => {
+    // handle supplier search here
+    console.log(val);
+  };
+
   return (
 	<MainContent
 		help={Help}
@@ -115,6 +121,7 @@ const RfpDashboard = ({ match, getProposal, proposal }) => {
 								<Divider type="faint" title="" classes="m-b-4" />
 								<KtTransparentInput
 									classes="fluid kt-transparent-input no-bg"
+									handleSearch={(value) => handleSearch(value)}
 								/>
 								<Divider type="faint" title="" classes="m-t-4" />
 							</div>

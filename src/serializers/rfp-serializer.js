@@ -1,4 +1,7 @@
-import { mergeDateAndTime, getDateOnly, getTimeOnly } from '../utils/app/index';
+import
+{
+  mergeDateAndTime, getDateOnly, getTimeOnly, convertTimeToDisplay,
+} from '../utils/app/index';
 
 /**
  * format incoming data
@@ -12,9 +15,9 @@ export const deserializeProposal = (proposal) => {
     bid_deadline_date: getDateOnly(proposal.bid_deadline),
     rsvp_deadline_date: getDateOnly(proposal.rsvp_deadline),
     question_deadline_date: getDateOnly(proposal.question_deadline),
-    bid_deadline_time: getTimeOnly(proposal.bid_deadline),
-    rsvp_deadline_time: getTimeOnly(proposal.rsvp_deadline),
-    question_deadline_time: getTimeOnly(proposal.question_deadline),
+    bid_deadline_time: convertTimeToDisplay(getTimeOnly(proposal.bid_deadline)),
+    rsvp_deadline_time: convertTimeToDisplay(getTimeOnly(proposal.rsvp_deadline)),
+    question_deadline_time: convertTimeToDisplay(getTimeOnly(proposal.question_deadline)),
     published_at: proposal.published_at,
     currency: proposal.currency,
     files: (proposal.proposal_attachments && proposal.proposal_attachments.map((req) => ({

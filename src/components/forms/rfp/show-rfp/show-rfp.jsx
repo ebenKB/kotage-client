@@ -69,14 +69,17 @@ const ShowRfp = ({ match, getProposal, proposal }) => {
 								<TimelineItem
 									label="Bid Deadline:"
 									dateValue="02/20/2020"
+									timeValue={proposal.bid_deadline_time}
 								/>
 								<TimelineItem
 									label="RSVP Deadline:"
 									dateValue="02/20/2020"
+									timeValue={proposal.rsvp_deadline_time}
 								/>
 								<TimelineItem
 									label="Question Deadline:"
 									dateValue="02/20/2020"
+									timeValue={proposal.question_deadline_time}
 								/>
 							</div>
 						</div>
