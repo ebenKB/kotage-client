@@ -2,7 +2,9 @@
 /* eslint-disable camelcase */
 /* eslint-disable import/prefer-default-export */
 import {
-  CREATE_PROPOSAL, SET_RFP_LOADING, SET_RFP_DONE_LOADING, GET_RFP, GET_PROPOSAL_BY_ID,
+  CREATE_PROPOSAL, SET_RFP_LOADING,
+  SET_RFP_DONE_LOADING, GET_RFP,
+  GET_PROPOSAL_BY_ID, CREATE_MESSAGE,
 } from '../types/rfpTypes';
 import Axios from '../../utils/axios/axios';
 import { getToken } from '../../utils/app/index';
@@ -21,6 +23,7 @@ Promise((resolve, reject) => {
    * proposalimport { setNotification } from './appActions';
 import { deserializeProposal } from '../../serializers/rfp-serializer';
 import { deserializeProposal } from '../../serializers/rfp-serializer';
+import { CREATE_MESSAGE } from '../types/rfpTypes';
 
    */
   // const newProposal = {
@@ -115,11 +118,23 @@ export const getCurrentProposal = (id) => async (dispatch) => {
   // dispatch(findProposal(id));
 };
 
-
 export const getRfpInbox = () => async (dispatch) => {
   dispatch({ type: SET_RFP_LOADING });
 
   setTimeout(() => { dispatch({ type: SET_RFP_DONE_LOADING }); }, 9000);
+};
+
+export const createRfpMessage = (message) => async (dispatch) => {
+  dispatch({ type: SET_RFP_LOADING });
+  console.log('This is the message we want to create', message);
+  setTimeout(() => {
+    console.log('we are creating the message');
+    dispatch({
+      type: CREATE_MESSAGE,
+      payload: message,
+    });
+    dispatch({ type: SET_RFP_DONE_LOADING });
+  }, 9000);
 };
 
 export const setLoading = () => async (dispatch) => dispatch({

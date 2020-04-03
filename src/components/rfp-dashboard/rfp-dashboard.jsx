@@ -18,7 +18,7 @@ import KtTransparentInput from '../form-fields/kt-transparent-search-input/kt-tr
 import FormGroup from '../form-fields/form-group/form-group';
 import SupplierDetailsCaptionGroup from '../snippets/supplier-details-caption-group/supplier-details-caption-group';
 
-const ShowRfp = ({ match, getProposal, proposal }) => {
+const RfpDashboard = ({ match, getProposal, proposal }) => {
   const { params } = match;
   const { id } = params;
   useEffect(() => {
@@ -155,10 +155,14 @@ const ShowRfp = ({ match, getProposal, proposal }) => {
   );
 };
 
-ShowRfp.propTypes = {
+RfpDashboard.propTypes = {
   match: PropTypes.object.isRequired,
   getProposal: PropTypes.func.isRequired,
-  proposal: PropTypes.object.isRequired,
+  proposal: PropTypes.object,
+};
+
+RfpDashboard.defaultProps = {
+  proposal: [],
 };
 
 const mapDispatchToProps = {
@@ -169,4 +173,4 @@ const mapStateToProps = (state) => ({
   proposal: state.rfp.currentProposal,
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(ShowRfp));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(RfpDashboard));

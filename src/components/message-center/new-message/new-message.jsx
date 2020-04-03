@@ -1,5 +1,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState } from 'react';
+import { PropTypes } from 'prop-types';
+import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { Button, Input } from 'semantic-ui-react';
 import MainContent from '../../kt-main-content/mainContent';
@@ -7,8 +9,9 @@ import KtTextArea from '../../form-fields/textarea/textarea';
 import KtWrapper from '../../kt-wrapper/kt-wrapper';
 import Help from '../../../utils/requisitions/new/help';
 import { ReactComponent as Attachment } from '../../../svg/attach.svg';
+import { createRfpMessage } from '../../../redux/actions/rfpActions';
 
-const NewMessage = () => {
+const NewMessage = ({ createNewMessage, isLoading }) => {
   const history = useHistory();
   const [files, setFiles] = useState();
   const [message, setMessage] = useState('');
@@ -25,6 +28,10 @@ const NewMessage = () => {
 
   const handleTextChange = (e) => {
     setMessage(e);
+  };
+
+  const handleSubmit = () => {
+    createNewMessage(message);
   };
 
   return (
@@ -77,7 +84,8 @@ const NewMessage = () => {
 				<Button
 					content="Send Message"
 					color="green"
-					onClick={console.log('We want to send the message')}
+					onClick={handleSubmit}
+					loading={isLoading}
 				/>
 			</div>
 		</KtWrapper>
@@ -85,4 +93,17 @@ const NewMessage = () => {
   );
 };
 
-export default NewMessage;
+const mapDispatchToProps = {
+  createNewMessage: createRfpMessage,
+};
+
+const mapStateToProps = (state) => ({
+  isLoading: state.rfp.loading,
+});
+
+NewMessage.propTypes = {
+  createNewMessage: PropTypes.func.isRequired,
+  isLoading: PropTypes.bool.isRequired,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(NewMessage);

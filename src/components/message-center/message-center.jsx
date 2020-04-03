@@ -126,7 +126,7 @@ const MessageCenter = ({ isLoading, getInbox }) => {
 						<BackArrow className="medium logo auto-height" />
 					</Button>
 					<Divider type="faint" />
-					<div className="m-t-40 message-preview__body">
+					<div className="m-t-20 message-preview__body">
 						{selectedMessage.message}
 					</div>
 				</div>

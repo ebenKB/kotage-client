@@ -7,3 +7,5 @@ export const FIND_RFP = 'FIND_RFP';
 export const GET_PROPOSAL_BY_ID = 'GET_PROPOSAL_BY_ID';
 export const GET_RFP_INBOX = 'GET_RFP_INBOX';
 export const GET_RFP_OUTBOX = 'GET_RFP_OUTBOX';
+export const CREATE_MESSAGE = 'CREATE_MESSAGE';
+export const DELETE_MESSAGE = 'DELETE_MESSAGE';

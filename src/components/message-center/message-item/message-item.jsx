@@ -7,16 +7,14 @@ import { ReactComponent as MenuIcon } from '../../../svg/menu.svg';
 
 const MessageItem = ({ message, handleAction }) => (
 	<Button className="message-item__wrapper fluid text-left kt-transparent" onClick={() => handleAction(message)}>
-		<div className="message-item m-t-20">
+		<div className="message-item m-t-10">
 			<div>
-				<span className="m-r-10">
-					<MenuIcon className="very small logo" />
-				</span>
-				<span>{message.message}</span>
+				<MenuIcon className="very small logo" />
 			</div>
+			<p>{message.message}</p>
 			<div className="text-right">{message.date}</div>
 		</div>
-		<Divider type="faint" classes="p-b-8" />
+		<Divider type="faint" />
 	</Button>
 );
 

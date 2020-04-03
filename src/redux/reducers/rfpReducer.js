@@ -1,5 +1,6 @@
 import {
-  CREATE_PROPOSAL, SET_RFP_LOADING, SET_RFP_DONE_LOADING, GET_RFP, GET_PROPOSAL_BY_ID,
+  CREATE_PROPOSAL, SET_RFP_LOADING, SET_RFP_DONE_LOADING,
+  GET_RFP, GET_PROPOSAL_BY_ID, CREATE_MESSAGE,
 } from '../types/rfpTypes';
 
 const initialState = {
@@ -52,6 +53,20 @@ export default (state = initialState, action) => {
       return {
         ...state,
         currentProposal: proposal,
+      };
+    }
+
+    case CREATE_MESSAGE: {
+      const outbox = state.rfpOutbox;
+      let rfpMessages = null;
+      if (outbox !== null) {
+        rfpMessages = [...outbox, action.payload];
+      } else {
+        rfpMessages = [action.payload];
+      }
+      return {
+        ...state,
+        rfpOutbox: rfpMessages,
       };
     }
 

@@ -119,12 +119,17 @@ export const getNameFromFileName = (fileName) => {
   const newName = fileName.split('.')[0].toUpperCase();
   return newName.replace(new RegExp('[-_]', 'g'), ' ');
 };
-
-const uploadToS3 = (file, tenant_uid, rfp_id) => new Promise((resolve, reject) => {
+/**
+ * Use this function to upload a single file to s3
+ * @param {*} file the file to upload
+ * @param {*} tenant_uid the uid of the current tenant
+ * @param {*} item_id a unique id of the item that the file belongs to
+ */
+const uploadToS3 = (file, tenant_uid, item_id) => new Promise((resolve, reject) => {
   import('react-s3').then((reactS3) => {
     const config = {
       bucketName: 'ebenkb',
-      dirName: `kotage/${tenant_uid}/rfx/${rfp_id}`,
+      dirName: `kotage/${tenant_uid}/rfx/${item_id}`,
       region: 'us-east-2',
       accessKeyId: process.env.REACT_APP_awsAccessKeyId,
       secretAccessKey: process.env.REACT_APP_awsSecretAccessKey,
@@ -142,8 +147,8 @@ const uploadToS3 = (file, tenant_uid, rfp_id) => new Promise((resolve, reject) =
 });
 
 /**
- *
- * @param {*} file the file to be uploaded to the server
+ * use this function to upload multiple files to s3
+ * @param {*} files the file to be uploaded to the server
  * returns a reference to the file on the server
  */
 export const uploadFile = (files, tenant_uid) => new Promise(async (resolve, reject) => {
@@ -160,6 +165,10 @@ export const uploadFile = (files, tenant_uid) => new Promise(async (resolve, rej
   }
 });
 
+
+/**
+ * get the token of the currently logged in user
+ */
 export const getToken = () => {
   const ktToken = localStorage.getItem('kotage-auth');
   if (ktToken != null) {

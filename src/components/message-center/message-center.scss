@@ -5,8 +5,8 @@
 .message-preview {
   position: absolute;
   background: var(--kt-white);
-  min-height: 555px;
-  top: 20px;
+  min-height: 100%;
+  top: 0;
   left: 0;
   padding: 40px;
   width: 100%;
@@ -34,6 +34,9 @@
 
 .message-item {
   padding: 0 15px;
+  display: grid;
+  grid-template-columns: 20px calc(80% - 40px) 20%;
+  column-gap: 10px;
 }
 
 .ui.button.message-item__wrapper:hover {
