@@ -43,6 +43,7 @@ export const deserializeProposal = (proposal) => {
     documents: (proposal.proposal_response_sheet
       && proposal.proposal_response_sheet.proposal_document_requests
       && proposal.proposal_response_sheet.proposal_document_requests.map((doc) => ({
+        id: doc.id,
         name: doc.document_name,
         description: doc.description,
       }))),

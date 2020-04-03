@@ -45,13 +45,14 @@ const StakeholderItem = ({
 StakeholderItem.propTypes = {
   stakeholder: PropTypes.object.isRequired,
   currentUserId: PropTypes.number,
-  removeStakeholder: PropTypes.func.isRequired,
+  removeStakeholder: PropTypes.func,
   mode: PropTypes.string,
 };
 
 StakeholderItem.defaultProps = {
   currentUserId: null,
   mode: 'write',
+  removeStakeholder: null,
 };
 
 const mapStateToProps = (state) => ({

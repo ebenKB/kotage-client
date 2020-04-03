@@ -17,6 +17,7 @@ const DocumentListGroup = ({ documents }) => (
 			<Divider type="faint" title="" classes="m-t-10 m-b-10" />
 			{documents && documents.map((doc) => (
 				<DocumentListItem
+					key={doc.id}
 					document={doc}
 				/>
 			))}
@@ -25,7 +26,7 @@ const DocumentListGroup = ({ documents }) => (
 );
 
 DocumentListGroup.propTypes = {
-  documents: PropTypes.object.isRequired,
+  documents: PropTypes.array.isRequired,
 };
 
 export default DocumentListGroup;

@@ -72,12 +72,13 @@ const SupplierListItem = ({
 SupplierListItem.propTypes = {
   isInline: PropTypes.bool,
   supplier: PropTypes.object.isRequired,
-  handleChange: PropTypes.func.isRequired,
+  handleChange: PropTypes.func,
   isSelectAll: PropTypes.bool,
   deleteSupplier: PropTypes.func.isRequired,
 };
 
 SupplierListItem.default = {
   isSelected: false,
+  handleChange: null,
 };
 export default SupplierListItem;

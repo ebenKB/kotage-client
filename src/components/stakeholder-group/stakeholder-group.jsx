@@ -38,6 +38,7 @@ const StakeholderGroup = ({
 				))}
 				{mode === 'readonly' && stakeholders && stakeholders.map((stakeholder) => (
 					<StakeholderItemFetch
+						key={stakeholder.id}
 						mode={mode}
 						stakeholderObj={stakeholder}
 					/>
@@ -56,9 +57,9 @@ const StakeholderGroup = ({
 
 StakeholderGroup.propTypes = {
   stakeholders: PropTypes.array.isRequired,
-  addStakeholder: PropTypes.func.isRequired,
+  addStakeholder: PropTypes.func,
   shouldFetchData: PropTypes.bool.isRequired,
-  removeStakeholder: PropTypes.func.isRequired,
+  removeStakeholder: PropTypes.func,
   classes: PropTypes.string,
   mode: PropTypes.string,
 };
@@ -66,6 +67,8 @@ StakeholderGroup.propTypes = {
 StakeholderGroup.defaultProps = {
   mode: 'write',
   classes: '',
+  addStakeholder: null,
+  removeStakeholder: null,
 };
 
 export default StakeholderGroup;
