@@ -93,6 +93,7 @@ Promise(async (resolve, reject) => {
     const { user } = getState();
     if (user.currentUser) {
       const { data } = await Axios.post(`/v1/${user.currentUser.tenant_id}/users/login`, { email, password });
+      console.log('This is the data from axios', data);
       dispatch(doneLoading());
       const { access_token } = data;
       if (access_token && access_token.length > 0) {
@@ -102,8 +103,8 @@ Promise(async (resolve, reject) => {
             token: access_token[0].token,
             user: access_token[0].user_id,
           }));
+        resolve(data);
       }
-      resolve(data);
     } else {
       // There was no tenant found for the user so the user cannot login
       reject(new Error('Tenant does exist for this user'));

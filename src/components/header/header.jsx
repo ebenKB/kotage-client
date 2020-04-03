@@ -15,7 +15,7 @@ const header = ({ currentUser }) => (
 			<Search />
 			<div>
 				<UserProfile
-					title={currentUser && `${currentUser.firstname} ${currentUser.lastname}`}
+					title={(currentUser && currentUser.firstname && currentUser.lastname) && `${currentUser.firstname} ${currentUser.lastname}`}
 				/>
 			</div>
 		</div>

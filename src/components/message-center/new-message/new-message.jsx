@@ -82,7 +82,7 @@ const NewMessage = ({ createNewMessage, isLoading }) => {
 					onClick={goBack}
 				/>
 				<Button
-					content="Send Message"
+					content="Send to all suppliers"
 					color="green"
 					onClick={handleSubmit}
 					loading={isLoading}

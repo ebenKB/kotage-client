@@ -14,6 +14,7 @@ import CreateUser from './components/forms/user/create-user/create-user';
 import ResetPassword from './components/forms/user/reset-password/reset-password';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 import KtLoader from './components/loader/loader';
+import MainContent from './components/kt-main-content/mainContent';
 
 const Home = lazy(() => import('./pages/home'));
 const NewRequisition = lazy(() => import('./components/forms/requisitions/new/new-requisitions'));
@@ -147,7 +148,9 @@ function App() {
 			</Route>
 			<Suspense fallback={(
 				<Layout>
-					<KtLoader />
+					<MainContent>
+						<KtLoader />
+					</MainContent>
 				</Layout>
 			)}
 			>

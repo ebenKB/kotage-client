@@ -98,11 +98,11 @@ const SignIn = ({
         checkUserTenant(user.email);
       }
       const data = await userLogin(user.email, user.password);
+      console.log('This is the data after login', data);
       if (data.error) {
         alert(data.data.error);
       } else {
         getCurrentTenant(currentUser.tenant_id);
-        // clear any errors or notifications that were caught before successful login
         clearAppNotifications().then(() => history.push('/'));
       }
     } catch (error) {
