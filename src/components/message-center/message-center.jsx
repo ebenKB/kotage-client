@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import shortid from 'shortid';
 import { PropTypes } from 'prop-types';
 import { connect } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import {
   Button, Dropdown, Menu,
 } from 'semantic-ui-react';
@@ -14,6 +14,7 @@ import './message-center.scss';
 import Divider from '../kt-divider/divider';
 import { ReactComponent as MessageIcon } from '../../svg/edit.svg';
 import { ReactComponent as BackArrow } from '../../svg/return.svg';
+import { ReactComponent as Reply } from '../../svg/reload.svg';
 import MessageItem from './message-item/message-item';
 import KtLoader from '../loader/loader';
 import { getRfpInbox } from '../../redux/actions/rfpActions';
@@ -122,9 +123,17 @@ const MessageCenter = ({ isLoading, getInbox }) => {
 			</div>
 			{selectedMessage !== null && (
 				<div className="message-preview">
-					<Button className="kt-transparent" onClick={() => setSelectedMessage(() => null)}>
-						<BackArrow className="medium logo auto-height" />
-					</Button>
+					<div className="flex-center">
+						<Button className="kt-transparent" onClick={() => setSelectedMessage(() => null)}>
+							<BackArrow className="m-r-20 medium logo auto-height" />
+						</Button>
+						<Link to="/">
+							<Button className="flex-center">
+								<Reply className="m-r-5 medium logo auto-height" />
+								<span>reply</span>
+							</Button>
+						</Link>
+					</div>
 					<Divider type="faint" />
 					<div className="m-t-20 message-preview__body">
 						{selectedMessage.message}

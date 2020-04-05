@@ -9,7 +9,7 @@ import shortid from 'shortid';
 import { createProposal } from '../../../redux/actions/rfpActions';
 import RfpEditor from '../../rfp-editor/rfp-editor';
 import Modal from '../../modal/modal';
-import { uploadFile } from '../../../utils/app/index';
+import { uploadFiles } from '../../../utils/app/index';
 
 class RFP extends React.Component {
   constructor(props) {
@@ -83,7 +83,7 @@ class RFP extends React.Component {
         ...state,
         canShowModal: false,
       }));
-      const files = await uploadFile(newProposal.files, tenantUid);
+      const files = await uploadFiles(newProposal.files, tenantUid, 'rfp');
       const proposal = newProposal;
       proposal.files = files;
       this.setState((state) => ({

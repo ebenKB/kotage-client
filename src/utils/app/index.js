@@ -146,26 +146,31 @@ export const getNameFromFileName = (fileName) => {
  * @param {*} file the file to upload
  * @param {*} tenant_uid the uid of the current tenant
  * @param {*} item_id a unique id of the item that the file belongs to
+ * @param {*} folderName the name of the folder where the files should be saved
+ * example folder names include : rfp = request for proposal, rfi = request for information,
+ * rfq = request for quote, messages,
  */
-const uploadToS3 = (file, tenant_uid, item_id) => new Promise((resolve, reject) => {
-  import('react-s3').then((reactS3) => {
-    const config = {
-      bucketName: 'ebenkb',
-      dirName: `kotage/${tenant_uid}/rfx/${item_id}`,
-      region: 'us-east-2',
-      accessKeyId: process.env.REACT_APP_awsAccessKeyId,
-      secretAccessKey: process.env.REACT_APP_awsSecretAccessKey,
-      meta: {
-        owner: tenant_uid,
-      },
-    };
-    try {
-      reactS3.uploadFile(file, config)
-        .then((data) => resolve(data));
-    } catch (error) {
-      reject(error);
-    }
-  });
+const uploadToS3 = (file, tenant_uid, item_id, folderName) => new Promise((resolve, reject) => {
+  if (folderName !== null && folderName !== '' && folderName !== undefined) {
+    import('react-s3').then((reactS3) => {
+      const config = {
+        bucketName: process.env.REACT_APP_bucketName,
+        dirName: `kotage/${tenant_uid}/${folderName}/${item_id}`,
+        region: 'us-east-2',
+        accessKeyId: process.env.REACT_APP_awsAccessKeyId,
+        secretAccessKey: process.env.REACT_APP_awsSecretAccessKey,
+        meta: {
+          owner: tenant_uid,
+        },
+      };
+      try {
+        reactS3.uploadFile(file, config)
+          .then((data) => resolve(data));
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
 });
 
 /**
@@ -173,12 +178,13 @@ const uploadToS3 = (file, tenant_uid, item_id) => new Promise((resolve, reject) 
  * @param {*} files the file to be uploaded to the server
  * returns a reference to the file on the server
  */
-export const uploadFile = (files, tenant_uid) => new Promise(async (resolve, reject) => {
+export const uploadFiles = (files, tenant_uid, folderName) => new
+Promise(async (resolve, reject) => {
   try {
     let response = [];
     const rfp_id = shortid.generate();
     for (const file of files) {
-      const data = await uploadToS3(file, tenant_uid, rfp_id);
+      const data = await uploadToS3(file, tenant_uid, rfp_id, folderName);
       response = [...response, data];
     }
     resolve(response);
@@ -187,6 +193,24 @@ export const uploadFile = (files, tenant_uid) => new Promise(async (resolve, rej
   }
 });
 
+/**
+ * delete file from s3
+ * @param {*} url the url of the file to delete
+ */
+export const deleteFileFroms3 = (url) => {
+  import('react-s3').then((reacts3) => {
+    const config = {
+      bucketName: process.env.REACT_APP_bucketName,
+      region: 'us-east-2',
+      accessKeyId: process.env.REACT_APP_awsAccessKeyId,
+      secretAccessKey: process.env.REACT_APP_awsSecretAccessKey,
+    };
+    reacts3.deleteFile(url, config)
+      .then((data) => {
+        console.log('The file file been deleted', data);
+      });
+  });
+};
 
 /**
  * get the token of the currently logged in user
