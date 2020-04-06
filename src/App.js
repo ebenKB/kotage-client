@@ -1,6 +1,7 @@
 /* eslint-disable react/jsx-filename-extension */
 /* eslint-disable react/no-array-index-key */
 import React, { lazy, Suspense } from 'react';
+import { Provider } from 'react-redux';
 import './App.css';
 import { Switch, Route } from 'react-router-dom';
 import Layout from './components/Layout/layout';
