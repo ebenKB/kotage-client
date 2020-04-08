@@ -16,7 +16,10 @@ const MessageItem = ({ message }) => {
 				<MenuIcon className="very small logo" />
 			</div>
 			<p align="justify">{trimContent(message.message)}</p>
-			<div className="text-right">{message.date}</div>
+			<div className="text-right">
+        02/22/2020
+				{message.date}
+			</div>
 		</div>
 		<Divider type="faint" />
 	</Link>
