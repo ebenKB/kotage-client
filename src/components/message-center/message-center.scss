@@ -21,8 +21,11 @@
   svg {
     fill: var(--kt-light);
   }
-}
 
+  .message-preview__body p {
+    line-height: 1.7;
+  }
+}
 
 .message-center__heading {
   padding: 15px;
@@ -43,10 +46,6 @@
 }
 
 a .message-item:hover {
-  // box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.1);
-  // border-left: 2px solid var(--kt-light);
-  // height: 90%;
-  // font-weight: 900;
   color: var(--kt-black);
 }
 
@@ -64,6 +63,7 @@ a .message-item:hover.message-item {
   display: inline-block;
   margin: 0;
 }
+
 .message-center__body {
   min-height: 200px;
 }
