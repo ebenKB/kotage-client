@@ -9,8 +9,10 @@ import React, {
 } from 'react';
 import { Button } from 'semantic-ui-react';
 import Dropzone from 'react-dropzone';
+import { getNameFromFileName } from '../../utils/app/index';
 import './dropzone.scss';
 import DropzoneItem from './dropzone-item/dropzone-item';
+
 
 const dropzoneRef = createRef();
 function KtDropzone({ onFilesChange }) {
@@ -42,7 +44,11 @@ function KtDropzone({ onFilesChange }) {
     if (newFiles.length - filteredFiles.length > 0) {
       setError(`${(newFiles.length - filteredFiles.length)} duplicate file(s) rejected`);
     }
-    setFiles((oldFiles) => ([...oldFiles, ...filteredFiles]));
+    const formatedFileObject = filteredFiles.map((f) => ({
+      title: getNameFromFileName(f.name),
+      data: f,
+    }));
+    setFiles((oldFiles) => ([...oldFiles, ...formatedFileObject]));
   };
 
   // open file explorer to select files

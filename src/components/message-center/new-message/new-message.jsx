@@ -3,18 +3,25 @@ import React, { useState } from 'react';
 import { PropTypes } from 'prop-types';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { Button, Input } from 'semantic-ui-react';
+import { Button } from 'semantic-ui-react';
 import MainContent from '../../kt-main-content/mainContent';
 import KtTextArea from '../../form-fields/textarea/textarea';
 import KtWrapper from '../../kt-wrapper/kt-wrapper';
 import Help from '../../../utils/requisitions/new/help';
-import { ReactComponent as Attachment } from '../../../svg/attach.svg';
+// import { ReactComponent as Attachment } from '../../../svg/attach.svg';
 import { createRfpMessage } from '../../../redux/actions/rfpActions';
+import Dropzone from '../../dropzone/dropzone';
+import Divider from '../../kt-divider/divider';
 
-const NewMessage = ({ createNewMessage, isLoading }) => {
+const NewMessage = ({ createNewMessage, isLoading, currentProposalId }) => {
   const history = useHistory();
-  const [files, setFiles] = useState();
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState(
+    {
+      rfp_id: currentProposalId,
+      message: 'some message is here',
+      files: [],
+    },
+  );
 
   const goBack = () => {
     if (history) {
@@ -22,16 +29,28 @@ const NewMessage = ({ createNewMessage, isLoading }) => {
     }
   };
 
-  const handleFileChange = (e) => {
-    setFiles(e.target.files);
-  };
+  // const handleFileChange = (e) => {
+  //   setFiles(e.target.files);
+  //   console.log(files);
+  // };
 
   const handleTextChange = (e) => {
-    setMessage(e);
+    setMessage((state) => ({
+      ...state,
+      message: e,
+    }));
+  };
+
+  const setFiles = (files) => {
+    setMessage((state) => ({
+      ...state,
+      files,
+    }));
   };
 
   const handleSubmit = () => {
-    createNewMessage(message);
+    createNewMessage(message)
+      .then(() => history.goBack());
   };
 
   return (
@@ -47,9 +66,9 @@ const NewMessage = ({ createNewMessage, isLoading }) => {
 				rows={10}
 				classes="message-box fluid kt-bg-shadow"
 				onChange={handleTextChange}
-				value={message}
+				value={message.message}
 			/>
-			<div className="attachment-wrapper m-t-10">
+			{/* <div className="attachment-wrapper m-t-10">
 				<div className="flex-center">
 					<div className="attachment-label">
 						<Button className="kt-transparent">
@@ -74,7 +93,11 @@ const NewMessage = ({ createNewMessage, isLoading }) => {
 						)}
 					</div>
 				</div>
-			</div>
+			</div> */}
+			<Divider type="faint" title="Attachment" classes="m-b-20 m-t-10" />
+			<Dropzone
+				onFilesChange={(files) => setFiles(files)}
+			/>
 			<div className="text-right m-t-20">
 				<Button
 					default
@@ -99,11 +122,13 @@ const mapDispatchToProps = {
 
 const mapStateToProps = (state) => ({
   isLoading: state.rfp.loading,
+  currentProposalId: state.rfp.currentProposal.id,
 });
 
 NewMessage.propTypes = {
   createNewMessage: PropTypes.func.isRequired,
   isLoading: PropTypes.bool.isRequired,
+  currentProposalId: PropTypes.string.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(NewMessage);

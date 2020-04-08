@@ -1,6 +1,6 @@
 import {
   CREATE_PROPOSAL, SET_RFP_LOADING, SET_RFP_DONE_LOADING,
-  GET_RFP, GET_PROPOSAL_BY_ID, CREATE_MESSAGE,
+  GET_RFP, GET_PROPOSAL_BY_ID, CREATE_MESSAGE, GET_RFP_INBOX, GET_RFP_OUTBOX, FIND_RFP_MESSAGE,
 } from '../types/rfpTypes';
 
 const initialState = {
@@ -9,6 +9,10 @@ const initialState = {
   currentProposal: null,
   rfpInbox: null,
   rfpOutbox: null,
+  currentOutbox: null,
+  currentInbox: null,
+  rfpOutboxMeta: null,
+  rfpInboxMeta: null,
   meta: null,
 };
 
@@ -19,6 +23,7 @@ export default (state = initialState, action) => {
         return {
           ...state,
           proposals: [state.proposals, action.payload],
+          loading: false,
         };
       }
       return { ...state };
@@ -44,6 +49,7 @@ export default (state = initialState, action) => {
         ...state,
         proposals: [...state.proposals, ...proposals],
         meta: action.payload.meta,
+        loading: false,
       };
     }
 
@@ -53,6 +59,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         currentProposal: proposal,
+        loading: false,
       };
     }
 
@@ -67,13 +74,34 @@ export default (state = initialState, action) => {
       return {
         ...state,
         rfpOutbox: rfpMessages,
+        loading: false,
       };
     }
 
-    default: {
+    case GET_RFP_INBOX: {
       return {
         ...state,
+        rfpInbox: null,
+        loading: false,
       };
     }
+
+    case GET_RFP_OUTBOX: {
+      return {
+        ...state,
+        rfpOutbox: action.payload.data,
+        rfpOutboxMeta: action.payload.meta,
+        loading: false,
+      };
+    }
+
+    case FIND_RFP_MESSAGE: {
+      return {
+        ...state,
+        currentOutbox: action.payload,
+      };
+    }
+
+    default: return state;
   }
 };

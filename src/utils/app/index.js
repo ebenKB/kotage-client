@@ -185,7 +185,7 @@ Promise(async (resolve, reject) => {
     const rfp_id = shortid.generate();
     for (const file of files) {
       const data = await uploadToS3(file, tenant_uid, rfp_id, folderName);
-      response = [...response, data];
+      response = [...response, { title: file.title, url: data.location }];
     }
     resolve(response);
   } catch (error) {
@@ -222,4 +222,35 @@ export const getToken = () => {
     return token;
   }
   return undefined;
+};
+
+// export const trimContent = (content) => {
+//   const data = content.replace(' ', '~%~').split('');
+//   let newData = '';
+//   if (data.length >= 100) {
+//     let total = data.length;
+//     if (total > 100) {
+//       total = 100;
+//     }
+//     let i = 0;
+//     while (i < total) {
+//       const text = data[i];
+//       if (text !== undefined && text !== null) {
+//         newData = `${newData}${data[i]}`;
+//       }
+//       i += 1;
+//     }
+//     newData = `${newData.replace('~%~', ' ')}...`;
+//   } else {
+//     newData = content;
+//   }
+
+//   return newData;
+// };
+
+export const trimContent = (content) => {
+  if (content.length < 100) {
+    return content;
+  }
+  return `${content.substring(0, 100)}...`;
 };

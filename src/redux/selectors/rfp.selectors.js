@@ -13,3 +13,7 @@ export const hasRFPLoaded = createSelector(
   [selectAllProposals],
   (proposals) => proposals.length > 0,
 );
+
+export const getAllRfpInbox = createSelector([AllRFPs], (rfp) => rfp.rfpInbox);
+
+export const getAllRfpOutbox = createSelector([AllRFPs], (rfp) => rfp.rfpOutbox);

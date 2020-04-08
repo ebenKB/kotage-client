@@ -27,11 +27,10 @@ export default (state = initialState, action) => {
         requisitions: [...state, action.payload],
         loading: false,
       };
+
     case SET_FILES:
-      return {
-        ...state,
-      };
-    default:
       return state;
+
+    default: return state;
   }
 };

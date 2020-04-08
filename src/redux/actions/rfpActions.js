@@ -4,12 +4,14 @@
 import {
   CREATE_PROPOSAL, SET_RFP_LOADING,
   SET_RFP_DONE_LOADING, GET_RFP,
-  GET_PROPOSAL_BY_ID, CREATE_MESSAGE,
+  GET_PROPOSAL_BY_ID, CREATE_MESSAGE, GET_RFP_OUTBOX, GET_RFP_INBOX, FIND_RFP_MESSAGE,
 } from '../types/rfpTypes';
 import Axios from '../../utils/axios/axios';
 import { getToken } from '../../utils/app/index';
 import { setNotification } from './appActions';
-import { serializeProposal, deserializeProposal } from '../../serializers/rfp-serializer';
+import {
+  serializeProposal, deserializeProposal, serializeRfpMessage, deserializeRfpMessage,
+} from '../../serializers/rfp-serializer';
 
 // set default auth token
 Axios.defaults.headers.common['Authorization'] = `Bearer ${getToken()}`;
@@ -24,6 +26,8 @@ Promise((resolve, reject) => {
 import { deserializeProposal } from '../../serializers/rfp-serializer';
 import { deserializeProposal } from '../../serializers/rfp-serializer';
 import { CREATE_MESSAGE } from '../types/rfpTypes';
+import { GET_RFP_INBOX } from '../types/rfpTypes';
+import { GET_RFP_INBOX } from '../types/rfpTypes';
 
    */
   // const newProposal = {
@@ -67,7 +71,7 @@ import { CREATE_MESSAGE } from '../types/rfpTypes';
         type: CREATE_PROPOSAL,
         payload: data,
       });
-      dispatch({ type: SET_RFP_DONE_LOADING });
+      // dispatch({ type: SET_RFP_DONE_LOADING });
       dispatch(setNotification({ message: 'New Rfp has been created' }, 'success'));
       resolve(data);
     })
@@ -83,7 +87,6 @@ export const getRequestForProposals = () => async (dispatch, getState) => {
   const { data } = await Axios.get(`/v1/${user.currentUser.tenant_id}/rfp`);
   const { proposal_requests, meta } = data;
   const deserializedProposals = proposal_requests.map((proposal) => deserializeProposal(proposal));
-  console.log(deserializedProposals);
   const { pagination } = meta;
   dispatch({
     type: GET_RFP,
@@ -92,7 +95,7 @@ export const getRequestForProposals = () => async (dispatch, getState) => {
       meta: pagination,
     },
   });
-  dispatch({ type: SET_RFP_DONE_LOADING });
+  // dispatch({ type: SET_RFP_DONE_LOADING });
 };
 
 // export const findProposal = (id) => async (dispatch, getState) => {
@@ -118,25 +121,73 @@ export const getCurrentProposal = (id) => async (dispatch) => {
   // dispatch(findProposal(id));
 };
 
-export const getRfpInbox = () => async (dispatch) => {
-  dispatch({ type: SET_RFP_LOADING });
-
-  setTimeout(() => { dispatch({ type: SET_RFP_DONE_LOADING }); }, 9000);
-};
-
-export const createRfpMessage = (message) => async (dispatch) => {
-  dispatch({ type: SET_RFP_LOADING });
-  console.log('This is the message we want to create', message);
-  setTimeout(() => {
-    console.log('we are creating the message');
+export const getRfpInbox = (rfp_id) => async (dispatch, getState) => {
+  try {
+    dispatch({ type: SET_RFP_LOADING });
+    const { user } = getState();
+    const { data } = await Axios.get(`/v1/${user.currentUser.tenant_id}/rfp/${rfp_id}/messages?path=inbox`);
     dispatch({
-      type: CREATE_MESSAGE,
-      payload: message,
+      type: GET_RFP_INBOX,
+      payload: data,
     });
+  } catch (error) {
     dispatch({ type: SET_RFP_DONE_LOADING });
-  }, 9000);
+  }
 };
+
+
+export const getRfpOutbox = (rfp_id) => async (dispatch, getState) => {
+  try {
+    dispatch({ type: SET_RFP_LOADING });
+    const { user } = getState();
+    const { data } = await Axios.get(`/v1/${user.currentUser.tenant_id}/rfp/${rfp_id}/messages?path=outbox`);
+    const formatedData = data.rfp_messages.map((d) => deserializeRfpMessage(d));
+    dispatch({
+      type: GET_RFP_OUTBOX,
+      payload: {
+        data: formatedData,
+        meta: data.meta.pagination,
+      },
+    });
+  } catch (error) {
+    dispatch({ type: SET_RFP_DONE_LOADING });
+  }
+};
+
+
+export const createRfpMessage = (message) => async (dispatch, getState) => new
+Promise((resolve) => {
+  try {
+    dispatch({ type: SET_RFP_LOADING });
+    const { user } = getState();
+    Axios.post(`/v1/${user.currentUser.tenant_id}/rfp/${message.rfp_id}/messages`, serializeRfpMessage(message))
+      .then((data) => {
+        dispatch({
+          type: CREATE_MESSAGE,
+          payload: data,
+        });
+        resolve(true);
+      });
+  } catch (error) {
+    console.log('error here');
+  }
+});
 
 export const setLoading = () => async (dispatch) => dispatch({
   type: SET_RFP_LOADING,
 });
+
+export const findRfpMessageById = (message_id) => async (dispatch, getState) => {
+  try {
+    const { rfp } = getState();
+    const { rfpOutbox } = rfp;
+    // console.log('This is the entire outbox', rfpOutbox);
+    const message = rfpOutbox.find((m) => parseInt(m.id, 10) === parseInt(message_id, 10));
+    dispatch({
+      type: FIND_RFP_MESSAGE,
+      payload: message,
+    });
+  } catch (error) {
+    console.log('an error occcurred', error);
+  }
+};

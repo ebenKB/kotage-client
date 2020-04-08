@@ -93,10 +93,17 @@ export default (state = initialState, action) => {
       };
     }
     case GET_TENANT_ID: {
-      const currentUser = { tenant_id: action.payload };
+      const { currentUser } = state;
+      let newUser = null;
+      if (currentUser !== null) {
+        newUser = { ...currentUser, tenant_id: action.payload };
+      } else {
+        newUser = { tenant_id: action.payload };
+      }
+
       return {
         ...state,
-        currentUser,
+        currentUser: newUser,
       };
     }
 
@@ -148,8 +155,6 @@ export default (state = initialState, action) => {
     }
 
     default:
-      return {
-        ...state,
-      };
+      return state;
   }
 };
