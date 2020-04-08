@@ -31,7 +31,7 @@ const MessageInbox = ({
 		{!messages && !isLoading && hasFetched && (
 			<div className="text-center">
 				<File className="medium dark logo" />
-				<p>You don&apos;t have any messages from your supplers.</p>
+				<p>You don&apos;t have any message from your supplers.</p>
 			</div>
 		)}
 		{messages && messages.map((m) => (
