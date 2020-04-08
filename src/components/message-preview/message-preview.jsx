@@ -11,6 +11,7 @@ import { ReactComponent as Reply } from '../../svg/reload.svg';
 import { ReactComponent as BackArrow } from '../../svg/return.svg';
 import './message-preview.scss';
 import { findRfpMessageById } from '../../redux/actions/rfpActions';
+import Help from '../../utils/requisitions/new/help';
 
 const MessagePreview = ({ findRfpMessage, message }) => {
   const { id, message_id } = useParams();
@@ -29,6 +30,7 @@ const MessagePreview = ({ findRfpMessage, message }) => {
   return (
 	<MainContent
 		classes="m-t-40"
+		help={Help}
 	>
 		<KtWrapperLite>
 			<div className="message-preview">
