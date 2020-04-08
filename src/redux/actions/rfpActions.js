@@ -122,34 +122,44 @@ export const getCurrentProposal = (id) => async (dispatch) => {
 };
 
 export const getRfpInbox = (rfp_id) => async (dispatch, getState) => {
-  try {
-    dispatch({ type: SET_RFP_LOADING });
-    const { user } = getState();
-    const { data } = await Axios.get(`/v1/${user.currentUser.tenant_id}/rfp/${rfp_id}/messages?path=inbox`);
-    dispatch({
-      type: GET_RFP_INBOX,
-      payload: data,
-    });
-  } catch (error) {
-    dispatch({ type: SET_RFP_DONE_LOADING });
+  if (rfp_id !== null && rfp_id !== undefined) {
+    try {
+      dispatch({ type: SET_RFP_LOADING });
+      const { user } = getState();
+      const { data } = await Axios.get(`/v1/${user.currentUser.tenant_id}/rfp/${rfp_id}/messages?path=inbox`);
+      const formatedData = data.rfp_messages.map((d) => deserializeRfpMessage(d));
+      dispatch({
+        type: GET_RFP_INBOX,
+        payload: {
+          data: formatedData,
+          meta: data.meta.pagination,
+        },
+      });
+    } catch (error) {
+      dispatch({ type: SET_RFP_DONE_LOADING });
+    }
   }
 };
 
 
 export const getRfpOutbox = (rfp_id) => async (dispatch, getState) => {
-  try {
-    dispatch({ type: SET_RFP_LOADING });
-    const { user } = getState();
-    const { data } = await Axios.get(`/v1/${user.currentUser.tenant_id}/rfp/${rfp_id}/messages?path=outbox`);
-    const formatedData = data.rfp_messages.map((d) => deserializeRfpMessage(d));
-    dispatch({
-      type: GET_RFP_OUTBOX,
-      payload: {
-        data: formatedData,
-        meta: data.meta.pagination,
-      },
-    });
-  } catch (error) {
+  if (rfp_id !== null && rfp_id !== undefined) {
+    try {
+      dispatch({ type: SET_RFP_LOADING });
+      const { user } = getState();
+      const { data } = await Axios.get(`/v1/${user.currentUser.tenant_id}/rfp/${rfp_id}/messages?path=outbox`);
+      const formatedData = data.rfp_messages.map((d) => deserializeRfpMessage(d));
+      dispatch({
+        type: GET_RFP_OUTBOX,
+        payload: {
+          data: formatedData,
+          meta: data.meta.pagination,
+        },
+      });
+    } catch (error) {
+      dispatch({ type: SET_RFP_DONE_LOADING });
+    }
+  } else {
     dispatch({ type: SET_RFP_DONE_LOADING });
   }
 };

@@ -224,33 +224,38 @@ export const getToken = () => {
   return undefined;
 };
 
-// export const trimContent = (content) => {
-//   const data = content.replace(' ', '~%~').split('');
-//   let newData = '';
-//   if (data.length >= 100) {
-//     let total = data.length;
-//     if (total > 100) {
-//       total = 100;
-//     }
-//     let i = 0;
-//     while (i < total) {
-//       const text = data[i];
-//       if (text !== undefined && text !== null) {
-//         newData = `${newData}${data[i]}`;
-//       }
-//       i += 1;
-//     }
-//     newData = `${newData.replace('~%~', ' ')}...`;
-//   } else {
-//     newData = content;
-//   }
-
-//   return newData;
-// };
-
-export const trimContent = (content) => {
-  if (content.length < 100) {
-    return content;
+/**
+ *
+ * @param {*} content the content to trim
+ * @param {*} size defaults to 100. the size of the new string
+ */
+export const trimContent = (content, size = 100) => {
+  if (content && content !== undefined) {
+    if (content.length < size) {
+      return content;
+    }
+    return `${content.substring(0, size)}...`;
   }
-  return `${content.substring(0, 100)}...`;
+  return content;
+};
+
+/**
+ * find how many more records a user can view during pagination
+ * @param {*} total the overall total number of items returned by the api
+ * @param {*} itemSize the number of items on each page
+ * @param {*} page the current page number
+ */
+export const getPageRemainder = (total, itemSize, page) => {
+  let rem = 0;
+  if (total > itemSize) {
+    const diff = (total - (page * itemSize));
+    if (diff > 0) {
+      if (diff > itemSize) {
+        rem = diff - itemSize;
+      } else {
+        rem = diff;
+      }
+    }
+  }
+  return rem;
 };

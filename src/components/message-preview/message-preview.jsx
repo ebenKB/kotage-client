@@ -18,7 +18,6 @@ const MessagePreview = ({ findRfpMessage, message }) => {
 
   useEffect(() => {
     if (!message || message.id !== message_id) {
-      console.log('Message id: ', message_id);
       findRfpMessage(message_id);
     }
   });
@@ -37,7 +36,7 @@ const MessagePreview = ({ findRfpMessage, message }) => {
 					<Button className="kt-transparent" onClick={goBack}>
 						<BackArrow className="m-r-20 medium logo auto-height" />
 					</Button>
-					<Link to={`/rfx/proposal/${id}/message/new`}>
+					<Link to={`/rfx/proposal/${id}/message/create/new`}>
 						<div className="flex-center kt-transparent">
 							<Reply className="m-r-5 small logo auto-height" />
 							<span>reply</span>
@@ -71,4 +70,5 @@ const mapDispatchToProps = {
 const mapStateToProps = (state) => ({
   message: state.rfp.currentOutbox,
 });
+
 export default connect(mapStateToProps, mapDispatchToProps)(MessagePreview);

@@ -7,7 +7,6 @@ import { connect } from 'react-redux';
 const ProtectedRoute = ({ children, isAuthenticated, ...rest }) => (
 	<Route
 		{...rest}
-		// eslint-disable-next-line no-self-compare
 		render={({ location }) => ((isAuthenticated) ? (children
 		) : (
 			<Redirect

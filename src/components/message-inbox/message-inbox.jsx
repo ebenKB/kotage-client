@@ -1,19 +1,23 @@
+/* eslint-disable react/jsx-fragments */
 /* eslint-disable react/boolean-prop-naming */
 /* eslint-disable react/forbid-prop-types */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, Fragment } from 'react';
+import { useParams } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
 import MessageItem from '../message-center/message-item/message-item';
 import { getRfpInbox } from '../../redux/actions/rfpActions';
 import KtLoader from '../loader/loader';
+import { ReactComponent as File } from '../../svg/empty.svg';
 
 const MessageInbox = ({
   messages, getMessageInbox, isLoading,
 }) => {
   const [hasFetched, setHasFetched] = useState(false);
+  const { id } = useParams();
   useEffect(() => {
     if (!messages && !hasFetched && !isLoading) {
-      getMessageInbox();
+      getMessageInbox(id);
       setHasFetched(true);
     }
   });
@@ -25,13 +29,21 @@ const MessageInbox = ({
 			</div>
 		)}
 		{!messages && !isLoading && hasFetched && (
-			<h3>Your inbox is empty</h3>
+			<div className="text-center">
+				<File className="medium dark logo" />
+				<p>You don&apos;t have any messages from your supplers.</p>
+			</div>
 		)}
 		{messages && messages.map((m) => (
-			<MessageItem
-				key={m.id}
-				message={m}
-			/>
+			<Fragment>
+				<div className="message-center__heading m-b-20">
+					<h4>Messages received from suppliers</h4>
+				</div>
+				<MessageItem
+					key={m.id}
+					message={m}
+				/>
+			</Fragment>
 		))}
 		{messages && (
 			<p className="kt-primary m-t-40">View 9 more sent messages</p>

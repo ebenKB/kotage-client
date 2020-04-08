@@ -119,13 +119,13 @@ const routes = [
   },
   {
     exact: true,
-    path: '/rfx/proposal/:id/message/:message_id',
-    main: () => <PreviewMessage />,
+    path: '/rfx/proposal/:id/message/create/new',
+    main: () => <NewMessage />,
   },
   {
     exact: true,
-    path: '/rfx/proposal/:id/message/new',
-    main: () => <NewMessage />,
+    path: '/rfx/proposal/:id/message/:message_id',
+    main: () => <PreviewMessage />,
   },
   {
     exact: true,
@@ -160,19 +160,19 @@ function App() {
 				</Layout>
 			)}
 			>
-				<Layout>
-					{routes.map((route, index) => (
-					// Render more <Route>s with the same paths as
-					// above, but different components this time.
-						<ProtectedRoute
-							key={index}
-							path={route.path}
-							exact={route.exact}
-						>
+				{/* <Layout> */}
+				{routes.map((route, index) => (
+					<ProtectedRoute
+						key={index}
+						path={route.path}
+						exact={route.exact}
+					>
+						<Layout>
 							<route.main />
-						</ProtectedRoute>
-					))}
-				</Layout>
+						</Layout>
+					</ProtectedRoute>
+				))}
+				{/* </Layout> */}
 			</Suspense>
 			<Route path="*">
 				<PageNotFound />
