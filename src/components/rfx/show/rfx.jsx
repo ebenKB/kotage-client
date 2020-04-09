@@ -8,9 +8,12 @@ import help from '../../../utils/requisitions/index/help';
 import RfxItem from '../../rfx-item/rfx-item';
 import '../rfx.scss';
 import Divider from '../../kt-divider/divider';
+import KtLoader from '../../loader/loader';
 
 
-const RFX = ({ getProposals, proposals, meta }) => {
+const RFX = ({
+  getProposals, proposals, isLoading, meta,
+}) => {
   useEffect(() => {
     if (!proposals || proposals.length === 0) {
       getProposals();
@@ -66,7 +69,10 @@ const RFX = ({ getProposals, proposals, meta }) => {
 		>
 			<div>
 				{meta && getDescription()}
-				{ proposals && proposals.map((proposal) => (
+				{isLoading && (
+					<KtLoader />
+				)}
+				{ proposals && !isLoading && proposals.map((proposal) => (
 					<div key={proposal.id}>
 						<RfxItem type={proposal.published_at !== null ? 'Published' : 'Draft'} proposal={proposal} />
 						<Divider type="faint" />
@@ -86,6 +92,7 @@ const mapDispatchToProps = {
 const mapStateToProps = (state) => ({
   proposals: state.rfp.proposals,
   meta: state.rfp.meta,
+  isLoading: state.rfp.loading,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(RFX);
