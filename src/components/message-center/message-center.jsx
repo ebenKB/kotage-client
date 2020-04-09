@@ -60,7 +60,7 @@ const MessageCenter = () => {
 				<div className="flex-inline">
 					<AddItem
 						title="New Message"
-						Logo={<MessageIcon className="kt-primary auto-height medium logo" />}
+						Logo={<MessageIcon className="kt-primary auto-height small logo" />}
 						handleClick={handleClick}
 					/>
 					<Menu>

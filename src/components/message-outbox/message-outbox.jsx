@@ -1,6 +1,6 @@
 /* eslint-disable react/boolean-prop-naming */
 /* eslint-disable react/forbid-prop-types */
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button } from 'semantic-ui-react';
 import { useParams } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -13,9 +13,11 @@ const MessageOutbox = ({
   messages, getSentMessages, isLoading, meta,
 }) => {
   const { id } = useParams();
+  const [hasFetched, setHasFetched] = useState(false);
   useEffect(() => {
-    if (!messages && !isLoading) {
+    if (!messages && !isLoading && !hasFetched) {
       getSentMessages(id);
+      setHasFetched(true);
     }
   }, [isLoading]);
   return (
