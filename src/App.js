@@ -160,19 +160,17 @@ function App() {
 				</Layout>
 			)}
 			>
-				{/* <Layout> */}
-				{routes.map((route, index) => (
-					<ProtectedRoute
-						key={index}
-						path={route.path}
-						exact={route.exact}
-					>
-						<Layout>
+				<Layout>
+					{routes.map((route, index) => (
+						<ProtectedRoute
+							key={index}
+							path={route.path}
+							exact={route.exact}
+						>
 							<route.main />
-						</Layout>
-					</ProtectedRoute>
-				))}
-				{/* </Layout> */}
+						</ProtectedRoute>
+					))}
+				</Layout>
 			</Suspense>
 			<Route path="*">
 				<PageNotFound />
