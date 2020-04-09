@@ -76,7 +76,7 @@ function KtDropzone({ onFilesChange }) {
    * @param {*} file the file to be deleted
    */
   const handleDeleteFile = (file) => {
-    setFiles(files.filter((x) => (x.name !== file)));
+    setFiles(files.filter((x) => (x.data.name !== file.data.name)));
   };
 
   // const { getRootProps, getInputProps, isDragActive } = useDropzone({onDrop})
@@ -96,7 +96,7 @@ function KtDropzone({ onFilesChange }) {
 					{files.map((file, idx) => (
 						<DropzoneItem
 							file={file}
-							deleteFile={() => handleDeleteFile(file.name)}
+							deleteFile={() => handleDeleteFile(file)}
 							idx={idx}
 							key={idx}
 						/>
