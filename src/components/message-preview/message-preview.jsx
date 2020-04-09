@@ -5,9 +5,11 @@ import { PropTypes } from 'prop-types';
 import { Button, Divider } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { Link, useParams, useHistory } from 'react-router-dom';
+import ReplyRoundedIcon from '@material-ui/icons/ReplyRounded';
 import MainContent from '../kt-main-content/mainContent';
 import KtWrapperLite from '../kt-wrapper-lite/kt-wrapper-lite';
-import { ReactComponent as Reply } from '../../svg/reload.svg';
+// import { ReactComponent as Reply } from '../../svg/reload.svg';
+// import { ReactComponent as Forward } from '../../svg/forward.svg';
 import { ReactComponent as BackArrow } from '../../svg/return.svg';
 import './message-preview.scss';
 import { findRfpMessageById } from '../../redux/actions/rfpActions';
@@ -38,16 +40,22 @@ const MessagePreview = ({ findRfpMessage, message }) => {
 					<Button className="kt-transparent" onClick={goBack}>
 						<BackArrow className="m-r-20 medium logo auto-height" />
 					</Button>
-					<Link to={`/rfx/proposal/${id}/message/create/new`}>
-						<div className="flex-center kt-transparent">
-							<Reply className="m-r-5 small logo auto-height" />
-							<span>reply</span>
-						</div>
-					</Link>
+					<div className="cta circle hover">
+						<Link to={`/rfx/proposal/${id}/message/create/new`}>
+							<div className="flex-center kt-transparent">
+								<ReplyRoundedIcon className="m-r-5 medium dark logo auto-height" />
+								{/* <span>reply</span> */}
+							</div>
+						</Link>
+					</div>
+					<div className="flex-center kt-transparent m-l-10">
+						<Button className="kt-transparent" content="resend" />
+					</div>
 				</div>
 				<Divider type="faint" />
 				{message && (
 					<div className="m-t-20 message-preview__body kt-bg-shadow">
+						<div className="text-right xsm-caption m-b-20">Monday 22nd March 2020</div>
 						<p align="justify">{message.message}</p>
 					</div>
 				)}
