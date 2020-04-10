@@ -17,6 +17,7 @@ import KtTransparentInput from '../form-fields/kt-transparent-search-input/kt-tr
 // import ButtonGroup from '../form-fields/button-group/button-group';
 import FormGroup from '../form-fields/form-group/form-group';
 import SupplierDetailsCaptionGroup from '../snippets/supplier-details-caption-group/supplier-details-caption-group';
+import RfpTitle from '../snippets/rfp-title/rfp-title';
 
 const RfpDashboard = ({ match, getProposal, proposal }) => {
   const { params } = match;
@@ -37,13 +38,10 @@ const RfpDashboard = ({ match, getProposal, proposal }) => {
 		<div>
 			{proposal && (
 				<div>
+					<RfpTitle classes="m-t-20" />
 					<KtWrapperLite
 						classes="m-t-20"
 					>
-						<div>
-							<div className="big-caption bold">{proposal.title}</div>
-							<Divider type="thick" title="" classes="m-b-10" />
-						</div>
 						<div>
 							<span className="kt-primary">
                 Bids due:
