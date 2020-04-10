@@ -9,7 +9,7 @@ const RfpTitle = ({ proposal, classes }) => {
     if (classes !== null && classes !== '') {
       return (
 	<div className={classes}>
-		<div className="big-caption bold">{proposal && proposal.title}</div>
+		<div className="very-big-caption">{proposal && proposal.title}</div>
 		<Divider type="thick" title="" classes="m-b-10" />
 	</div>
       );
