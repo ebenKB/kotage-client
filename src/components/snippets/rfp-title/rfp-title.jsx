@@ -1,33 +1,30 @@
+/* eslint-disable no-mixed-spaces-and-tabs */
 /* eslint-disable react/forbid-prop-types */
 import React from 'react';
 import { PropTypes } from 'prop-types';
 import { connect } from 'react-redux';
 import { Divider } from 'semantic-ui-react';
 
-const RfpTitle = ({ proposal, classes }) => {
-  const getContent = () => {
-    if (classes !== null && classes !== '') {
-      return (
-	<div className={classes}>
-		<div className="very-big-caption">{proposal && proposal.title}</div>
-		<Divider type="thick" title="" classes="m-b-10" />
-	</div>
-      );
-    }
-    return (
+const RfpTitle = ({ proposal, classes }) => (
 	<div>
-		<div className="big-caption bold">{proposal && proposal.title}</div>
-		<Divider type="thick" title="" classes="m-b-10" />
+		{(() => {
+		  if (classes) {
+		    return (
+			<div className={classes}>
+				<div className="very-big-caption">{proposal && proposal.title}</div>
+				<Divider type="thick" title="" classes="m-b-10" />
+			</div>
+		    );
+		  }
+		  return (
+			<div>
+				<div className="very-big-caption">{proposal && proposal.title}</div>
+				<Divider type="thick" title="" classes="m-b-10" />
+			</div>
+		  );
+		})()}
 	</div>
-    );
-  };
-
-  return (
-	<div>
-		{ getContent() }
-	</div>
-  );
-};
+);
 const mapStateToProps = (state) => ({
   proposal: state.rfp.currentProposal,
 });

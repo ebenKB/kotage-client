@@ -10,11 +10,11 @@ import { ReactComponent as Logo } from '../../../svg/padlock.svg';
 import { ReactComponent as BackArrow } from '../../../svg/back.svg';
 import { login, getTenantID } from '../../../redux/actions/userActions';
 import { getTenant } from '../../../redux/actions/tenantActions';
-import './sign-in.scss';
 import KtLogo from '../../KtLogo/kt-logo';
 import Notification from '../../Notification/notification';
 import { isValidEmail } from '../../../utils/app';
 import { clearNotification } from '../../../redux/actions/appActions';
+import './sign-in.scss';
 
 const SignIn = ({
   loading, userLogin, checkUserTenant, currentUser, getCurrentTenant,
