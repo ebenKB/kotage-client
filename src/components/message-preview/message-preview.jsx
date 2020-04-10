@@ -6,6 +6,8 @@ import { Button, Divider } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { Link, useParams, useHistory } from 'react-router-dom';
 import ReplyRoundedIcon from '@material-ui/icons/ReplyRounded';
+import MailIcon from '@material-ui/icons/Mail';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import MainContent from '../kt-main-content/mainContent';
 import KtWrapperLite from '../kt-wrapper-lite/kt-wrapper-lite';
 // import { ReactComponent as Reply } from '../../svg/reload.svg';
@@ -57,6 +59,17 @@ const MessagePreview = ({ findRfpMessage, message }) => {
 				{message && (
 					<div className="m-t-20 message-preview__body kt-bg-shadow">
 						<div className="text-right xsm-caption m-b-20">Monday 22nd March 2020</div>
+						<h3 className="dark">Message subject is here</h3>
+						<div className="m-b-20">
+							<div className="flex-center">
+								<MailIcon className="small dark logo m-r-5" />
+								<span className="sm-caption kt-primary">4 suppliers received this message</span>
+							</div>
+							<div className="flex-center">
+								<AccountCircleIcon className="small dark logo m-r-5" />
+								<span className="kt-primary">eakbo23@gmail.com</span>
+							</div>
+						</div>
 						<p align="justify">{message.message}</p>
 					</div>
 				)}
