@@ -8,10 +8,9 @@ import { Link, useParams, useHistory } from 'react-router-dom';
 import ReplyRoundedIcon from '@material-ui/icons/ReplyRounded';
 import MailIcon from '@material-ui/icons/Mail';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import AttachmentIcon from '@material-ui/icons/Attachment';
 import MainContent from '../kt-main-content/mainContent';
 import KtWrapperLite from '../kt-wrapper-lite/kt-wrapper-lite';
-// import { ReactComponent as Reply } from '../../svg/reload.svg';
-// import { ReactComponent as Forward } from '../../svg/forward.svg';
 import { ReactComponent as BackArrow } from '../../svg/return.svg';
 import './message-preview.scss';
 import { findRfpMessageById } from '../../redux/actions/rfpActions';
@@ -58,8 +57,11 @@ const MessagePreview = ({ findRfpMessage, message }) => {
 				<Divider type="faint" />
 				{message && (
 					<div className="m-t-20 message-preview__body kt-bg-shadow">
-						<div className="text-right xsm-caption m-b-20">Monday 22nd March 2020</div>
+						<div className="text-right xsm-caption m-b-20">
+              Monday 22nd March 2020
+						</div>
 						<h3 className="dark">Message subject is here</h3>
+						<AttachmentIcon className="big dark logo" />
 						<div className="m-b-20">
 							<div className="flex-center">
 								<MailIcon className="small dark logo m-r-5" />
