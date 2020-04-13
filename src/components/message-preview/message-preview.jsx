@@ -2,7 +2,7 @@
 /* eslint-disable camelcase */
 import React, { useEffect, useState } from 'react';
 import { PropTypes } from 'prop-types';
-import { Button, Divider } from 'semantic-ui-react';
+import { Button, Divider, Dropdown } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { Link, useParams, useHistory } from 'react-router-dom';
 import ReplyRoundedIcon from '@material-ui/icons/ReplyRounded';
@@ -17,11 +17,16 @@ import { findRfpMessageById } from '../../redux/actions/rfpActions';
 import Help from '../../utils/requisitions/new/help';
 import RfpTitle from '../snippets/rfp-title/rfp-title';
 import { getUser } from '../../redux/actions/userActions';
+import { ReactComponent as FileIcon } from '../../svg/pdf-alt.svg';
 
 const MessagePreview = ({ findRfpMessage, message, tenant_id }) => {
   const { id, message_id } = useParams();
   const history = useHistory();
   const [user, setUser] = useState(null);
+  const options = [
+    { key: '1', text: 'Preview', value: '1' },
+    { key: '2', text: 'Download', value: '2' },
+  ];
   useEffect(() => {
     if (!message || message.id !== message_id) {
       findRfpMessage(message_id);
@@ -80,6 +85,20 @@ const MessagePreview = ({ findRfpMessage, message, tenant_id }) => {
 							<div className="flex-center">
 								<AccountCircleIcon className="small dark logo m-r-5" />
 								<span className="kt-primary">{user && user.email}</span>
+							</div>
+						</div>
+						<div className="file-item__wrapper">
+							<div className="m-b-20 flex-center file-item kt-bg-shadow">
+								<FileIcon className="big logo auto-height m-r-5" />
+								<Dropdown basic options={options} text="File Title" />
+							</div>
+							<div className="m-b-20 flex-center file-item kt-bg-shadow">
+								<FileIcon className="big logo auto-height m-r-5" />
+								<Dropdown basic options={options} text="File Title" />
+							</div>
+							<div className="m-b-20 flex-center file-item kt-bg-shadow">
+								<FileIcon className="big logo auto-height m-r-5" />
+								<Dropdown basic options={options} text="File Title" />
 							</div>
 						</div>
 						<p align="justify">{message.message}</p>

@@ -1,3 +1,16 @@
 .message-preview .ui.button.flex-center {
   display: flex;
 }
+
+.file-item {
+  width: max-content;
+  padding: 8px 14px;
+}
+
+.file-item__wrapper {
+  display: flex;
+}
+
+.file-item__wrapper .file-item{
+  margin-right: 15px;
+}

@@ -123,6 +123,10 @@ ul.custom {
   position: relative;
 }
 
+.logo.big {
+  width: 40px;
+}
+
 .logo.medium {
   width: 20px;
   height: auto;
