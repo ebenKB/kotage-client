@@ -1,6 +1,6 @@
 /* eslint-disable react/forbid-prop-types */
 /* eslint-disable camelcase */
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { PropTypes } from 'prop-types';
 import { Button, Divider } from 'semantic-ui-react';
 import { connect } from 'react-redux';
@@ -16,14 +16,21 @@ import './message-preview.scss';
 import { findRfpMessageById } from '../../redux/actions/rfpActions';
 import Help from '../../utils/requisitions/new/help';
 import RfpTitle from '../snippets/rfp-title/rfp-title';
+import { getUser } from '../../redux/actions/userActions';
 
-const MessagePreview = ({ findRfpMessage, message }) => {
+const MessagePreview = ({ findRfpMessage, message, tenant_id }) => {
   const { id, message_id } = useParams();
   const history = useHistory();
-
+  const [user, setUser] = useState(null);
   useEffect(() => {
     if (!message || message.id !== message_id) {
       findRfpMessage(message_id);
+    }
+    if (!user && message) {
+      getUser(message.user_id, tenant_id)
+        .then((data) => {
+          setUser(data);
+        });
     }
   });
 
@@ -61,7 +68,10 @@ const MessagePreview = ({ findRfpMessage, message }) => {
               Monday 22nd March 2020
 						</div>
 						<h3 className="dark">Message subject is here</h3>
-						<AttachmentIcon className="big dark logo" />
+						<div className="flex-center">
+							<AttachmentIcon className="medium dark logo m-r-4" />
+							<span>{message.attachments && message.attachments.length}</span>
+						</div>
 						<div className="m-b-20">
 							<div className="flex-center">
 								<MailIcon className="small dark logo m-r-5" />
@@ -69,7 +79,7 @@ const MessagePreview = ({ findRfpMessage, message }) => {
 							</div>
 							<div className="flex-center">
 								<AccountCircleIcon className="small dark logo m-r-5" />
-								<span className="kt-primary">eakbo23@gmail.com</span>
+								<span className="kt-primary">{user && user.email}</span>
 							</div>
 						</div>
 						<p align="justify">{message.message}</p>
@@ -84,6 +94,7 @@ const MessagePreview = ({ findRfpMessage, message }) => {
 MessagePreview.propTypes = {
   findRfpMessage: PropTypes.func.isRequired,
   message: PropTypes.object,
+  tenant_id: PropTypes.string.isRequired,
 };
 
 MessagePreview.defaultProps = {
@@ -95,6 +106,7 @@ const mapDispatchToProps = {
 
 const mapStateToProps = (state) => ({
   message: state.rfp.currentOutbox,
+  tenant_id: state.user.currentUser.tenant_id,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MessagePreview);

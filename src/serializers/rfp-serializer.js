@@ -115,6 +115,7 @@ export const serializeRfpMessage = (message) => {
 export const deserializeRfpMessage = (message) => {
   const newMessage = {
     id: message.id,
+    user_id: message.user_id,
     message: message.message,
     attachments: message.rfp_message_attachments.map((a) => ({
       id: a.id,
