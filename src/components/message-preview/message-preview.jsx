@@ -18,6 +18,7 @@ import Help from '../../utils/requisitions/new/help';
 import RfpTitle from '../snippets/rfp-title/rfp-title';
 import { getUser } from '../../redux/actions/userActions';
 import { ReactComponent as FileIcon } from '../../svg/pdf-alt.svg';
+import PdfPreview from '../pdf-preview/pdf-preview';
 
 const MessagePreview = ({ findRfpMessage, message, tenant_id }) => {
   const { id, message_id } = useParams();
@@ -49,6 +50,7 @@ const MessagePreview = ({ findRfpMessage, message, tenant_id }) => {
 	>
 		<RfpTitle classes="m-t-20" />
 		<KtWrapperLite>
+			<PdfPreview />
 			<div className="message-preview">
 				<div className="flex-center">
 					<Button className="kt-transparent" onClick={goBack}>
