@@ -3,14 +3,15 @@
 /* eslint-disable react/prop-types */
 import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
-import { Label, Checkbox, Button } from 'semantic-ui-react';
+import { Checkbox, Button } from 'semantic-ui-react';
 import './user-details.scss';
 import {
   setAdminStatus, sendPasswordResetToken, softDeleteUser, resendUserInvitation,
   softDeleteInvitation,
 } from '../../../redux/actions/userActions';
 import Popup from '../popup/popup';
-import { getInitialNames } from '../../../utils/app';
+// import { getInitialNames } from '../../../utils/app';
+import UsernameWithInitialsLabel from '../Username-with-initials-label/username-with-initials-label';
 
 /**
  * This component displays a user or an invitation and enforces SEPARATION OF ROLES
@@ -63,11 +64,14 @@ const UserDetails = ({
 
   return (
 	<div className="user-details__wrapper">
-		<div>
+		{/* <div>
 			<Label circular color="grey" size="big">
 				{getInitialNames(`${user.firstname} ${user.lastname}`)}
 			</Label>
-		</div>
+		</div> */}
+		{user && (
+			<UsernameWithInitialsLabel user={user} />
+		)}
 		<div>
 			<div className="name-caption">
 				<h3>{`${user.firstname} ${user.lastname}`}</h3>

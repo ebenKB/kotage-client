@@ -1,6 +1,29 @@
-.message-preview .ui.button.flex-center {
-  display: flex;
+.message-preview {
+  position: absolute;
+  background: var(--kt-white);
+  min-height: 100%;
+  top: 0;
+  left: 0;
+  padding: 40px;
+  width: 100%;
+
+  .message-preview__body  {
+    padding: 30px;
+  }
+
+  svg {
+    fill: var(--kt-light);
+  }
+
+  .message-preview__body p {
+    line-height: 1.7;
+  }
+
+  .ui.button.flex-center {
+    display: flex;
+  }
 }
+
 
 .file-item {
   width: max-content;
@@ -14,3 +37,5 @@
 .file-item__wrapper .file-item{
   margin-right: 15px;
 }
+
+

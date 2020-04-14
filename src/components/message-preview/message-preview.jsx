@@ -6,8 +6,7 @@ import { Button, Divider, Dropdown } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { Link, useParams, useHistory } from 'react-router-dom';
 import ReplyRoundedIcon from '@material-ui/icons/ReplyRounded';
-import MailIcon from '@material-ui/icons/Mail';
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+// import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import AttachmentIcon from '@material-ui/icons/Attachment';
 import MainContent from '../kt-main-content/mainContent';
 import KtWrapperLite from '../kt-wrapper-lite/kt-wrapper-lite';
@@ -18,7 +17,8 @@ import Help from '../../utils/requisitions/new/help';
 import RfpTitle from '../snippets/rfp-title/rfp-title';
 import { getUser } from '../../redux/actions/userActions';
 import { ReactComponent as FileIcon } from '../../svg/pdf-alt.svg';
-import PdfPreview from '../pdf-preview/pdf-preview';
+import PdfPreview from '../../file.pdf';
+import UsernameWithInitialsLabel from '../snippets/Username-with-initials-label/username-with-initials-label';
 
 const MessagePreview = ({ findRfpMessage, message, tenant_id }) => {
   const { id, message_id } = useParams();
@@ -44,13 +44,18 @@ const MessagePreview = ({ findRfpMessage, message, tenant_id }) => {
     history.goBack();
   };
 
+  const handleDownload = (e) => {
+    e.stopPropagation();
+    // e.preventDefault();
+  };
+
   return (
 	<MainContent
 		help={Help}
 	>
 		<RfpTitle classes="m-t-20" />
 		<KtWrapperLite>
-			<PdfPreview />
+			{/* <PdfPreview /> */}
 			<div className="message-preview">
 				<div className="flex-center">
 					<Button className="kt-transparent" onClick={goBack}>
@@ -71,24 +76,30 @@ const MessagePreview = ({ findRfpMessage, message, tenant_id }) => {
 				<Divider type="faint" />
 				{message && (
 					<div className="m-t-20 message-preview__body kt-bg-shadow">
-						<div className="text-right xsm-caption m-b-20">
-              Monday 22nd March 2020
-						</div>
 						<h3 className="dark">Message subject is here</h3>
+						<div className="flex">
+							{user && (<UsernameWithInitialsLabel user={user} />)}
+							<div className="sm-caption m-b-20 m-l-8">
+								<div className="kt-primary">
+									{user && (
+										<span>
+											{' '}
+											{user.firstname}
+											{' '}
+											{user.lastname}
+										</span>
+									)}
+								</div>
+								<span className="xsm-caption">Monday 22nd March 2020</span>
+								<div>4 suppliers received this message</div>
+							</div>
+						</div>
 						<div className="flex-center">
 							<AttachmentIcon className="medium dark logo m-r-4" />
-							<span>{message.attachments && message.attachments.length}</span>
+							<div>{message.attachments && message.attachments.length}</div>
 						</div>
-						<div className="m-b-20">
-							<div className="flex-center">
-								<MailIcon className="small dark logo m-r-5" />
-								<span className="sm-caption kt-primary">4 suppliers received this message</span>
-							</div>
-							<div className="flex-center">
-								<AccountCircleIcon className="small dark logo m-r-5" />
-								<span className="kt-primary">{user && user.email}</span>
-							</div>
-						</div>
+						<p align="justify">{message.message}</p>
+						<Divider type="faint" classes="p-b-8 p-t-8" />
 						<div className="file-item__wrapper">
 							<div className="m-b-20 flex-center file-item kt-bg-shadow">
 								<FileIcon className="big logo auto-height m-r-5" />
@@ -103,7 +114,24 @@ const MessagePreview = ({ findRfpMessage, message, tenant_id }) => {
 								<Dropdown basic options={options} text="File Title" />
 							</div>
 						</div>
-						<p align="justify">{message.message}</p>
+						<div className="m-t-20">
+							<Button default content="Download all" size="tiny" icon={<AttachmentIcon />} className="flex-center" />
+						</div>
+						{/* <Link to={PdfPreview} download>
+              download me
+						</Link> */}
+						<Button
+							onClick={handleDownload}
+						>
+							<a
+								href={PdfPreview}
+								download="my_file"
+								target="_blank"
+								rel="noreferrer noopener"
+							>
+                Download me
+							</a>
+						</Button>
 					</div>
 				)}
 			</div>

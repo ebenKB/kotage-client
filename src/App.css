@@ -124,7 +124,7 @@ ul.custom {
 }
 
 .logo.big {
-  width: 40px;
+  width: 30px;
 }
 
 .logo.medium {
@@ -236,6 +236,10 @@ svg.faint {
 .light-text,
 .kt-transparent.ui.button.light-text {
   font-weight: 300;
+}
+
+.flex {
+  display: flex;
 }
 
 .flex-center {
