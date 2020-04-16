@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import './pdf-preview.scss';
 import { PropTypes } from 'prop-types';
+import Jszip from 'jszip';
+import { saveAs } from 'file-saver';
 import { connect } from 'react-redux';
-// import { Button } from 'semantic-ui-react';
+import { Button } from 'semantic-ui-react';
 import { downloadFile } from '../../redux/actions/appActions';
+
+
 // import file from '../../file.pdf';
 
 const PdfPreview = ({ getFile }) => {
@@ -15,6 +19,14 @@ const PdfPreview = ({ getFile }) => {
   const getFileName = (url) => {
     const data = url.split('/');
     console.log(data[data.length - 1]);
+  };
+
+  const downloadZip = () => {
+    const zip = new Jszip();
+    const zipFolder = zip.folder('rfpFiles');
+    zipFolder.file('rfp-1', new Blob([fileData]), { base64: true });
+    zip.generateAsync({ type: 'blob' })
+      .then((data) => saveAs(data));
   };
 
   const getFileSize = (bytes) => {
@@ -62,6 +74,7 @@ const PdfPreview = ({ getFile }) => {
 	<div className="file-preview__wrapper">
 		<div className="file-preview">
       file preview
+			<Button onClick={downloadZip} content="Download zip" />
 		</div>
 		<div className="preview-controls">
 			{isFileReady && (
