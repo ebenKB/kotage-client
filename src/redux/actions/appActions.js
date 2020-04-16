@@ -1,5 +1,6 @@
 /* eslint-disable import/prefer-default-export */
-import { CLEAR_NOTIFICATION, SET_APP_NOTIFICATION } from '../types/appTypes';
+import Axios from 'axios';
+import { CLEAR_NOTIFICATION, SET_APP_NOTIFICATION, DOWNLOAD_FILE } from '../types/appTypes';
 
 // clear notification from the app state
 export const clearNotification = () => async (dispatch) => new Promise((resolve) => {
@@ -22,4 +23,17 @@ export const setNotification = (notification, type) => async (dispatch) => dispa
     type: `${type}`,
     notification,
   },
+});
+
+export const downloadFile = (url) => (dispatch) => new Promise((resolve) => {
+  Axios({
+    url,
+    method: 'GET',
+    responseType: 'blob',
+  })
+    .then((response) => {
+      resolve(response);
+      dispatch({ type: DOWNLOAD_FILE });
+    })
+    .catch((err) => console.log('an error occured while', err));
 });
