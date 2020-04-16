@@ -64,11 +64,6 @@ const PdfPreview = ({ getFile }) => {
       file preview
 		</div>
 		<div className="preview-controls">
-      controls here
-			{/* <Button
-				onClick={prepareDownload}
-				content="Download file"
-			/> */}
 			{isFileReady && (
 				<div>
 					<a href={href} download="file" className="ui green button">
