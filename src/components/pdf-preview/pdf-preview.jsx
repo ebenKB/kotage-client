@@ -37,7 +37,7 @@ const PdfPreview = () => {
 			{isFileReady && fileObject && (
 				<div>
 					<a href={fileObject.staticUrl} download={fileObject.fileName} className="ui green button">
-            Download file
+            Download
             &nbsp;
             {fileObject.fileSize}
 					</a>

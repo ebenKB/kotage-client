@@ -2,33 +2,27 @@
 /* eslint-disable camelcase */
 import React, { useEffect, useState } from 'react';
 import { PropTypes } from 'prop-types';
-import { Button, Divider, Dropdown } from 'semantic-ui-react';
+import { Button, Divider } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { Link, useParams, useHistory } from 'react-router-dom';
 import ReplyRoundedIcon from '@material-ui/icons/ReplyRounded';
-// import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import AttachmentIcon from '@material-ui/icons/Attachment';
 import MainContent from '../kt-main-content/mainContent';
 import KtWrapperLite from '../kt-wrapper-lite/kt-wrapper-lite';
 import { ReactComponent as BackArrow } from '../../svg/return.svg';
-import './message-preview.scss';
 import { findRfpMessageById } from '../../redux/actions/rfpActions';
 import Help from '../../utils/requisitions/new/help';
 import RfpTitle from '../snippets/rfp-title/rfp-title';
 import { getUser } from '../../redux/actions/userActions';
-import { ReactComponent as FileIcon } from '../../svg/pdf-alt.svg';
-// import PdfPreview from '../../file.pdf';
 import UsernameWithInitialsLabel from '../snippets/Username-with-initials-label/username-with-initials-label';
-import PdfPreview from '../pdf-preview/pdf-preview';
+import KtFileItem from '../snippets/kt-file-item/kt-file-item';
+import './message-preview.scss';
 
 const MessagePreview = ({ findRfpMessage, message, tenant_id }) => {
   const { id, message_id } = useParams();
   const history = useHistory();
   const [user, setUser] = useState(null);
-  const options = [
-    { key: '1', text: 'Preview', value: '1' },
-    { key: '2', text: 'Download', value: '2' },
-  ];
+
   useEffect(() => {
     if (!message || message.id !== message_id) {
       findRfpMessage(message_id);
@@ -45,19 +39,12 @@ const MessagePreview = ({ findRfpMessage, message, tenant_id }) => {
     history.goBack();
   };
 
-  const handleDownload = (e) => {
-    e.stopPropagation();
-    // e.preventDefault();
-  };
-
   return (
 	<MainContent
 		help={Help}
 	>
 		<RfpTitle classes="m-t-20" />
 		<KtWrapperLite>
-			<PdfPreview />
-			{/* <PdfPreview /> */}
 			<div className="message-preview">
 				<div className="flex-center">
 					<Button className="kt-transparent" onClick={goBack}>
@@ -67,7 +54,6 @@ const MessagePreview = ({ findRfpMessage, message, tenant_id }) => {
 						<Link to={`/rfx/proposal/${id}/message/create/new`}>
 							<div className="flex-center kt-transparent">
 								<ReplyRoundedIcon className="m-r-5 medium dark logo auto-height" />
-								{/* <span>reply</span> */}
 							</div>
 						</Link>
 					</div>
@@ -85,7 +71,6 @@ const MessagePreview = ({ findRfpMessage, message, tenant_id }) => {
 								<div className="kt-primary">
 									{user && (
 										<span>
-											{' '}
 											{user.firstname}
 											{' '}
 											{user.lastname}
@@ -103,37 +88,13 @@ const MessagePreview = ({ findRfpMessage, message, tenant_id }) => {
 						<p align="justify">{message.message}</p>
 						<Divider type="faint" classes="p-b-8 p-t-8" />
 						<div className="file-item__wrapper">
-							<div className="m-b-20 flex-center file-item kt-bg-shadow">
-								<FileIcon className="big logo auto-height m-r-5" />
-								<Dropdown basic options={options} text="File Title" />
-							</div>
-							<div className="m-b-20 flex-center file-item kt-bg-shadow">
-								<FileIcon className="big logo auto-height m-r-5" />
-								<Dropdown basic options={options} text="File Title" />
-							</div>
-							<div className="m-b-20 flex-center file-item kt-bg-shadow">
-								<FileIcon className="big logo auto-height m-r-5" />
-								<Dropdown basic options={options} text="File Title" />
-							</div>
+							<KtFileItem url="https://ebenkb.s3.us-east-2.amazonaws.com/kotage/e62b652c4b/rfx/1M-ebtiSy/MANAGEMENT+ACCOUNTING+(1).pdf" />
+							<KtFileItem url="https://ebenkb.s3.us-east-2.amazonaws.com/kotage/e62b652c4b/rfx/1M-ebtiSy/MANAGEMENT+ACCOUNTING+(1).pdf" />
+							<KtFileItem url="https://ebenkb.s3.us-east-2.amazonaws.com/kotage/e62b652c4b/rfx/1M-ebtiSy/MANAGEMENT+ACCOUNTING+(1).pdf" />
 						</div>
 						<div className="m-t-20">
-							<Button default content="Download all" size="tiny" icon={<AttachmentIcon />} className="flex-center" />
+							<Button default content="Download all attachments" size="tiny" icon={<AttachmentIcon />} className="kt-transparent flex-center" />
 						</div>
-						{/* <Link to={PdfPreview} download>
-              download me
-						</Link> */}
-						<Button
-							onClick={handleDownload}
-						>
-							{/* <a
-								href={PdfPreview}
-								download="my_file"
-								target="_blank"
-								rel="noreferrer noopener"
-							>
-                Download me
-							</a> */}
-						</Button>
 					</div>
 				)}
 			</div>

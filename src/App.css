@@ -144,6 +144,11 @@ ul.custom {
   fill: var(--kt-dark);
 }
 
+.dark.logo.invert {
+  background-color: var(--kt-dark);
+  fill: var(--kt-white);
+}
+
 .auto-height {
   height: auto;
 }

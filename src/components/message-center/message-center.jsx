@@ -33,7 +33,8 @@ const MessageCenter = () => {
   ];
 
   const handleChange = (data) => {
-    setSelectedOption(() => ({ text: data.text, value: data.value }));
+    // setSelectedOption(() => ({ text: data.text, value: data.value }));
+    setSelectedOption({ text: data.text, value: data.value });
   };
 
   const handleClick = () => {
@@ -70,7 +71,6 @@ const MessageCenter = () => {
 					/>
 					<Menu>
 						<Dropdown
-							placeholder=""
 							item
 							value={selectedOption.value}
 							options={options}

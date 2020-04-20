@@ -4,15 +4,15 @@ export const getFileSize = (bytes) => {
   console.log('These are the file bytes', bytes);
   try {
     let newSize = null;
-    let postFix = 'kb';
+    let postFix = 'KB';
     if (bytes < 1000000) {
       newSize = (bytes / 1000);
     } else if (bytes < 125000000) {
       newSize = bytes / 1000000;
-      postFix = 'mb';
+      postFix = 'MB';
     } else {
       newSize = (bytes / 125000000);
-      postFix = 'gb';
+      postFix = 'GB';
     }
     return `${newSize.toFixed(2)}${postFix}`;
   } catch (error) {

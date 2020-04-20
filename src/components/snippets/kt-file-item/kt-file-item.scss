@@ -1,0 +1,48 @@
+.file-item {
+  width: max-content;
+  padding: 8px 14px;
+  position: relative;
+}
+
+.flex-center .file-item__cta {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: rgb(233, 232, 232);
+  width: 100%;
+  height: 100%;
+  padding: 8px 14px;
+  visibility: hidden;
+  opacity: 0.9;
+}
+
+.file-item:hover .file-item__cta {
+  visibility: visible;
+}
+
+.download-cta {
+  position: relative;
+}
+
+.file-item__cta-tool-tip {
+  position: relative;
+  width: 100%;
+}
+
+.file-item__cta-tool-tip::after {
+  content: attr(attr-data);
+  position: absolute;
+  visibility: hidden;
+  left: 0;
+  top: 45px;
+  // bottom: -25px;
+  color: var(--kt-dark);
+  font-weight: 500;
+  width: 100%;
+  
+}
+
+.file-item__cta-tool-tip:hover::after {
+  visibility: visible;
+}
