@@ -1,8 +1,9 @@
+
 /* eslint-disable react/forbid-prop-types */
 /* eslint-disable camelcase */
 import React, { useEffect, useState } from 'react';
 import { PropTypes } from 'prop-types';
-import { Button, Divider } from 'semantic-ui-react';
+import { Button, Divider, Loader } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { Link, useParams, useHistory } from 'react-router-dom';
 import ReplyRoundedIcon from '@material-ui/icons/ReplyRounded';
@@ -17,16 +18,43 @@ import { getUser } from '../../redux/actions/userActions';
 import UsernameWithInitialsLabel from '../snippets/Username-with-initials-label/username-with-initials-label';
 import KtFileItem from '../snippets/kt-file-item/kt-file-item';
 import './message-preview.scss';
+import { prepareFileForDownloadSync, downloadMultipleZip } from '../../utils/app/file';
 
 const MessagePreview = ({ findRfpMessage, message, tenant_id }) => {
   const { id, message_id } = useParams();
   const history = useHistory();
   const [user, setUser] = useState(null);
+  const [files, setFiles] = useState([]);
+  const [hasPreparedFile, prepareFile] = useState(false);
+  const attachments = [
+    {
+      file_url: 'https://ebenkb.s3.us-east-2.amazonaws.com/kotage/e62b652c4b/rfx/1M-ebtiSy/MANAGEMENT+ACCOUNTING+(1).pdf',
+    },
+    {
+      file_url: 'https://ebenkb.s3.us-east-2.amazonaws.com/kotage/e62b652c4b/rfx/tpYLfHhU_/kisspng-data-analysis-information-clip-art-5ae03d8ab075b2.8218787715246452587228.jpg',
+    },
+  ];
+
+  const prepFilesForDownload = async () => {
+    const fileObjects = attachments.map((file) => prepareFileForDownloadSync(file.file_url));
+    prepareFile(true);
+    Promise.all(fileObjects)
+      .then((data) => {
+        setFiles(data);
+      });
+  };
+
+  useEffect(() => {
+    if (!hasPreparedFile) {
+      prepFilesForDownload();
+    }
+  }, [hasPreparedFile]);
 
   useEffect(() => {
     if (!message || message.id !== message_id) {
       findRfpMessage(message_id);
     }
+
     if (!user && message) {
       getUser(message.user_id, tenant_id)
         .then((data) => {
@@ -37,6 +65,10 @@ const MessagePreview = ({ findRfpMessage, message, tenant_id }) => {
 
   const goBack = () => {
     history.goBack();
+  };
+
+  const downloadAllFiles = () => {
+    downloadMultipleZip(files, 'RFP files');
   };
 
   return (
@@ -88,12 +120,24 @@ const MessagePreview = ({ findRfpMessage, message, tenant_id }) => {
 						<p align="justify">{message.message}</p>
 						<Divider type="faint" classes="p-b-8 p-t-8" />
 						<div className="file-item__wrapper">
-							<KtFileItem url="https://ebenkb.s3.us-east-2.amazonaws.com/kotage/e62b652c4b/rfx/1M-ebtiSy/MANAGEMENT+ACCOUNTING+(1).pdf" />
-							<KtFileItem url="https://ebenkb.s3.us-east-2.amazonaws.com/kotage/e62b652c4b/rfx/1M-ebtiSy/MANAGEMENT+ACCOUNTING+(1).pdf" />
-							<KtFileItem url="https://ebenkb.s3.us-east-2.amazonaws.com/kotage/e62b652c4b/rfx/1M-ebtiSy/MANAGEMENT+ACCOUNTING+(1).pdf" />
+							{!files && attachments && (
+								<Loader active inline content="Loading files" />
+							)}
+							{files && files.map((file) => (
+								<KtFileItem
+									fileObject={file}
+								/>
+							))}
 						</div>
 						<div className="m-t-20">
-							<Button default content="Download all attachments" size="tiny" icon={<AttachmentIcon />} className="kt-transparent flex-center" />
+							<Button
+								default
+								content="Download all attachments"
+								size="tiny"
+								icon={<AttachmentIcon />}
+								className="kt-transparent flex-center"
+								onClick={downloadAllFiles}
+							/>
 						</div>
 					</div>
 				)}

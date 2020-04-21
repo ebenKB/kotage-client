@@ -1,28 +1,23 @@
-import React, { useState, useEffect } from 'react';
+/* eslint-disable react/forbid-prop-types */
+import React, { useState } from 'react';
 // import SaveAltRoundedIcon from '@material-ui/icons/SaveAltRounded';
 import { PropTypes } from 'prop-types';
 import { Button } from 'semantic-ui-react';
-import { ReactComponent as FileIcon } from '../../../svg/pdf-alt.svg';
+import { ReactComponent as PDFIcon } from '../../../svg/pdf-alt.svg';
+import { ReactComponent as JPEGIcon } from '../../../svg/jpg-alt.svg';
+import { ReactComponent as WORDIcon } from '../../../svg/word-alt.svg';
+import { ReactComponent as PNGIcon } from '../../../svg/png-alt.svg';
+import { ReactComponent as EXCELIcon } from '../../../svg/xls-alt.svg';
 import './kt-file-item.scss';
 import PdfPreview from '../../pdf-preview/pdf-preview';
-import { prepareFileForDownload } from '../../../utils/app/file';
 import { ReactComponent as Download } from '../../../svg/download.svg';
 import { ReactComponent as Preview } from '../../../svg/preview.svg';
+import {
+  PDF, JPEG, JPG, WORD, PNG, EXCEL,
+} from '../../../utils/app/fileTypes';
 
-const KtFileItem = ({ url }) => {
-  const [hasPreparedFile, prepareFile] = useState(false);
-  const [fileObject, setFileObject] = useState(null);
+const KtFileItem = ({ fileObject }) => {
   const [canPreview, setCanPreview] = useState(false);
-
-  useEffect(() => {
-    if (!hasPreparedFile) {
-      prepareFileForDownload(url)
-        .then((data) => {
-          prepareFile(true);
-          setFileObject(data);
-        });
-    }
-  }, [hasPreparedFile]);
 
   const getDownloadLink = () => (
 	<a href={fileObject.staticUrl} download={fileObject.fileName} className="file-item__cta-tool-tip" attr-data="Download">
@@ -32,23 +27,41 @@ const KtFileItem = ({ url }) => {
 
   const getFileTitle = () => (
 	<span>
-    File Item
+		{fileObject && fileObject.fileName}
     &nbsp;
 		<span className="xsm">{ fileObject && fileObject.fileSize}</span>
 	</span>
   );
 
+  const getFileLogo = () => {
+    if (fileObject.fileType === PDF) {
+      return (<PDFIcon className="big logo auto-height m-r-5" />);
+    }
+    if (fileObject.fileType === JPEG || fileObject.fileType === JPG) {
+      return (<JPEGIcon className="big logo auto-height m-r-5" />);
+    }
+    if (fileObject.fileType === WORD) {
+      return (<WORDIcon className="big logo auto-height m-r-5" />);
+    }
+    if (fileObject.fileType === PNG) {
+      return (<PNGIcon className="big logo auto-height m-r-5" />);
+    }
+    if (fileObject.fileType === EXCEL) {
+      return (<EXCELIcon className="big logo auto-height m-r-5" />);
+    }
+    return (<span />);
+  };
   return (
 	<div className="m-b-20 flex-center file-item kt-bg-shadow">
 		<div className="flex-center item">
-			<FileIcon className="big logo auto-height m-r-5" />
+			{getFileLogo()}
 			<span>
 				{getFileTitle()}
 			</span>
 		</div>
 		<div className="flex-center file-item__cta text-center">
 			<div className="flex-center file-item__cta-logo">
-				{ hasPreparedFile && fileObject && getDownloadLink()}
+				{fileObject && getDownloadLink()}
 				<span className="m-l-5 file-item__cta-tool-tip" attr-data="Preview">
 					<Button className="kt-transparent" onClick={() => setCanPreview(true)}>
 						<Preview className="big logo auto-height" />
@@ -64,7 +77,7 @@ const KtFileItem = ({ url }) => {
 };
 
 KtFileItem.propTypes = {
-  url: PropTypes.string.isRequired,
+  fileObject: PropTypes.object.isRequired,
 };
 
 export default KtFileItem;
