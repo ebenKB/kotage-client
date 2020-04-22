@@ -146,7 +146,7 @@ const MessagePreview = ({
 			<div className="message-preview">
 				<div className="flex-center">
 					<Button className="kt-transparent" onClick={goBack}>
-						<BackArrow className="m-r-20 medium logo auto-height" />
+						<BackArrow className="m-r-20 medium light logo auto-height" />
 					</Button>
 					<div className="cta circle hover">
 						<Link to={`/rfx/proposal/${id}/message/create/new`}>

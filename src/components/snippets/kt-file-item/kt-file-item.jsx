@@ -12,15 +12,22 @@ import './kt-file-item.scss';
 import PdfPreview from '../../pdf-preview/pdf-preview';
 import { ReactComponent as Download } from '../../../svg/download.svg';
 import { ReactComponent as Preview } from '../../../svg/preview.svg';
+import { getFileNameAndExtension } from '../../../utils/app/file';
 import {
   PDF, JPEG, JPG, WORD, PNG, EXCEL,
 } from '../../../utils/app/fileTypes';
+
 
 const KtFileItem = ({ fileObject }) => {
   const [canPreview, setCanPreview] = useState(false);
 
   const getDownloadLink = () => (
-	<a href={fileObject.staticUrl} download={fileObject.fileName} className="file-item__cta-tool-tip" attr-data="Download">
+	<a
+		href={fileObject.staticUrl}
+		download={getFileNameAndExtension(fileObject.file_url)}
+		className="file-item__cta-tool-tip"
+		attr-data="Download"
+	>
 		<Download className="m-r-5 big dark logo auto-height" />
 	</a>
   );
@@ -71,7 +78,9 @@ const KtFileItem = ({ fileObject }) => {
 			</div>
 		</div>
 		{canPreview && (
-			<PdfPreview />
+			<PdfPreview
+				handleCloseAction={() => setCanPreview(false)}
+			/>
 		)}
 	</div>
   );

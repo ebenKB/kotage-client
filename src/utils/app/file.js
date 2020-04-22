@@ -30,8 +30,13 @@ export const getFileName = (url) => {
   return (data[data.length - 1].split('?')[0].split('.')[0]);
 };
 
+export const getFileNameAndExtension = (url) => {
+  const data = url.split('/');
+  // get the file name, remove anything after ?
+  return (data[data.length - 1].split('?')[0]);
+};
+
 export const getFullFilePath = (url) => {
-  console.log('this is the url', url);
   if (url) {
     const data = url.split('/');
     let path = '';
@@ -42,7 +47,6 @@ export const getFullFilePath = (url) => {
         path = `${path}/${data[i]}`; // append / to the beginning of the path
       }
     }
-    console.log('This is the path', path);
     return path;
   }
   return url;
