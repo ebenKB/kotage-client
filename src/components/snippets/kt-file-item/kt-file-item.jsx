@@ -25,10 +25,10 @@ const KtFileItem = ({ fileObject }) => {
 	<a
 		href={fileObject.staticUrl}
 		download={getFileNameAndExtension(fileObject.file_url)}
-		className="file-item__cta-tool-tip"
+		className="file-item__cta-tool-tip m-r-10"
 		attr-data="Download"
 	>
-		<Download className="m-r-5 big dark logo auto-height" />
+		<Download className="m-r-5 medium dark logo auto-height" />
 	</a>
   );
 
@@ -67,12 +67,12 @@ const KtFileItem = ({ fileObject }) => {
 				{getFileTitle()}
 			</span>
 		</div>
-		<div className="flex-center file-item__cta text-center">
-			<div className="flex-center file-item__cta-logo">
+		<div className="file-item__cta text-center">
+			<div className="file-item__cta-logo">
 				{fileObject && getDownloadLink()}
 				<span className="m-l-5 file-item__cta-tool-tip" attr-data="Preview">
 					<Button className="kt-transparent" onClick={() => setCanPreview(true)}>
-						<Preview className="big logo auto-height" />
+						<Preview className="medium logo auto-height" />
 					</Button>
 				</span>
 			</div>
