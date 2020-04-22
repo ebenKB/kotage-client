@@ -37,7 +37,7 @@ const MessagePreview = ({
       file_url: 'https://ebenkb.s3.us-east-2.amazonaws.com/kotage/e62b652c4b/rfx/O2_cE4-O1/PIK.png',
     },
     {
-      file_url: 'https://ebenkb.s3.us-east-2.amazonaws.com/kotage/FFR.jpg',
+      file_url: 'https://ebenkb.s3.us-east-2.amazonaws.com/kotage/e62b652c4b/rfx/qqPSEwI5r/Background.png',
     },
   ];
 
