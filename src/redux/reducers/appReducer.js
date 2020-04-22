@@ -1,4 +1,4 @@
-import { SET_APP_NOTIFICATION, CLEAR_NOTIFICATION, DOWNLOAD_FILE } from '../types/appTypes';
+import { SET_APP_NOTIFICATION, CLEAR_NOTIFICATION } from '../types/appTypes';
 
 const initialState = {
   notification: null,
@@ -43,10 +43,6 @@ export default (state = initialState, action) => {
         ...state,
         notification: null,
       };
-    }
-
-    case DOWNLOAD_FILE: {
-      return state;
     }
 
     default: {

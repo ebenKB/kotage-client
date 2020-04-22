@@ -4,6 +4,7 @@ import Jszip from 'jszip';
 import { saveAs } from 'file-saver';
 import { Button } from 'semantic-ui-react';
 import { prepareFileForDownload } from '../../utils/app/file';
+import { ReactComponent as CloseIcon } from '../../svg/close.svg';
 
 const PdfPreview = () => {
   const [isFileReady, hasPreparedFile] = useState(false);
@@ -39,10 +40,16 @@ const PdfPreview = () => {
 					<a href={fileObject.staticUrl} download={fileObject.fileName} className="ui green button">
             Download
             &nbsp;
-            {fileObject.fileSize}
+						{fileObject.fileSize}
 					</a>
 				</div>
 			)}
+			<Button
+				default
+				size="tiny"
+				icon={<CloseIcon className="small icon dark" />}
+				className="kt-transparent flex-center"
+			/>
 		</div>
 	</div>
   );

@@ -18,39 +18,88 @@ import { getUser } from '../../redux/actions/userActions';
 import UsernameWithInitialsLabel from '../snippets/Username-with-initials-label/username-with-initials-label';
 import KtFileItem from '../snippets/kt-file-item/kt-file-item';
 import './message-preview.scss';
-import { prepareFileForDownloadSync, downloadMultipleZip } from '../../utils/app/file';
+import { prepareFileForDownload, downloadMultipleZip, getFileSignedUrl } from '../../utils/app/file';
 
-const MessagePreview = ({ findRfpMessage, message, tenant_id }) => {
+const MessagePreview = ({
+  findRfpMessage, message, tenant_id, currentRfpID,
+}) => {
   const { id, message_id } = useParams();
   const history = useHistory();
   const [user, setUser] = useState(null);
   const [files, setFiles] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [hasPreparedFile, prepareFile] = useState(false);
+  const [hasSignedUrls, setHasSignedUrl] = useState(false);
+  let signedAttachments = [];
+
   const attachments = [
     {
-      file_url: 'https://ebenkb.s3.us-east-2.amazonaws.com/kotage/e62b652c4b/rfx/1M-ebtiSy/MANAGEMENT+ACCOUNTING+(1).pdf',
+      file_url: 'https://ebenkb.s3.us-east-2.amazonaws.com/kotage/e62b652c4b/rfx/O2_cE4-O1/PIK.png',
     },
     {
-      file_url: 'https://ebenkb.s3.us-east-2.amazonaws.com/kotage/e62b652c4b/rfx/tpYLfHhU_/kisspng-data-analysis-information-clip-art-5ae03d8ab075b2.8218787715246452587228.jpg',
+      file_url: 'https://ebenkb.s3.us-east-2.amazonaws.com/kotage/FFR.jpg',
     },
   ];
 
-  const prepFilesForDownload = async () => {
-    const fileObjects = attachments.map((file) => prepareFileForDownloadSync(file.file_url));
-    prepareFile(true);
-    Promise.all(fileObjects)
-      .then((data) => {
-        setFiles(data);
-      });
+  // const prepFilesForDownload = async () => {
+  //   for (let i = 0; i < signedAttachments.length; i += 1) {
+  //     prepareFileForDownload(signedAttachments[i].file_url)
+  //       .then((file) => setFiles([...files, file]));
+  //   }
+  // };
+
+  const prepareFilesSync = () => {
+    signedAttachments.map(async (file) => {
+      const fileBody = await prepareFileForDownload(file.file_url);
+      if (fileBody) {
+        const fileObject = { ...file, ...fileBody };
+        setFiles((state) => [...state, fileObject]);
+      }
+    });
+    setIsLoading(false);
+
+    // const readyFiles = await Promise.all(
+    //   // eslint-disable-next-line no-return-await
+    //   signedAttachments.map(async (file) => {
+    //     const fileBody = await prepareFileForDownload(file.file_url);
+    //     return {
+    //       ...file,
+    //       ...fileBody,
+    //     };
+    //   }),
+    // );
+    // setFiles(...files, readyFiles);
+    // setIsLoading(false);
+  };
+
+  const signFileUrls = async () => {
+    for (let i = 0; i < attachments.length; i += 1) {
+      // eslint-disable-next-line no-await-in-loop
+      const singedUrl = await getFileSignedUrl(attachments[i].file_url, tenant_id, currentRfpID);
+      signedAttachments = [...signedAttachments, { ...signedAttachments[i], file_url: singedUrl }];
+      if (i === (attachments.length - 1)) {
+        setHasSignedUrl(true);
+        prepareFilesSync();
+        prepareFile(true);
+        // setIsLoading(false);
+      }
+    }
+
+    // attachments.map((file) => getFileSignedUrl(file.file_url, tenant_id, currentRfpID)
+    //   .then((url) => (setSignedAttachments([...signedAttachments, {
+    //     ...file,
+    //     file_url: url,
+    //   }]))));
+    // setSignedAttachments(data);
   };
 
   useEffect(() => {
     if (!hasPreparedFile) {
-      prepFilesForDownload();
+      if (!hasSignedUrls) {
+        signFileUrls();
+      }
     }
-  }, [hasPreparedFile]);
 
-  useEffect(() => {
     if (!message || message.id !== message_id) {
       findRfpMessage(message_id);
     }
@@ -61,7 +110,24 @@ const MessagePreview = ({ findRfpMessage, message, tenant_id }) => {
           setUser(data);
         });
     }
-  });
+    // if (hasSignedUrls) {
+    //   prepFilesForDownload();
+    //   prepareFile(true);
+    // }
+  }, [hasPreparedFile, hasSignedUrls]);
+
+  // useEffect(() => {
+  //   if (!message || message.id !== message_id) {
+  //     findRfpMessage(message_id);
+  //   }
+
+  //   if (!user && message) {
+  //     getUser(message.user_id, tenant_id)
+  //       .then((data) => {
+  //         setUser(data);
+  //       });
+  //   }
+  // });
 
   const goBack = () => {
     history.goBack();
@@ -120,19 +186,35 @@ const MessagePreview = ({ findRfpMessage, message, tenant_id }) => {
 						<p align="justify">{message.message}</p>
 						<Divider type="faint" classes="p-b-8 p-t-8" />
 						<div className="file-item__wrapper">
-							{!files && attachments && (
-								<Loader active inline content="Loading files" />
-							)}
 							{files && files.map((file) => (
 								<KtFileItem
 									fileObject={file}
 								/>
 							))}
+							{isLoading && attachments && (
+								<Loader
+									active
+									inline
+									content={(
+										<span>
+                      Loading
+											{attachments.length}
+											{' '}
+                      attachments
+										</span>
+									)}
+								/>
+							)}
 						</div>
 						<div className="m-t-20">
 							<Button
 								default
-								content="Download all attachments"
+								content={(
+									<span>
+                    Download all
+                    attachments
+									</span>
+								)}
 								size="tiny"
 								icon={<AttachmentIcon />}
 								className="kt-transparent flex-center"
@@ -151,6 +233,7 @@ MessagePreview.propTypes = {
   findRfpMessage: PropTypes.func.isRequired,
   message: PropTypes.object,
   tenant_id: PropTypes.string.isRequired,
+  currentRfpID: PropTypes.string.isRequired,
 };
 
 MessagePreview.defaultProps = {
@@ -163,6 +246,7 @@ const mapDispatchToProps = {
 const mapStateToProps = (state) => ({
   message: state.rfp.currentOutbox,
   tenant_id: state.user.currentUser.tenant_id,
+  currentRfpID: state.rfp.currentProposal.id,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MessagePreview);

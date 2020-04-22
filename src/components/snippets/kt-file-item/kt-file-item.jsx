@@ -51,6 +51,7 @@ const KtFileItem = ({ fileObject }) => {
     }
     return (<span />);
   };
+
   return (
 	<div className="m-b-20 flex-center file-item kt-bg-shadow">
 		<div className="flex-center item">

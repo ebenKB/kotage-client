@@ -1,6 +1,8 @@
-import Axios from 'axios';
+/* eslint-disable camelcase */
 import Jszip from 'jszip';
 import { saveAs } from 'file-saver';
+import Axios from 'axios';
+import { getToken } from '.';
 
 export const getFileSize = (bytes) => {
   console.log('These are the file bytes', bytes);
@@ -24,8 +26,26 @@ export const getFileSize = (bytes) => {
 
 export const getFileName = (url) => {
   const data = url.split('/');
-  console.log(data[data.length - 1]);
-  return (data[data.length - 1]);
+  // get the file name, remove anything after ? and remove the file extension
+  return (data[data.length - 1].split('?')[0].split('.')[0]);
+};
+
+export const getFullFilePath = (url) => {
+  console.log('this is the url', url);
+  if (url) {
+    const data = url.split('/');
+    let path = '';
+    for (let i = 3; i < data.length; i += 1) {
+      if (i === 3) {
+        path = data[i]; // don't append / to the beginning of the path
+      } else {
+        path = `${path}/${data[i]}`; // append / to the beginning of the path
+      }
+    }
+    console.log('This is the path', path);
+    return path;
+  }
+  return url;
 };
 
 export const downloadZip = (fileData, filename, foldername) => {
@@ -53,7 +73,7 @@ export const createStaticFileUrl = (fileData) => window.URL.createObjectURL(new 
 //   return type;
 // };
 
-export const prepareFileForDownload = async (fileUrl) => (new Promise(
+export const prepareFileForDownload = (fileUrl) => (new Promise(
   (resolve, reject) => {
     Axios({
       url: fileUrl,
@@ -76,6 +96,7 @@ export const prepareFileForDownload = async (fileUrl) => (new Promise(
 ));
 
 export const prepareFileForDownloadSync = async (fileUrl) => {
+  console.log('This is the url you want to download with sync', fileUrl);
   const response = await Axios({
     url: fileUrl,
     method: 'GET',
@@ -89,8 +110,10 @@ export const prepareFileForDownloadSync = async (fileUrl) => {
     fileType: response.data.type,
     data: response.data,
   };
+  console.log('This is the file data we are returning', fileData);
   return fileData;
 };
+
 
 // getFile('https://ebenkb.s3.us-east-2.amazonaws.com/kotage/e62b652c4b/rfx/1M-ebtiSy/MANAGEMENT+ACCOUNTING+(1).pdf')
 // .then((response) => {
@@ -101,3 +124,29 @@ export const prepareFileForDownloadSync = async (fileUrl) => {
 //   prepareFile(true);
 //   getFileName('https://ebenkb.s3.us-east-2.amazonaws.com/kotage/e62b652c4b/rfx/1M-ebtiSy/MANAGEMENT+ACCOUNTING+(1).pdf');
 // });
+
+// export const getFileSignedUrl = (url, tenant_id, objectOwnerId) => async () => new
+// Promise((resolve) => {
+//   Axios.post(`${process.env.REACT_APP_apiHost}/${process.env.REACT_APP_apiNamespace}/v1/
+//     ${tenant_id}/rfp/${objectOwnerId}/file_presigned`, {
+//     filename: getFullFilePath(url),
+//   })
+//     .then((data) => {
+//       console.log('sign data', data);
+//       resolve(data);
+//     });
+// });
+
+export const getFileSignedUrl = (url, tenant_id, objectOwnerId) => {
+  const AxiosInstance = Axios.create({ headers: { Authorization: getToken() } });
+  return new Promise((resolve) => {
+    try {
+      AxiosInstance.post(`${process.env.REACT_APP_apiHost}/${process.env.REACT_APP_apiNamespace}/v1/
+      ${tenant_id}/rfp/${objectOwnerId}/file_presigned`, {
+        filename: getFullFilePath(url),
+      }).then((data) => resolve(data.data));
+    } catch (error) {
+      console.log(error);
+    }
+  });
+};
