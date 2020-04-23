@@ -79,6 +79,7 @@ const KtFileItem = ({ fileObject }) => {
 		</div>
 		{canPreview && (
 			<PdfPreview
+				fileObject={fileObject}
 				handleCloseAction={() => setCanPreview(false)}
 			/>
 		)}
