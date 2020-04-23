@@ -36,6 +36,9 @@ const PdfPreview = ({ fileObject, handleCloseAction }) => (
 				<div className="file-preview">
           file preview
 				</div>
+				<div className="kt-bg-shadow">
+					{/* controls */}
+				</div>
 			</div>
 		</div>
 	</div>

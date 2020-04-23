@@ -31,20 +31,25 @@
 
 .file-item__cta-tool-tip::after {
   content: attr(attr-data);
+  background: var(--kt-dark);
+  color: var(--kt-white);
   position: absolute;
   visibility: hidden;
   left: 0;
   top: 30px;
-  // bottom: -25px;
-  color: var(--kt-dark);
+  padding: 2px 5px;
+  border-radius: 4px;
   font-weight: 500;
-  width: 100%;
+  font-size: 0.9em;
+  min-height: 100%;
+  // width: 100%;
   
 }
 
 .file-item__cta-tool-tip:hover::after {
   visibility: visible;
 }
+
 .file-item__cta-logo {
   margin-top: 7px;
 }
