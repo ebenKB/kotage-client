@@ -123,6 +123,10 @@ ul.custom {
   position: relative;
 }
 
+.logo.big {
+  width: 30px;
+}
+
 .logo.medium {
   width: 20px;
   height: auto;
@@ -138,6 +142,11 @@ ul.custom {
 
 .logo.dark {
   fill: var(--kt-dark);
+}
+
+.dark.logo.invert {
+  background-color: var(--kt-dark);
+  fill: var(--kt-white);
 }
 
 .auto-height {
@@ -232,6 +241,10 @@ svg.faint {
 .light-text,
 .kt-transparent.ui.button.light-text {
   font-weight: 300;
+}
+
+.flex {
+  display: flex;
 }
 
 .flex-center {

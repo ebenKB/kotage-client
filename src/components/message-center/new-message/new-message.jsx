@@ -8,7 +8,7 @@ import MainContent from '../../kt-main-content/mainContent';
 import KtTextArea from '../../form-fields/textarea/textarea';
 import KtWrapper from '../../kt-wrapper/kt-wrapper';
 import Help from '../../../utils/requisitions/new/help';
-// import { ReactComponent as Attachment } from '../../../svg/attach.svg';
+import Input from '../../form-fields/input/input';
 import { createRfpMessage } from '../../../redux/actions/rfpActions';
 import Dropzone from '../../dropzone/dropzone';
 import Divider from '../../kt-divider/divider';
@@ -18,6 +18,7 @@ const NewMessage = ({ createNewMessage, isLoading, currentProposalId }) => {
   const [message, setMessage] = useState(
     {
       rfp_id: currentProposalId,
+      subject: 'ff',
       message: '',
       files: [],
     },
@@ -29,23 +30,27 @@ const NewMessage = ({ createNewMessage, isLoading, currentProposalId }) => {
     }
   };
 
-  // const handleFileChange = (e) => {
-  //   setFiles(e.target.files);
-  //   console.log(files);
-  // };
-
   const handleTextChange = (e) => {
-    setMessage((state) => ({
-      ...state,
+    setMessage({
+      ...message,
       message: e,
-    }));
+    });
+  };
+
+  const handleInputChange = (e) => {
+    e.preventDefault();
+    const { name, value } = e.target;
+    setMessage({
+      ...message,
+      [name]: value,
+    });
   };
 
   const setFiles = (files) => {
-    setMessage((state) => ({
-      ...state,
+    setMessage({
+      ...message,
       files,
-    }));
+    });
   };
 
   const handleSubmit = () => {
@@ -62,38 +67,23 @@ const NewMessage = ({ createNewMessage, isLoading, currentProposalId }) => {
 			header="New message"
 		>
 			<p>Messages you send about this RFP will be sent to all your suppliers.</p>
+			<div>
+				<Input
+					className="fluid m-b-10"
+					type="text"
+					placeholder="Subject"
+					onChange={(e) => handleInputChange(e)}
+					name="subject"
+					value={message.subject}
+				/>
+			</div>
 			<KtTextArea
+				placeholder="Message"
 				rows={10}
 				classes="message-box fluid kt-bg-shadow"
 				onChange={handleTextChange}
 				value={message.message}
 			/>
-			{/* <div className="attachment-wrapper m-t-10">
-				<div className="flex-center">
-					<div className="attachment-label">
-						<Button className="kt-transparent">
-							<Attachment className="attachment medium logo clickable" />
-						</Button>
-					</div>
-					<Input
-						type="file"
-						multiple
-						accept="image/*,.pdf"
-						name="attachment"
-						className="attachment"
-						onChange={(e) => handleFileChange(e)}
-					/>
-					<div>
-						{files && (
-							<span>
-								<span className="bold">{files.length}</span>
-								{' '}
-                file(s) attached
-							</span>
-						)}
-					</div>
-				</div>
-			</div> */}
 			<Divider type="faint" title="Attachment" classes="m-b-20 m-t-10" />
 			<Dropzone
 				onFilesChange={(files) => setFiles(files)}

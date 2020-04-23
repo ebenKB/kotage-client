@@ -24,6 +24,7 @@ import QuestionListGroup from '../../../question-list-group/question-list-group'
 import TimelineItem from '../../../timeline-item/timeline-item';
 import StakeholderGroup from '../../../stakeholder-group/stakeholder-group';
 import DocumentListGroup from '../../../document-list-group/document-list-group';
+import RfpTitle from '../../../snippets/rfp-title/rfp-title';
 
 const ShowRfp = ({ match, getProposal, proposal }) => {
   const { params } = match;
@@ -35,16 +36,11 @@ const ShowRfp = ({ match, getProposal, proposal }) => {
   // eslint-disable-next-line react/no-danger
   const getDescription = () => (<div dangerouslySetInnerHTML={{ __html: proposal.description }} />
   );
-  const getTitle = () => <div className="very-big-caption">{proposal.title}</div>;
-
   return (
 	<MainContent
 		help={Help}
 	>
-		<div className="m-t-20 m-b-20">
-			{getTitle()}
-			<Divider type="thick" title="" classes="p-b-10 p-t-4" />
-		</div>
+		<RfpTitle classes="m-t-20 m-b-20" />
 		<KtWrapper
 			header=""
 			canPerform

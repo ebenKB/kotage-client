@@ -5,27 +5,6 @@
 .message-wrapper a {
   color: var(--kt-dark);
 }
-.message-preview {
-  position: absolute;
-  background: var(--kt-white);
-  min-height: 100%;
-  top: 0;
-  left: 0;
-  padding: 40px;
-  width: 100%;
-
-  .message-preview__body  {
-    padding: 20px;
-  }
-
-  svg {
-    fill: var(--kt-light);
-  }
-
-  .message-preview__body p {
-    line-height: 1.7;
-  }
-}
 
 .message-center__heading {
   padding: 15px;

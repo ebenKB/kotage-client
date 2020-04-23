@@ -158,16 +158,16 @@ export const getUsers = () => async (dispatch, getState) => {
   }
 };
 
-// export const getUser = (id, tenant_id) => (new Promise((resolve, reject) => {
-//   if (id && tenant_id) {
-//     Axios.get(`/v1/${tenant_id}/users/${id}`)
-//       .then((data) => {
-//         console.log(data);
-//         resolve(data);
-//       })
-//       .catch((err) => reject((err)));
-//   }
-// }));
+export const getUser = (id, tenant_id) => (new Promise((resolve, reject) => {
+  if (id && tenant_id) {
+    Axios.get(`/v1/${tenant_id}/users/${id}`)
+      .then((data) => {
+        const { user } = data.data;
+        resolve(user);
+      })
+      .catch((err) => reject((err)));
+  }
+}));
 
 /**
  * This function retrieves invitations
