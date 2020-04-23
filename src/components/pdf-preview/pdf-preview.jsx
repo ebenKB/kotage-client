@@ -7,6 +7,7 @@ import CancelOutlinedIcon from '@material-ui/icons/CancelOutlined';
 import DownloadIcon from '@material-ui/icons/GetApp';
 import MessageHeaderCaption from '../snippets/message-header-caption/message-header-caption';
 import { getFileNameAndExtension } from '../../utils/app/file';
+import 'react-pdf/dist/Page/AnnotationLayer.css';
 
 const PdfPreview = ({ fileObject, user, handleCloseAction }) => {
   const [enlarge, setEnlarge] = useState(true);
