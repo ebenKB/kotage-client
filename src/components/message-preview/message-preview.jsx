@@ -8,7 +8,6 @@ import { connect } from 'react-redux';
 import { Link, useParams, useHistory } from 'react-router-dom';
 import ReplyRoundedIcon from '@material-ui/icons/ReplyRounded';
 import AttachmentIcon from '@material-ui/icons/Attachment';
-import LoopRoundedIcon from '@material-ui/icons/LoopRounded';
 import MainContent from '../kt-main-content/mainContent';
 import KtWrapperLite from '../kt-wrapper-lite/kt-wrapper-lite';
 import { ReactComponent as BackArrow } from '../../svg/return.svg';
@@ -144,26 +143,25 @@ const MessagePreview = ({
 	>
 		<RfpTitle classes="m-t-20" />
 		<KtWrapperLite>
-			<div className="message-preview">
-				<div className="flex-center">
-					<Button className="kt-transparent" onClick={goBack}>
-						<BackArrow className="m-r-20 medium light logo auto-height" />
-					</Button>
-					<div>
-						<Link to={`/rfx/proposal/${id}/message/create/new`} className="file-item__cta-tool-tip" attr-data="Reply">
-							<ReplyRoundedIcon className="m-r-5 medium dark logo" />
-						</Link>
-					</div>
-					<div className="flex-center kt-transparent m-l-10 file-item__cta-tool-tip" attr-data="Resend">
-						<Button
-							className="kt-transparent"
-							content={<LoopRoundedIcon className="medium dark logo" />}
-						/>
-					</div>
+			<div className="flex-center">
+				<Button className="kt-transparent" onClick={goBack}>
+					<BackArrow className="m-r-20 medium light logo auto-height" />
+				</Button>
+				<div className="cta circle hover">
+					<Link to={`/rfx/proposal/${id}/message/create/new`}>
+						<div className="flex-center kt-transparent file-item__cta-tool-tip" attr-data="Reply">
+							<ReplyRoundedIcon className="m-r-5 medium dark logo auto-height" />
+						</div>
+					</Link>
 				</div>
-				<Divider type="faint" />
+				<div className="flex-center kt-transparent m-l-10 file-item__cta-tool-tip" attr-data="Resend message">
+					<Button className="kt-transparent" content="resend" />
+				</div>
+			</div>
+			<div className="message-preview">
+				<Divider type="faint" heading="Heading is here" />
 				{message && (
-					<div className="m-t-20 message-preview__body kt-bg-shadow">
+					<div className="m-t-20 message-preview__body kt-bg-shadoww">
 						<h3 className="dark">Message subject is here</h3>
 						<div className="flex">
 							{user && (<UsernameWithInitialsLabel user={user} />)}
