@@ -190,9 +190,10 @@ class MessagePreview extends React.Component {
 							{ signedAttachments.length !== files.length && (
 								<Loader
 									active
+									size="tiny"
 									inline
 									content={(
-										<span>
+										<span className="sm-caption">
                       Loading
                       &nbsp;
 											{signedAttachments.length - files.length}
