@@ -17,19 +17,25 @@ const PdfPreview = ({ fileObject, handleCloseAction }) => (
 						<a
 							href={fileObject.staticUrl}
 							download={getFileNameAndExtension(fileObject.file_url)}
-							className="kt-transparent flex-center float-r m-r-20"
+							className="kt-transparent flex-center float-r m-r-20 kt-item__cta-tool-tip"
+							attr-data="Download"
 						>
 							<DownloadIcon className="medium logo dark auto-height" />
 						</a>
 					)}
-					<Button
-						default
-						size="tiny"
-						icon={<CancelOutlinedIcon className="big logo dark" />}
-						className="kt-transparent flex-center"
-						content=""
-						onClick={handleCloseAction}
-					/>
+					<div
+						className="kt-item__cta-tool-tip"
+						attr-data="Close"
+					>
+						<Button
+							default
+							size="tiny"
+							icon={<CancelOutlinedIcon className="big logo dark" />}
+							className="kt-transparent flex-center"
+							content=""
+							onClick={handleCloseAction}
+						/>
+					</div>
 				</div>
 			</div>
 			<div className="file-preview-content__body">

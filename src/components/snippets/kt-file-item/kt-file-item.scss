@@ -25,32 +25,6 @@
   position: relative;
 }
 
-.file-item__cta-tool-tip {
-  position: relative;
-  width: 100%;
-}
-
-.file-item__cta-tool-tip::after {
-  content: attr(attr-data);
-  background: var(--kt-dark);
-  color: var(--kt-white);
-  position: absolute;
-  visibility: hidden;
-  left: 0;
-  top: 30px;
-  padding: 2px 5px;
-  border-radius: 4px;
-  font-weight: 500;
-  font-size: 0.9em;
-  min-height: 100%;
-  // min-width: 100%;
-  
-}
-
-.file-item__cta-tool-tip:hover::after {
-  visibility: visible;
-}
-
 .file-item__cta-logo {
   margin-top: 7px;
 }

@@ -145,12 +145,12 @@ class MessagePreview extends React.Component {
 				</Button>
 				<div className="cta circle hover">
 					<Link to={`/rfx/proposal/${id}/message/create/new`}>
-						<div className="flex-center kt-transparent file-item__cta-tool-tip" attr-data="Reply">
+						<div className="flex-center kt-transparent kt-item__cta-tool-tip" attr-data="Reply">
 							<ReplyIcon className="m-r-5 small dark logo auto-height" />
 						</div>
 					</Link>
 				</div>
-				<div className="flex-center kt-transparent m-l-10 file-item__cta-tool-tip" attr-data="Resend message">
+				<div className="flex-center kt-transparent m-l-10 kt-item__cta-tool-tip" attr-data="Resend message">
 					<Button className="kt-transparent" content={<ResendIcon className="small dark logo auto-height" />} />
 				</div>
 			</div>

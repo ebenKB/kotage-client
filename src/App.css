@@ -274,11 +274,37 @@ svg.faint {
 .items-group.underline.bottom > div {
   border-bottom: 1px solid rgba(212, 212, 213, 0.7);
 }
+
 /* general divider for application level */
 .user-invitation .label.kt-success,
 .kt-divider__wrapper .label.kt-success {
   background: var(--kt-green__very-light);
   color: var(--kt-white);
+}
+
+/* Tooltip  */
+.kt-item__cta-tool-tip {
+  position: relative;
+  width: 100%;
+}
+
+.kt-item__cta-tool-tip::after {
+  content: attr(attr-data);
+  background: var(--kt-dark);
+  color: var(--kt-white);
+  position: absolute;
+  visibility: hidden;
+  left: 0;
+  top: 30px;
+  padding: 2px 5px;
+  border-radius: 4px;
+  font-weight: 500;
+  font-size: 0.9em;
+  min-height: 100%;
+} /* Tooltip */
+
+.kt-item__cta-tool-tip:hover::after {
+  visibility: visible;
 }
 
 /* media queries  */
