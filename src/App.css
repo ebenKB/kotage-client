@@ -144,6 +144,10 @@ ul.custom {
   fill: var(--kt-dark);
 }
 
+.logo.light {
+  fill: var(--kt-light);
+}
+
 .dark.logo.invert {
   background-color: var(--kt-dark);
   fill: var(--kt-white);

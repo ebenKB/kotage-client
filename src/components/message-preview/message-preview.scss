@@ -11,10 +11,6 @@
     // padding: 30px;
   }
 
-  svg.light {
-    fill: var(--kt-light);
-  }
-
   .message-preview__body p {
     line-height: 1.7;
   }
@@ -26,6 +22,7 @@
 
 .file-item__wrapper {
   display: flex;
+  flex-wrap: wrap;
 }
 
 .file-item__wrapper .file-item{
