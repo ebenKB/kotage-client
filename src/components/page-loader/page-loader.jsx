@@ -1,8 +1,9 @@
 import React from 'react';
 import { ReactComponent as Loader } from '../../svg/loader.svg';
+import './loader.scss';
 
 const PageLoader = () => (
-	<div className="text-center">
+	<div className="loader text-center">
 		<Loader />
 	</div>
 );
