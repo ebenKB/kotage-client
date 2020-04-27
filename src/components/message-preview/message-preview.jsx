@@ -150,7 +150,7 @@ class MessagePreview extends React.Component {
 						</div>
 					</Link>
 				</div>
-				<div className="flex-center kt-transparent m-l-10 kt-item__cta-tool-tip" attr-data="Resend message">
+				<div className="flex-center kt-transparent m-l-10 kt-item__cta-tool-tip" attr-data="Resend">
 					<Button className="kt-transparent" content={<ResendIcon className="small dark logo auto-height" />} />
 				</div>
 			</div>

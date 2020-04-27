@@ -13,7 +13,7 @@ import CreateNewTenant from './components/forms/tenant/create-new-tenant';
 import CreateUser from './components/forms/user/create-user/create-user';
 import ResetPassword from './components/forms/user/reset-password/reset-password';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
-import KtLoader from './components/loader/loader';
+import PageLoader from './components/page-loader/page-loader';
 import MainContent from './components/kt-main-content/mainContent';
 
 const Home = lazy(() => import('./pages/home'));
@@ -32,6 +32,7 @@ const NewMessage = lazy(() => import('./components/message-center/new-message/ne
 const PreviewMessage = lazy(() => import('./components/message-preview/message-preview'));
 const InviteSupplier = lazy(() => import('./components/invite-supplier/invite-supplier'));
 const RFxNew = lazy(() => import('./components/rfx/rfx-new/rfx-new'));
+
 
 const routes = [
   {
@@ -155,7 +156,7 @@ function App() {
 			<Suspense fallback={(
 				<Layout>
 					<MainContent>
-						<KtLoader />
+						<PageLoader />
 					</MainContent>
 				</Layout>
 			)}

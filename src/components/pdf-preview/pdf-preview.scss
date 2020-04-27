@@ -1,5 +1,6 @@
 .file-preview__wrapper {
   position: relative;
+  z-index: 100;
 }
 
 .file-preview__content {
@@ -11,11 +12,12 @@
   background: var(--kt-white);
   margin-left: 2%;
   margin-right: 2%;
-  z-index: 99;
+  z-index: 100;
 
   .file-preview {
     background: var(--kt-dark);
     color:  var(--kt-white);
+    overflow-y: scroll;
   }
 
   .preview-controls {
