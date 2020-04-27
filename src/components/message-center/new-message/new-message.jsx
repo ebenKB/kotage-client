@@ -18,7 +18,7 @@ const NewMessage = ({ createNewMessage, isLoading, currentProposalId }) => {
   const [message, setMessage] = useState(
     {
       rfp_id: currentProposalId,
-      subject: 'ff',
+      subject: '',
       message: '',
       files: [],
     },
