@@ -21,7 +21,6 @@ import KtFileItem from '../snippets/kt-file-item/kt-file-item';
 import './message-preview.scss';
 import { prepareFileForDownload, downloadMultipleZip, getFileSignedUrl } from '../../utils/app/file';
 
-
 class MessagePreview extends React.Component {
   constructor(props) {
     super(props);
@@ -30,6 +29,7 @@ class MessagePreview extends React.Component {
       files: [],
       hasPreparedFiles: false,
       hasSignedUrls: false,
+      error: null,
       signedAttachments: [],
       attachments: [
         {
@@ -107,8 +107,12 @@ class MessagePreview extends React.Component {
         }));
         if (i === (attachments.length - 1)) {
           this.setState((state) => ({ ...state, hasSignedUrls: true }));
-          this.prepareFilesSync();
-          this.setState((state) => ({ ...state, hasPrepareed: true }));
+          try {
+            this.prepareFilesSync();
+            this.setState((state) => ({ ...state, hasPrepareed: true }));
+          } catch (error) {
+            this.setState((state) => ({ ...state, error }));
+          }
         }
       }
     };
@@ -121,7 +125,7 @@ class MessagePreview extends React.Component {
       // eslint-disable-next-line react/prop-types
       const { id } = params;
       const {
-        files, user, signedAttachments,
+        files, user, signedAttachments, error,
       } = this.state;
 
       const { message } = this.props;
@@ -162,27 +166,6 @@ class MessagePreview extends React.Component {
 						<MessageHeaderCaption
 							user={user}
 						/>
-						{/* <h3 className="dark">Message subject is here</h3>
-						<div className="flex">
-							{user && (<UsernameWithInitialsLabel user={user} />)}
-							<div className="sm-caption m-b-20 m-l-8">
-								<div className="kt-primary">
-									{user && (
-										<span>
-											{user.firstname}
-											{' '}
-											{user.lastname}
-										</span>
-									)}
-								</div>
-								<span className="xsm-caption">Monday 22nd March 2020</span>
-								<div>4 suppliers received this message</div>
-							</div>
-						</div> */}
-						{/* <div className="flex-center">
-							<AttachmentIcon className="medium dark logo m-r-4" />
-							<div>{message.attachments && message.attachments.length}</div>
-						</div> */}
 						<p align="justify">{message.message}</p>
 						<Divider type="faint" classes="p-b-8 p-t-8" />
 						<div className="file-item__wrapper">
@@ -192,7 +175,7 @@ class MessagePreview extends React.Component {
 									user={user}
 								/>
 							))}
-							{ signedAttachments.length !== files.length && (
+							{ !error && signedAttachments.length !== files.length && (
 								<Loader
 									active
 									size="tiny"
