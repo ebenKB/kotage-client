@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom';
 import AttachmentIcon from '@material-ui/icons/Attachment';
 import MainContent from '../kt-main-content/mainContent';
 import KtWrapperLite from '../kt-wrapper-lite/kt-wrapper-lite';
+import MessageHeaderCaption from '../snippets/message-header-caption/message-header-caption';
 import { ReactComponent as BackArrow } from '../../svg/return.svg';
 import { ReactComponent as ResendIcon } from '../../svg/forward.svg';
 import { ReactComponent as ReplyIcon } from '../../svg/backward.svg';
@@ -16,10 +17,10 @@ import { findRfpMessageById } from '../../redux/actions/rfpActions';
 import Help from '../../utils/requisitions/new/help';
 import RfpTitle from '../snippets/rfp-title/rfp-title';
 import { getUser } from '../../redux/actions/userActions';
-import UsernameWithInitialsLabel from '../snippets/Username-with-initials-label/username-with-initials-label';
 import KtFileItem from '../snippets/kt-file-item/kt-file-item';
 import './message-preview.scss';
 import { prepareFileForDownload, downloadMultipleZip, getFileSignedUrl } from '../../utils/app/file';
+
 
 class MessagePreview extends React.Component {
   constructor(props) {
@@ -158,7 +159,10 @@ class MessagePreview extends React.Component {
 				<Divider type="faint" heading="Heading is here" />
 				{message && (
 					<div className="m-t-20 message-preview__body kt-bg-shadoww">
-						<h3 className="dark">Message subject is here</h3>
+						<MessageHeaderCaption
+							user={user}
+						/>
+						{/* <h3 className="dark">Message subject is here</h3>
 						<div className="flex">
 							{user && (<UsernameWithInitialsLabel user={user} />)}
 							<div className="sm-caption m-b-20 m-l-8">
@@ -174,7 +178,7 @@ class MessagePreview extends React.Component {
 								<span className="xsm-caption">Monday 22nd March 2020</span>
 								<div>4 suppliers received this message</div>
 							</div>
-						</div>
+						</div> */}
 						{/* <div className="flex-center">
 							<AttachmentIcon className="medium dark logo m-r-4" />
 							<div>{message.attachments && message.attachments.length}</div>
@@ -185,6 +189,7 @@ class MessagePreview extends React.Component {
 							{files && files.map((file) => (
 								<KtFileItem
 									fileObject={file}
+									user={user}
 								/>
 							))}
 							{ signedAttachments.length !== files.length && (

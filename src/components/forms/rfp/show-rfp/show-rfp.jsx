@@ -26,13 +26,18 @@ import StakeholderGroup from '../../../stakeholder-group/stakeholder-group';
 import DocumentListGroup from '../../../document-list-group/document-list-group';
 import RfpTitle from '../../../snippets/rfp-title/rfp-title';
 
-const ShowRfp = ({ match, getProposal, proposal }) => {
+const ShowRfp = ({
+  match, getProposal, proposal, history,
+}) => {
   const { params } = match;
   const { id } = params;
   useEffect(() => {
     getProposal(id);
   }, [id]);
 
+  const handleAction = () => {
+    history.push(`/rfx/proposal/${id}/edit`);
+  };
   // eslint-disable-next-line react/no-danger
   const getDescription = () => (<div dangerouslySetInnerHTML={{ __html: proposal.description }} />
   );
@@ -49,7 +54,7 @@ const ShowRfp = ({ match, getProposal, proposal }) => {
 			canFilter={false}
 			canPublish={false}
 			cancelUrl="/rfx"
-			handleAction={console.log('')}
+			handleAction={handleAction}
 		>
 			{/* <KtWrapperLite> */}
 			<div>
@@ -172,6 +177,7 @@ ShowRfp.propTypes = {
   match: PropTypes.object.isRequired,
   getProposal: PropTypes.func.isRequired,
   proposal: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
 };
 
 const mapDispatchToProps = {

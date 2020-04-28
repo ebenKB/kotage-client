@@ -9,7 +9,7 @@ const EditRFP = ({ proposal }) => (
 		<RfpEditor
 			proposal={proposal}
 			options={{ type: 'edit', heading: 'Edit Proposal' }}
-  />
+		/>
 	</div>
 );
 

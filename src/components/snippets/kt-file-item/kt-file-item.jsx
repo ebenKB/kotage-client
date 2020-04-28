@@ -18,7 +18,7 @@ import {
 } from '../../../utils/app/fileTypes';
 
 
-const KtFileItem = ({ fileObject }) => {
+const KtFileItem = ({ fileObject, user }) => {
   const [canPreview, setCanPreview] = useState(false);
 
   const getDownloadLink = () => (
@@ -80,6 +80,7 @@ const KtFileItem = ({ fileObject }) => {
 		{canPreview && (
 			<PdfPreview
 				fileObject={fileObject}
+				user={user}
 				handleCloseAction={() => setCanPreview(false)}
 			/>
 		)}
@@ -89,6 +90,7 @@ const KtFileItem = ({ fileObject }) => {
 
 KtFileItem.propTypes = {
   fileObject: PropTypes.object.isRequired,
+  user: PropTypes.object.isRequired,
 };
 
 export default KtFileItem;
