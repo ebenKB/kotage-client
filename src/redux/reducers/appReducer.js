@@ -1,4 +1,4 @@
-import { SET_APP_NOTIFICATION, CLEAR_NOTIFICATION } from '../types/appTypes';
+import { SET_APP_NOTIFICATION, CLEAR_NOTIFICATION, GET_CURRENCY_OPTIONS } from '../types/appTypes';
 
 const initialState = {
   notification: null,
@@ -42,6 +42,13 @@ export default (state = initialState, action) => {
       return {
         ...state,
         notification: null,
+      };
+    }
+
+    case GET_CURRENCY_OPTIONS: {
+      return {
+        ...state,
+        currencyOptions: action.payload,
       };
     }
 

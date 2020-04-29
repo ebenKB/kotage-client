@@ -41,6 +41,7 @@ const FormGroup = ({
 		search
 		selection
 		options={options}
+		defaultValue={rest.defaultValue}
 		className={`md-dropdown ${rest.classes}`}
 		onChange={(e, data) => rest.onChange(data.value)}
 	/>

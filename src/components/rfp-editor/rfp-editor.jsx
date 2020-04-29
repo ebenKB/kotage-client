@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import shortid from 'shortid';
 import { ValidatorForm } from 'react-form-validator-core';
 // import { Button } from 'semantic-ui-react';
+import { getCurrencyOptions } from '../../redux/actions/appActions';
 import MainContent from '../kt-main-content/mainContent';
 import KtWrapper from '../kt-wrapper/kt-wrapper';
 import Divider from '../kt-divider/divider';
@@ -31,28 +32,39 @@ class RfpEditor extends React.Component {
       type: options.type,
       heading: options.heading,
       shouldFetchData: false,
-      currencyOptions: [
-        {
-          key: '1',
-          text: 'GHC',
-          value: '1',
-        },
-        {
-          key: '2',
-          text: 'USD',
-          value: '2',
-        },
-      ],
+      // currencyOptions: [
+      //   {
+      //     key: '1',
+      //     text: 'GHC',
+      //     value: '1',
+      //   },
+      //   {
+      //     key: '2',
+      //     text: 'USD',
+      //     value: '2',
+      //   },
+      // ],
     };
+  }
+
+  componentDidMount() {
+    console.log('The currency has mounted');
+    if (!this.props.currencies) {
+      try {
+        this.props.getAllCurrencies();
+      } catch (error) {
+        console.log('an error occured', error);
+      }
+    }
   }
 
   render() {
     const {
-      newProposal, currencyOptions, shouldFetchData, type, heading,
+      newProposal, shouldFetchData, type, heading,
     } = this.state;
 
     const {
-      loading, publishAction,
+      loading, publishAction, currencies,
     } = this.props;
 
     const handleSubmit = () => {
@@ -300,7 +312,8 @@ class RfpEditor extends React.Component {
 							labelName="event_type"
 							classes="small"
 							center
-							options={currencyOptions}
+							options={currencies}
+							defaultValue={newProposal.currency.id}
 							onChange={(id) => setCurrency(id)}
 						/>
 					</div>
@@ -376,10 +389,12 @@ const mapStateToProps = (state) => ({
   newProposal: state.rfp.newProposal,
   tenantUid: state.tenant.currentTenant.account_id,
   loading: state.rfp.loading,
+  currencies: state.app.currencyOptions,
 });
 
 const mapDispatchToProps = {
   createNewProposal: createProposal,
+  getAllCurrencies: getCurrencyOptions,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(RfpEditor);
