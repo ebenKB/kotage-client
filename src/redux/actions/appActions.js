@@ -42,7 +42,6 @@ export const getCurrencyOptions = () => async (dispatch, getState) => {
   });
 };
 
-
 // export const downloadFile = (url) => (dispatch) => new Promise((resolve) => {
 //   Axios({
 //     url,
