@@ -45,6 +45,28 @@ class MessagePreview extends React.Component {
           file_url: 'https://ebenkb.s3.us-east-2.amazonaws.com/kotage/e62b652c4b/rfx/O2_cE4-O1/PIK.png',
         },
       ],
+      inbox: [
+        {
+          id: 1,
+          subject: 'Deadline review',
+          message: 'Please consider reviewing the deadline for the final proposal submission',
+        },
+        {
+          id: 1,
+          subject: 'Deadline review',
+          message: 'Please consider reviewing the deadline for the final proposal submission',
+        },
+        {
+          id: 1,
+          subject: 'Deadline review',
+          message: 'Please consider reviewing the deadline for the final proposal submission. This is because the current rise in prices has affected our discounts with our partners and we are looking for a extension to do new bargians.',
+        },
+        {
+          id: 1,
+          subject: 'Deadline review',
+          message: 'Please consider reviewing the deadline for the final proposal submission',
+        },
+      ],
     };
   }
 
@@ -66,7 +88,11 @@ class MessagePreview extends React.Component {
 
     if (!hasPreparedFiles) {
       if (!hasSignedUrls) {
-        this.signFileUrls();
+        try {
+          this.signFileUrls();
+        } catch (error) {
+          this.setState((state) => ({ ...state, error }));
+        }
       }
     }
 
@@ -107,12 +133,8 @@ class MessagePreview extends React.Component {
         }));
         if (i === (attachments.length - 1)) {
           this.setState((state) => ({ ...state, hasSignedUrls: true }));
-          try {
-            this.prepareFilesSync();
-            this.setState((state) => ({ ...state, hasPrepareed: true }));
-          } catch (error) {
-            this.setState((state) => ({ ...state, error }));
-          }
+          this.prepareFilesSync();
+          this.setState((state) => ({ ...state, hasPrepareed: true }));
         }
       }
     };

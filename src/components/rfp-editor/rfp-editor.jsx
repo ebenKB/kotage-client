@@ -352,54 +352,6 @@ class RfpEditor extends React.Component {
 							deleteSupplier={(id) => deleteSupplier(id)}
 							addSupplier={(suppliers) => addSuppliers(suppliers)}
 						/>
-						{/* <div className="flex-inline m-t-30 m-b-30">
-							<div>Open your supplier directory to add suppliers</div>
-							<div className="">
-								<Button
-									onClick={openSupplierDirectory}
-									className="flex-center
-                  kt-transparent kt-primary clickable m-t-20 kt-primary bold sm-caption flex-center"
-								>
-									<span className="kt-primary">Open Supplier Directory</span>
-								</Button>
-								{canShowSuplliers && (
-									<FloatingSupplierList
-										isVisible={canShowSuplliers}
-										closeForm={hideSuppliers}
-										handleAction={(suppliers) => addSuppliers(suppliers)}
-									/>
-								)}
-							</div>
-						</div>
-						{newProposal.suppliers && newProposal.suppliers.length > 0 && (
-							<Fragment>
-								<div>
-									<div className="bold faint-caption m-t-8 m-b-8">
-										{ newProposal.suppliers.length }
-										{' '}
-                    ADDED SUPPLIER(S)
-									</div>
-									<Divider type="thick" title="" classes="m-t-8" isNumbered={false} />
-									<div className="xsm-caption supplier-content__heading faint-caption m-t-8 m-b-8">
-										<div>
-											<div>SUPPLIER NAME</div>
-										</div>
-										<div>CONTACT</div>
-									</div>
-									<Divider type="thick" title="" classes="m-t-8" isNumbered={false} />
-									<div className="items-group underline bottom">
-										{newProposal.suppliers && (newProposal.suppliers.map((supplier) => (
-											<SupplierListItem
-												isInline
-												supplier={supplier}
-												key={supplier.id}
-												deleteSupplier={(id) => deleteSupplier(id)}
-											/>
-										)))}
-									</div>
-								</div>
-							</Fragment>
-						)} */}
 					</div>
 					<Divider type="thick" title="Invite Stakeholders" classes="m-t-40" isNumbered number="5" />
 					{newProposal.stakeholders && (
