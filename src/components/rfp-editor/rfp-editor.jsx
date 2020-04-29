@@ -32,6 +32,7 @@ class RfpEditor extends React.Component {
       type: options.type,
       heading: options.heading,
       shouldFetchData: false,
+<<<<<<< HEAD
       // currencyOptions: [
       //   {
       //     key: '1',
@@ -44,6 +45,25 @@ class RfpEditor extends React.Component {
       //     value: '2',
       //   },
       // ],
+=======
+      currencyOptions: [
+        {
+          key: 1,
+          text: 'GHC',
+          value: 1,
+        },
+        {
+          key: 2,
+          text: 'USD',
+          value: '2',
+        },
+        {
+          key: 3,
+          text: 'gbp',
+          value: 3,
+        },
+      ],
+>>>>>>> update dropdown
     };
   }
 
@@ -292,6 +312,7 @@ class RfpEditor extends React.Component {
 							placeholder="How would you describe the quote?"
 							label="Description"
 							labelName="decription"
+							defaultValue={newProposal.description}
 							onChange={setDescription}
 						/>
 					</div>
@@ -312,8 +333,8 @@ class RfpEditor extends React.Component {
 							labelName="event_type"
 							classes="small"
 							center
-							options={currencies}
-							defaultValue={newProposal.currency.id}
+							options={currencyOptions}
+							defaultValue={1}
 							onChange={(id) => setCurrency(id)}
 						/>
 					</div>

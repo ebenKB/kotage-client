@@ -23,14 +23,14 @@ const Stakeholders = ({
 
   const options = [
     {
-      key: '1',
+      key: 1,
       text: 'Read only',
-      value: '1',
+      value: 1,
     },
     {
-      key: '2',
+      key: 2,
       text: 'Read & Write',
-      value: '2',
+      value: 2,
     },
   ];
 
@@ -94,10 +94,11 @@ const Stakeholders = ({
 					<Dropdown
 						className="fluid"
 						selection
-						default="Read"
+						defaultValue={1}
 						options={options}
 						placeholder="Permission"
 						onChange={(e, data) => { handlePermissionChange(data); }}
+						closeOnChange
 					/>
 				</div>
 				<div>

@@ -16,7 +16,14 @@ import InputValidator from '../input-validator/input-validator';
 import RichTextEditor from '../../rich-text-editor/rich-text-editor';
 
 const FormGroup = ({
-  type, placeholder, label, labelName, center, classes = '', inline = true, options = [
+  type,
+  placeholder,
+  label,
+  labelName,
+  center,
+  classes = '',
+  inline = true,
+  options = [
     {
       key: '1',
       text: 'Emmanuel',
@@ -40,6 +47,7 @@ const FormGroup = ({
 		placeholder={placeholder}
 		search
 		selection
+		defaultValue={rest.defaultValue}
 		options={options}
 		defaultValue={rest.defaultValue}
 		className={`md-dropdown ${rest.classes}`}

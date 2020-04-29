@@ -1,15 +1,39 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { PropTypes } from 'prop-types';
-import { convertToRaw } from 'draft-js';
+import {
+  convertToRaw,
+  convertFromHTML,
+  ContentState,
+  EditorState,
+} from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
 import draftToHtml from 'draftjs-to-html';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import './rich-text-editor.scss';
 
-const RichTextEditor = ({ onChange }) => {
+const RichTextEditor = ({ onChange, defaultValue }) => {
   const [editorState, setEditorState] = useState();
   const [htmlContent, setHtmlContent] = useState();
+  const [hasInit, setHasInit] = useState(false);
 
+  // set the default value to show in the rich text editor
+  const prepareDefaultValue = () => {
+    const blocksFromHTML = convertFromHTML(defaultValue);
+    const state = ContentState.createFromBlockArray(
+      blocksFromHTML.contentBlocks,
+      blocksFromHTML.entityMap,
+    );
+    setEditorState(EditorState.createWithContent(state));
+  };
+
+  useEffect(() => {
+    if (!hasInit && defaultValue) {
+      prepareDefaultValue();
+      setHasInit(true);
+    }
+  });
+
+  // listen to changes from the editor state
   const handleEditorChange = (e) => {
     setEditorState(() => e);
     setHtmlContent(() => draftToHtml(convertToRaw(e.getCurrentContent())));
@@ -54,6 +78,7 @@ const RichTextEditor = ({ onChange }) => {
 
 RichTextEditor.propTypes = {
   onChange: PropTypes.func.isRequired,
+  defaultValue: PropTypes.string.isRequired,
 };
 
 export default RichTextEditor;
