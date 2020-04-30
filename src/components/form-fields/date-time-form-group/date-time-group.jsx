@@ -7,7 +7,13 @@ import './date-time-group.scss';
 // import Input from '../input/input';
 
 const DateTimeGroup = ({
-  labelName, label, onDateChange, onTimeChange, dateValue,
+  labelName,
+  label,
+  onDateChange,
+  onTimeChange,
+  dateValue,
+  timeValue,
+  isDisablePast,
 }) => (
 	<div className="date-time-group">
 		<label htmlFor={labelName}>
@@ -16,6 +22,7 @@ const DateTimeGroup = ({
 		<div className="date-group__content">
 			<div>
 				<DatePicker
+					isDisablePast={isDisablePast}
 					handleChange={(data) => onDateChange(data)}
 					value={dateValue}
 				/>
@@ -23,6 +30,8 @@ const DateTimeGroup = ({
 			<div>
 				<TimePicker
 					handleChange={(data) => onTimeChange(data)}
+					dateValue={dateValue}
+					timeValue={timeValue}
 				/>
 			</div>
 		</div>

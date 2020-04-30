@@ -76,7 +76,8 @@ export const getTimeOnly = (date) => {
 };
 
 /**
- * formate date to month-day-year e.g mm-dd-yyyy
+ *
+ * formate date to year-month-day e.g yyyy-mm-dd
  * @param {*} dateObj the date to format
  */
 export const formatDate = (dateObj) => {
@@ -91,7 +92,8 @@ export const formatDate = (dateObj) => {
     if (day < 10) {
       day = `0${day}`;
     }
-    return `${month}-${day}-${year}`;
+    // return `${month}-${day}-${year}`;
+    return `${year}-${month}-${day}`;
   }
   return dateObj;
 };

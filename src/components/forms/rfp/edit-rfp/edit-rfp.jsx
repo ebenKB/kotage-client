@@ -8,6 +8,7 @@ const EditRFP = ({ proposal }) => (
 	<div>
 		<RfpEditor
 			proposal={proposal}
+			type="edit" // use type to know whether to track and compare changes to the form
 			options={{ type: 'edit', heading: 'Edit Proposal' }}
 		/>
 	</div>

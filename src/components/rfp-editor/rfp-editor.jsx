@@ -32,7 +32,6 @@ class RfpEditor extends React.Component {
       type: options.type,
       heading: options.heading,
       shouldFetchData: false,
-<<<<<<< HEAD
       // currencyOptions: [
       //   {
       //     key: '1',
@@ -45,30 +44,10 @@ class RfpEditor extends React.Component {
       //     value: '2',
       //   },
       // ],
-=======
-      currencyOptions: [
-        {
-          key: 1,
-          text: 'GHC',
-          value: 1,
-        },
-        {
-          key: 2,
-          text: 'USD',
-          value: '2',
-        },
-        {
-          key: 3,
-          text: 'gbp',
-          value: 3,
-        },
-      ],
->>>>>>> update dropdown
     };
   }
 
   componentDidMount() {
-    console.log('The currency has mounted');
     if (!this.props.currencies) {
       try {
         this.props.getAllCurrencies();
@@ -255,22 +234,6 @@ class RfpEditor extends React.Component {
       }
     };
 
-    // use this function to open the floating supplier directory to select suppliers
-    // const openSupplierDirectory = () => {
-    //   this.setState((state) => ({
-    //     ...state,
-    //     canShowSuplliers: true,
-    //   }));
-    // };
-
-    // use this function to hide the floating suppplier list items
-    // const hideSuppliers = () => {
-    //   this.setState((state) => ({
-    //     ...state,
-    //     canShowSuplliers: false,
-    //   }));
-    // };
-
     return (
 	<ValidatorForm
 		ref={this.myRef}
@@ -333,16 +296,19 @@ class RfpEditor extends React.Component {
 							labelName="event_type"
 							classes="small"
 							center
-							options={currencyOptions}
-							defaultValue={1}
+							options={currencies}
+							defaultValue={newProposal.defaultValue}
 							onChange={(id) => setCurrency(id)}
 						/>
 					</div>
 					<Divider type="thick" title="Timeline" classes="m-t-40" isNumbered number="2" />
 					<div className="form-item m-t-30">
 						<DateTimeGroup
+							isDisablePast={type === 'create'}
 							placeholder="Date"
 							label="Bid Deadline *"
+							dateValue={newProposal.bid_deadline_date}
+							timeValue={newProposal.bid_deadline_time}
 							center
 							onDateChange={(date) => setDate(date, 'bid_deadline_date')}
 							onTimeChange={(time) => setTime(time, 'bid_deadline_time')}
@@ -350,19 +316,24 @@ class RfpEditor extends React.Component {
 					</div>
 					<div className="form-item m-t-30">
 						<DateTimeGroup
+							isDisablePast={type === 'create'}
 							placeholder="Date"
 							label="RSVP Deadline"
 							center
+							dateValue={newProposal.rsvp_deadline_date}
+							timeValue={newProposal.rsvp_deadline_time}
 							onDateChange={(date) => setDate(date, 'rsvp_deadline_date')}
 							onTimeChange={(time) => setTime(time, 'rsvp_deadline_time')}
 						/>
 					</div>
 					<div className="form-item m-t-30">
 						<DateTimeGroup
-							disablePast
+							isDisablePast={type === 'create'}
 							placeholder="Date"
 							label="Question Deadline"
 							center
+							dateValue={newProposal.question_deadline_date}
+							timeValue={newProposal.question_deadline_time}
 							onDateChange={(date) => setDate(date, 'question_deadline_date')}
 							onTimeChange={(time) => setTime(time, 'question_deadline_time')}
 						/>

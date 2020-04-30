@@ -26,6 +26,7 @@ export default function MaterialUIPickers() {
 				id="date-picker-dialog"
 				label=""
 				format="MM/dd/yyyy"
+				defaultValue="2017-05-24"
 				value={selectedDate}
 				onChange={handleDateChange}
 				KeyboardButtonProps={{ 'aria-label': 'change date' }}

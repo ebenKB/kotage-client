@@ -9,12 +9,21 @@ import {
 } from '@material-ui/pickers';
 import { formatTime } from '../../utils/app/index';
 
-export default function MaterialUIPickers({ handleChange }) {
-  const [selectedDate, setSelectedDate] = React.useState(null);
+export default function MaterialUIPickers({ handleChange, dateValue, timeValue }) {
+  //  merge date and time to create a new Data Time object
+  const getTimeFromDate = () => {
+    if (!(dateValue || timeValue) || (dateValue || timeValue) === null
+      || (dateValue || timeValue) === undefined) {
+      return null;
+    }
+    const newTime = timeValue.split('.');
+    return new Date(`${dateValue}T${newTime[0]}`);
+  };
+
+  const [selectedDate, setSelectedDate] = React.useState(getTimeFromDate());
 
   // check when the date changes
   const handleTimeChange = (time) => {
-    console.log('This is the time ', { time }, 'and this is the string', time.toGMTString());
     setSelectedDate(time);
     handleChange(formatTime(time));
   };
@@ -32,7 +41,7 @@ export default function MaterialUIPickers({ handleChange }) {
 				KeyboardButtonProps={{ 'aria-label': 'change time' }}
 				placeholder="Time"
 				emptyLabel=""
-				invalidDateMessage={null}
+				invalidDateMessage="Time is not valid"
 				keyboardIcon={<AccessTimeIcon />}
 			/>
 		</Grid>

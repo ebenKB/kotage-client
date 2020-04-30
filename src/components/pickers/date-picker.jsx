@@ -10,14 +10,14 @@ import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker,
 } from '@material-ui/pickers';
-import { formatDate } from '../../utils/app';
+import { formatDate } from '../../utils/app/index';
 
-export default function MaterialUIPickers({ handleChange, isDisablePast, value }) {
+export default function MaterialUIPickers({ handleChange, isDisablePast, value = null }) {
   // The first commit of Material-UI
   const [selectedDate, setSelectedDate] = React.useState(value);
 
   const handleDateChange = (date) => {
-    const newDate = formatDate(date);
+    const newDate = formatDate(date); // for date for saving
     setSelectedDate(date);
     handleChange(newDate);
   };
@@ -35,7 +35,8 @@ export default function MaterialUIPickers({ handleChange, isDisablePast, value }
 				KeyboardButtonProps={{ 'aria-label': 'change date' }}
 				placeholder="Select Date"
 				autoOk
-				invalidDateMessage={null}
+				invalidDateMessage="Invalid Date"
+				minDateMessage="selected date is before today."
 				keyboardIcon={<DateRangeOutlinedIcon />}
 				format="MM-dd-yyyy"
 				disablePast={isDisablePast}

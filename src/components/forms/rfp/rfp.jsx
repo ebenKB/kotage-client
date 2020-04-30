@@ -20,9 +20,9 @@ class RFP extends React.Component {
       newProposal: {
         title: '',
         description: '',
-        bid_deadline_date: '',
-        rsvp_deadline_date: '',
-        question_deadline_date: '',
+        bid_deadline_date: null,
+        rsvp_deadline_date: null,
+        question_deadline_date: null,
         bid_deadline_time: '',
         rsvp_deadline_time: '',
         question_deadline_time: '',
