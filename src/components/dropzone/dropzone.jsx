@@ -51,6 +51,19 @@ function KtDropzone({ onFilesChange }) {
     setFiles((oldFiles) => ([...oldFiles, ...formatedFileObject]));
   };
 
+  const updateFile = (oldFile, newFile) => {
+    const newFiles = files.map((f) => {
+      if (f.title === oldFile.title) {
+        // eslint-disable-next-line no-param-reassign
+        f.title = newFile.title;
+      }
+      return f;
+    });
+
+    setFiles(newFiles);
+    console.log('We want to set the file title', newFile);
+  };
+
   // open file explorer to select files
   const openDialog = () => {
     if (dropzoneRef.current) {
@@ -96,6 +109,7 @@ function KtDropzone({ onFilesChange }) {
 					{files.map((file, idx) => (
 						<DropzoneItem
 							file={file}
+							handleFileUpdate={(old, newFile) => updateFile(old, newFile)}
 							deleteFile={() => handleDeleteFile(file)}
 							idx={idx}
 							key={idx}

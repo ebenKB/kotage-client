@@ -169,6 +169,7 @@ const uploadToS3 = (file, tenant_uid, item_id, folderName) => new Promise((resol
         reactS3.uploadFile(file, config)
           .then((data) => resolve(data));
       } catch (error) {
+        console.log(error);
         reject(error);
       }
     });
@@ -180,17 +181,19 @@ const uploadToS3 = (file, tenant_uid, item_id, folderName) => new Promise((resol
  * @param {*} files the file to be uploaded to the server
  * returns a reference to the file on the server
  */
-export const uploadFiles = (files, tenant_uid, folderName) => new
+export const uploadFiles = (files, tenant_uid) => new
 Promise(async (resolve, reject) => {
   try {
     let response = [];
     const rfp_id = shortid.generate();
+    const folderName = process.env.REACT_APP_rfpFolderName;
     for (const file of files) {
       const data = await uploadToS3(file, tenant_uid, rfp_id, folderName);
       response = [...response, { title: file.title, url: data.location }];
     }
     resolve(response);
   } catch (error) {
+    console.log(error);
     reject(error);
   }
 });

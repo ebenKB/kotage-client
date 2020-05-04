@@ -1,6 +1,14 @@
 import {
-  CREATE_PROPOSAL, SET_RFP_LOADING, SET_RFP_DONE_LOADING,
-  GET_RFP, GET_PROPOSAL_BY_ID, CREATE_MESSAGE, GET_RFP_INBOX, GET_RFP_OUTBOX, FIND_RFP_MESSAGE,
+  CREATE_PROPOSAL,
+  SET_RFP_LOADING,
+  SET_RFP_DONE_LOADING,
+  GET_RFP,
+  GET_PROPOSAL_BY_ID,
+  CREATE_MESSAGE,
+  GET_RFP_INBOX,
+  GET_RFP_OUTBOX,
+  FIND_RFP_MESSAGE,
+  UPDATE_RFP,
 } from '../types/rfpTypes';
 
 const initialState = {
@@ -99,6 +107,13 @@ export default (state = initialState, action) => {
       return {
         ...state,
         currentOutbox: action.payload,
+      };
+    }
+
+    case UPDATE_RFP: {
+      return {
+        ...state,
+        currentProposal: action.payload,
       };
     }
 

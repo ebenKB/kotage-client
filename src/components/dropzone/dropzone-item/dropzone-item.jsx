@@ -1,16 +1,25 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable react/forbid-prop-types */
-import React from 'react';
+import React, { useState } from 'react';
 import { PropTypes } from 'prop-types';
-import { Button } from 'semantic-ui-react';
+import { Button, Input } from 'semantic-ui-react';
 import { ReactComponent as Menu } from '../../../svg/menu.svg';
-import { ReactComponent as PowerPoint } from '../../../svg/pptx.svg';
-import { ReactComponent as PDF } from '../../../svg/pdf.svg';
-import { ReactComponent as JPEG } from '../../../svg/jpg.svg';
-import { ReactComponent as EXCEL } from '../../../svg/excel.svg';
-import { ReactComponent as WORD } from '../../../svg/word.svg';
-import { ReactComponent as CSV } from '../../../svg/csv.svg';
+import { ReactComponent as PowerPointIcon } from '../../../svg/pptx.svg';
+import { ReactComponent as PDFIcon } from '../../../svg/pdf.svg';
+import { ReactComponent as JPEGIcon } from '../../../svg/jpg.svg';
+import { ReactComponent as EXCELIcon } from '../../../svg/excel.svg';
+import { ReactComponent as WORDIcon } from '../../../svg/word.svg';
+import { ReactComponent as CSVIcon } from '../../../svg/csv.svg';
+import { ReactComponent as ALTIcon } from '../../../svg/briefing.svg';
+import {
+  PDF, EXCEL, WORD, JPEG, CSV, PPTX,
+} from '../../../utils/app/fileTypes';
 
-const DropzoneItem = ({ file, deleteFile, idx }) => {
+
+const DropzoneItem = ({
+  file, handleFileUpdate, deleteFile, idx,
+}) => {
+  const [canEditTitle, setTitleEditable] = useState(false);
   /**
    * This fonunction is used to delete files that the user has uploaded
    * @param {*} fileToDelete the file to delete
@@ -21,41 +30,54 @@ const DropzoneItem = ({ file, deleteFile, idx }) => {
 
   // this function returns the appropriate icon based on the file type
   const getFileIcon = () => {
-    if (file.type === 'application/pdf') {
-      return (<PDF className="dark medium logo" />);
+    if (file.type === PDF) {
+      return (<PDFIcon className="dark medium logo" />);
     }
 
-    if (file.type === 'application/docx'
-      || file.type === 'application/doc'
-      || file.type === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document') {
-      return (<WORD className="dark medium logo" />);
+    if (file.type === WORD) {
+      return (<WORDIcon className="dark medium logo" />);
     }
 
-    if (file.type === 'application/csv') {
-      return (<CSV className="dark medium logo" />);
+    if (file.type === CSV) {
+      return (<CSVIcon className="dark medium logo" />);
     }
 
-    if (file.type === 'image/jpg' || file.type === 'image/jpeg') {
-      return (<JPEG className="dark medium logo" />);
+    if (file.type === JPEG) {
+      return (<JPEGIcon className="dark medium logo" />);
     }
 
-    if (file.type === 'application/xlsx'
-      || file.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet') {
-      return (<EXCEL className="dark medium logo" />);
+    if (file.type === EXCEL) {
+      return (<EXCELIcon className="dark medium logo" />);
     }
 
-    if (file.type === 'application/pptx') {
-      return (<PowerPoint className="dark medium logo" />);
+    if (file.type === PPTX) {
+      return (<PowerPointIcon className="dark medium logo" />);
     }
-    return (<PowerPoint className="dark medium logo" />);
+
+    return (<ALTIcon className="dark medium logo" />);
   };
+
+  const updateFile = (e) => {
+    const newFile = file;
+    newFile.title = e.target.value;
+    handleFileUpdate(file, newFile);
+  };
+
+  const getTitle = () => {
+    if (canEditTitle) {
+      return (<Input value={file.title} onChange={updateFile} name="title" />
+      );
+    }
+    return <div className="bold xsm-caption">{file.title}</div>;
+  };
+
   return (
 	<div className="dropzone-item">
 		<div>
 			<Menu className="small logo" />
 		</div>
 		<div>
-			<div className="bold xsm-caption">{file.title}</div>
+			{getTitle()}
 			<div className="light-caption xsm-caption">
 				{file && file.name}
 			</div>
@@ -64,7 +86,7 @@ const DropzoneItem = ({ file, deleteFile, idx }) => {
 			{getFileIcon()}
 		</div>
 		<Button.Group basic size="mini" className="dropzone-cta">
-			<Button>EDIT</Button>
+			<Button onClick={() => setTitleEditable(true)} type="Button">EDIT</Button>
 			<Button
 				onClick={() => handleDelete(idx)}
 			>
@@ -79,5 +101,6 @@ DropzoneItem.propTypes = {
   idx: PropTypes.number.isRequired,
   file: PropTypes.object.isRequired,
   deleteFile: PropTypes.func.isRequired,
+  handleFileUpdate: PropTypes.func.isRequired,
 };
 export default DropzoneItem;

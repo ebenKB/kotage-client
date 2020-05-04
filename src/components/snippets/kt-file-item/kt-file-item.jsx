@@ -14,7 +14,7 @@ import { ReactComponent as Download } from '../../../svg/download.svg';
 import { ReactComponent as Preview } from '../../../svg/preview.svg';
 import { getFileNameAndExtension } from '../../../utils/app/file';
 import {
-  PDF, JPEG, JPG, WORD, PNG, EXCEL,
+  PDF, JPEG, WORD, PNG, EXCEL,
 } from '../../../utils/app/fileTypes';
 
 
@@ -44,7 +44,7 @@ const KtFileItem = ({ fileObject, user }) => {
     if (fileObject.fileType === PDF) {
       return (<PDFIcon className="big logo auto-height m-r-5" />);
     }
-    if (fileObject.fileType === JPEG || fileObject.fileType === JPG) {
+    if (fileObject.fileType === JPEG) {
       return (<JPEGIcon className="big logo auto-height m-r-5" />);
     }
     if (fileObject.fileType === WORD) {

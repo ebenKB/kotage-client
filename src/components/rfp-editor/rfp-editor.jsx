@@ -67,7 +67,8 @@ class RfpEditor extends React.Component {
     } = this.props;
 
     const handleSubmit = () => {
-
+      // handleSaveAction();
+      console.log('We want to submit');
     };
 
     const handleInputChange = (e) => {

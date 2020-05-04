@@ -64,7 +64,7 @@ class RFP extends React.Component {
 
     const { createNewProposal, history, tenantUid } = this.props;
 
-    const handleConfirmPublish = () => {
+    const handlePublish = () => {
       this.setState((state) => ({
         ...state,
         canShowModal: true,
@@ -78,12 +78,13 @@ class RFP extends React.Component {
       }));
     };
 
-    const handlePublish = async () => {
+    const handleConfirmPublish = async () => {
+      console.log('we have confirmed publish...');
       this.setState((state) => ({
         ...state,
         canShowModal: false,
       }));
-      const files = await uploadFiles(newProposal.files, tenantUid, 'rfp');
+      const files = await uploadFiles(newProposal.files, tenantUid);
       const proposal = newProposal;
       proposal.files = files;
       this.setState((state) => ({
@@ -106,7 +107,7 @@ class RFP extends React.Component {
 				heading="Before you publish this RFP to suppliers"
 				type="success"
 				confirmActionText="Confirm and publish RFP to suppliers"
-				handleConfirmAction={handlePublish}
+				handleConfirmAction={handleConfirmPublish}
 				handleDeclineAction={declinePublishAction}
 			>
 				<div>
@@ -122,7 +123,8 @@ class RFP extends React.Component {
 		<RfpEditor
 			proposal={newProposal}
 			options={{ type: 'create', heading: 'New Proposal' }}
-			publishAction={handleConfirmPublish}
+			handleSaveAction={console.log('saving ...')}
+			publishAction={handlePublish}
 		/>
 	</div>
     );
