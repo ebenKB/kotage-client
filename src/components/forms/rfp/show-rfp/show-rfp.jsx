@@ -53,7 +53,7 @@ const ShowRfp = ({
 			actionName="Edit Proposal"
 			canFilter={false}
 			canPublish={false}
-			cancelUrl="/rfx"
+			cancelUrl={`/rfx/proposal/dashboard/${id}`}
 			handleAction={handleAction}
 		>
 			{/* <KtWrapperLite> */}
