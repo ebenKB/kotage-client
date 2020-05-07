@@ -24,6 +24,9 @@ export default (state = initialState, action) => {
         } else if (notification.response && notification.response.status
           && notification.response.status === 409) {
           errorMessage = 'This record already existis';
+        } else if (notification.response && notification.response.status
+          && notification.response.status === 404) {
+          errorMessage = 'No matching record found';
         } else {
           errorMessage = notification.message;
           // errorMessage = 'An error occurred while completing your request';

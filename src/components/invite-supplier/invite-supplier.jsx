@@ -44,7 +44,7 @@ const InviteSupplier = ({
 			>
 				<div className="supplier md-container">
 					<div className="m-t-10 m-b-20">
-            Enter the Kotage number for the Supplier you want to invite
+						Enter the Kotage number for the Supplier you want to invite
 					</div>
 					<Input
 						action={{ content: `${loading ? '' : 'Search'}`, onClick: (e) => handleSubmit(e) }}

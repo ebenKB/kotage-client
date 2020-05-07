@@ -8,6 +8,7 @@ import {
 } from '../types/tenantTypes';
 import deserializeSupplier from '../../serializers/supplier-serializer';
 // import { deserializeSupplier } from '../../../serializers/supplier-serializer';
+import { setNotification } from './appActions';
 
 /**
  * this function creates a new tenant
@@ -36,13 +37,14 @@ export const getTenant = (tenant_id) => async (dispatch, getState) => {
         payload: data.tenant,
       });
     } catch (error) {
-      return dispatch({
-        type: SET_APP_NOTIFICATION,
-        payload: {
-          type: 'error',
-          message: 'Sorry! an notification occured',
-        },
-      });
+      return dispatch(setNotification({ message: 'Sorry! an error occured' }, 'error'));
+      // return dispatch({
+      //   type: SET_APP_NOTIFICATION,
+      //   payload: {
+      //     type: 'error',
+      //     message: 'Sorry! an error occured',
+      //   },
+      // });
     }
   } else {
     return null;
@@ -65,8 +67,9 @@ export const validateDomain = (domain) => async (dispatch) => (
         resolve(false);
       }
     } catch (error) {
-      reject(error);
       dispatch(doneLoading);
+      dispatch(setNotification({ message: 'Sorry! an error occured' }, 'error'));
+      reject(error);
     }
   })
 );
@@ -85,6 +88,7 @@ export const searchSupplier = (tenant_id, uid) => async (dispatch) => (
       dispatch(doneLoading);
     } catch (error) {
       dispatch(doneLoading);
+      dispatch(setNotification(error, 'error'));
       reject(error);
     }
   })
@@ -102,7 +106,6 @@ export const getAllSuppliers = () => async (dispatch, getState) => {
     });
     dispatch(doneLoading);
   } catch (error) {
-    console.log(error);
     dispatch(doneLoading);
   }
 };
