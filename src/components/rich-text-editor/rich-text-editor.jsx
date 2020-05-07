@@ -78,7 +78,10 @@ const RichTextEditor = ({ onChange, defaultValue }) => {
 
 RichTextEditor.propTypes = {
   onChange: PropTypes.func.isRequired,
-  defaultValue: PropTypes.string.isRequired,
+  defaultValue: PropTypes.string,
 };
 
+RichTextEditor.defaultProps = {
+  defaultValue: null,
+};
 export default RichTextEditor;

@@ -45,6 +45,7 @@ class RfpEditor extends React.Component {
       //   },
       // ],
     };
+    this.myRef = React.createRef();
   }
 
   componentDidMount() {
@@ -71,6 +72,14 @@ class RfpEditor extends React.Component {
       console.log('We want to submit');
     };
 
+    const handlePublish = () => {
+      this.myRef.current.isFormValid(false).then((value) => {
+        console.log(value);
+        if (value) {
+          publishAction();
+        }
+      });
+    };
     const handleInputChange = (e) => {
       e.preventDefault();
       // check if we need to fetch any data for the form
@@ -253,7 +262,7 @@ class RfpEditor extends React.Component {
 				isLoading={loading}
 				cancelUrl="/rfx"
 				handleAction={handleSubmit}
-				handlePublishAction={publishAction}
+				handlePublishAction={handlePublish}
 				saveBtnClasses="default"
 			>
 				<Divider type="thick" title="Setup Your Event" classes="m-t-10" isNumbered number="1" />
@@ -268,6 +277,9 @@ class RfpEditor extends React.Component {
 							onChange={handleInputChange}
 							center
 							name="title"
+							validators={['required', 'isString', 'minStringLength:8']}
+							errorMessages={['Title is required', 'Title is not valid', 'Titles too short']}
+							instantValidate
 						/>
 					</div>
 					<div className="form-item m-t-30">

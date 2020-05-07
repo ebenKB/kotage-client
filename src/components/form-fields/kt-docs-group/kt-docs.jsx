@@ -2,6 +2,7 @@
 /* eslint-disable jsx-a11y/interactive-supports-focus */
 import React from 'react';
 import Input from '../input/input';
+import InputValidator from '../input-validator/input-validator';
 import DeleteButton from '../../buttons/delete-button';
 import './kt-docs.scss';
 
@@ -19,13 +20,16 @@ const KtDocs = ({
   return (
 	<div className="docs-wrapper__content m-t-20">
 		<div>
-			<Input
+			<InputValidator
 				type="text"
 				placeholder="Document name"
 				value={doc.name}
 				name="name"
 				onChange={handleTextChange}
 				className="fluid"
+				validators={['required', 'isString', 'minStringLength:8']}
+				errorMessages={['Document name is required', 'Document name is not valid', 'Document name is too short']}
+				instantValidate
 			/>
 		</div>
 		<div>
