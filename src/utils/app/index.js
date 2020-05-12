@@ -6,7 +6,9 @@
 /* eslint-disable camelcase */
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable import/prefer-default-export */
+import Axios from 'axios';
 import shortid from 'shortid';
+import { RFP_FOLDER_NAME } from './definitions';
 
 export const isValidEmail = (email) => (/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(email));
 
@@ -152,6 +154,8 @@ export const getNameFromFileName = (fileName) => {
  * example folder names include : rfp = request for proposal, rfi = request for information,
  * rfq = request for quote, messages,
  */
+
+// eslint-disable-next-line no-unused-vars
 const uploadToS3 = (file, tenant_uid, item_id, folderName) => new Promise((resolve, reject) => {
   if (folderName !== null && folderName !== '' && folderName !== undefined) {
     import('react-s3').then((reactS3) => {
@@ -177,6 +181,27 @@ const uploadToS3 = (file, tenant_uid, item_id, folderName) => new Promise((resol
 });
 
 /**
+ * uploads files the remote
+ * @param {*} files the files to upload to the server
+ */
+const uploadToFileServer = async (file, tenant_uid, objectID) => {
+  const key = `kotage/${tenant_uid}/${RFP_FOLDER_NAME}/${objectID}/${file.data.name}`;
+  const formData = new FormData();
+
+  formData.append('key', key);
+  formData.append('file', file.data);
+
+  const res = await Axios.post('https://kotage-file-server.herokuapp.com/upload', formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
+  if (res.status === 200) {
+    return { location: `${process.env.REACT_APP_DO_space_base_url}/${key}` };
+  }
+};
+
+/**
  * use this function to upload multiple files to s3
  * @param {*} files the file to be uploaded to the server
  * returns a reference to the file on the server
@@ -186,10 +211,12 @@ Promise(async (resolve, reject) => {
   try {
     let response = [];
     const rfp_id = shortid.generate();
-    const folderName = process.env.REACT_APP_rfpFolderName;
+    // const folderName = process.env.REACT_APP_rfpFolderName;
     for (const file of files) {
-      const data = await uploadToS3(file, tenant_uid, rfp_id, folderName);
+      const data = await uploadToFileServer(file, tenant_uid, rfp_id);
+      // const data = await uploadToS3(file, tenant_uid, rfp_id, folderName);
       response = [...response, { title: file.title, url: data.location }];
+      console.log(data);
     }
     resolve(response);
   } catch (error) {

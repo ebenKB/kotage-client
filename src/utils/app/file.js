@@ -2,10 +2,10 @@
 import Jszip from 'jszip';
 import { saveAs } from 'file-saver';
 import Axios from 'axios';
+// import { createProxyMiddleware } from 'http-proxy-middleware';
 import { getToken } from '.';
 
 export const getFileSize = (bytes) => {
-  console.log('These are the file bytes', bytes);
   try {
     let newSize = null;
     let postFix = 'KB';
@@ -78,10 +78,39 @@ export const createStaticFileUrl = (fileData) => window.URL.createObjectURL(new 
 // };
 
 export const prepareFileForDownload = (fileUrl) => (new Promise(
+  // ((resolve, reject) => {
+  //   console.log('This is the url we are using to fetch the blob', fileUrl);
+  //   fetch(pdf, {
+  //     method: 'GET',
+  //     mode: 'cors',
+  //     // headers: {
+  //     //   'Content-Type': 'blob',
+  //     // },
+  //   })
+  //     .then((response) => {
+  //       console.log('This is the response', response);
+  //       return response.blob();
+  //     })
+  //     .then((blob) => {
+  //       console.log('This is the blob: ', blob);
+  //       const fileData = {
+  //         // staticUrl: createStaticFileUrl(blob.data),
+  //         // remoteUrl: fileUrl,
+  //         // fileName: getFileName(fileUrl),
+  //         // fileSize: getFileSize(blob.data.size),
+  //         // fileType: blob.data.type,
+  //         // data: blob.data,
+  //       };
+  //       resolve(fileData);
+  //     })
+  //     .catch((err) => reject(err));
+  // }),
+
   (resolve, reject) => {
     Axios({
       url: fileUrl,
       method: 'GET',
+
       responseType: 'blob',
     })
       .then((response) => {
@@ -100,7 +129,6 @@ export const prepareFileForDownload = (fileUrl) => (new Promise(
 ));
 
 export const prepareFileForDownloadSync = async (fileUrl) => {
-  console.log('This is the url you want to download with sync', fileUrl);
   const response = await Axios({
     url: fileUrl,
     method: 'GET',
@@ -114,7 +142,6 @@ export const prepareFileForDownloadSync = async (fileUrl) => {
     fileType: response.data.type,
     data: response.data,
   };
-  console.log('This is the file data we are returning', fileData);
   return fileData;
 };
 
@@ -153,4 +180,9 @@ export const getFileSignedUrl = (url, tenant_id, objectOwnerId) => {
       console.log(error);
     }
   });
+};
+
+export const getPresignUrlFromServer = async (key) => {
+  const res = await Axios.get(`https://kotage-file-server.herokuapp.com/signUrl?key=${key}`);
+  return res.data.preSignedUrl;
 };

@@ -4,6 +4,7 @@ import { PropTypes } from 'prop-types';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { Button } from 'semantic-ui-react';
+import { uploadFiles } from '../../../utils/app';
 import MainContent from '../../kt-main-content/mainContent';
 import KtTextArea from '../../form-fields/textarea/textarea';
 import KtWrapper from '../../kt-wrapper/kt-wrapper';
@@ -13,7 +14,9 @@ import { createRfpMessage } from '../../../redux/actions/rfpActions';
 import Dropzone from '../../dropzone/dropzone';
 import Divider from '../../kt-divider/divider';
 
-const NewMessage = ({ createNewMessage, isLoading, currentProposalId }) => {
+const NewMessage = ({
+  createNewMessage, isLoading, currentProposalId, tenantUid,
+}) => {
   const history = useHistory();
   const [message, setMessage] = useState(
     {
@@ -53,7 +56,10 @@ const NewMessage = ({ createNewMessage, isLoading, currentProposalId }) => {
     });
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
+    const files = await uploadFiles(message.files, tenantUid);
+    message.files = files;
+    setMessage(message);
     createNewMessage(message)
       .then(() => history.goBack());
   };
@@ -113,12 +119,14 @@ const mapDispatchToProps = {
 const mapStateToProps = (state) => ({
   isLoading: state.rfp.loading,
   currentProposalId: state.rfp.currentProposal.id,
+  tenantUid: state.tenant.currentTenant.account_id,
 });
 
 NewMessage.propTypes = {
   createNewMessage: PropTypes.func.isRequired,
   isLoading: PropTypes.bool.isRequired,
   currentProposalId: PropTypes.string.isRequired,
+  tenantUid: PropTypes.string.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(NewMessage);

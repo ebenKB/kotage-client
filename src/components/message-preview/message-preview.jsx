@@ -19,7 +19,13 @@ import RfpTitle from '../snippets/rfp-title/rfp-title';
 import { getUser } from '../../redux/actions/userActions';
 import KtFileItem from '../snippets/kt-file-item/kt-file-item';
 import './message-preview.scss';
-import { prepareFileForDownload, downloadMultipleZip, getFileSignedUrl } from '../../utils/app/file';
+// import {
+//   prepareFileForDownload, downloadMultipleZip, getFileSignedUrl
+// } from '../../utils/app/file';
+import {
+  prepareFileForDownload, downloadMultipleZip, getPresignUrlFromServer, getFullFilePath,
+} from '../../utils/app/file';
+// import { getPresignUrlFromServer } from '../../utils/app/file';
 
 class MessagePreview extends React.Component {
   constructor(props) {
@@ -120,21 +126,29 @@ class MessagePreview extends React.Component {
   };
 
     signFileUrls = async () => {
-      const { currentRfpID, tenant_id } = this.props;
-      const {
-        attachments,
-      } = this.state;
-      for (let i = 0; i < attachments.length; i += 1) {
-      // eslint-disable-next-line no-await-in-loop
-        const singedUrl = await getFileSignedUrl(attachments[i].file_url, tenant_id, currentRfpID);
-        this.setState((state) => ({
-          ...state,
-          signedAttachments: [...state.signedAttachments, singedUrl],
-        }));
-        if (i === (attachments.length - 1)) {
-          this.setState((state) => ({ ...state, hasSignedUrls: true }));
-          this.prepareFilesSync();
-          this.setState((state) => ({ ...state, hasPrepareed: true }));
+      // const { currentRfpID, tenant_id } = this.props;
+      // const {
+      //   attachments,
+      // } = this.state;
+      const { message } = this.props;
+      if (message) {
+        const { attachments } = message;
+        for (let i = 0; i < attachments.length; i += 1) {
+        // eslint-disable-next-line no-await-in-loop
+          // const singedUrl = await getFileSignedUrl(attachments[i].file_url,
+          // tenant_id, currentRfpID);
+          // eslint-disable-next-line no-await-in-loop
+          const singedUrl = await getPresignUrlFromServer(getFullFilePath(attachments[i].file_url));
+          console.log('in the message preview', singedUrl);
+          this.setState((state) => ({
+            ...state,
+            signedAttachments: [...state.signedAttachments, singedUrl],
+          }));
+          if (i === (attachments.length - 1)) {
+            this.setState((state) => ({ ...state, hasSignedUrls: true }));
+            this.prepareFilesSync();
+            this.setState((state) => ({ ...state, hasPrepareed: true }));
+          }
         }
       }
     };
@@ -204,11 +218,11 @@ class MessagePreview extends React.Component {
 									inline
 									content={(
 										<span className="sm-caption">
-                      Loading
-                      &nbsp;
+											Loading
+											&nbsp;
 											{signedAttachments.length - files.length}
 											{' '}
-                      attachment(s)
+											attachment(s)
 										</span>
 									)}
 								/>
@@ -219,11 +233,11 @@ class MessagePreview extends React.Component {
 								default
 								content={(
 									<span>
-                    Download
+										Download
 										{' '}
 										{files.length}
 										{' '}
-                    attachments
+										attachments
 									</span>
 								)}
 								size="tiny"
@@ -244,7 +258,7 @@ MessagePreview.propTypes = {
   findRfpMessage: PropTypes.func.isRequired,
   message: PropTypes.object,
   tenant_id: PropTypes.string.isRequired,
-  currentRfpID: PropTypes.string.isRequired,
+  // currentRfpID: PropTypes.string.isRequired,
 };
 
 MessagePreview.defaultProps = {

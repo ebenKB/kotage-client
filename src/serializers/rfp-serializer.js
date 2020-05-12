@@ -81,7 +81,7 @@ export const serializeProposal = (proposal) => {
         })),
     proposal_suppliers_attributes: proposal.suppliers.map((s) => (
       {
-        id: s.id,
+        supplier_id: s.id,
       })),
     proposal_attachments_attributes: proposal.files.map((f) => ({
       file: f.url,
@@ -104,8 +104,7 @@ export const serializeRfpMessage = (message) => {
     message: message.message,
     proposal_request_id: message.rfp_id,
     rfp_message_attachments_attributes: message.files.map((f) => ({
-      // file_url: f.url,
-      file_url: 'https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Focdn.eu%2Fimages%2Fpulscms%2FMzE7MDMsMmU0LDAsMSwx%2F0792994eebb2bd3a7766c8d8d0290ae4.jpeg&f=1&nofb=1',
+      file_url: f.url,
       title: f.title,
     })),
   };
