@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import React, { useEffect } from 'react';
+import { Button } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { getRequestForProposals } from '../../../redux/actions/rfpActions';
 import MainContent from '../../kt-main-content/mainContent';
@@ -9,52 +10,60 @@ import RfxItem from '../../rfx-item/rfx-item';
 import '../rfx.scss';
 import Divider from '../../kt-divider/divider';
 import KtLoader from '../../loader/loader';
+import { getPageRemainder } from '../../../utils/app';
 
 
 const RFX = ({
-  getProposals, proposals, isLoading, meta,
+  getProposals, proposals, isLoading, meta, page,
 }) => {
   useEffect(() => {
-    if (!proposals || proposals.length === 0) {
-      getProposals();
+    // check if records have not been loaded or there are more records to load
+    if (proposals.length === 0) {
+      getProposals(page);
     }
-  }, [proposals]);
+  }, []);
 
   const getDescription = () => (
 	<div>
-    Showing
-    &nbsp;
-		{meta.items}
-    &nbsp;
-    out of
+		Showing
+		&nbsp;
+		{proposals.length}
+		&nbsp;
+		out of
 		&nbsp;
 		{ meta.count }
 		&nbsp;
-    request for proposals.
+		request for proposals.
 		<Divider type="thick" />
 	</div>
   );
 
-  const getFootNote = () => {
-    const remainder = meta.count - meta.items;
-    let diff = null;
-    if (remainder >= 10) {
-      diff = 10;
-    } else {
-      diff = remainder;
+  const loadMoreRecords = () => {
+    // check if there are more records to load
+    if (proposals.length < meta.count && meta.next) {
+      getProposals(page + 1);
     }
-    return (
-	<div className="clickable bold kt-primary m-t-10">
-    See
-    &nbsp;
-		{ diff }
-    &nbsp;
-    more request for proposals
-    &nbsp;
-	</div>
-    );
   };
 
+  // eslint-disable-next-line consistent-return
+  const getFootNote = () => {
+    const rem = getPageRemainder(meta.count, proposals.length, 10);
+    if (rem > 0) {
+      return (
+	<Button
+		className="clickable bold kt-primary m-t-10 kt-transparent m-t-20"
+		onClick={loadMoreRecords}
+	>
+		See
+		&nbsp;
+		{ getPageRemainder(meta.count, proposals.length, 10) }
+		&nbsp;
+		more request for proposals
+		&nbsp;
+	</Button>
+      );
+    }
+  };
   return (
 	<MainContent
 		classes="m-t-20 rfx"
@@ -69,15 +78,17 @@ const RFX = ({
 		>
 			<div>
 				{meta && getDescription()}
-				{isLoading && (
-					<KtLoader />
-				)}
-				{ proposals && !isLoading && proposals.map((proposal) => (
+				{ proposals && proposals.map((proposal) => (
 					<div key={proposal.id}>
 						<RfxItem type={proposal.published_at !== null ? 'Published' : 'Draft'} proposal={proposal} />
 						<Divider type="faint" />
 					</div>
 				))}
+				<div className="m-t-20">
+					{isLoading && (
+						<KtLoader />
+					)}
+				</div>
 				{meta && getFootNote()}
 			</div>
 		</KtWrapper>
@@ -92,6 +103,7 @@ const mapDispatchToProps = {
 const mapStateToProps = (state) => ({
   proposals: state.rfp.proposals,
   meta: state.rfp.meta,
+  page: state.rfp.currentPage,
   isLoading: state.rfp.loading,
 });
 

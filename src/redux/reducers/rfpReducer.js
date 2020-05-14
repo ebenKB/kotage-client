@@ -23,6 +23,7 @@ const initialState = {
   rfpOutboxMeta: null,
   rfpInboxMeta: null,
   meta: null,
+  currentPage: 1,
 };
 
 export default (state = initialState, action) => {
@@ -54,10 +55,15 @@ export default (state = initialState, action) => {
 
     case GET_RFP: {
       const { proposals } = action.payload;
+      // let { currentPage } = state;
+      // if (action.payload.meta.next) {
+      //   currentPage = +1;
+      // }
       return {
         ...state,
         proposals: [...state.proposals, ...proposals],
         meta: action.payload.meta,
+        currentPage: action.payload.page,
         loading: false,
       };
     }

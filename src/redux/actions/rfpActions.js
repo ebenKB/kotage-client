@@ -57,21 +57,30 @@ export const updateProposal = (newProposal) => async (dispatch, getState) => {
   }
 };
 
-export const getRequestForProposals = () => async (dispatch, getState) => {
-  dispatch({ type: SET_RFP_LOADING });
-  const { user } = getState();
-  const { data } = await Axios.get(`/v1/${user.currentUser.tenant_id}/rfp`);
-  const { proposal_requests, meta } = data;
-  const deserializedProposals = proposal_requests.map((proposal) => deserializeProposal(proposal));
-  const { pagination } = meta;
-  dispatch({
-    type: GET_RFP,
-    payload: {
-      proposals: deserializedProposals,
-      meta: pagination,
-    },
-  });
-  // dispatch({ type: SET_RFP_DONE_LOADING });
+export const getRequestForProposals = (page) => async (dispatch, getState) => {
+  try {
+    dispatch({ type: SET_RFP_LOADING });
+    const { user } = getState();
+    const { data } = await Axios.get(`/v1/${user.currentUser.tenant_id}/rfp?page=${page}`);
+    const { proposal_requests, meta } = data;
+    const deserializedProposals = proposal_requests
+      .map((proposal) => deserializeProposal(proposal));
+    const { pagination } = meta;
+    dispatch({
+      type: GET_RFP,
+      payload: {
+        proposals: deserializedProposals,
+        meta: pagination,
+        page,
+      },
+    });
+    console.log('returning true');
+    return true;
+  } catch (error) {
+    console.log('return false');
+    dispatch({ type: SET_RFP_DONE_LOADING });
+    return false;
+  }
 };
 
 export const getCurrentProposal = (id) => async (dispatch) => {

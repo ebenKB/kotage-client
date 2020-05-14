@@ -276,18 +276,27 @@ export const trimContent = (content, size = 100) => {
  * @param {*} itemSize the number of items on each page
  * @param {*} page the current page number
  */
-export const getPageRemainder = (total, itemSize, page) => {
+export const getPageRemainder = (total, totalFound, perPage) => {
   let rem = 0;
-  if (total > itemSize) {
-    // get how many items are left to view
-    const diff = (total - (page * itemSize));
-    if (diff > 0) {
-      if (diff > itemSize) {
-        rem = diff - itemSize;
-      } else {
-        rem = diff;
-      }
-    }
+  rem = total - totalFound;
+  if (rem > perPage) {
+    return perPage;
   }
   return rem;
 };
+
+// export const getPageRemainder = (total, itemSize, page) => {
+//   let rem = 0;
+//   if (total > itemSize) {
+//     // get how many items are left to view
+//     const diff = (total - (page * itemSize));
+//     if (diff > 0) {
+//       if (diff > itemSize) {
+//         rem = diff - itemSize;
+//       } else {
+//         rem = diff;
+//       }
+//     }
+//   }
+//   return rem;
+// };
