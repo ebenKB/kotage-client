@@ -27,11 +27,11 @@ const RichTextEditor = ({ onChange, defaultValue }) => {
   };
 
   useEffect(() => {
-    if (!hasInit && defaultValue) {
+    if (!hasInit && defaultValue && defaultValue !== '') {
       prepareDefaultValue();
       setHasInit(true);
     }
-  });
+  }, [hasInit]);
 
   // listen to changes from the editor state
   const handleEditorChange = (e) => {
