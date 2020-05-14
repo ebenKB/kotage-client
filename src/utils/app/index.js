@@ -173,7 +173,6 @@ const uploadToS3 = (file, tenant_uid, item_id, folderName) => new Promise((resol
         reactS3.uploadFile(file, config)
           .then((data) => resolve(data));
       } catch (error) {
-        console.log(error);
         reject(error);
       }
     });
@@ -181,23 +180,25 @@ const uploadToS3 = (file, tenant_uid, item_id, folderName) => new Promise((resol
 });
 
 /**
- * uploads files the remote
+ * uploads files the remote for Digital ocean space
  * @param {*} files the files to upload to the server
  */
 const uploadToFileServer = async (file, tenant_uid, objectID) => {
-  const key = `kotage/${tenant_uid}/${RFP_FOLDER_NAME}/${objectID}/${file.data.name}`;
-  const formData = new FormData();
+  if (file && tenant_uid && objectID) {
+    const key = `kotage/${tenant_uid}/${RFP_FOLDER_NAME}/${objectID}/${file.data.name}`;
+    const formData = new FormData();
 
-  formData.append('key', key);
-  formData.append('file', file.data);
+    formData.append('key', key);
+    formData.append('file', file.data);
 
-  const res = await Axios.post('https://kotage-file-server.herokuapp.com/upload', formData, {
-    headers: {
-      'Content-Type': 'multipart/form-data',
-    },
-  });
-  if (res.status === 200) {
-    return { location: `${process.env.REACT_APP_DO_space_base_url}/${key}` };
+    const res = await Axios.post('https://kotage-file-server.herokuapp.com/upload', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    if (res.status === 200) {
+      return { location: `${process.env.REACT_APP_DO_space_base_url}/${key}` };
+    }
   }
 };
 
@@ -216,11 +217,9 @@ Promise(async (resolve, reject) => {
       const data = await uploadToFileServer(file, tenant_uid, rfp_id);
       // const data = await uploadToS3(file, tenant_uid, rfp_id, folderName);
       response = [...response, { title: file.title, url: data.location }];
-      console.log(data);
     }
     resolve(response);
   } catch (error) {
-    console.log(error);
     reject(error);
   }
 });
@@ -280,6 +279,7 @@ export const trimContent = (content, size = 100) => {
 export const getPageRemainder = (total, itemSize, page) => {
   let rem = 0;
   if (total > itemSize) {
+    // get how many items are left to view
     const diff = (total - (page * itemSize));
     if (diff > 0) {
       if (diff > itemSize) {

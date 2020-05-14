@@ -4,7 +4,9 @@
 import {
   CREATE_PROPOSAL, SET_RFP_LOADING,
   SET_RFP_DONE_LOADING, GET_RFP,
-  GET_PROPOSAL_BY_ID, CREATE_MESSAGE, GET_RFP_OUTBOX, GET_RFP_INBOX, FIND_RFP_MESSAGE, UPDATE_RFP,
+  GET_PROPOSAL_BY_ID, CREATE_MESSAGE,
+  GET_RFP_OUTBOX, GET_RFP_INBOX, FIND_RFP_MESSAGE,
+  UPDATE_RFP, SET_CURRENT_MESSAGE_BLOB,
 } from '../types/rfpTypes';
 import Axios from '../../utils/axios/axios';
 import { getToken } from '../../utils/app/index';
@@ -148,7 +150,8 @@ export const setLoading = () => async (dispatch) => dispatch({
   type: SET_RFP_LOADING,
 });
 
-export const findRfpMessageById = (message_id) => async (dispatch, getState) => {
+export const findRfpMessageById = (message_id) => async (dispatch, getState) => new
+Promise((resolve, reject) => {
   try {
     const { rfp } = getState();
     const { rfpOutbox } = rfp;
@@ -158,7 +161,21 @@ export const findRfpMessageById = (message_id) => async (dispatch, getState) => 
       type: FIND_RFP_MESSAGE,
       payload: message,
     });
+    resolve(message);
   } catch (error) {
     console.log('an error occcurred', error);
+    reject(error);
+  }
+});
+
+export const setCurrenMessageBlob = (blob) => async (dispatch) => {
+  console.log('We want to set message blob', blob);
+  try {
+    dispatch({
+      type: SET_CURRENT_MESSAGE_BLOB,
+      payload: blob,
+    });
+  } catch (error) {
+    console.log(error);
   }
 };

@@ -2,9 +2,12 @@
 import Jszip from 'jszip';
 import { saveAs } from 'file-saver';
 import Axios from 'axios';
-// import { createProxyMiddleware } from 'http-proxy-middleware';
 import { getToken } from '.';
 
+/**
+ * calculate the size of a file from raw bytes
+ * @param {*} bytes the raw bytes of the file
+ */
 export const getFileSize = (bytes) => {
   try {
     let newSize = null;
@@ -32,7 +35,7 @@ export const getFileName = (url) => {
 
 export const getFileNameAndExtension = (url) => {
   const data = url.split('/');
-  // get the file name, remove anything after ?
+  // get the file name, remove anything after '?'
   return (data[data.length - 1].split('?')[0]);
 };
 
@@ -60,6 +63,11 @@ export const downloadZip = (fileData, filename, foldername) => {
     .then((data) => saveAs(data));
 };
 
+/**
+ * download many files as a single zip
+ * @param {*} fileDataArray the files to download
+ * @param {*} foldername the name to be given to the folder
+ */
 export const downloadMultipleZip = (fileDataArray, foldername) => {
   const zip = new Jszip();
   const zipFolder = zip.folder(foldername);
@@ -72,59 +80,31 @@ export const downloadMultipleZip = (fileDataArray, foldername) => {
 
 export const createStaticFileUrl = (fileData) => window.URL.createObjectURL(new Blob([fileData]));
 
-// export const getFileType = (type) => {
-//   console.log(type);
-//   return type;
-// };
-
+/**
+ * returns a file object with binary data of the file
+ * @param {*} fileUrl the url of the file
+ */
 export const prepareFileForDownload = (fileUrl) => (new Promise(
-  // ((resolve, reject) => {
-  //   console.log('This is the url we are using to fetch the blob', fileUrl);
-  //   fetch(pdf, {
-  //     method: 'GET',
-  //     mode: 'cors',
-  //     // headers: {
-  //     //   'Content-Type': 'blob',
-  //     // },
-  //   })
-  //     .then((response) => {
-  //       console.log('This is the response', response);
-  //       return response.blob();
-  //     })
-  //     .then((blob) => {
-  //       console.log('This is the blob: ', blob);
-  //       const fileData = {
-  //         // staticUrl: createStaticFileUrl(blob.data),
-  //         // remoteUrl: fileUrl,
-  //         // fileName: getFileName(fileUrl),
-  //         // fileSize: getFileSize(blob.data.size),
-  //         // fileType: blob.data.type,
-  //         // data: blob.data,
-  //       };
-  //       resolve(fileData);
-  //     })
-  //     .catch((err) => reject(err));
-  // }),
-
   (resolve, reject) => {
     Axios({
       url: fileUrl,
       method: 'GET',
-
       responseType: 'blob',
     })
       .then((response) => {
         const fileData = {
           staticUrl: createStaticFileUrl(response.data),
           remoteUrl: fileUrl,
-          fileName: getFileName(fileUrl),
+          fileName: getFileNameAndExtension(fileUrl),
           fileSize: getFileSize(response.data.size),
           fileType: response.data.type,
           data: response.data,
         };
         resolve(fileData);
       })
-      .catch((err) => reject(err));
+      .catch((err) => {
+        reject(err);
+      });
   },
 ));
 
@@ -145,44 +125,32 @@ export const prepareFileForDownloadSync = async (fileUrl) => {
   return fileData;
 };
 
-
-// getFile('https://ebenkb.s3.us-east-2.amazonaws.com/kotage/e62b652c4b/rfx/1M-ebtiSy/MANAGEMENT+ACCOUNTING+(1).pdf')
-// .then((response) => {
-//   console.log('This is the response ', response);
-//   setData(response.data);
-//   const url = window.URL.createObjectURL(new Blob([response.data]));
-//   setLink(url);
-//   prepareFile(true);
-//   getFileName('https://ebenkb.s3.us-east-2.amazonaws.com/kotage/e62b652c4b/rfx/1M-ebtiSy/MANAGEMENT+ACCOUNTING+(1).pdf');
-// });
-
-// export const getFileSignedUrl = (url, tenant_id, objectOwnerId) => async () => new
-// Promise((resolve) => {
-//   Axios.post(`${process.env.REACT_APP_apiHost}/${process.env.REACT_APP_apiNamespace}/v1/
-//     ${tenant_id}/rfp/${objectOwnerId}/file_presigned`, {
-//     filename: getFullFilePath(url),
-//   })
-//     .then((data) => {
-//       console.log('sign data', data);
-//       resolve(data);
-//     });
-// });
-
+// signs file url from AWS-S3
 export const getFileSignedUrl = (url, tenant_id, objectOwnerId) => {
   const AxiosInstance = Axios.create({ headers: { Authorization: getToken() } });
-  return new Promise((resolve) => {
+  return new Promise((resolve, reject) => {
     try {
       AxiosInstance.post(`${process.env.REACT_APP_apiHost}/${process.env.REACT_APP_apiNamespace}/v1/
-      ${tenant_id}/rfp/${objectOwnerId}/file_presigned`, {
+        ${tenant_id}/rfp/${objectOwnerId}/file_presigned`, {
         filename: getFullFilePath(url),
       }).then((data) => resolve(data.data));
     } catch (error) {
-      console.log(error);
+      reject(error);
     }
   });
 };
 
+// signs file url from digital ocean spaces
 export const getPresignUrlFromServer = async (key) => {
   const res = await Axios.get(`https://kotage-file-server.herokuapp.com/signUrl?key=${key}`);
   return res.data.preSignedUrl;
+};
+
+/**
+ * returns the file extension
+ * @param {*} filename the filename with extension
+ */
+export const getFileExtension = (filename) => {
+  const data = filename.split('.');
+  return data[data.length - 1];
 };

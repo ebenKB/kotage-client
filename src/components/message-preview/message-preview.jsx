@@ -13,44 +13,25 @@ import MessageHeaderCaption from '../snippets/message-header-caption/message-hea
 import { ReactComponent as BackArrow } from '../../svg/return.svg';
 import { ReactComponent as ResendIcon } from '../../svg/forward.svg';
 import { ReactComponent as ReplyIcon } from '../../svg/backward.svg';
-import { findRfpMessageById } from '../../redux/actions/rfpActions';
+import { findRfpMessageById, setCurrenMessageBlob } from '../../redux/actions/rfpActions';
 import Help from '../../utils/requisitions/new/help';
 import RfpTitle from '../snippets/rfp-title/rfp-title';
 import { getUser } from '../../redux/actions/userActions';
 import KtFileItem from '../snippets/kt-file-item/kt-file-item';
 import './message-preview.scss';
-// import {
-//   prepareFileForDownload, downloadMultipleZip, getFileSignedUrl
-// } from '../../utils/app/file';
 import {
   prepareFileForDownload, downloadMultipleZip, getPresignUrlFromServer, getFullFilePath,
 } from '../../utils/app/file';
-// import { getPresignUrlFromServer } from '../../utils/app/file';
 
 class MessagePreview extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       user: null,
-      files: [],
       hasPreparedFiles: false,
       hasSignedUrls: false,
       error: null,
       signedAttachments: [],
-      attachments: [
-        {
-          file_url: 'https://ebenkb.s3.us-east-2.amazonaws.com/kotage/e62b652c4b/rfx/O2_cE4-O1/PIK.png',
-        },
-        {
-          file_url: 'https://ebenkb.s3.us-east-2.amazonaws.com/kotage/FFR.jpg',
-        },
-        {
-          file_url: 'https://ebenkb.s3.us-east-2.amazonaws.com/kotage/e62b652c4b/rfx/O2_cE4-O1/PIK.png',
-        },
-        {
-          file_url: 'https://ebenkb.s3.us-east-2.amazonaws.com/kotage/e62b652c4b/rfx/O2_cE4-O1/PIK.png',
-        },
-      ],
       inbox: [
         {
           id: 1,
@@ -76,14 +57,9 @@ class MessagePreview extends React.Component {
     };
   }
 
-
   componentDidMount() {
-    const { hasPreparedFiles, hasSignedUrls, user } = this.state;
-    const { findRfpMessage } = this.props;
-    const {
-      // eslint-disable-next-line react/prop-types
-      message, tenant_id,
-    } = this.props;
+    const { hasSignedUrls, user } = this.state;
+    const { findRfpMessage, message, tenant_id } = this.props;
 
     // eslint-disable-next-line react/prop-types
     const { match } = this.props;
@@ -92,58 +68,62 @@ class MessagePreview extends React.Component {
     // eslint-disable-next-line react/prop-types
     const { message_id } = params;
 
-    if (!hasPreparedFiles) {
-      if (!hasSignedUrls) {
-        try {
-          this.signFileUrls();
-        } catch (error) {
-          this.setState((state) => ({ ...state, error }));
-        }
-      }
-    }
-
     if (!message || message.id !== message_id) {
-      findRfpMessage(message_id);
-    }
+      findRfpMessage(message_id)
+        .then((msg) => {
+          if ((!hasSignedUrls && (!msg.files))
+          || (msg.files && (msg.files.length < msg.attachments.length))) {
+            this.signFileUrls();
+          }
 
-    if (!user && message) {
-      getUser(message.user_id, tenant_id)
-        .then((data) => {
-          this.setState((state) => ({ ...state, user: data }));
+          if (!user) {
+            getUser(msg.user_id, tenant_id)
+              .then((data) => {
+                this.setState((state) => ({ ...state, user: data }));
+              });
+          }
         });
     }
   }
 
   prepareFilesSync = () => {
     const { signedAttachments } = this.state;
+    const { setMessageBlob } = this.props;
     signedAttachments.map(async (file_url) => {
-      const fileBody = await prepareFileForDownload(file_url);
-      if (fileBody) {
-        const fileObject = { file_url, ...fileBody };
-        this.setState((state) => ({ ...state, files: [...state.files, fileObject] }));
+      try {
+        const fileBody = await prepareFileForDownload(file_url);
+        if (fileBody) {
+          const fileObject = { file_url, ...fileBody };
+          setMessageBlob(fileObject);
+          // this.setState((state) => ({ ...state, files: [...state.files, fileObject] }));
+        }
+      } catch (error) {
+        this.setState((state) => ({ ...state, error, hasPreparedFiles: true }));
       }
     });
+    this.setState((state) => ({ ...state, hasPreparedFiles: true }));
   };
 
     signFileUrls = async () => {
-      // const { currentRfpID, tenant_id } = this.props;
-      // const {
-      //   attachments,
-      // } = this.state;
       const { message } = this.props;
-      if (message) {
+      if ((message && !message.files)
+        || (message && message.files && message.files.length < message.attachments.length)) {
         const { attachments } = message;
         for (let i = 0; i < attachments.length; i += 1) {
-        // eslint-disable-next-line no-await-in-loop
+          // eslint-disable-next-line no-await-in-loop
           // const singedUrl = await getFileSignedUrl(attachments[i].file_url,
           // tenant_id, currentRfpID);
-          // eslint-disable-next-line no-await-in-loop
-          const singedUrl = await getPresignUrlFromServer(getFullFilePath(attachments[i].file_url));
-          console.log('in the message preview', singedUrl);
-          this.setState((state) => ({
-            ...state,
-            signedAttachments: [...state.signedAttachments, singedUrl],
-          }));
+          try {
+            // eslint-disable-next-line no-await-in-loop
+            const singedUrl = await
+            getPresignUrlFromServer(getFullFilePath(attachments[i].file_url));
+            this.setState((state) => ({
+              ...state,
+              signedAttachments: [...state.signedAttachments, singedUrl],
+            }));
+          } catch (error) {
+            this.setState((state) => ({ ...state, error }));
+          }
           if (i === (attachments.length - 1)) {
             this.setState((state) => ({ ...state, hasSignedUrls: true }));
             this.prepareFilesSync();
@@ -151,6 +131,25 @@ class MessagePreview extends React.Component {
           }
         }
       }
+    };
+
+    canLoadedFiles = () => {
+      const { message } = this.props;
+      const { error } = this.state;
+      if (message) {
+        if (message.attachments) {
+          if (message.files) {
+            if (message.files.length < message.attachments.length) {
+              if (!error) {
+                return true;
+              }
+            }
+          } else if (!error) {
+            return true;
+          }
+        }
+      }
+      return false;
     };
 
     render() {
@@ -161,7 +160,7 @@ class MessagePreview extends React.Component {
       // eslint-disable-next-line react/prop-types
       const { id } = params;
       const {
-        files, user, signedAttachments, error,
+        user,
       } = this.state;
 
       const { message } = this.props;
@@ -171,7 +170,7 @@ class MessagePreview extends React.Component {
       };
 
       const downloadAllFiles = () => {
-        downloadMultipleZip(files, 'RFP files');
+        downloadMultipleZip(message.files, 'RFP files');
       };
 
       return (
@@ -205,13 +204,13 @@ class MessagePreview extends React.Component {
 						<p align="justify">{message.message}</p>
 						<Divider type="faint" classes="p-b-8 p-t-8" />
 						<div className="file-item__wrapper">
-							{files && files.map((file) => (
+							{message.files && message.files.map((file) => (
 								<KtFileItem
 									fileObject={file}
 									user={user}
 								/>
 							))}
-							{ !error && signedAttachments.length !== files.length && (
+							{ this.canLoadedFiles() && (
 								<Loader
 									active
 									size="tiny"
@@ -220,32 +219,32 @@ class MessagePreview extends React.Component {
 										<span className="sm-caption">
 											Loading
 											&nbsp;
-											{signedAttachments.length - files.length}
-											{' '}
-											attachment(s)
+											attachments
 										</span>
 									)}
 								/>
 							)}
 						</div>
-						<div className="m-t-20">
-							<Button
-								default
-								content={(
-									<span>
-										Download
-										{' '}
-										{files.length}
-										{' '}
-										attachments
-									</span>
-								)}
-								size="tiny"
-								icon={<AttachmentIcon />}
-								className="kt-transparent flex-center"
-								onClick={downloadAllFiles}
-							/>
-						</div>
+						{message && message.files && (
+							<div className="m-t-20">
+								<Button
+									default
+									content={(
+										<span>
+											Download
+											{' '}
+											{message.files.length}
+											{' '}
+											attachment(s)
+										</span>
+									)}
+									size="tiny"
+									icon={<AttachmentIcon />}
+									className="kt-transparent flex-center"
+									onClick={downloadAllFiles}
+								/>
+							</div>
+						)}
 					</div>
 				)}
 			</div>
@@ -258,14 +257,17 @@ MessagePreview.propTypes = {
   findRfpMessage: PropTypes.func.isRequired,
   message: PropTypes.object,
   tenant_id: PropTypes.string.isRequired,
+  setMessageBlob: PropTypes.func.isRequired,
   // currentRfpID: PropTypes.string.isRequired,
 };
 
 MessagePreview.defaultProps = {
   message: null,
 };
+
 const mapDispatchToProps = {
   findRfpMessage: findRfpMessageById,
+  setMessageBlob: setCurrenMessageBlob,
 };
 
 const mapStateToProps = (state) => ({

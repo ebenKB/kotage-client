@@ -101,6 +101,7 @@ export const serializeProposal = (proposal) => {
 
 export const serializeRfpMessage = (message) => {
   const newMessage = {
+    subject: message.subject,
     message: message.message,
     proposal_request_id: message.rfp_id,
     rfp_message_attachments_attributes: message.files.map((f) => ({

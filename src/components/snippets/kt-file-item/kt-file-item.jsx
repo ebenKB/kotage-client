@@ -12,7 +12,7 @@ import './kt-file-item.scss';
 import PdfPreview from '../../pdf-preview/pdf-preview';
 import { ReactComponent as Download } from '../../../svg/download.svg';
 import { ReactComponent as Preview } from '../../../svg/preview.svg';
-import { getFileNameAndExtension } from '../../../utils/app/file';
+import { getFileNameAndExtension, getFileExtension } from '../../../utils/app/file';
 import {
   PDF, JPEG, WORD, PNG, EXCEL,
 } from '../../../utils/app/fileTypes';
@@ -41,19 +41,19 @@ const KtFileItem = ({ fileObject, user }) => {
   );
 
   const getFileLogo = () => {
-    if (fileObject.fileType === PDF) {
+    if ((fileObject.fileType === PDF) || (getFileExtension(fileObject.fileName) === 'pdf')) {
       return (<PDFIcon className="big logo auto-height m-r-5" />);
     }
-    if (fileObject.fileType === JPEG) {
+    if (fileObject.fileType === JPEG || (getFileExtension(fileObject.fileName) === ('jpeg' || 'jpg'))) {
       return (<JPEGIcon className="big logo auto-height m-r-5" />);
     }
-    if (fileObject.fileType === WORD) {
+    if (fileObject.fileType === WORD || (getFileExtension(fileObject.fileName) === ('docx' || 'doc'))) {
       return (<WORDIcon className="big logo auto-height m-r-5" />);
     }
-    if (fileObject.fileType === PNG) {
+    if (fileObject.fileType === PNG || (getFileExtension(fileObject.fileName) === 'png')) {
       return (<PNGIcon className="big logo auto-height m-r-5" />);
     }
-    if (fileObject.fileType === EXCEL) {
+    if (fileObject.fileType === EXCEL || (getFileExtension(fileObject.fileName) === '.xlsx')) {
       return (<EXCELIcon className="big logo auto-height m-r-5" />);
     }
     return (<span />);
