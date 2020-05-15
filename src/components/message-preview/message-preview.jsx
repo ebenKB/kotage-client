@@ -245,7 +245,7 @@ class MessagePreview extends React.Component {
 											{' '}
 											{message.files.length}
 											{' '}
-											attachment(s)
+											{message.files.length === 1 ? 'attachment' : 'attachments' }
 										</span>
 									)}
 									size="tiny"
