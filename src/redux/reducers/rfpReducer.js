@@ -10,6 +10,7 @@ import {
   FIND_RFP_MESSAGE,
   UPDATE_RFP,
   SET_CURRENT_MESSAGE_BLOB,
+  CLEAR_RFP_OUTBOX,
 } from '../types/rfpTypes';
 
 const initialState = {
@@ -110,6 +111,13 @@ export default (state = initialState, action) => {
       };
     }
 
+    case CLEAR_RFP_OUTBOX: {
+      return {
+        ...state,
+        rfpOutbox: null,
+      };
+    }
+
     case FIND_RFP_MESSAGE: {
       if (!state.currentOutbox || action.payload.id !== state.currentOutbox.id) {
         return {
@@ -132,6 +140,7 @@ export default (state = initialState, action) => {
         currentOutbox: { ...state.currentOutbox, files: newWBlobs },
       };
     }
+
     case UPDATE_RFP: {
       return {
         ...state,

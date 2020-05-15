@@ -33,7 +33,6 @@ const MessageCenter = () => {
   ];
 
   const handleChange = (data) => {
-    // setSelectedOption(() => ({ text: data.text, value: data.value }));
     setSelectedOption({ text: data.text, value: data.value });
   };
 

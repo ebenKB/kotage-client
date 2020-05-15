@@ -8,36 +8,53 @@ import { PropTypes } from 'prop-types';
 import MessageItem from '../message-center/message-item/message-item';
 import { getRfpOutbox } from '../../redux/actions/rfpActions';
 import { getPageRemainder } from '../../utils/app/index';
+import { ReactComponent as File } from '../../svg/empty.svg';
 
 const MessageOutbox = ({
   messages, getSentMessages, isLoading, meta,
 }) => {
   const { id } = useParams();
   const [hasFetched, setHasFetched] = useState(false);
+
   useEffect(() => {
-    if (!messages && !isLoading && !hasFetched) {
+    if (!isLoading && !hasFetched) {
       getSentMessages(id);
       setHasFetched(true);
     }
   }, [isLoading]);
+
+  const remainder = () => getPageRemainder(meta.count, messages.length, 10);
+
   return (
 	<div>
-		<div className="message-center__heading m-b-20">
-			<h4>Messages sent to suppliers</h4>
-		</div>
+		{messages && (
+			<div className="message-center__heading m-b-20">
+				<h4>Messages sent to suppliers</h4>
+			</div>
+		)}
 		{messages && messages.map((m) => (
-			<MessageItem
-				key={m.id}
-				message={m}
-			/>
+			<div>
+				<MessageItem
+					key={m.id}
+					message={m}
+				/>
+			</div>
 		))}
-		{meta && (
+
+		{!messages && !isLoading && hasFetched && (
+			<div className="text-center">
+				<File className="medium dark logo" />
+				<p>You have not sent any messages to your supplers.</p>
+			</div>
+		)}
+
+		{meta && messages && (remainder() > 0) && (
 			<div className="m-t-20 m-b-20">
 				<Button className="kt-transparent kt-primary">
-          View&nbsp;
-					{getPageRemainder(meta.count, meta.items, meta.page)}
-          &nbsp;
-          more sent messages
+					View&nbsp;
+					{remainder()}
+					&nbsp;
+					more sent messages
 				</Button>
 			</div>
 		)}

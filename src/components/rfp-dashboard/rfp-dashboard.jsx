@@ -14,7 +14,6 @@ import MainContent from '../kt-main-content/mainContent';
 import Help from '../../utils/requisitions/new/help';
 import KtWrapperLite from '../kt-wrapper-lite/kt-wrapper-lite';
 import KtTransparentInput from '../form-fields/kt-transparent-search-input/kt-trans-input';
-// import ButtonGroup from '../form-fields/button-group/button-group';
 import FormGroup from '../form-fields/form-group/form-group';
 import SupplierDetailsCaptionGroup from '../snippets/supplier-details-caption-group/supplier-details-caption-group';
 import RfpTitle from '../snippets/rfp-title/rfp-title';
@@ -44,15 +43,15 @@ const RfpDashboard = ({ match, getProposal, proposal }) => {
 					>
 						<div>
 							<span className="kt-primary">
-                Bids due:
+								Bids due:
 								&nbsp;
 								{ proposal.bid_deadline_date }
 								&nbsp;
-                @
+								@
 								&nbsp;
 								{ proposal.bid_deadline_time }
 								{' '}
-                UTC (in 6 days)
+								UTC (in 6 days)
 							</span>
 							<Divider type="faint" title="" classes="m-t-10 m-b-10" />
 						</div>
@@ -79,11 +78,11 @@ const RfpDashboard = ({ match, getProposal, proposal }) => {
 									</div>
 									<div className="m-t-20">
 										<Divider type="faint" title="" classes="m-b-10" />
-                    All Bids are due in
+										All Bids are due in
 										{' '}
 										<span className="bold">6</span>
 										{' '}
-                    days
+										days
 									</div>
 								</div>
 								<div>
@@ -98,8 +97,8 @@ const RfpDashboard = ({ match, getProposal, proposal }) => {
 									</div>
 									<div className="m-t-20">
 										<Link to={`/rfx/proposal/${proposal.id}/message`}>
-											<Button size="tiny" className="green flex flex-center">
-                        Message Center
+											<Button size="tiny" className="green">
+												Message Center
 											</Button>
 										</Link>
 									</div>
@@ -148,9 +147,6 @@ const RfpDashboard = ({ match, getProposal, proposal }) => {
 							<Link to={`/rfx/proposal/show/${proposal.id}`}>
 								<Button content="VIEW RFP" color="green" />
 							</Link>
-							{/* <Link to="/">
-								<Button content="VIEW RFP" color="green" />
-							</Link> */}
 						</div>
 					</div>
 				</div>

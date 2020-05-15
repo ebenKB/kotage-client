@@ -21,7 +21,7 @@ export const getFileSize = (bytes) => {
       newSize = (bytes / 125000000);
       postFix = 'GB';
     }
-    return `${newSize.toFixed(2)}${postFix}`;
+    return `${newSize.toFixed(1)}${postFix}`;
   } catch (error) {
     return bytes;
   }

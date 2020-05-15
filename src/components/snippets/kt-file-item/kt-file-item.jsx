@@ -36,7 +36,11 @@ const KtFileItem = ({ fileObject, user }) => {
 	<span>
 		{fileObject && fileObject.fileName}
     &nbsp;
-		<span className="xsm">{ fileObject && fileObject.fileSize}</span>
+		<span className="xsm bold">
+			<span>(</span>
+			<span>{ fileObject && fileObject.fileSize}</span>
+			<span>)</span>
+		</span>
 	</span>
   );
 

@@ -6,7 +6,7 @@ import {
   SET_RFP_DONE_LOADING, GET_RFP,
   GET_PROPOSAL_BY_ID, CREATE_MESSAGE,
   GET_RFP_OUTBOX, GET_RFP_INBOX, FIND_RFP_MESSAGE,
-  UPDATE_RFP, SET_CURRENT_MESSAGE_BLOB,
+  UPDATE_RFP, SET_CURRENT_MESSAGE_BLOB, CLEAR_RFP_OUTBOX,
 } from '../types/rfpTypes';
 import Axios from '../../utils/axios/axios';
 import { getToken } from '../../utils/app/index';
@@ -113,13 +113,14 @@ export const getRfpInbox = (rfp_id) => async (dispatch, getState) => {
   }
 };
 
-
 export const getRfpOutbox = (rfp_id) => async (dispatch, getState) => {
   if (rfp_id !== null && rfp_id !== undefined) {
     try {
       dispatch({ type: SET_RFP_LOADING });
       const { user } = getState();
-      const { data } = await Axios.get(`/v1/${user.currentUser.tenant_id}/rfp/${rfp_id}/messages?path=outbox`);
+      const { data } = await Axios
+        .get(`/v1/${user.currentUser.tenant_id}/rfp/${rfp_id}/messages?path=outbox`);
+
       const formatedData = data.rfp_messages.map((d) => deserializeRfpMessage(d));
       dispatch({
         type: GET_RFP_OUTBOX,
@@ -130,12 +131,12 @@ export const getRfpOutbox = (rfp_id) => async (dispatch, getState) => {
       });
     } catch (error) {
       dispatch({ type: SET_RFP_DONE_LOADING });
+      dispatch({ type: CLEAR_RFP_OUTBOX });
     }
   } else {
     dispatch({ type: SET_RFP_DONE_LOADING });
   }
 };
-
 
 export const createRfpMessage = (message) => async (dispatch, getState) => new
 Promise((resolve) => {
