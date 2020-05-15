@@ -82,7 +82,7 @@ export default (state = initialState, action) => {
       const outbox = state.rfpOutbox;
       let rfpMessages = null;
       if (outbox !== null) {
-        rfpMessages = [...outbox, action.payload];
+        rfpMessages = [action.payload, ...outbox];
       } else {
         rfpMessages = [action.payload];
       }

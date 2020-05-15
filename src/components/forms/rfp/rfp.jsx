@@ -83,7 +83,8 @@ class RFP extends React.Component {
         ...state,
         canShowModal: false,
       }));
-      const files = await uploadFiles(newProposal.files, tenantUid);
+      const files = await
+      uploadFiles(newProposal.files, tenantUid, process.env.REACT_APP_rfpFolderName);
       const proposal = newProposal;
       proposal.files = files;
       this.setState((state) => ({

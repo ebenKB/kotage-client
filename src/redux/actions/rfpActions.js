@@ -146,12 +146,12 @@ Promise((resolve) => {
       .then((data) => {
         dispatch({
           type: CREATE_MESSAGE,
-          payload: data,
+          payload: deserializeRfpMessage(data.data.rfp_message),
         });
         resolve(true);
       });
   } catch (error) {
-    console.log('error here');
+    dispatch({ type: SET_RFP_DONE_LOADING });
   }
 });
 

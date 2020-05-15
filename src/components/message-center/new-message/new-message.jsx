@@ -57,7 +57,8 @@ const NewMessage = ({
   };
 
   const handleSubmit = async () => {
-    const files = await uploadFiles(message.files, tenantUid);
+    const files = await
+    uploadFiles(message.files, tenantUid, process.env.REACT_APP_messageFolderName);
     message.files = files;
     setMessage(message);
     createNewMessage(message)

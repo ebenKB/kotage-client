@@ -207,15 +207,15 @@ const uploadToFileServer = async (file, tenant_uid, objectID) => {
  * @param {*} files the file to be uploaded to the server
  * returns a reference to the file on the server
  */
-export const uploadFiles = (files, tenant_uid) => new
+export const uploadFiles = (files, tenant_uid, directory) => new
 Promise(async (resolve, reject) => {
   try {
     let response = [];
-    const rfp_id = shortid.generate();
-    const folderName = process.env.REACT_APP_rfpFolderName;
+    const object_id = shortid.generate();
+    // const folderName = process.env.REACT_APP_rfpFolderName;
     for (const file of files) {
       // const data = await uploadToFileServer(file, tenant_uid, rfp_id);
-      const data = await uploadToS3(file, tenant_uid, rfp_id, folderName);
+      const data = await uploadToS3(file, tenant_uid, object_id, directory);
       response = [...response, { title: file.title, url: data.location }];
     }
     resolve(response);
