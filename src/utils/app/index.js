@@ -161,7 +161,7 @@ const uploadToS3 = (file, tenant_uid, item_id, folderName) => new Promise((resol
       const config = {
         bucketName: process.env.REACT_APP_bucketName,
         dirName: `kotage/${tenant_uid}/${folderName}/${item_id}`,
-        region: 'us-east-2',
+        region: process.env.REACT_APP_awsRegion,
         accessKeyId: process.env.REACT_APP_awsAccessKeyId,
         secretAccessKey: process.env.REACT_APP_awsSecretAccessKey,
         meta: {
@@ -169,7 +169,7 @@ const uploadToS3 = (file, tenant_uid, item_id, folderName) => new Promise((resol
         },
       };
       try {
-        reactS3.uploadFile(file, config)
+        reactS3.uploadFile(file.data, config)
           .then((data) => resolve(data));
       } catch (error) {
         reject(error);

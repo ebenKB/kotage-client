@@ -79,7 +79,6 @@ class RFP extends React.Component {
     };
 
     const handleConfirmPublish = async () => {
-      console.log('we have confirmed publish...');
       this.setState((state) => ({
         ...state,
         canShowModal: false,

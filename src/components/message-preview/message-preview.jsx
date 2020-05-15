@@ -20,7 +20,7 @@ import { getUser } from '../../redux/actions/userActions';
 import KtFileItem from '../snippets/kt-file-item/kt-file-item';
 import './message-preview.scss';
 import {
-  prepareFileForDownload, downloadMultipleZip, getPresignUrlFromServer, getFullFilePath,
+  prepareFileForDownload, downloadMultipleZip, getFileSignedUrl,
 } from '../../utils/app/file';
 
 class MessagePreview extends React.Component {
@@ -105,18 +105,18 @@ class MessagePreview extends React.Component {
   };
 
     signFileUrls = async () => {
-      const { message } = this.props;
+      const { message, tenant_id, currentRfpID } = this.props;
       if ((message && !message.files)
         || (message && message.files && message.files.length < message.attachments.length)) {
         const { attachments } = message;
         for (let i = 0; i < attachments.length; i += 1) {
-          // eslint-disable-next-line no-await-in-loop
-          // const singedUrl = await getFileSignedUrl(attachments[i].file_url,
-          // tenant_id, currentRfpID);
           try {
             // eslint-disable-next-line no-await-in-loop
-            const singedUrl = await
-            getPresignUrlFromServer(getFullFilePath(attachments[i].file_url));
+            // const singedUrl = await
+            // getPresignUrlFromServer(getFullFilePath(attachments[i].file_url));
+          // eslint-disable-next-line no-await-in-loop
+            const singedUrl = await getFileSignedUrl(attachments[i].file_url,
+              tenant_id, currentRfpID);
             this.setState((state) => ({
               ...state,
               signedAttachments: [...state.signedAttachments, singedUrl],
@@ -155,6 +155,7 @@ class MessagePreview extends React.Component {
     render() {
       // eslint-disable-next-line react/prop-types
       const { match, history } = this.props;
+      const { error } = this.state;
       // eslint-disable-next-line react/prop-types
       const { params } = match;
       // eslint-disable-next-line react/prop-types
@@ -224,6 +225,15 @@ class MessagePreview extends React.Component {
 									)}
 								/>
 							)}
+							{error && (
+								<span className="kt-danger">
+									Failed to load attachment
+									{/* <Button
+										content="Retry"
+										onClick={this.signFileUrls}
+									/> */}
+								</span>
+							)}
 						</div>
 						{message && message.files && (
 							<div className="m-t-20">
@@ -258,7 +268,7 @@ MessagePreview.propTypes = {
   message: PropTypes.object,
   tenant_id: PropTypes.string.isRequired,
   setMessageBlob: PropTypes.func.isRequired,
-  // currentRfpID: PropTypes.string.isRequired,
+  currentRfpID: PropTypes.string.isRequired,
 };
 
 MessagePreview.defaultProps = {
