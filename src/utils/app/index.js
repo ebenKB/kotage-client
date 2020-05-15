@@ -155,7 +155,6 @@ export const getNameFromFileName = (fileName) => {
  * rfq = request for quote, messages,
  */
 
-// eslint-disable-next-line no-unused-vars
 const uploadToS3 = (file, tenant_uid, item_id, folderName) => new Promise((resolve, reject) => {
   if (folderName !== null && folderName !== '' && folderName !== undefined) {
     import('react-s3').then((reactS3) => {
@@ -183,6 +182,7 @@ const uploadToS3 = (file, tenant_uid, item_id, folderName) => new Promise((resol
  * uploads files the remote for Digital ocean space
  * @param {*} files the files to upload to the server
  */
+// eslint-disable-next-line no-unused-vars
 const uploadToFileServer = async (file, tenant_uid, objectID) => {
   if (file && tenant_uid && objectID) {
     const key = `kotage/${tenant_uid}/${RFP_FOLDER_NAME}/${objectID}/${file.data.name}`;
@@ -212,10 +212,10 @@ Promise(async (resolve, reject) => {
   try {
     let response = [];
     const rfp_id = shortid.generate();
-    // const folderName = process.env.REACT_APP_rfpFolderName;
+    const folderName = process.env.REACT_APP_rfpFolderName;
     for (const file of files) {
-      const data = await uploadToFileServer(file, tenant_uid, rfp_id);
-      // const data = await uploadToS3(file, tenant_uid, rfp_id, folderName);
+      // const data = await uploadToFileServer(file, tenant_uid, rfp_id);
+      const data = await uploadToS3(file, tenant_uid, rfp_id, folderName);
       response = [...response, { title: file.title, url: data.location }];
     }
     resolve(response);
