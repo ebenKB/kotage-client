@@ -13,7 +13,7 @@ import Input from '../../form-fields/input/input';
 import { createRfpMessage } from '../../../redux/actions/rfpActions';
 import Dropzone from '../../dropzone/dropzone';
 import Divider from '../../kt-divider/divider';
-import { RFP_MESSAGE_FOLDERNAME } from 'utils/app/definitions';
+import { RFP_MESSAGE_FOLDERNAME } from '../../../utils/app/definitions';
 
 const NewMessage = ({
   createNewMessage, isLoading, currentProposalId, tenantUid,
