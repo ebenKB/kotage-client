@@ -13,6 +13,7 @@ import Input from '../../form-fields/input/input';
 import { createRfpMessage } from '../../../redux/actions/rfpActions';
 import Dropzone from '../../dropzone/dropzone';
 import Divider from '../../kt-divider/divider';
+import { RFP_MESSAGE_FOLDERNAME } from 'utils/app/definitions';
 
 const NewMessage = ({
   createNewMessage, isLoading, currentProposalId, tenantUid,
@@ -58,7 +59,7 @@ const NewMessage = ({
 
   const handleSubmit = async () => {
     const files = await
-    uploadFiles(message.files, tenantUid, process.env.REACT_APP_messageFolderName);
+    uploadFiles(message.files, tenantUid, RFP_MESSAGE_FOLDERNAME);
     message.files = files;
     setMessage(message);
     createNewMessage(message)

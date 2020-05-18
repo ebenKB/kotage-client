@@ -10,6 +10,7 @@ import { createProposal } from '../../../redux/actions/rfpActions';
 import RfpEditor from '../../rfp-editor/rfp-editor';
 import Modal from '../../modal/modal';
 import { uploadFiles } from '../../../utils/app/index';
+import { RFP_FOLDER_NAME } from '../../../utils/app/definitions';
 
 class RFP extends React.Component {
   constructor(props) {
@@ -84,7 +85,7 @@ class RFP extends React.Component {
         canShowModal: false,
       }));
       const files = await
-      uploadFiles(newProposal.files, tenantUid, process.env.REACT_APP_rfpFolderName);
+      uploadFiles(newProposal.files, tenantUid, RFP_FOLDER_NAME);
       const proposal = newProposal;
       proposal.files = files;
       this.setState((state) => ({
