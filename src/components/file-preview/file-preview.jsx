@@ -1,59 +1,61 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable react/forbid-prop-types */
-import React, { useState } from 'react';
+import React from 'react';
 import { PropTypes } from 'prop-types';
 import './pdf-preview.scss';
-import { Button, Image, Divider } from 'semantic-ui-react';
+import { Button, Divider } from 'semantic-ui-react';
 import CancelOutlinedIcon from '@material-ui/icons/CancelOutlined';
 import DownloadIcon from '@material-ui/icons/GetApp';
 import AddBoxIcon from '@material-ui/icons/AddBox';
 import MinusIcon from '@material-ui/icons/IndeterminateCheckBox';
+import FullscreenIcon from '@material-ui/icons/Fullscreen';
 import Input from '../form-fields/input/input';
 import MessageHeaderCaption from '../snippets/message-header-caption/message-header-caption';
 import { getFileNameAndExtension } from '../../utils/app/file';
-import PdfReader from '../pdf-reader/pdf-reader';
+// import PdfReader from '../pdf-reader/pdf-reader';
 
 const FilePreview = ({
-  type, fileObject, user, handleCloseAction,
+  type, fileObject, user, handleCloseAction, children, ...rest
 }) => {
-  const [enlarge, setEnlarge] = useState(true);
-  const [scale, setScale] = useState(1.5);
+  // const [enlarge, setEnlarge] = useState(true);
+  // const [scale, setScale] = useState(1.5);
 
-  let clickCounter = 0;
+  // let clickCounter = 0;
   // const [clickCounter, setClickCounter] = useState(0);
-  const handleClick = (e) => {
-    e.preventDefault();
-    const count = clickCounter + 1;
-    clickCounter = count;
+  // const handleClick = (e) => {
+  //   e.preventDefault();
+  //   const count = clickCounter + 1;
+  //   clickCounter = count;
 
-    // check if it is double click
-    if (clickCounter === 2) {
-      setEnlarge(!enlarge);
-    }
+  //   // check if it is double click
+  //   if (clickCounter === 2) {
+  //     setEnlarge(!enlarge);
+  //   }
 
-    // clear the click counter
-    setTimeout(() => {
-      clickCounter = 0;
-    }, 500);
-  };
+  //   // clear the click counter
+  //   setTimeout(() => {
+  //     clickCounter = 0;
+  //   }, 500);
+  // };
 
-  const getImageSize = () => {
-    if (enlarge) {
-      return 'full-width';
-    }
-    return 'fit-height';
-  };
+  // const getImageSize = () => {
+  //   if (enlarge) {
+  //     return 'full-width';
+  //   }
+  //   return 'fit-height';
+  // };
 
-  const zoomout = () => {
-    if (scale < 300) {
-      setScale(scale + 0.25);
-    }
-  };
+  // const zoomout = () => {
+  //   if (scale < 300) {
+  //     setScale(scale + 0.25);
+  //   }
+  // };
 
-  const zoomin = () => {
-    if (scale >= 0.25) {
-      setScale(scale - 0.25);
-    }
-  };
+  // const zoomin = () => {
+  //   if (scale >= 0.25) {
+  //     setScale(scale - 0.25);
+  //   }
+  // };
 
   const showAdvancedControls = () => {
     if (type === 'pdf') {
@@ -69,6 +71,14 @@ const FilePreview = ({
 				<div className="file-preview-header__controls-wrapper">
 					{type === 'pdf' && (
 						<div className="file-preview-header__controls">
+							{rest.pages && (
+								<span className="flex-center">
+									{' ('}
+									{rest.pages}
+									{' '}
+									pages)
+								</span>
+							)}
 							<Button
 								draggable
 								default
@@ -76,7 +86,7 @@ const FilePreview = ({
 								className="kt-transparent flex-center"
 								content=""
 								icon={<AddBoxIcon className="big logo dark" />}
-								onClick={zoomout}
+								onClick={rest.handleZoomOut}
 							/>
 							<Button
 								draggable
@@ -85,11 +95,20 @@ const FilePreview = ({
 								className="kt-transparent flex-center"
 								content=""
 								icon={<MinusIcon className="big logo dark" />}
-								onClick={zoomin}
+								onClick={rest.handleZoomIn}
+							/>
+							<Button
+								draggable
+								default
+								size="tiny"
+								className="kt-transparent flex-center"
+								content=""
+								icon={<FullscreenIcon className="big logo dark" />}
+								onClick={rest.handleFitScreen}
 							/>
 							<Input
 								type="text"
-								value={`${Math.round(scale * 100)} %`}
+								value={`${Math.round(rest.scale * 100)} %`}
 								classes="file-preview__input"
 							/>
 						</div>
@@ -124,7 +143,7 @@ const FilePreview = ({
 			</div>
 			<div className="file-preview-content__body">
 				<div className="file-preview">
-					{type.toLowerCase() === 'image' && (
+					{/* {type.toLowerCase() === 'image' && (
 						<Image
 							onClick={handleClick}
 							src={fileObject.staticUrl}
@@ -136,7 +155,8 @@ const FilePreview = ({
 							scale={scale}
 							fileUrl={fileObject.staticUrl}
 						/>
-					)}
+					)} */}
+					{children}
 				</div>
 				<div className="kt-bg-shadow preview-controls">
 					<MessageHeaderCaption

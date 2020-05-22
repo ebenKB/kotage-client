@@ -9,11 +9,13 @@ import { ReactComponent as WORDIcon } from '../../../svg/word-alt.svg';
 import { ReactComponent as PNGIcon } from '../../../svg/png-alt.svg';
 import { ReactComponent as EXCELIcon } from '../../../svg/xls-alt.svg';
 import './kt-file-item.scss';
-import FilePreview from '../../file-preview/file-preview';
+import PdfReader from '../../pdf-reader/pdf-reader';
 import { ReactComponent as Download } from '../../../svg/download.svg';
 import { ReactComponent as Preview } from '../../../svg/preview.svg';
 import { getFileNameAndExtension, getFileExtension } from '../../../utils/app/file';
+import ImageReader from '../../image-reader/image-reader';
 import {
+// import PdfReader from '../../pdf-reader/pdf-reader';
   PDF, JPEG, WORD, PNG, EXCEL,
 } from '../../../utils/app/fileTypes';
 
@@ -73,6 +75,25 @@ const KtFileItem = ({ fileObject, user }) => {
     return (<span />);
   };
 
+  const getPreview = () => {
+    if (getFileType() === 'pdf') {
+      return (
+	<PdfReader
+		fileObject={fileObject}
+		user={user}
+		handleCloseAction={() => setCanPreview(false)}
+	/>
+      );
+    }
+    return (
+	<ImageReader
+		fileObject={fileObject}
+		user={user}
+		handleCloseAction={() => setCanPreview(false)}
+	/>
+    );
+  };
+
   return (
 	<div className="m-b-20 flex-center file-item kt-bg-shadow">
 		<div className="flex-center item">
@@ -91,14 +112,7 @@ const KtFileItem = ({ fileObject, user }) => {
 				</span>
 			</div>
 		</div>
-		{canPreview && (
-			<FilePreview
-				type={getFileType()}
-				fileObject={fileObject}
-				user={user}
-				handleCloseAction={() => setCanPreview(false)}
-			/>
-		)}
+		{canPreview && getPreview()}
 	</div>
   );
 };
