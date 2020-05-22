@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
+import { PropTypes } from 'prop-types';
 import { pdfjs, Document, Page } from 'react-pdf';
-// import { Document, Page } from 'react-pdf/dist/entry.webpack';
-import pdf from '../../file.pdf';
-// import 'react-pdf/dist/Page/AnnotationLayer.css';
+// import pdf from '../../file.pdf';
+import 'react-pdf/dist/Page/AnnotationLayer.css';
+import './pdf-reader.scss';
+
 
 pdfjs
   .GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
-class MyApp extends Component {
+class PdfReader extends Component {
   constructor(props) {
     super(props);
 
@@ -23,26 +25,47 @@ class MyApp extends Component {
 
   render() {
     const { pageNumber, numPages } = this.state;
+    const { scale, fileUrl } = this.props;
 
     return (
 	<div>
 		<Document
-			file={pdf}
+			file={fileUrl}
 			onLoadSuccess={this.onDocumentLoadSuccess}
-			loading="Loading file...."
+			loading="Loading file..."
+			className="pdf-reader"
 		>
-			<Page pageNumber={pageNumber} scale={1.5} />
+			{numPages <= 10 && (Array.from(new Array(numPages), (el, index) => (
+				<Page
+					key={`page_${index + 1}`}
+					pageNumber={index + 1}
+					scale={scale}
+					className="pdf-reader__canvas"
+				/>
+			))
+			)}
+			{numPages > 10 && (
+				<Page
+					pageNumber={pageNumber}
+					scale={scale}
+					className="pdf-reader__canvas"
+				/>
+			)}
 		</Document>
-		<p>
-      Page
+		{/* <p>
+			Page
 			{pageNumber}
 			{' '}
-      of
+			of
 			{numPages}
-		</p>
+		</p> */}
 	</div>
     );
   }
 }
 
-export default MyApp;
+PdfReader.propTypes = {
+  scale: PropTypes.number.isRequired,
+  fileUrl: PropTypes.string.isRequired,
+};
+export default PdfReader;

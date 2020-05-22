@@ -9,7 +9,7 @@ import { ReactComponent as WORDIcon } from '../../../svg/word-alt.svg';
 import { ReactComponent as PNGIcon } from '../../../svg/png-alt.svg';
 import { ReactComponent as EXCELIcon } from '../../../svg/xls-alt.svg';
 import './kt-file-item.scss';
-import PdfPreview from '../../pdf-preview/pdf-preview';
+import FilePreview from '../../file-preview/file-preview';
 import { ReactComponent as Download } from '../../../svg/download.svg';
 import { ReactComponent as Preview } from '../../../svg/preview.svg';
 import { getFileNameAndExtension, getFileExtension } from '../../../utils/app/file';
@@ -44,6 +44,16 @@ const KtFileItem = ({ fileObject, user }) => {
 	</span>
   );
 
+  const getFileType = () => {
+    if (fileObject.fileType === PDF) {
+      return 'pdf';
+    }
+
+    if (fileObject.fileType === PNG || fileObject.fileType === JPEG || fileObject.fileType) {
+      return 'image';
+    }
+    return 'none';
+  };
   const getFileLogo = () => {
     if ((fileObject.fileType === PDF) || (getFileExtension(fileObject.fileName) === 'pdf')) {
       return (<PDFIcon className="big logo auto-height m-r-5" />);
@@ -82,7 +92,8 @@ const KtFileItem = ({ fileObject, user }) => {
 			</div>
 		</div>
 		{canPreview && (
-			<PdfPreview
+			<FilePreview
+				type={getFileType()}
 				fileObject={fileObject}
 				user={user}
 				handleCloseAction={() => setCanPreview(false)}

@@ -25,13 +25,36 @@
     padding: 20px;
   }
 
-  .file-preview-header {
-    padding: 10px;
-    padding-right: 30px;
+  .file-preview-header.basic-controls {
+    display: block;
+  
+    .file-preview-header__cta {
+      float: right;
+    }
   }
 
-  .file-preview-header div {
-    float: right;
+  .file-preview-header.advanced-controls{
+      display: grid;
+      grid-template-columns: 90% 10%;
+      padding: 10px;
+      padding-right: 30px;
+  }
+
+  .file-preview-header {
+    padding: 10px;
+
+    .file-preview-header__controls-wrapper {
+      margin: auto;
+    }
+
+    .file-preview-header__controls {
+      display: inline-flex;
+     }
+
+     .file-preview__input {
+      width: 80px;
+      height: 30px;
+    }
   }
   
   .file-preview-content__body {

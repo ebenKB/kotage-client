@@ -5,11 +5,18 @@ import './pdf-preview.scss';
 import { Button, Image, Divider } from 'semantic-ui-react';
 import CancelOutlinedIcon from '@material-ui/icons/CancelOutlined';
 import DownloadIcon from '@material-ui/icons/GetApp';
+import AddBoxIcon from '@material-ui/icons/AddBox';
+import MinusIcon from '@material-ui/icons/IndeterminateCheckBox';
+import Input from '../form-fields/input/input';
 import MessageHeaderCaption from '../snippets/message-header-caption/message-header-caption';
 import { getFileNameAndExtension } from '../../utils/app/file';
+import PdfReader from '../pdf-reader/pdf-reader';
 
-const PdfPreview = ({ fileObject, user, handleCloseAction }) => {
+const FilePreview = ({
+  type, fileObject, user, handleCloseAction,
+}) => {
   const [enlarge, setEnlarge] = useState(true);
+  const [scale, setScale] = useState(1.5);
 
   let clickCounter = 0;
   // const [clickCounter, setClickCounter] = useState(0);
@@ -36,12 +43,59 @@ const PdfPreview = ({ fileObject, user, handleCloseAction }) => {
     return 'fit-height';
   };
 
+  const zoomout = () => {
+    if (scale < 300) {
+      setScale(scale + 0.25);
+    }
+  };
+
+  const zoomin = () => {
+    if (scale >= 0.25) {
+      setScale(scale - 0.25);
+    }
+  };
+
+  const showAdvancedControls = () => {
+    if (type === 'pdf') {
+      return true;
+    } return false;
+  };
+
   return (
 	<div className="file-preview__wrapper">
 		<div className="file-preview__backdrop" />
 		<div className="file-preview__content">
-			<div className="file-preview-header kt-bg-shadow">
-				<div className="text-right flex-center">
+			<div className={`file-preview-header kt-bg-shadow ${showAdvancedControls() ? 'advanced-controls' : 'basic-controls'}`}>
+				<div className="file-preview-header__controls-wrapper">
+					{type === 'pdf' && (
+						<div className="file-preview-header__controls">
+							<Button
+								draggable
+								default
+								size="tiny"
+								className="kt-transparent flex-center"
+								content=""
+								icon={<AddBoxIcon className="big logo dark" />}
+								onClick={zoomout}
+							/>
+							<Button
+								draggable
+								default
+								size="tiny"
+								className="kt-transparent flex-center"
+								content=""
+								icon={<MinusIcon className="big logo dark" />}
+								onClick={zoomin}
+							/>
+							<Input
+								type="text"
+								value={`${Math.round(scale * 100)} %`}
+								classes="file-preview__input"
+							/>
+						</div>
+					)}
+				</div>
+				<div className="text-right flex-center file-preview-header__cta">
 					{fileObject && (
 						<a
 							href={fileObject.staticUrl}
@@ -70,12 +124,19 @@ const PdfPreview = ({ fileObject, user, handleCloseAction }) => {
 			</div>
 			<div className="file-preview-content__body">
 				<div className="file-preview">
-					{/* <h2>The file will be previewed here.</h2> */}
-					<Image
-						onClick={handleClick}
-						src={fileObject.staticUrl}
-						className={`clickable ${getImageSize()}`}
-					/>
+					{type.toLowerCase() === 'image' && (
+						<Image
+							onClick={handleClick}
+							src={fileObject.staticUrl}
+							className={`clickable ${getImageSize()}`}
+						/>
+					)}
+					{type.toLowerCase() === 'pdf' && (
+						<PdfReader
+							scale={scale}
+							fileUrl={fileObject.staticUrl}
+						/>
+					)}
 				</div>
 				<div className="kt-bg-shadow preview-controls">
 					<MessageHeaderCaption
@@ -90,10 +151,11 @@ const PdfPreview = ({ fileObject, user, handleCloseAction }) => {
   );
 };
 
-PdfPreview.propTypes = {
+FilePreview.propTypes = {
   fileObject: PropTypes.object.isRequired,
   user: PropTypes.object.isRequired,
   handleCloseAction: PropTypes.func.isRequired,
+  type: PropTypes.string.isRequired,
 };
 
-export default PdfPreview;
+export default FilePreview;
