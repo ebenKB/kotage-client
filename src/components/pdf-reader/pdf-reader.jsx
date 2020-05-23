@@ -6,6 +6,7 @@ import { pdfjs, Document, Page } from 'react-pdf';
 import 'react-pdf/dist/Page/AnnotationLayer.css';
 import './pdf-reader.scss';
 import FilePreview from '../file-preview/file-preview';
+import KtLoader from '../loader/loader';
 
 
 pdfjs
@@ -81,7 +82,7 @@ class PdfReader extends Component {
 			<Document
 				file={fileObject.staticUrl}
 				onLoadSuccess={this.onDocumentLoadSuccess}
-				loading="Loading file..."
+				loading={<KtLoader />}
 				className="pdf-reader"
 			>
 				{numPages <= 10 && (Array.from(new Array(numPages), (el, index) => (
