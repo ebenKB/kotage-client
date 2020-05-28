@@ -6,6 +6,7 @@ import { PropTypes } from 'prop-types';
 import { connect } from 'react-redux';
 // import { Button } from 'semantic-ui-react';
 // import { CircularProgressbar } from 'react-circular-progressbar';
+import AttachmentIcon from '@material-ui/icons/Attachment';
 import { getCurrentProposal } from '../../../../redux/actions/rfpActions';
 import Divider from '../../../kt-divider/divider';
 import 'react-circular-progressbar/dist/styles.css';
@@ -63,6 +64,21 @@ const ShowRfp = ({
 						<Divider type="faint" title="RFP DETAILS" classes="" isNumbered number="1" />
 						<div className="m-t-20 m-b-20 kt-bg-shadow kt-text-caption__wrapper kt-move-left">
 							{getDescription()}
+						</div>
+						<div className="kt-pad-left">
+							<div className="dark bold">Rfp Attachments</div>
+							{proposal.files && (
+								<div className="m-t-20 flex-center">
+									This Rfp has &nbsp;
+									{proposal.files.length}
+									{' '}
+									attachment(s)
+									<div className="m-l-5 flex-center">
+										<AttachmentIcon />
+										<span className="m-l-5">View</span>
+									</div>
+								</div>
+							)}
 						</div>
 						<div className="m-t-40">
 							<Divider type="faint" title="EVENT TIMELINE" classes="" isNumbered number="2" />
