@@ -45,43 +45,44 @@ export const updateProposal = (newProposal) => async (dispatch, getState) => {
     const serProposal = serializeProposal(newProposal);
     const { user } = getState();
     const data = await Axios.put(`/v1/${user.currentUser.tenant_id}/rfp/${newProposal.id}`, serProposal);
-    console.log('This is the data', data);
     dispatch({
       type: UPDATE_RFP,
       payload: data,
     });
     dispatch({ type: SET_RFP_DONE_LOADING });
   } catch (error) {
-    console.log('An error occured while updating');
     dispatch({ type: SET_RFP_DONE_LOADING });
   }
 };
 
-export const getRequestForProposals = (page) => async (dispatch, getState) => {
-  try {
-    dispatch({ type: SET_RFP_LOADING });
-    const { user } = getState();
-    const { data } = await Axios.get(`/v1/${user.currentUser.tenant_id}/rfp?page=${page}`);
-    const { proposal_requests, meta } = data;
-    const deserializedProposals = proposal_requests
-      .map((proposal) => deserializeProposal(proposal));
-    const { pagination } = meta;
-    dispatch({
-      type: GET_RFP,
-      payload: {
-        proposals: deserializedProposals,
-        meta: pagination,
-        page,
-      },
+export const getRequestForProposals = (page) => async (dispatch, getState) => new
+Promise((resolve, reject) => {
+  dispatch({ type: SET_RFP_LOADING });
+  const { user } = getState();
+  // const { data } = await Axios.get(`/v1/${user.currentUser.tenant_id}/rfp?page=${page}`);
+  const req = Axios.get(`/v1/${user.currentUser.tenant_id}/rfp?page=${page}`);
+  Promise.resolve(req)
+    .then((response) => {
+      const { data } = response;
+      const { proposal_requests, meta } = data;
+      const deserializedProposals = proposal_requests
+        .map((proposal) => deserializeProposal(proposal));
+      const { pagination } = meta;
+      dispatch({
+        type: GET_RFP,
+        payload: {
+          proposals: deserializedProposals,
+          meta: pagination,
+          page,
+        },
+      });
+      resolve(true);
+    })
+    .catch((error) => {
+      dispatch({ type: SET_RFP_DONE_LOADING });
+      reject(error);
     });
-    console.log('returning true');
-    return true;
-  } catch (error) {
-    console.log(error);
-    dispatch({ type: SET_RFP_DONE_LOADING });
-    return false;
-  }
-};
+});
 
 export const getCurrentProposal = (id) => async (dispatch) => {
   dispatch(
@@ -173,13 +174,11 @@ Promise((resolve, reject) => {
     });
     resolve(message);
   } catch (error) {
-    console.log('an error occcurred', error);
     reject(error);
   }
 });
 
 export const setCurrenMessageBlob = (blob) => async (dispatch) => {
-  console.log('We want to set message blob', blob);
   try {
     dispatch({
       type: SET_CURRENT_MESSAGE_BLOB,

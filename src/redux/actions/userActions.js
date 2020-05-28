@@ -93,7 +93,6 @@ Promise(async (resolve, reject) => {
     const { user } = getState();
     if (user.currentUser) {
       const { data } = await Axios.post(`/v1/${user.currentUser.tenant_id}/users/login`, { email, password });
-      console.log('This is the data from axios', data);
       dispatch(doneLoading());
       const { access_token } = data;
       if (access_token && access_token.length > 0) {
@@ -218,13 +217,6 @@ export const getTenantID = (email) => async (dispatch) => {
     });
   } catch (error) {
     dispatch(setNotification(error, 'error'));
-    // return dispatch({
-    //   type: SET_APP_NOTIFICATION,
-    //   payload: {
-    //     type: 'error',
-    //     notification: error,
-    //   },
-    // });
   }
 };
 
@@ -243,7 +235,7 @@ export const setAdminStatus = (newUser) => async (dispatch, getState) => {
       });
     }
   } catch (error) {
-    console.log('an error occured while updating a user', error);
+    dispatch(setNotification(error, 'error'));
   }
 };
 
@@ -256,26 +248,8 @@ export const sendPasswordResetToken = (email) => async (dispatch, getState) => {
     const { user } = getState();
     await Axios.post(`/v1/${user.currentUser.tenant_id}/users/password_reset`, { email });
     dispatch(setNotification({ message: 'Instructions for password reset has been sent to this user' }, 'success'));
-
-    // dispatch({
-    //   type: SET_APP_NOTIFICATION,
-    //   payload: {
-    //     type: 'success',
-    //     notification: {
-    //       message: 'Instructions for password reset has been sent to this user',
-    //     },
-    //   },
-    // });
   } catch (error) {
     dispatch(setNotification({ message: 'an error occurred while sending the notification' }, 'error'));
-
-    // dispatch({
-    //   type: SET_APP_NOTIFICATION,
-    //   payload: {
-    //     type: 'error',
-    //     notification: 'an error occurred while sending the notification',
-    //   },
-    // });
   }
 };
 
@@ -292,25 +266,10 @@ export const resetUserPassword = (password, password_confirmation,
     const { data } = await Axios.put(`/v1/${tenant_id}/users/password_update`, { password, password_confirmation, token });
     if (data.status === 200) {
       dispatch(setNotification({ message: 'Instructions for password reset has been sent to this user' }, 'success'));
-
-      // dispatch({
-      //   type: SET_APP_NOTIFICATION,
-      //   payload: {
-      //     type: 'success',
-      //     notification: 'Instructions for password reset has been sent to this user',
-      //   },
-      // });
     }
     resolve(data);
   } catch (error) {
     dispatch(setNotification({ message: 'an error occurred while sending password reset instructions' }, 'error'));
-    // dispatch({
-    //   type: SET_APP_NOTIFICATION,
-    //   payload: {
-    //     type: 'error',
-    //     notification: 'an error occurred while sending password reset instructions',
-    //   },
-    // });
     reject(error);
   }
 });
@@ -332,19 +291,9 @@ export const softDeleteUser = (user_id, type = 'normal') => async (dispatch, get
         payload: user_id,
       });
       dispatch(setNotification({ message: 'User has been deleted' }, 'success'));
-
-      // dispatch({
-      //   type: SET_APP_NOTIFICATION,
-      //   payload: {
-      //     type: 'success',
-      //     notification: {
-      //       message: 'User has been deleted',
-      //     },
-      //   },
-      // });
     }
   } catch (error) {
-    console.log('an error occured', { error });
+    dispatch(setNotification(error, 'error'));
   }
 };
 
@@ -363,27 +312,9 @@ export const softDeleteInvitation = (invitation_id) => async (dispatch, getState
       });
 
       dispatch(setNotification({ message: 'User has been deleted' }, 'success'));
-      // dispatch({
-      //   type: SET_APP_NOTIFICATION,
-      //   payload: {
-      //     type: 'success',
-      //     notification: {
-      //       message: 'User has been deleted',
-      //     },
-      //   },
-      // });
     }
   } catch (error) {
     dispatch(setNotification({ message: 'an error occurred while deleting the user' }, 'error'));
-    // dispatch({
-    //   type: SET_APP_NOTIFICATION,
-    //   payload: {
-    //     type: 'error',
-    //     notification: {
-    //       message: 'an error occurred while deleting the user',
-    //     },
-    //   },
-    // });
   }
 };
 

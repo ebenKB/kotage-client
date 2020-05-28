@@ -1,7 +1,9 @@
+/* eslint-disable camelcase */
 /* eslint-disable react/prop-types */
 import React, { useEffect } from 'react';
 import { Button } from 'semantic-ui-react';
 import { connect } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { getRequestForProposals } from '../../../redux/actions/rfpActions';
 import MainContent from '../../kt-main-content/mainContent';
 import KtWrapper from '../../kt-wrapper/kt-wrapper';
@@ -11,15 +13,26 @@ import '../rfx.scss';
 import Divider from '../../kt-divider/divider';
 import KtLoader from '../../loader/loader';
 import { getPageRemainder } from '../../../utils/app';
+import { SET_APP_NOTIFICATION } from '../../../redux/types/appTypes';
 
 
 const RFX = ({
-  getProposals, proposals, isLoading, meta, page,
+  getProposals, proposals, setNotification, isLoading, meta, page,
 }) => {
+  const history = useHistory();
+
   useEffect(() => {
     // check if records have not been loaded or there are more records to load
     if (proposals.length === 0) {
-      getProposals(page);
+      getProposals(page)
+        .catch((error) => {
+          const { response: { data: { invalid_token } } } = error;
+          if (invalid_token) {
+            history.push('/auth/signin');
+          } else {
+            setNotification(error, 'error');
+          }
+        });
     }
   }, []);
 
@@ -41,7 +54,15 @@ const RFX = ({
   const loadMoreRecords = () => {
     // check if there are more records to load
     if (proposals.length < meta.count && meta.next) {
-      getProposals(page + 1);
+      getProposals(page + 1)
+        .catch((error) => {
+          const { response: { data: { invalid_token } } } = error;
+          if (invalid_token) {
+            history.push('/auth/signin');
+          } else {
+            setNotification(error, 'error');
+          }
+        });
     }
   };
 
@@ -98,6 +119,7 @@ const RFX = ({
 
 const mapDispatchToProps = {
   getProposals: getRequestForProposals,
+  setNotification: SET_APP_NOTIFICATION,
 };
 
 const mapStateToProps = (state) => ({
