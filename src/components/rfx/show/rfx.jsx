@@ -26,11 +26,13 @@ const RFX = ({
     if (proposals.length === 0) {
       getProposals(page)
         .catch((error) => {
-          const { response: { data: { invalid_token } } } = error;
-          if (invalid_token) {
-            history.push('/auth/signin');
-          } else {
-            setNotification(error, 'error');
+          if (error.response) {
+            const { response: { data: { invalid_token } } } = error;
+            if (invalid_token) {
+              history.push('/auth/signin');
+            } else {
+              setNotification(error, 'error');
+            }
           }
         });
     }
