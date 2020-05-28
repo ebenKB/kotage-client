@@ -29,7 +29,7 @@ class AccordionStandard extends Component {
 		<div className="m-l-16 m-b-15 content menu-option bold">
 			<Link to="/">
 				<Logo className="kt-logo__small" />
-        Welcome
+				Welcome
 			</Link>
 		</div>
 		<Accordion as={Menu} vertical>

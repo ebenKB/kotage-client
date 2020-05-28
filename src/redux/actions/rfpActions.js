@@ -77,7 +77,7 @@ export const getRequestForProposals = (page) => async (dispatch, getState) => {
     console.log('returning true');
     return true;
   } catch (error) {
-    console.log('return false');
+    console.log(error);
     dispatch({ type: SET_RFP_DONE_LOADING });
     return false;
   }

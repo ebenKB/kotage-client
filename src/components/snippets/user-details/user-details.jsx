@@ -12,6 +12,7 @@ import {
 import Popup from '../popup/popup';
 // import { getInitialNames } from '../../../utils/app';
 import UsernameWithInitialsLabel from '../Username-with-initials-label/username-with-initials-label';
+import Can from '../../can/can';
 
 /**
  * This component displays a user or an invitation and enforces SEPARATION OF ROLES
@@ -57,10 +58,11 @@ const UserDetails = ({
    * check if the object we are showing is a user or an invitation
    * We check this because, this component can be used to show both a user and an invitation
    */
-  const isUserAdmin = () => (((type === 'user' && user.id !== currentUser.id) && (currentUser.is_admin))
-    || ((type === 'invitation') && (currentUser.is_admin)));
+  // const isUserAdmin = () => (((type === 'user' && user.id !== currentUser.id)
+  //   && (currentUser.is_admin))
+  //   || ((type === 'invitation') && (currentUser.is_admin)));
 
-  const canDeleteUser = () => (currentUser.id !== user.id && currentUser.is_admin);
+  // const canDeleteUser = () => (currentUser.id !== user.id && currentUser.is_admin);
 
   return (
 	<div className="user-details__wrapper">
@@ -93,7 +95,7 @@ const UserDetails = ({
 				<div className="xsm-caption">User</div>
 			)}
 			<div>
-				{isUserAdmin() && (
+				{/* {isUserAdmin() && (
 					<Fragment>
 						<Checkbox
 							className="xsm-caption"
@@ -102,15 +104,47 @@ const UserDetails = ({
 							checked={user.is_admin}
 						/>
 					</Fragment>
-				)}
-				{canDeleteUser() && (
+				)} */}
+				<Can
+					perform="user:set_admin"
+					accountType="buyer"
+					roleType={currentUser.is_admin ? 'admin' : 'user'}
+					data={{ userID: user.id, currentUserID: currentUser.id, type }}
+					yes={() => (
+						<Fragment>
+							<Checkbox
+								className="xsm-caption"
+								label="Admin"
+								onChange={(e, data) => handleSetAdminStatus(data.checked)}
+								checked={user.is_admin}
+							/>
+						</Fragment>
+					)}
+					no={() => null}
+				/>
+				{/* {canDeleteUser() && (
 					<Button
 						className="kt-transparent block kt-danger"
 						onClick={removeUser}
 					>
-            Delete user
+						Delete user
 					</Button>
-				)}
+				)} */}
+				<Can
+					accountType="buyer"
+					roleType={currentUser.is_admin ? 'admin' : 'user'}
+					perform="user:delete"
+					data={{ userID: user.id, currentUserID: currentUser.id }}
+					yes={() => (
+						<Button
+							className="kt-transparent block kt-danger"
+							onClick={removeUser}
+						>
+							Delete user
+						</Button>
+					)}
+					no={() => null}
+				/>
 			</div>
 			{/* check whether we are showing a user and the user is not the owner of
        this account and also the user is not the currenlty logged in user */}
@@ -130,7 +164,7 @@ const UserDetails = ({
 									color="green"
 									onClick={sendResetPassInstructions}
 								>
-                  Send reset instructions
+									Send reset instructions
 								</Button>
 							</div>
 						</div>
@@ -138,14 +172,22 @@ const UserDetails = ({
 				</div>
 			)}
 			{type === 'invitation' && (
-				<div className="">
-					<Button
-						className="kt-transparent light-text"
-						onClick={() => resendInvitation(user)}
-					>
-						<span className="kt-primary"> Resend invitation</span>
-					</Button>
-				</div>
+				<Can
+					perform="user:resend_invitation"
+					accountType="buyer"
+					roleType={currentUser.is_admin ? 'admin' : 'user'}
+					yes={() => (
+						<div className="">
+							<Button
+								className="kt-transparent light-text"
+								onClick={() => resendInvitation(user)}
+							>
+								<span className="kt-primary"> Resend invitation</span>
+							</Button>
+						</div>
+					)}
+					no={() => null}
+				/>
 			)}
 		</div>
 	</div>
