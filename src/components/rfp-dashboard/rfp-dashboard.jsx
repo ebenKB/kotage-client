@@ -97,9 +97,7 @@ const RfpDashboard = ({ match, getProposal, proposal }) => {
 									</div>
 									<div className="m-t-20">
 										<Link to={`/rfx/proposal/${proposal.id}/message`}>
-											<Button size="tiny" className="green">
-												Message Center
-											</Button>
+											<Button size="tiny" className="green" content="Message Center" />
 										</Link>
 									</div>
 								</div>
@@ -112,7 +110,9 @@ const RfpDashboard = ({ match, getProposal, proposal }) => {
 								<Divider type="faint" title="INVITED SUPPLIERS" classes="m-t-10 m-b-10 p-b-10" />
 							</div>
 							<div className="text-right m-t-20">
-								<Button content="Compare Bids" color="green" size="tiny" />
+								<Link to={`/rfx/proposal/${proposal.id}/compare-bids`}>
+									<Button content="Compare Bids" color="green" size="tiny" />
+								</Link>
 							</div>
 							<div className="m-t-20">
 								<Divider type="faint" title="" classes="m-b-4" />
