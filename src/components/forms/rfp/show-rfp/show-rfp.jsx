@@ -4,7 +4,7 @@ import React, { useEffect } from 'react';
 import { withRouter } from 'react-router';
 import { PropTypes } from 'prop-types';
 import { connect } from 'react-redux';
-// import { Button } from 'semantic-ui-react';
+import { Button } from 'semantic-ui-react';
 // import { CircularProgressbar } from 'react-circular-progressbar';
 import AttachmentIcon from '@material-ui/icons/Attachment';
 import { getCurrentProposal } from '../../../../redux/actions/rfpActions';
@@ -68,15 +68,12 @@ const ShowRfp = ({
 						<div className="kt-pad-left">
 							<div className="dark bold">Rfp Attachments</div>
 							{proposal.files && (
-								<div className="m-t-20 flex-center">
-									This Rfp has &nbsp;
-									{proposal.files.length}
-									{' '}
-									attachment(s)
-									<div className="m-l-5 flex-center">
-										<AttachmentIcon />
-										<span className="m-l-5">View</span>
-									</div>
+								<div className="flex-center m-t-10">
+									<AttachmentIcon />
+									<Button
+										className="kt-transparent kt-primary"
+										content={`Download ${proposal.files.length} attachment(s)`}
+									/>
 								</div>
 							)}
 						</div>
