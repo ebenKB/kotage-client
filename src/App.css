@@ -144,6 +144,10 @@ ul.custom {
   fill: var(--kt-dark);
 }
 
+svg.logo.kt-success {
+  fill: var(--kt-green)
+}
+
 .logo.light {
   fill: var(--kt-light);
 }

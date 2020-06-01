@@ -2,6 +2,7 @@
 import React from 'react';
 import { Button } from 'semantic-ui-react';
 import ButtonGroup from '../../form-fields/button-group/button-group';
+import PopupDropdown from '../popup/popup';
 
 const SupplierDetailsCaption = ({ type }) => (
 	<div>
@@ -12,7 +13,19 @@ const SupplierDetailsCaption = ({ type }) => (
 				<div className="text-right">
 					<ButtonGroup>
 						<Button content="View Bid" />
-						<Button content="Bid Action" />
+						<Button content={(
+							<PopupDropdown
+								trigger="Bid Action"
+								position="top center"
+							>
+								<div className="flex-center">
+									<Button content="Decline" />
+									<Button content="Accept" success />
+								</div>
+							</PopupDropdown>
+						)}
+						/>
+
 					</ButtonGroup>
 				</div>
 			</div>
