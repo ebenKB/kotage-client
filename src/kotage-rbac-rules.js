@@ -2,6 +2,7 @@ const rules = {
   buyer: {
     user: {
       static: [
+        'buyer:view_navigation',
         'rfp:create',
         'rfp:view',
         'rfp:edit',
@@ -12,13 +13,16 @@ const rules = {
     admin: {
       static: [
         'rbac:test',
+        'buyer:view_navigation',
         'rfp:create',
         'rfp:view',
         'rfp:edit',
         'rfp:delete',
+        'user:view_all_users',
         'user:invite',
         'user:resend_invitation',
         'user:reset_password',
+        'supplier:invite',
       ],
       dynamic: {
         'user:delete': ({ userID, currentUserID }) => {
@@ -34,6 +38,18 @@ const rules = {
           return false;
         },
       },
+    },
+  },
+  supplier: {
+    user: {
+      static: [
+        'supplier:view_navigation',
+      ],
+    },
+    admin: {
+      static: [
+        'supplier:view_navigation',
+      ],
     },
   },
 };

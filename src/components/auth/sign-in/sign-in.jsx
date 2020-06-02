@@ -13,12 +13,12 @@ import { getTenant } from '../../../redux/actions/tenantActions';
 import KtLogo from '../../KtLogo/kt-logo';
 import Notification from '../../Notification/notification';
 import { isValidEmail } from '../../../utils/app';
-import { clearNotification } from '../../../redux/actions/appActions';
+import { clearNotification, setAccountType } from '../../../redux/actions/appActions';
 import './sign-in.scss';
 
 const SignIn = ({
   loading, userLogin, checkUserTenant, currentUser, getCurrentTenant,
-  notification, clearAppNotifications,
+  notification, clearAppNotifications, setUserAccountType,
 }) => {
   const history = useHistory();
   const [page, setPage] = useState({ page: 1, max: 2 });
@@ -98,12 +98,18 @@ const SignIn = ({
         checkUserTenant(user.email);
       }
       const data = await userLogin(user.email, user.password);
-      console.log('This is the data after login', data);
       if (data.error) {
         alert(data.data.error);
       } else {
+        setUserAccountType(loginType);
         getCurrentTenant(currentUser.tenant_id);
-        clearAppNotifications().then(() => history.push('/'));
+        clearAppNotifications().then(() => {
+          if (loginType.toLowerCase() === 'buyer') {
+            history.push('/');
+          } else if (loginType.toLowerCase() === 'supplier') {
+            history.push('/supplier/events');
+          }
+        });
       }
     } catch (error) {
       console.log(error.message);
@@ -230,6 +236,7 @@ const mapDispatchToProps = {
   checkUserTenant: getTenantID,
   getCurrentTenant: getTenant,
   clearAppNotifications: clearNotification,
+  setUserAccountType: setAccountType,
 };
 
 const mapStateToProps = (state) => ({

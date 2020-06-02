@@ -6,8 +6,11 @@ import './user-profile.scss';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { logout } from '../../../redux/actions/userActions';
+import Can from '../../can/can';
 
-const UserProfile = ({ title, handleLogout }) => {
+const UserProfile = ({
+  title, currentUser, accountType, handleLogout,
+}) => {
   const signout = () => {
     handleLogout();
   };
@@ -26,30 +29,66 @@ const UserProfile = ({ title, handleLogout }) => {
 					className="kt-success"
 				/>
 			</Link>
-			<Link to="/users" className="item">
-				<Dropdown.Item
-					icon="folder"
-					text="Users"
-				/>
-			</Link>
-			<Link to="/user/invitation" className="item">
-				<Dropdown.Item
-					icon="folder"
-					text="Invite user"
-				/>
-			</Link>
-			<Link to="/supplier/invitation" className="item">
-				<Dropdown.Item
-					icon="folder"
-					text="Invite Supplier"
-				/>
-			</Link>
-			<Link to="/user/requisitions" className="item">
-				<Dropdown.Item
-					icon="folder"
-					text="Your requisitions"
-				/>
-			</Link>
+			{currentUser && (
+				<>
+					<Can
+						accountType={accountType}
+						roleType={currentUser.is_admin ? 'admin' : 'user'}
+						perform="user:view_all_users"
+						yes={() => (
+							<Link to="/users" className="item">
+								<Dropdown.Item
+									icon="folder"
+									text="Users"
+								/>
+							</Link>
+						)}
+						no={() => null}
+					/>
+					<Can
+						perform="user:invite"
+						accountType={accountType}
+						roleType={currentUser.is_admin ? 'admin' : 'user'}
+						yes={() => (
+							<Link to="/user/invitation" className="item">
+								<Dropdown.Item
+									icon="folder"
+									text="Invite user"
+								/>
+							</Link>
+						)}
+						no={() => null}
+					/>
+					<Can
+						perform="supplier:invite"
+						accountType={accountType}
+						roleType={currentUser.is_admin ? 'admin' : 'user'}
+						yes={() => (
+							<Link to="/supplier/invitation" className="item">
+								<Dropdown.Item
+									icon="folder"
+									text="Invite Supplier"
+								/>
+							</Link>
+						)}
+						no={() => null}
+					/>
+					<Can
+						perform="rfp:view"
+						accountType={accountType}
+						roleType={currentUser.is_admin ? 'admin' : 'user'}
+						yes={() => (
+							<Link to="/user/requisitions" className="item">
+								<Dropdown.Item
+									icon="folder"
+									text="Your requisitions"
+								/>
+							</Link>
+						)}
+						no={() => null}
+					/>
+				</>
+			)}
 			<Link to="/help" className="item">
 				<Dropdown.Item
 					text="Help Center"
@@ -77,6 +116,8 @@ const UserProfile = ({ title, handleLogout }) => {
 
 const mapStateToProps = (state) => ({
   tenant: state.tenant.currentTenant,
+  currentUser: state.user.currentUser,
+  accountType: state.app.accountType.toLowerCase(),
 });
 
 const mapDispatchToProps = {

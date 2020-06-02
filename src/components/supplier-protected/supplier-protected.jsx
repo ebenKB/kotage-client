@@ -4,10 +4,12 @@ import { PropTypes } from 'prop-types';
 import { Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-const ProtectedRoute = ({ children, isAuthenticated, ...rest }) => (
+const ProtectedRoute = ({
+  children, isAuthenticated, accountType, ...rest
+}) => (
 	<Route
 		{...rest}
-		render={({ location }) => ((isAuthenticated) ? (children
+		render={({ location }) => (((isAuthenticated) && (accountType === 'Supplier')) ? (children
 		) : (
 			<Redirect
 				to={{ pathname: '/auth/signin', state: { from: location } }}
@@ -18,11 +20,13 @@ const ProtectedRoute = ({ children, isAuthenticated, ...rest }) => (
 
 const mapStateToProps = (state) => ({
   isAuthenticated: state.user.isAuthenticated,
-  accountType: state.user.accountType,
+  accountType: state.app.accountType,
 });
 
 ProtectedRoute.propTypes = {
   children: PropTypes.element.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
+  accountType: PropTypes.string.isRequired,
 };
+
 export default connect(mapStateToProps, null)(ProtectedRoute);

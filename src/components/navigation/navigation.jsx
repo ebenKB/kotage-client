@@ -6,12 +6,13 @@ import { Link } from 'react-router-dom';
 import { ReactComponent as Logo } from '../../svg/home.svg';
 
 import './navigation.scss';
+import Can from '../can/can';
 
 class AccordionStandard extends Component {
   constructor(props) {
     super(props);
     // set activeIndex to 0 to open the first item by default
-    this.state = { activeIndex: -1 };
+    this.state = { activeIndex: props.accountType.toLowerCase() === 'buyer' ? -1 : 0 };
   }
 
   handleClick = (e, titleProps) => {
@@ -23,7 +24,7 @@ class AccordionStandard extends Component {
 
   render() {
     const { activeIndex } = this.state;
-    const { currentTenant } = this.props;
+    const { currentTenant, accountType } = this.props;
     return (
 	<div className="nav-wrapper">
 		<div className="m-l-16 m-b-15 content menu-option bold">
@@ -32,67 +33,99 @@ class AccordionStandard extends Component {
 				Welcome
 			</Link>
 		</div>
-		<Accordion as={Menu} vertical>
-			<Menu.Item>
-				<Accordion.Title
-					active={activeIndex === 0}
-					content="Source"
-					index={0}
-					onClick={this.handleClick}
-					className="m-b-10"
-				/>
-				<Accordion.Content active={activeIndex === 0} className="menu-option">
-					<Link to="/rfx">RFx</Link>
-				</Accordion.Content>
-				<Accordion.Content active={activeIndex === 0} className="menu-option">
-					<Link to="/rfx/new">New Event</Link>
-				</Accordion.Content>
-				<Accordion.Content active={activeIndex === 0} className="menu-option">
-					<Link to="/quotes/news">New Quote</Link>
-				</Accordion.Content>
-				<Accordion.Content active={activeIndex === 0} className="menu-option">
-					<Link to="/vendors/new">Vendors</Link>
-				</Accordion.Content>
-			</Menu.Item>
-		</Accordion>
-		<Accordion as={Menu} vertical>
-			<Menu.Item>
-				<Accordion.Title
-					active={activeIndex === 1}
-					content="Procure"
-					index={1}
-					onClick={this.handleClick}
-					className="m-b-10"
-				/>
-				{currentTenant && (
-					<Accordion.Content active={activeIndex === 1} className="menu-option">
-						<Link to={`/${currentTenant.account_id}/requisitions`}>Requisitions</Link>
-					</Accordion.Content>
-				)}
-			</Menu.Item>
-		</Accordion>
-		<Accordion as={Menu} vertical>
-			<Menu.Item>
-				<Accordion.Title
-					active={activeIndex === 2}
-					content="Pay"
-					index={0}
-					onClick={this.handleClick}
-					className="m-b-10"
-				/>
-			</Menu.Item>
-		</Accordion>
-		<Accordion as={Menu} vertical>
-			<Menu.Item>
-				<Accordion.Title
-					active={activeIndex === 3}
-					content="Reports"
-					index={0}
-					onClick={this.handleClick}
-					className="m-b-10"
-				/>
-			</Menu.Item>
-		</Accordion>
+		<Can
+			accountType={accountType.toLowerCase()}
+			roleType="user"
+			perform="buyer:view_navigation"
+			yes={() => (
+				<>
+					<Accordion as={Menu} vertical>
+						<Menu.Item>
+							<Accordion.Title
+								active={activeIndex === 0}
+								content="Source"
+								index={0}
+								onClick={this.handleClick}
+								className="m-b-10"
+							/>
+							<Accordion.Content active={activeIndex === 0} className="menu-option">
+								<Link to="/rfx">RFx</Link>
+							</Accordion.Content>
+							<Accordion.Content active={activeIndex === 0} className="menu-option">
+								<Link to="/rfx/new">New Event</Link>
+							</Accordion.Content>
+							<Accordion.Content active={activeIndex === 0} className="menu-option">
+								<Link to="/quotes/news">New Quote</Link>
+							</Accordion.Content>
+							<Accordion.Content active={activeIndex === 0} className="menu-option">
+								<Link to="/vendors/new">Vendors</Link>
+							</Accordion.Content>
+						</Menu.Item>
+					</Accordion>
+					<Accordion as={Menu} vertical>
+						<Menu.Item>
+							<Accordion.Title
+								active={activeIndex === 1}
+								content="Procure"
+								index={1}
+								onClick={this.handleClick}
+								className="m-b-10"
+							/>
+							{currentTenant && (
+								<Accordion.Content active={activeIndex === 1} className="menu-option">
+									<Link to={`/${currentTenant.account_id}/requisitions`}>Requisitions</Link>
+								</Accordion.Content>
+							)}
+						</Menu.Item>
+					</Accordion>
+					<Accordion as={Menu} vertical>
+						<Menu.Item>
+							<Accordion.Title
+								active={activeIndex === 2}
+								content="Pay"
+								index={0}
+								onClick={this.handleClick}
+								className="m-b-10"
+							/>
+						</Menu.Item>
+					</Accordion>
+					<Accordion as={Menu} vertical>
+						<Menu.Item>
+							<Accordion.Title
+								active={activeIndex === 3}
+								content="Reports"
+								index={0}
+								onClick={this.handleClick}
+								className="m-b-10"
+							/>
+						</Menu.Item>
+					</Accordion>
+				</>
+			)}
+			no={() => null}
+		/>
+		<Can
+			perform="supplier:view_navigation"
+			accountType={accountType.toLowerCase()}
+			roleType="user"
+			yes={() => (
+				<Accordion as={Menu} vertical>
+					<Menu.Item>
+						<Accordion.Title
+							active={activeIndex === 0}
+							content="Supplier"
+							index={0}
+							onClick={this.handleClick}
+							className="m-b-10"
+						/>
+						<Accordion.Content active={activeIndex === 0} className="menu-option">
+							<Link to="/supplier/events">View Bids</Link>
+						</Accordion.Content>
+					</Menu.Item>
+				</Accordion>
+			)}
+			no={() => null}
+		/>
 	</div>
     );
   }
@@ -101,6 +134,7 @@ class AccordionStandard extends Component {
 const mapStateToProps = (state) => (
   {
     currentTenant: state.tenant.currentTenant,
+    accountType: state.app.accountType,
   }
 );
 

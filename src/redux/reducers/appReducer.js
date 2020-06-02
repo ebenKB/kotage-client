@@ -1,6 +1,12 @@
-import { SET_APP_NOTIFICATION, CLEAR_NOTIFICATION, GET_CURRENCY_OPTIONS } from '../types/appTypes';
+import {
+  SET_APP_NOTIFICATION,
+  CLEAR_NOTIFICATION,
+  GET_CURRENCY_OPTIONS,
+  SET_ACCOUNT_TYPE,
+} from '../types/appTypes';
 
 const initialState = {
+  accountType: null,
   notification: null,
   currencyOptions: null,
 };
@@ -32,6 +38,7 @@ export default (state = initialState, action) => {
           // errorMessage = 'An error occurred while completing your request';
         }
       }
+
       return {
         ...state,
         notification: {
@@ -52,6 +59,13 @@ export default (state = initialState, action) => {
       return {
         ...state,
         currencyOptions: action.payload,
+      };
+    }
+
+    case SET_ACCOUNT_TYPE: {
+      return {
+        ...state,
+        accountType: action.payload,
       };
     }
 

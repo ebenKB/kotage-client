@@ -11,9 +11,13 @@ import CreateNewTenant from './components/forms/tenant/create-new-tenant';
 import CreateUser from './components/forms/user/create-user/create-user';
 import ResetPassword from './components/forms/user/reset-password/reset-password';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
+import BuyerProtectedRoute from './components/buyer-protected/buyer-protected';
+import SupplierProtectedRoutes from './components/supplier-protected/supplier-protected';
 import PageLoader from './components/page-loader/page-loader';
 import MainContent from './components/kt-main-content/mainContent';
 import routes from './routes/protected-routes';
+import buyerRoutes from './routes/buyer-protected-routes';
+import supplierRoutes from './routes/supplier-protected-routes';
 
 function App() {
   return (
@@ -47,6 +51,26 @@ function App() {
 					>
 						<route.main />
 					</ProtectedRoute>
+				))}
+
+				{buyerRoutes.map((route, index) => (
+					<BuyerProtectedRoute
+						key={index}
+						path={route.path}
+						exact={route.exact}
+					>
+						<route.main />
+					</BuyerProtectedRoute>
+				))}
+
+				{supplierRoutes.map((route, index) => (
+					<SupplierProtectedRoutes
+						key={index}
+						path={route.path}
+						exact={route.exact}
+					>
+						<route.main />
+					</SupplierProtectedRoutes>
 				))}
 			</Layout>
 		</Suspense>

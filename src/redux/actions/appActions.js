@@ -1,6 +1,8 @@
 /* eslint-disable import/prefer-default-export */
 import Axios from '../../utils/axios/axios';
-import { CLEAR_NOTIFICATION, SET_APP_NOTIFICATION, GET_CURRENCY_OPTIONS } from '../types/appTypes';
+import {
+  CLEAR_NOTIFICATION, SET_APP_NOTIFICATION, GET_CURRENCY_OPTIONS, SET_ACCOUNT_TYPE,
+} from '../types/appTypes';
 // import { getFullFilePath } from '../../utils/app/file';
 
 // clear notification from the app state
@@ -39,6 +41,13 @@ export const getCurrencyOptions = () => async (dispatch, getState) => {
   return dispatch({
     type: GET_CURRENCY_OPTIONS,
     payload: formatedCurrencies,
+  });
+};
+
+export const setAccountType = (type) => async (dispatch) => {
+  dispatch({
+    type: SET_ACCOUNT_TYPE,
+    payload: type,
   });
 };
 
