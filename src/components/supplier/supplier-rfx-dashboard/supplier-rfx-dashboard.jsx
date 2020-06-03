@@ -1,40 +1,78 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button } from 'semantic-ui-react';
+import {
+  format,
+} from 'date-fns';
 import { Link } from 'react-router-dom';
+import AccessTimeIcon from '@material-ui/icons/AccessTime';
+import MessageIcon from '@material-ui/icons/MailOutline';
+import BookmarkBorderIcon from '@material-ui/icons/BookmarkBorder';
 import MainContent from '../../kt-main-content/mainContent';
 import Help from '../../../utils/requisitions/new/help';
 import KtWrapperLite from '../../kt-wrapper-lite/kt-wrapper-lite';
 import Divider from '../../kt-divider/divider';
+import RfpTitle from '../../snippets/rfp-title/rfp-title';
+import KtDetailsCaption from '../../kt-details-caption/kt-details-caption';
 
-const SupplierRfxDashboard = () => (
+const SupplierRfxDashboard = () => {
+  const [deadline] = useState(new Date('July 17, 2020 03:24:00'));
+  const [rsvpdeadline] = useState(new Date('July 01, 2020'));
+
+  return (
 	<MainContent
 		help={Help}
 	>
-		<h3>Write the title of the Event here</h3>
+		Write the tile here
+		<RfpTitle classes="m-t-20" />
 		<div className="flex-center">
 			<div className="m-r-15">
 				<Button
+					icon={<BookmarkBorderIcon className="kt-primary logo" />}
 					small
 					content="Acknowledge participation"
-					className="bold kt-sucess kt-transparent kt-primary tiny"
+					className="kt-sucess kt-transparent kt-primary tiny flex flex-center"
+				/>
+			</div>
+			<div className="m-r-15">
+				<Button
+					icon={<BookmarkBorderIcon className="kt-primary logo" />}
+					small
+					content="Accept Terms and Conditions"
+					className="kt-sucess kt-transparent kt-primary tiny flex flex-center"
 				/>
 			</div>
 			<Button
+				icon={<MessageIcon className="m-r-4" />}
 				small
-				content="Accept Terms and Conditions"
-				className="bold kt-sucess kt-transparent kt-primary tiny"
+				content="Message center"
+				className="kt-sucess kt-transparent kt-primary tiny flex flex-center"
 			/>
 		</div>
 		<Divider classes="p-b-4" type="faint" />
-		<div className="m-t-20 text-rights kt-primary">
-			This Bid is due in 17:40:33
+		<div className="m-t-20 text-rights flex-center">
+			<AccessTimeIcon className="m-r-5 kt-primary" />
+			Bid is due on
+			{' '}
+			{format(deadline, 'iiii do LLLL, yyyy')}
+			{' '}
+			at
+			{' '}
+			{format(deadline, 'h:m:ss aaaa')}
 		</div>
 		<KtWrapperLite
 			classes="m-t-20"
 		>
 			<div className="">
-				<p>RSVP Deadline:</p>
-				<p>Question Deadline</p>
+				<p>
+					All RSVP should be acknowledged on or before
+					<span className="kt-primary m-l-5">{format(rsvpdeadline, 'iiii do LLLL, yyyy')}</span>
+				</p>
+				<p>
+					All Questions should submitted on or before
+					<span className="kt-primary m-l-5">
+						{format(rsvpdeadline, 'iiii do LLLL, yyyy')}
+					</span>
+				</p>
 			</div>
 		</KtWrapperLite>
 		<KtWrapperLite
@@ -42,7 +80,7 @@ const SupplierRfxDashboard = () => (
 		>
 			<Divider type="thick" title="Description" />
 			<div className="m-t-20">
-				<p>lorem: Write all the descriptions of the bid here </p>
+				<KtDetailsCaption description="Some description here" classes="p-all-20" />
 			</div>
 		</KtWrapperLite>
 		<KtWrapperLite
@@ -55,7 +93,15 @@ const SupplierRfxDashboard = () => (
 		>
 			<Divider type="thick" title="Rfp Attachments" />
 		</KtWrapperLite>
-		<div className="m-t-20">
+		<div className="m-t-20 flex-center">
+			<Link to="/supplier/events">
+				<Button
+					small
+					default
+					content="Go Back"
+					className="tiny"
+				/>
+			</Link>
 			<Link to="/supplier/events/:id/response">
 				<Button
 					small
@@ -65,6 +111,7 @@ const SupplierRfxDashboard = () => (
 			</Link>
 		</div>
 	</MainContent>
-);
+  );
+};
 
 export default SupplierRfxDashboard;

@@ -26,6 +26,7 @@ import TimelineItem from '../../../timeline-item/timeline-item';
 import StakeholderGroup from '../../../stakeholder-group/stakeholder-group';
 import DocumentListGroup from '../../../document-list-group/document-list-group';
 import RfpTitle from '../../../snippets/rfp-title/rfp-title';
+import KtDetailsCaption from '../../../kt-details-caption/kt-details-caption';
 
 const ShowRfp = ({
   match, getProposal, proposal, history,
@@ -62,9 +63,10 @@ const ShowRfp = ({
 				{proposal && (
 					<div>
 						<Divider type="faint" title="RFP DETAILS" classes="" isNumbered number="1" />
-						<div className="m-t-20 m-b-20 kt-bg-shadow kt-text-caption__wrapper kt-move-left">
+						{/* <div className="m-t-20 m-b-20 kt-bg-shadow kt-text-caption__wrapper kt-move-left">
 							{getDescription()}
-						</div>
+						</div> */}
+						<KtDetailsCaption description={getDescription} classes="m-t-20 m-b-20  kt-move-left" />
 						<div className="kt-pad-left">
 							<div className="dark bold">Rfp Attachments</div>
 							{proposal.files && proposal.files.length > 0 && (

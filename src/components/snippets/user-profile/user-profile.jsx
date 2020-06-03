@@ -117,7 +117,7 @@ const UserProfile = ({
 const mapStateToProps = (state) => ({
   tenant: state.tenant.currentTenant,
   currentUser: state.user.currentUser,
-  accountType: state.app.accountType.toLowerCase(),
+  accountType: state.app.accountType,
 });
 
 const mapDispatchToProps = {

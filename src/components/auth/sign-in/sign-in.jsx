@@ -101,7 +101,7 @@ const SignIn = ({
       if (data.error) {
         alert(data.data.error);
       } else {
-        setUserAccountType(loginType);
+        setUserAccountType(loginType.toLowerCase());
         getCurrentTenant(currentUser.tenant_id);
         clearAppNotifications().then(() => {
           if (loginType.toLowerCase() === 'buyer') {

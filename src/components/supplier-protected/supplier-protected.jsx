@@ -9,7 +9,7 @@ const ProtectedRoute = ({
 }) => (
 	<Route
 		{...rest}
-		render={({ location }) => (((isAuthenticated) && (accountType === 'Supplier')) ? (children
+		render={({ location }) => (((isAuthenticated) && (accountType === 'supplier')) ? (children
 		) : (
 			<Redirect
 				to={{ pathname: '/auth/signin', state: { from: location } }}
