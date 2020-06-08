@@ -1,3 +1,4 @@
+/* eslint-disable react/forbid-prop-types */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState } from 'react';
 import { PropTypes } from 'prop-types';
@@ -17,7 +18,7 @@ import { RFP_MESSAGE_FOLDERNAME } from '../../../utils/app/definitions';
 import FloatingSupplierList from '../../floating-supplier-list/floating-supplier-list';
 
 const NewMessage = ({
-  createNewMessage, isLoading, currentProposalId, tenantUid,
+  createNewMessage, isLoading, currentProposal, currentProposalId, tenantUid,
 }) => {
   const history = useHistory();
   const [message, setMessage] = useState(
@@ -81,11 +82,14 @@ const NewMessage = ({
 			header="New message"
 		>
 			<p>Messages you send about this RFP will be sent to all your suppliers.</p>
-			<FloatingSupplierList
-				isVisible={canShowSuppliers}
-				closeForm={hideSuppliers}
-				handleAction={(suppliers) => handleAddSuppliers(suppliers)}
-			/>
+			{currentProposal && (
+				<FloatingSupplierList
+					suppliers={currentProposal.suppliers}
+					isVisible={canShowSuppliers}
+					closeForm={hideSuppliers}
+					handleAction={(suppliers) => handleAddSuppliers(suppliers)}
+				/>
+			)}
 			<div>
 				<Input
 					className="fluid m-b-10"
@@ -132,6 +136,7 @@ const mapDispatchToProps = {
 
 const mapStateToProps = (state) => ({
   isLoading: state.rfp.loading,
+  currentProposal: state.rfp.currentProposal,
   currentProposalId: state.rfp.currentProposal.id,
   tenantUid: state.tenant.currentTenant.account_id,
 });
@@ -141,6 +146,7 @@ NewMessage.propTypes = {
   isLoading: PropTypes.bool.isRequired,
   currentProposalId: PropTypes.string.isRequired,
   tenantUid: PropTypes.string.isRequired,
+  currentProposal: PropTypes.object.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(NewMessage);
