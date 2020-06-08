@@ -165,7 +165,7 @@ const mapDispatchToProps = {
 
 const mapStateToProps = (state) => ({
   // tempSuppliers: state.tenant.tempSuppliers,
-  suppliers: state.tenant.suppliers,
+  // suppliers: state.tenant.suppliers,
   loading: state.tenant.loading,
 });
 
