@@ -38,17 +38,22 @@ class CreateUser extends React.Component {
   componentDidMount() {
     const { token } = this.props.match.params;
     const { search } = this.props.location;
-    const { getCurrentTenant } = this.props;
+    // const { getCurrentTenant } = this.props;
     const access_token = search.split('&')[0].split('=')[1];
-    const tenant_id = search.split('&')[1].split('=')[1];
-    // retrieve the tenant that the invitation belons to
-    getCurrentTenant(tenant_id);
 
+    // retrieve the tenant that the invitation belons to
+    // const tenant_id = search.split('&')[1].split('=')[1];
+    // getCurrentTenant(tenant_id);
+
+    const tenant_id = search.split('&')[1].split('=')[1];
+    const companyName = search.split('&')[2].split('=')[1];
+    // const companyName = 'Apotica';
     // update the current state
     this.setState((oldSate) => ({
       ...oldSate,
       access_token,
       tenant_id,
+      companyName,
       token,
     }));
     this.props.getInvitation(token, tenant_id);
@@ -78,11 +83,11 @@ class CreateUser extends React.Component {
   }
 
   render() {
-    const { invitation, currentTenant } = this.props;
-    const { password, password_confirmation } = this.state;
+    const { invitation } = this.props;
+    const { password, password_confirmation, companyName } = this.state;
     return (
 	<div>
-		{invitation && currentTenant && (
+		{invitation && (
 			<div className="p-t-150 user-form">
 				<p className="text-center">
           Used Kotage before?
@@ -93,7 +98,8 @@ class CreateUser extends React.Component {
 						<span>Join</span>
 						<span className="big">
 							{' '}
-							{ titleize(currentTenant.company_name) }
+							{/* { titleize(currentTenant.company_name) } */}
+              {titleize(companyName)}
 						</span>
 						<span> on Kotage</span>
 					</div>
@@ -200,7 +206,7 @@ const mapDispatchToProps = {
 };
 
 const mapStateToProps = (state) => ({
-  currentTenant: state.tenant.currentTenant,
+  // currentTenant: state.tenant.currentTenant,
   loading: state.user.loading,
   invitation: state.user.invitation,
 });
