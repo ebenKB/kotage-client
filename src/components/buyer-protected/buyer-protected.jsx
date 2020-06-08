@@ -20,7 +20,7 @@ const ProtectedRoute = ({
 
 const mapStateToProps = (state) => ({
   isAuthenticated: state.user.isAuthenticated,
-  accountType: state.user.accountType,
+  accountType: state.app.accountType,
 });
 
 ProtectedRoute.propTypes = {

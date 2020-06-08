@@ -107,7 +107,7 @@ const SignIn = ({
           if (loginType.toLowerCase() === 'buyer') {
             history.push('/');
           } else if (loginType.toLowerCase() === 'supplier') {
-            history.push('/supplier/events');
+            history.push('/supplier/rfx');
           }
         });
       }

@@ -1,11 +1,18 @@
-import React, { useState } from 'react';
+/* eslint-disable react/prop-types */
+import React, { useState, useEffect } from 'react';
 import { Divider } from 'semantic-ui-react';
+import { connect } from 'react-redux';
 import MainContent from '../../kt-main-content/mainContent';
 import Help from '../../../utils/requisitions/new/help';
 import KtWrapper from '../../kt-wrapper/kt-wrapper';
 import SupplierRfxItem from '../supplier-rfx-item/supplier-rfx-item';
+import { getSupplierRfp } from '../../../redux/actions/supplierRfpActions';
 
-const supplier = () => {
+const supplier = ({ getSupplierRfpEvents }) => {
+  useEffect(() => {
+    console.log('here loading');
+    getSupplierRfpEvents();
+  }, []);
   const [proposals] = useState([
     {
       id: 1,
@@ -44,5 +51,11 @@ const supplier = () => {
 	</MainContent>
   );
 };
+const mapDispatchToProps = {
+  getSupplierRfpEvents: getSupplierRfp,
+};
 
-export default supplier;
+// const mapStateToProps = (state) => {
+// isLoading: state.
+// };
+export default connect(null, mapDispatchToProps)(supplier);

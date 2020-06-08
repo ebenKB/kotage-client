@@ -12,10 +12,9 @@ export default (state = initialState, action) => {
         countries: action.payload,
       };
     }
+
     default: {
-      return {
-        state,
-      };
+      return state;
     }
   }
 };
