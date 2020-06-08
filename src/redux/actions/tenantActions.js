@@ -16,7 +16,7 @@ import { setNotification } from './appActions';
  */
 export const createTenant = (tenant) => async () => new Promise((resolve, reject) => {
   try {
-    const data = Axios.post('tenants', tenant);
+    const data = Axios.post('/v1/tenants', tenant);
     resolve(data);
   } catch (error) {
     reject(error);
