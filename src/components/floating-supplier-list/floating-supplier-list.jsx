@@ -56,6 +56,7 @@ const FloatingSupplierList = ({
     setFilteredSuppliers(newSuppliers);
   };
 
+  // return selected suppliers  or all suppliers to the caller
   const addNewSuppliers = () => {
     if (isSelectAll) {
       handleAction(suppliers);

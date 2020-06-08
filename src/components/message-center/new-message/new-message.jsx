@@ -14,6 +14,7 @@ import { createRfpMessage } from '../../../redux/actions/rfpActions';
 import Dropzone from '../../dropzone/dropzone';
 import Divider from '../../kt-divider/divider';
 import { RFP_MESSAGE_FOLDERNAME } from '../../../utils/app/definitions';
+import FloatingSupplierList from '../../floating-supplier-list/floating-supplier-list';
 
 const NewMessage = ({
   createNewMessage, isLoading, currentProposalId, tenantUid,
@@ -28,6 +29,8 @@ const NewMessage = ({
     },
   );
 
+  const [canShowSuppliers] = useState(true);
+  const [hideSuppliers] = useState(false);
   const goBack = () => {
     if (history) {
       history.goBack();
@@ -57,6 +60,9 @@ const NewMessage = ({
     });
   };
 
+  const handleAddSuppliers = () => {
+    console.log('We want to add the suppliers that we have selecgted');
+  };
   const handleSubmit = async () => {
     const files = await
     uploadFiles(message.files, tenantUid, RFP_MESSAGE_FOLDERNAME);
@@ -75,6 +81,11 @@ const NewMessage = ({
 			header="New message"
 		>
 			<p>Messages you send about this RFP will be sent to all your suppliers.</p>
+			<FloatingSupplierList
+				isVisible={canShowSuppliers}
+				closeForm={hideSuppliers}
+				handleAction={(suppliers) => handleAddSuppliers(suppliers)}
+			/>
 			<div>
 				<Input
 					className="fluid m-b-10"
@@ -85,6 +96,7 @@ const NewMessage = ({
 					value={message.subject}
 				/>
 			</div>
+			<div>Receipients</div>
 			<KtTextArea
 				placeholder="Message"
 				rows={10}
