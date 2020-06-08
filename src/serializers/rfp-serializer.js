@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import
 {
   mergeDateAndTime, getDateOnly, getTimeOnly, convertTimeToDisplay,
@@ -25,16 +26,20 @@ export const deserializeProposal = (proposal) => {
       title: req.title,
       file: req.file,
     }))),
-    suppliers: (proposal.proposal_suppliers && proposal.proposal_suppliers.map((s) => ({
-      id: s.id,
-      uid: s.uid,
-      email: (s.tenant_supplier && s.tenant_supplier.tenant.email),
-      phone: (s.tenant_supplier && s.tenant_supplier.tenant.phone),
-      company_name: (s.tenant_supplier && s.tenant_supplier.tenant.company_name),
-      account_id: (s.tenant_supplier && s.tenant_supplier.tenant.account_id),
-      country: (s.tenant_supplier && s.tenant_supplier.tenant.country),
-      timezone: (s.tenant_supplier && s.tenant_supplier.tenant.timezone),
-    }))),
+    suppliers: (proposal.proposal_suppliers && proposal.proposal_suppliers.map((supplier) => {
+      const s = supplier.supplier.tenant_supplier.tenant;
+      const supplier_id = supplier.supplier.id;
+      return {
+        id: supplier_id,
+        uid: s.uid,
+        email: s.email,
+        phone: s.phone,
+        company_name: s.company_name,
+        account_id: s.account_id,
+        country: s.country,
+        timezone: s.timezone,
+      };
+    })),
     stakeholders: (proposal.proposal_stakeholders && proposal.proposal_stakeholders.map((s) => ({
       id: s.id,
       user_id: s.user_id,
