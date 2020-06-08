@@ -27,6 +27,7 @@ const FloatingSupplierList = ({
   const [isSearching, setIsSearching] = useState(false);
   const [searchKey, setSearchKey] = useState('');
 
+  // select suppliers to be added to event
   const handleSelectionChange = (supplier) => {
     const existing = selectedSuppliers.find((s) => s.id === supplier.id);
     if (existing === null || existing === undefined) {
@@ -115,6 +116,7 @@ const FloatingSupplierList = ({
 					<Checkbox label="Select All" onChange={handleSelectAllSuppliers} />
 					<Divider type="thick" />
 					<div className="m-t-20">
+						{/* use this when the suppliers are passes as props */}
 						{!isSearching && suppliers && suppliers.map((supplier) => (
 							<SupplierListItem
 								key={supplier.id}
@@ -123,6 +125,7 @@ const FloatingSupplierList = ({
 								isSelectAll={isSelectAll}
 							/>
 						))}
+						{/* Use this when we need to fetch the suppliers from the api */}
 						{isSearching && filteredSuppliers && filteredSuppliers.map((supplier) => (
 							<SupplierListItem
 								key={supplier.id}
