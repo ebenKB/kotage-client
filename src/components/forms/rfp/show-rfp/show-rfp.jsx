@@ -67,7 +67,7 @@ const ShowRfp = ({
 						</div>
 						<div className="kt-pad-left">
 							<div className="dark bold">Rfp Attachments</div>
-							{proposal.files && (
+							{proposal.files && proposal.files.length > 0 && (
 								<div className="flex-center m-t-10">
 									<AttachmentIcon />
 									<Button
@@ -75,6 +75,9 @@ const ShowRfp = ({
 										content={`Download ${proposal.files.length} attachment(s)`}
 									/>
 								</div>
+							)}
+							{proposal.files && proposal.files.length === 0 && (
+								<p>There are no files attached to this proposal</p>
 							)}
 						</div>
 						<div className="m-t-40">

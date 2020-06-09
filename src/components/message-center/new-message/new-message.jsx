@@ -1,3 +1,5 @@
+/* eslint-disable camelcase */
+/* eslint-disable no-unused-vars */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState } from 'react';
 import { PropTypes } from 'prop-types';
@@ -20,7 +22,7 @@ import FloatingSupplierList from '../../floating-supplier-list/floating-supplier
 
 
 const NewMessage = ({
-  createNewMessage, isLoading, currentProposalId, tenantUid,
+  createNewMessage, isLoading, currentProposal, currentProposalId, tenantUid,
 }) => {
   const history = useHistory();
   const [message, setMessage] = useState(
@@ -87,6 +89,12 @@ const NewMessage = ({
     uploadFiles(message.files, tenantUid, RFP_MESSAGE_FOLDERNAME);
     message.files = files;
     setMessage(message);
+    let supplier_ids = null;
+    if (selectedSuppliers.length > 0) {
+      supplier_ids = selectedSuppliers.map((s) => s.id);
+    } else {
+      supplier_ids = currentProposal.suppliers.map((s) => s.id);
+    }
     createNewMessage(message)
       .then(() => history.goBack());
   };
@@ -101,6 +109,7 @@ const NewMessage = ({
 		>
 			<p>Messages you send about this RFP will be sent to all your suppliers.</p>
 			<FloatingSupplierList
+				suppliers={currentProposal.suppliers}
 				isVisible={canShowSuppliers}
 				closeForm={hideSuppliers}
 				handleAction={(suppliers) => handleAddSuppliers(suppliers)}
@@ -174,6 +183,7 @@ const mapDispatchToProps = {
 
 const mapStateToProps = (state) => ({
   isLoading: state.rfp.loading,
+  currentProposal: state.rfp.currentProposal,
   currentProposalId: state.rfp.currentProposal.id,
   tenantUid: state.tenant.currentTenant.account_id,
 });
@@ -183,6 +193,7 @@ NewMessage.propTypes = {
   isLoading: PropTypes.bool.isRequired,
   currentProposalId: PropTypes.string.isRequired,
   tenantUid: PropTypes.string.isRequired,
+  currentProposal: PropTypes.string.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(NewMessage);
