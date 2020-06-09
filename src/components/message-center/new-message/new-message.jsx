@@ -3,7 +3,9 @@ import React, { useState } from 'react';
 import { PropTypes } from 'prop-types';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { Button } from 'semantic-ui-react';
+import {
+  Button, Checkbox, Icon, Label,
+} from 'semantic-ui-react';
 import { uploadFiles } from '../../../utils/app';
 import MainContent from '../../kt-main-content/mainContent';
 import KtTextArea from '../../form-fields/textarea/textarea';
@@ -15,6 +17,7 @@ import Dropzone from '../../dropzone/dropzone';
 import Divider from '../../kt-divider/divider';
 import { RFP_MESSAGE_FOLDERNAME } from '../../../utils/app/definitions';
 import FloatingSupplierList from '../../floating-supplier-list/floating-supplier-list';
+
 
 const NewMessage = ({
   createNewMessage, isLoading, currentProposalId, tenantUid,
@@ -29,8 +32,9 @@ const NewMessage = ({
     },
   );
 
-  const [canShowSuppliers] = useState(true);
-  const [hideSuppliers] = useState(false);
+  const [canShowSuppliers, setCanShowSuppliers] = useState(true);
+  const [selectedSuppliers, setSelectedSuppliers] = useState(null);
+
   const goBack = () => {
     if (history) {
       history.goBack();
@@ -53,6 +57,19 @@ const NewMessage = ({
     });
   };
 
+  const hideSuppliers = () => {
+    setCanShowSuppliers(false);
+  };
+
+  const showSuplierDirectory = () => {
+    setCanShowSuppliers(true);
+  };
+
+  const removeSupplierFromReceipients = (supplier) => {
+    const newSuppliers = selectedSuppliers.filter((s) => s.id !== supplier.id);
+    setSelectedSuppliers(newSuppliers);
+  };
+
   const setFiles = (files) => {
     setMessage({
       ...message,
@@ -60,9 +77,11 @@ const NewMessage = ({
     });
   };
 
-  const handleAddSuppliers = () => {
-    console.log('We want to add the suppliers that we have selecgted');
+  const handleAddSuppliers = (supplers) => {
+    setSelectedSuppliers([...supplers]);
+    setCanShowSuppliers(false);
   };
+
   const handleSubmit = async () => {
     const files = await
     uploadFiles(message.files, tenantUid, RFP_MESSAGE_FOLDERNAME);
@@ -96,7 +115,29 @@ const NewMessage = ({
 					value={message.subject}
 				/>
 			</div>
-			<div>Receipients</div>
+			<div className="m-t-20 m-b-20">
+				<Checkbox label="Send to all suppliers" />
+				<span>&nbsp;</span>
+				<Button
+					className="kt-transparent kt-primary"
+					content="or open supplier Directory"
+					onClick={showSuplierDirectory}
+				/>
+				<span>&nbsp;</span>
+				<span>to add suppliers</span>
+				<div className="m-t-20 flex-center">
+					{selectedSuppliers && selectedSuppliers.map((s) => (
+						<Label>
+							<Button
+								className="kt-transparent tiny m-r-5"
+								content={<Icon name="close" />}
+								onClick={() => removeSupplierFromReceipients(s)}
+							/>
+							{selectedSuppliers && s.company_name}
+						</Label>
+					))}
+				</div>
+			</div>
 			<KtTextArea
 				placeholder="Message"
 				rows={10}
@@ -115,7 +156,8 @@ const NewMessage = ({
 					onClick={goBack}
 				/>
 				<Button
-					content="Send to all suppliers"
+					small
+					content="Send"
 					color="green"
 					onClick={handleSubmit}
 					loading={isLoading}
