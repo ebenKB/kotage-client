@@ -2,6 +2,7 @@
 /* eslint-disable react/forbid-prop-types */
 import React, { useState } from 'react';
 import { PropTypes } from 'prop-types';
+import { connect } from 'react-redux';
 import { Button } from 'semantic-ui-react';
 import Divider from '../kt-divider/divider';
 import SupplierListItem from '../snippets/supplier-list-item/supplier-list-item';
@@ -9,7 +10,7 @@ import FloatingSupplierList from '../floating-supplier-list/floating-supplier-li
 import './supplier-directory-section.scss';
 
 const SupplierDirectorySection = ({
-  proposal, deleteSupplier, addSupplier,
+  proposal, existingSuppliers, deleteSupplier, addSupplier,
 }) => {
   const [canShowSuppliers, setShowSuppliers] = useState(false);
 
@@ -39,6 +40,7 @@ const SupplierDirectorySection = ({
 				</Button>
 				{canShowSuppliers && (
 					<FloatingSupplierList
+						suppliers={existingSuppliers}
 						isVisible={canShowSuppliers}
 						closeForm={hideSuppliers}
 						handleAction={(suppliers) => handleAddSuppliers(suppliers)}
@@ -51,7 +53,7 @@ const SupplierDirectorySection = ({
 				<div className="bold faint-caption m-t-8 m-b-8">
 					{ proposal.suppliers.length }
 					{' '}
-          ADDED SUPPLIER(S)
+					ADDED SUPPLIER(S)
 				</div>
 				<Divider type="thick" title="" classes="m-t-8" isNumbered={false} />
 				<div className="xsm-caption supplier-content__heading faint-caption m-t-8 m-b-8">
@@ -82,6 +84,15 @@ SupplierDirectorySection.propTypes = {
   proposal: PropTypes.object.isRequired,
   deleteSupplier: PropTypes.func.isRequired,
   addSupplier: PropTypes.func.isRequired,
+  existingSuppliers: PropTypes.object,
 };
 
-export default SupplierDirectorySection;
+SupplierDirectorySection.defaultProps = {
+  existingSuppliers: null,
+};
+
+const mapStateToProps = (state) => ({
+  existingSuppliers: state.tenant.suppliers,
+});
+
+export default connect(mapStateToProps, null)(SupplierDirectorySection);

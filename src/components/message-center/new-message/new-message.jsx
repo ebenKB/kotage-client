@@ -1,5 +1,9 @@
+<<<<<<< HEAD
 /* eslint-disable camelcase */
 /* eslint-disable no-unused-vars */
+=======
+/* eslint-disable react/forbid-prop-types */
+>>>>>>> refactor-floating-supplier
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState } from 'react';
 import { PropTypes } from 'prop-types';
@@ -108,12 +112,14 @@ const NewMessage = ({
 			header="New message"
 		>
 			<p>Messages you send about this RFP will be sent to all your suppliers.</p>
-			<FloatingSupplierList
-				suppliers={currentProposal.suppliers}
-				isVisible={canShowSuppliers}
-				closeForm={hideSuppliers}
-				handleAction={(suppliers) => handleAddSuppliers(suppliers)}
-			/>
+			{currentProposal && (
+				<FloatingSupplierList
+					suppliers={currentProposal.suppliers}
+					isVisible={canShowSuppliers}
+					closeForm={hideSuppliers}
+					handleAction={(suppliers) => handleAddSuppliers(suppliers)}
+				/>
+			)}
 			<div>
 				<Input
 					className="fluid m-b-10"
@@ -193,7 +199,11 @@ NewMessage.propTypes = {
   isLoading: PropTypes.bool.isRequired,
   currentProposalId: PropTypes.string.isRequired,
   tenantUid: PropTypes.string.isRequired,
+<<<<<<< HEAD
   currentProposal: PropTypes.string.isRequired,
+=======
+  currentProposal: PropTypes.object.isRequired,
+>>>>>>> refactor-floating-supplier
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(NewMessage);
