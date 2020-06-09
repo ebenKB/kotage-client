@@ -1,3 +1,5 @@
+/* eslint-disable no-plusplus */
+/* eslint-disable no-restricted-syntax */
 /* eslint-disable dot-notation */
 /* eslint-disable camelcase */
 /* eslint-disable import/prefer-default-export */
@@ -139,19 +141,40 @@ export const getRfpOutbox = (rfp_id) => async (dispatch, getState) => {
   }
 };
 
-export const createRfpMessage = (message) => async (dispatch, getState) => new
+/**
+ * send message to suppliers
+ * If no suppliers are specified, then send the message to all suppliers
+ * @param {*} message the message to send to the suppliers
+ * @param {*} supplier_ids the suppliers to receive the message, defaults to null
+ */
+export const createRfpMessage = (message, supplier_ids) => async (dispatch, getState) => new
 Promise((resolve) => {
   try {
     dispatch({ type: SET_RFP_LOADING });
     const { user } = getState();
-    Axios.post(`/v1/${user.currentUser.tenant_id}/rfp/${message.rfp_id}/messages`, serializeRfpMessage(message))
-      .then((data) => {
-        dispatch({
-          type: CREATE_MESSAGE,
-          payload: deserializeRfpMessage(data.data.rfp_message),
+    if (supplier_ids === null) { // send the message to all suppliers
+      Axios.post(`/v1/${user.currentUser.tenant_id}/rfp/${message.rfp_id}/messages`, serializeRfpMessage(message))
+        .then((data) => {
+          dispatch({
+            type: CREATE_MESSAGE,
+            payload: deserializeRfpMessage(data.data.rfp_message),
+          });
+          resolve(true);
         });
-        resolve(true);
-      });
+    } else { // send message to the selected suppliers
+      for (let i = 0; i < supplier_ids.length; i++) {
+        Axios.post(`/v1/${user.currentUser.tenant_id}/rfp/${message.rfp_id}/messages?to=${supplier_ids[i]}`, serializeRfpMessage(message))
+          .then((data) => {
+            dispatch({
+              type: CREATE_MESSAGE,
+              payload: deserializeRfpMessage(data.data.rfp_message),
+            });
+            if (i === (supplier_ids.length - 1)) {
+              resolve(true);
+            }
+          });
+      }
+    }
   } catch (error) {
     dispatch({ type: SET_RFP_DONE_LOADING });
   }

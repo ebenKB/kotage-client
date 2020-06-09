@@ -1,9 +1,5 @@
-<<<<<<< HEAD
 /* eslint-disable camelcase */
-/* eslint-disable no-unused-vars */
-=======
 /* eslint-disable react/forbid-prop-types */
->>>>>>> refactor-floating-supplier
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState } from 'react';
 import { PropTypes } from 'prop-types';
@@ -38,8 +34,9 @@ const NewMessage = ({
     },
   );
 
-  const [canShowSuppliers, setCanShowSuppliers] = useState(true);
+  const [canShowSuppliers, setCanShowSuppliers] = useState(false);
   const [selectedSuppliers, setSelectedSuppliers] = useState(null);
+  const [hasSetAllSuppliers, setAllSuppliers] = useState(false);
 
   const goBack = () => {
     if (history) {
@@ -76,6 +73,10 @@ const NewMessage = ({
     setSelectedSuppliers(newSuppliers);
   };
 
+  const handleSetAllSuppliers = (data) => {
+    setAllSuppliers(data.checked);
+  };
+
   const setFiles = (files) => {
     setMessage({
       ...message,
@@ -86,6 +87,9 @@ const NewMessage = ({
   const handleAddSuppliers = (supplers) => {
     setSelectedSuppliers([...supplers]);
     setCanShowSuppliers(false);
+    if (supplers.length > 0) {
+      setAllSuppliers(false);
+    }
   };
 
   const handleSubmit = async () => {
@@ -95,11 +99,9 @@ const NewMessage = ({
     setMessage(message);
     let supplier_ids = null;
     if (selectedSuppliers.length > 0) {
-      supplier_ids = selectedSuppliers.map((s) => s.id);
-    } else {
-      supplier_ids = currentProposal.suppliers.map((s) => s.id);
+      supplier_ids = selectedSuppliers.map((s) => s.account_id);
     }
-    createNewMessage(message)
+    createNewMessage(message, supplier_ids)
       .then(() => history.goBack());
   };
 
@@ -131,11 +133,15 @@ const NewMessage = ({
 				/>
 			</div>
 			<div className="m-t-20 m-b-20">
-				<Checkbox label="Send to all suppliers" />
-				<span>&nbsp;</span>
+				<Checkbox
+					onChange={(e, data) => handleSetAllSuppliers(data)}
+					checked={hasSetAllSuppliers}
+					label="Send to all suppliers"
+				/>
+				<span>&nbsp;or&nbsp;</span>
 				<Button
 					className="kt-transparent kt-primary"
-					content="or open supplier Directory"
+					content="open supplier Directory"
 					onClick={showSuplierDirectory}
 				/>
 				<span>&nbsp;</span>
@@ -199,11 +205,7 @@ NewMessage.propTypes = {
   isLoading: PropTypes.bool.isRequired,
   currentProposalId: PropTypes.string.isRequired,
   tenantUid: PropTypes.string.isRequired,
-<<<<<<< HEAD
-  currentProposal: PropTypes.string.isRequired,
-=======
   currentProposal: PropTypes.object.isRequired,
->>>>>>> refactor-floating-supplier
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(NewMessage);
