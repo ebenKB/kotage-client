@@ -7,16 +7,16 @@ import {
 import { deserializeProposal } from '../../serializers/supplier-rfp-serializer';
 
 // eslint-disable-next-line import/prefer-default-export
-export const getSupplierRfp = (page = 1) => async (dispatch, getState) => {
-  try {
-    const { user } = getState();
-    const { data } = await Axios.get(`/v1/${user.currentUser.tenant_id}/events/rfp?page=${page}`);
+export const getSupplierRfp = (page = 1) => async (dispatch, getState) => new
+Promise((resolve, reject) => {
+  const { user } = getState();
+  const promise = Axios.get(`/v1/${user.currentUser.tenant_id}/events/rfp?page=${page}`);
 
+  promise.then((data) => {
     // deserialize the requests
-    const { proposal_requests, meta } = data;
+    const { data: { proposal_requests, meta } } = data;
     const deserializedProposals = proposal_requests
       .map((proposal) => deserializeProposal(proposal));
-
     const { pagination } = meta;
     dispatch({
       type: GET_SUPPLIER_RFP,
@@ -25,10 +25,11 @@ export const getSupplierRfp = (page = 1) => async (dispatch, getState) => {
         meta: pagination,
       },
     });
-  } catch (error) {
-    console.log(error);
-  }
-};
+    resolve(proposal_requests);
+  }).catch((error) => {
+    reject(error);
+  });
+});
 
 export const createBidResponse = () => async (dispatch) => {
   dispatch({

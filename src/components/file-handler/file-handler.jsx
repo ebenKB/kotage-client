@@ -36,7 +36,8 @@ signUrl = () => {
         signedUrls: results,
       }));
       this.downloadFiles();
-    });
+    })
+    .catch((error) => console.log('error in the promise', error));
 };
 
 downloadFiles = () => {

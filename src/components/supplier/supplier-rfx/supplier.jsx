@@ -1,5 +1,7 @@
+/* eslint-disable camelcase */
 /* eslint-disable react/prop-types */
 import React, { useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import { Divider } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import MainContent from '../../kt-main-content/mainContent';
@@ -9,11 +11,23 @@ import SupplierRfxItem from '../supplier-rfx-item/supplier-rfx-item';
 import { getSupplierRfp } from '../../../redux/actions/supplierRfpActions';
 import { getPageRemainder } from '../../../utils/app/index';
 import PaginationFootnote from '../../pagination-footnote/pagination-footnote';
+import { setNotification } from '../../../redux/actions/appActions';
 
 const supplier = ({ proposals, meta, getSupplierRfpEvents }) => {
+  const history = useHistory();
+
   useEffect(() => {
-    console.log('here loading');
-    getSupplierRfpEvents();
+    getSupplierRfpEvents()
+      .catch((error) => {
+        if (error.response) {
+          const { response: { data: { invalid_token } } } = error;
+          if (invalid_token) {
+            history.push('/auth/signin');
+          } else {
+            setNotification(error, 'error');
+          }
+        }
+      });
   }, []);
 
   const getRemainder = () => getPageRemainder(meta.count, proposals.length, 10);

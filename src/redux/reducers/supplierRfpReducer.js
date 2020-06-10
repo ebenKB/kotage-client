@@ -32,7 +32,6 @@ export default (state = initialState, action) => {
     }
 
     case FIND_SUPPLIER_EVENT_BY_ID: {
-      console.log('Finding the supplier by id');
       return {
         ...state,
         currentProposal: action.payload,

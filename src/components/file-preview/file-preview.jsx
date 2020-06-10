@@ -77,7 +77,7 @@ const FilePreview = ({
 					{fileObject && (
 						<a
 							href={fileObject.staticUrl}
-							download={getFileNameAndExtension(fileObject.file_url)}
+							download={getFileNameAndExtension(fileObject.remoteUrl)}
 							className="kt-transparent flex-center float-r m-r-20 kt-item__cta-tool-tip"
 							attr-data="Download"
 						>
