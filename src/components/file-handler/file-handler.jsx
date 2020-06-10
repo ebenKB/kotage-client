@@ -5,6 +5,7 @@ import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
 import { getFileSignedUrl, prepareFileForDownload } from '../../utils/app/file';
 import KtFileItem from '../snippets/kt-file-item/kt-file-item';
+import KtLoader from '../loader/loader';
 
 
 class FileHandler extends Component {
@@ -66,9 +67,12 @@ downloadFiles = () => {
 };
 
 render() {
-  const { files } = this.state;
+  const { files, signedUrls } = this.state;
   return (
 	<div className="flex-center">
+		{files.length !== signedUrls.length && (
+			<KtLoader />
+		)}
 		{files.map((file) => (
 			<KtFileItem
 				fileObject={file}

@@ -153,7 +153,6 @@ const SupplierRfxDashboard = ({ findSupplierRfp }) => {
 				>
 					<Divider type="thick" title="Rfp Attachments" />
 					<div className="m-t-20">
-						<p>Show all attachments here and allow users to preview or download them</p>
 						<FileHandler files={currentProposal.files} />
 					</div>
 				</KtWrapperLite>
