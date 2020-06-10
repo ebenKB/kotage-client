@@ -19,6 +19,7 @@ import KtDetailsCaption from '../../kt-details-caption/kt-details-caption';
 import { ReactComponent as Bullet } from '../../../svg/menu.svg';
 import { findSupplierEventByID } from '../../../redux/actions/supplierRfpActions';
 import ParseHtml from '../../snippets/parse-html/parse-html';
+import FileHandler from '../../file-handler/file-handler';
 
 const SupplierRfxDashboard = ({ findSupplierRfp }) => {
   const params = useParams();
@@ -147,16 +148,17 @@ const SupplierRfxDashboard = ({ findSupplierRfp }) => {
 						)}
 					</KtWrapperLite>
 				)}
+				<KtWrapperLite
+					classes="m-t-20"
+				>
+					<Divider type="thick" title="Rfp Attachments" />
+					<div className="m-t-20">
+						<p>Show all attachments here and allow users to preview or download them</p>
+						<FileHandler files={currentProposal.files} />
+					</div>
+				</KtWrapperLite>
 			</>
 		)}
-		<KtWrapperLite
-			classes="m-t-20"
-		>
-			<Divider type="thick" title="Rfp Attachments" />
-			<div className="m-t-20">
-				<p>Show all attachments here and allow users to preview or download them</p>
-			</div>
-		</KtWrapperLite>
 		<div className="m-t-20 flex-center">
 			<Link to="/supplier/rfx">
 				<Button

@@ -68,8 +68,7 @@ downloadFiles = () => {
 render() {
   const { files } = this.state;
   return (
-	<div>
-		{this.state.signedUrls.map((s) => <div>{s}</div>)}
+	<div className="flex-center">
 		{files.map((file) => (
 			<KtFileItem
 				fileObject={file}
