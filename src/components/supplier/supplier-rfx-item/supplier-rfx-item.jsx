@@ -43,7 +43,6 @@ const RfpItem = ({ proposal, type }) => {
 							{' '}
 						</span>
 						<span className="kt-danger">{getDate()}</span>
-						<div>{proposal.bid_deadline_date}</div>
 					</div>
 				</div>
 			</div>
