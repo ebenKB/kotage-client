@@ -26,7 +26,7 @@ const KtFileItem = ({ fileObject, user }) => {
   const getDownloadLink = () => (
 	<a
 		href={fileObject.staticUrl}
-		download={getFileNameAndExtension(fileObject.file_url)}
+		download={getFileNameAndExtension(fileObject.remoteUrl)}
 		className="kt-item__cta-tool-tip m-r-10"
 		attr-data="Download"
 	>
