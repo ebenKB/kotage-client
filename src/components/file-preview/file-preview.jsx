@@ -12,51 +12,10 @@ import FullscreenIcon from '@material-ui/icons/Fullscreen';
 import Input from '../form-fields/input/input';
 import MessageHeaderCaption from '../snippets/message-header-caption/message-header-caption';
 import { getFileNameAndExtension } from '../../utils/app/file';
-// import PdfReader from '../pdf-reader/pdf-reader';
 
 const FilePreview = ({
   type, fileObject, user, handleCloseAction, children, ...rest
 }) => {
-  // const [enlarge, setEnlarge] = useState(true);
-  // const [scale, setScale] = useState(1.5);
-
-  // let clickCounter = 0;
-  // const [clickCounter, setClickCounter] = useState(0);
-  // const handleClick = (e) => {
-  //   e.preventDefault();
-  //   const count = clickCounter + 1;
-  //   clickCounter = count;
-
-  //   // check if it is double click
-  //   if (clickCounter === 2) {
-  //     setEnlarge(!enlarge);
-  //   }
-
-  //   // clear the click counter
-  //   setTimeout(() => {
-  //     clickCounter = 0;
-  //   }, 500);
-  // };
-
-  // const getImageSize = () => {
-  //   if (enlarge) {
-  //     return 'full-width';
-  //   }
-  //   return 'fit-height';
-  // };
-
-  // const zoomout = () => {
-  //   if (scale < 300) {
-  //     setScale(scale + 0.25);
-  //   }
-  // };
-
-  // const zoomin = () => {
-  //   if (scale >= 0.25) {
-  //     setScale(scale - 0.25);
-  //   }
-  // };
-
   const showAdvancedControls = () => {
     if (type === 'pdf') {
       return true;
@@ -75,7 +34,7 @@ const FilePreview = ({
 								<span className="flex-center">
 									{' ('}
 									{rest.pages}
-									{' '}
+									{' )'}
 									pages)
 								</span>
 							)}
@@ -143,19 +102,6 @@ const FilePreview = ({
 			</div>
 			<div className="file-preview-content__body">
 				<div className="file-preview">
-					{/* {type.toLowerCase() === 'image' && (
-						<Image
-							onClick={handleClick}
-							src={fileObject.staticUrl}
-							className={`clickable ${getImageSize()}`}
-						/>
-					)}
-					{type.toLowerCase() === 'pdf' && (
-						<PdfReader
-							scale={scale}
-							fileUrl={fileObject.staticUrl}
-						/>
-					)} */}
 					{children}
 				</div>
 				<div className="kt-bg-shadow preview-controls">
@@ -163,7 +109,6 @@ const FilePreview = ({
 						user={user}
 					/>
 					<Divider type="faint" />
-					{/* controls */}
 				</div>
 			</div>
 		</div>
