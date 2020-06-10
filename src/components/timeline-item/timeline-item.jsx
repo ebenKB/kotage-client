@@ -4,7 +4,7 @@ import './timeline-item.scss';
 import format from 'date-fns/format';
 
 const TimelineItem = ({ label, dateValue, timeValue }) => {
-  const getDate = () => format(new Date(dateValue), 'EEEE, io MMMM, yyyy');
+  const getDate = () => format(new Date(dateValue), 'EEEE, do MMMM, yyyy');
 
   return (
 	<div className="timeline-wrapper m-t-20">
@@ -13,7 +13,7 @@ const TimelineItem = ({ label, dateValue, timeValue }) => {
 		</div>
 		<div>
 			{getDate()}
-      @
+			@
 			{' '}
 			{timeValue}
 		</div>

@@ -20,6 +20,7 @@ import Divider from '../../kt-divider/divider';
 import { RFP_MESSAGE_FOLDERNAME } from '../../../utils/app/definitions';
 import FloatingSupplierList from '../../floating-supplier-list/floating-supplier-list';
 import { setNotification } from '../../../redux/actions/appActions';
+import Can from '../../can/can';
 
 
 const NewMessage = ({
@@ -29,6 +30,8 @@ const NewMessage = ({
   currentProposalId,
   showNotification,
   tenantUid,
+  accountType,
+  currentUser,
 }) => {
   const history = useHistory();
   const [message, setMessage] = useState(
@@ -123,7 +126,7 @@ const NewMessage = ({
 		<KtWrapper
 			header="New message"
 		>
-			<p>Messages you send about this RFP will be sent to all your suppliers.</p>
+			{/* <p>Messages you send about this RFP will be sent to all your suppliers.</p> */}
 			{currentProposal && (
 				<FloatingSupplierList
 					suppliers={currentProposal.suppliers}
@@ -142,33 +145,41 @@ const NewMessage = ({
 					value={message.subject}
 				/>
 			</div>
-			<div className="m-t-20 m-b-20">
-				<Checkbox
-					onChange={(e, data) => handleSetAllSuppliers(data)}
-					checked={hasSetAllSuppliers}
-					label="Send to all suppliers"
-				/>
-				<span>&nbsp;or&nbsp;</span>
-				<Button
-					className="kt-transparent kt-primary"
-					content="open supplier Directory"
-					onClick={showSuplierDirectory}
-				/>
-				<span>&nbsp;</span>
-				<span>to add suppliers</span>
-				<div className="m-t-20 flex-center">
-					{selectedSuppliers && selectedSuppliers.map((s) => (
-						<Label>
-							<Button
-								className="kt-transparent tiny m-r-5"
-								content={<Icon name="close" />}
-								onClick={() => removeSupplierFromReceipients(s)}
-							/>
-							{selectedSuppliers && s.company_name}
-						</Label>
-					))}
-				</div>
-			</div>
+			<Can
+				perform="supplier:send_message"
+				accountType={accountType}
+				roleType={currentUser.is_admin ? 'admin' : 'user'}
+				yes={() => (
+					<div className="m-t-20 m-b-20">
+						<Checkbox
+							onChange={(e, data) => handleSetAllSuppliers(data)}
+							checked={hasSetAllSuppliers}
+							label="Send to all suppliers"
+						/>
+						<span>&nbsp;or&nbsp;</span>
+						<Button
+							className="kt-transparent kt-primary"
+							content="open supplier Directory"
+							onClick={showSuplierDirectory}
+						/>
+						<span>&nbsp;</span>
+						<span>to add suppliers</span>
+						<div className="m-t-20 flex-center">
+							{selectedSuppliers && selectedSuppliers.map((s) => (
+								<Label>
+									<Button
+										className="kt-transparent tiny m-r-5"
+										content={<Icon name="close" />}
+										onClick={() => removeSupplierFromReceipients(s)}
+									/>
+									{selectedSuppliers && s.company_name}
+								</Label>
+							))}
+						</div>
+					</div>
+				)}
+				no={() => null}
+			/>
 			<KtTextArea
 				placeholder="Message"
 				rows={10}
@@ -209,6 +220,8 @@ const mapStateToProps = (state) => ({
   currentProposal: state.rfp.currentProposal,
   currentProposalId: state.rfp.currentProposal.id,
   tenantUid: state.tenant.currentTenant.account_id,
+  accountType: state.app.accountType,
+  currentUser: state.user.currentUser,
 });
 
 NewMessage.propTypes = {
@@ -218,6 +231,8 @@ NewMessage.propTypes = {
   tenantUid: PropTypes.string.isRequired,
   currentProposal: PropTypes.object.isRequired,
   showNotification: PropTypes.func.isRequired,
+  accountType: PropTypes.string.isRequired,
+  currentUser: PropTypes.object.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(NewMessage);

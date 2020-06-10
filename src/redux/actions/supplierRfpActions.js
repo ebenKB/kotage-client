@@ -1,16 +1,29 @@
+/* eslint-disable camelcase */
 import Axios from '../../utils/axios/axios';
-import { GET_SUPPLIER_RFP, CREATE_BID_RESPONSE, SET_CURRENT_SUPPLIER_RFP } from '../types/supplierRfpTypes';
+import {
+  GET_SUPPLIER_RFP, CREATE_BID_RESPONSE, SET_CURRENT_SUPPLIER_RFP, FIND_SUPPLIER_EVENT_BY_ID,
+} from '../types/supplierRfpTypes';
+
+import { deserializeProposal } from '../../serializers/supplier-rfp-serializer';
 
 // eslint-disable-next-line import/prefer-default-export
-export const getSupplierRfp = (page) => async (dispatch, getState) => {
-  console.log('we are fetching records for ', page);
+export const getSupplierRfp = (page = 1) => async (dispatch, getState) => {
   try {
     const { user } = getState();
-    console.log('This is the user making the request', user);
-    const { data } = await Axios.get(`/v1/${user.currentUser.tenant_id}/events/rfp`);
+    const { data } = await Axios.get(`/v1/${user.currentUser.tenant_id}/events/rfp?page=${page}`);
+
+    // deserialize the requests
+    const { proposal_requests, meta } = data;
+    const deserializedProposals = proposal_requests
+      .map((proposal) => deserializeProposal(proposal));
+
+    const { pagination } = meta;
     dispatch({
       type: GET_SUPPLIER_RFP,
-      payload: data,
+      payload: {
+        proposals: deserializedProposals,
+        meta: pagination,
+      },
     });
   } catch (error) {
     console.log(error);
@@ -18,7 +31,6 @@ export const getSupplierRfp = (page) => async (dispatch, getState) => {
 };
 
 export const createBidResponse = () => async (dispatch) => {
-  console.log('We want to create bid response');
   dispatch({
     type: CREATE_BID_RESPONSE,
     payload: null,
@@ -26,9 +38,33 @@ export const createBidResponse = () => async (dispatch) => {
 };
 
 export const setCurrentSupplierRfp = (rfp) => async (dispatch) => {
-  console.log('This is the rfp that we want to set', rfp);
   dispatch({
     type: SET_CURRENT_SUPPLIER_RFP,
-    payload: null,
+    payload: rfp,
   });
 };
+
+
+/**
+ * find an existing proposal from the list of proposals in the cache
+ * without making a newtwork request
+ * @param {*} id the id of the proposal to find
+ * @param return the found proposal or null if not found
+ */
+export const findSupplierEventByID = (id) => async (dispatch, getState) => (
+  new Promise((resolve, reject) => {
+    try {
+      const { supplierRfp: { proposals } } = getState();
+      const foundProposal = proposals.find((p) => p.id === parseInt(id, 10));
+      if (foundProposal) {
+        dispatch({
+          type: FIND_SUPPLIER_EVENT_BY_ID,
+          payload: foundProposal,
+        });
+        resolve(foundProposal);
+      } else resolve(null);
+    } catch (error) {
+      reject(error);
+    }
+  })
+);

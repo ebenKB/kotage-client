@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Divider } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import MainContent from '../../kt-main-content/mainContent';
@@ -7,26 +7,21 @@ import Help from '../../../utils/requisitions/new/help';
 import KtWrapper from '../../kt-wrapper/kt-wrapper';
 import SupplierRfxItem from '../supplier-rfx-item/supplier-rfx-item';
 import { getSupplierRfp } from '../../../redux/actions/supplierRfpActions';
+import { getPageRemainder } from '../../../utils/app/index';
+import PaginationFootnote from '../../pagination-footnote/pagination-footnote';
 
-const supplier = ({ getSupplierRfpEvents }) => {
+const supplier = ({ proposals, meta, getSupplierRfpEvents }) => {
   useEffect(() => {
     console.log('here loading');
     getSupplierRfpEvents();
   }, []);
-  const [proposals] = useState([
-    {
-      id: 1,
-      title: 'Request for Routes and Switches',
-    },
-    {
-      id: 2,
-      title: 'Request for Routes and Switches',
-    },
-    {
-      id: 3,
-      title: 'Request for Routes and Switches',
-    },
-  ]);
+
+  const getRemainder = () => getPageRemainder(meta.count, proposals.length, 10);
+
+  const loadMoreRecords = () => {
+    console.log('We want more records');
+  };
+
   return (
 	<MainContent
 		help={Help}
@@ -35,9 +30,8 @@ const supplier = ({ getSupplierRfpEvents }) => {
 			header="Active Events"
 		>
 			<div>
-				<h3>show all active events here</h3>
 				<Divider type="faint" />
-				{proposals.map((p) => (
+				{proposals && proposals.map((p) => (
 					<>
 						<SupplierRfxItem
 							proposal={p}
@@ -47,6 +41,15 @@ const supplier = ({ getSupplierRfpEvents }) => {
 					</>
 				))}
 			</div>
+			<div className="m-t-20">
+				{meta && getRemainder() > 0 && (
+					<PaginationFootnote
+						remainder={getRemainder()}
+						handleAction={() => loadMoreRecords}
+						caption="request for proposals"
+					/>
+				)}
+			</div>
 		</KtWrapper>
 	</MainContent>
   );
@@ -55,7 +58,9 @@ const mapDispatchToProps = {
   getSupplierRfpEvents: getSupplierRfp,
 };
 
-// const mapStateToProps = (state) => {
-// isLoading: state.
-// };
-export default connect(null, mapDispatchToProps)(supplier);
+const mapStateToProps = (state) => ({
+  proposals: state.supplierRfp && state.supplierRfp.proposals,
+  meta: state.supplierRfp && state.supplierRfp.meta,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(supplier);

@@ -7,6 +7,7 @@ const rules = {
         'rfp:view',
         'rfp:edit',
         'rfp:delete',
+        'supplier:send_message',
         'rbac:test',
       ],
     },
@@ -23,6 +24,7 @@ const rules = {
         'user:resend_invitation',
         'user:reset_password',
         'supplier:invite',
+        'supplier:send_message',
       ],
       dynamic: {
         'user:delete': ({ userID, currentUserID }) => {

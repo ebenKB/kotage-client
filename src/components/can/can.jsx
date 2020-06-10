@@ -7,7 +7,6 @@ const Check = (accountType, rules, role, action, data) => {
     return false;
   }
   const staticPermissions = permissions.static;
-  console.log('These are the static permissions', permissions);
   if (staticPermissions && staticPermissions.includes(action)) {
     return true;
   }
@@ -18,10 +17,8 @@ const Check = (accountType, rules, role, action, data) => {
     if (!permissionCondition) {
       return false;
     }
-    console.log('dynamic', data);
     return permissionCondition(data);
   }
-  console.log('There are no dynamic conditions');
   return false;
 };
 

@@ -13,7 +13,7 @@ const routes = [
     main: () => <SupplierHome />,
   },
   {
-    path: '/supplier/rfx/dashboard/:id',
+    path: '/supplier/rfp/dashboard/:id',
     exact: true,
     main: () => <SupplierDashboard />,
   },

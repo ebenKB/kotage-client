@@ -1,7 +1,6 @@
 /* eslint-disable camelcase */
 /* eslint-disable react/prop-types */
 import React, { useEffect } from 'react';
-import { Button } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { getRequestForProposals } from '../../../redux/actions/rfpActions';
@@ -14,6 +13,7 @@ import Divider from '../../kt-divider/divider';
 import KtLoader from '../../loader/loader';
 import { getPageRemainder } from '../../../utils/app';
 import { SET_APP_NOTIFICATION } from '../../../redux/types/appTypes';
+import PaginationFootnote from '../../pagination-footnote/pagination-footnote';
 
 
 const RFX = ({
@@ -69,24 +69,23 @@ const RFX = ({
   };
 
   // eslint-disable-next-line consistent-return
-  const getFootNote = () => {
-    const rem = getPageRemainder(meta.count, proposals.length, 10);
-    if (rem > 0) {
-      return (
-	<Button
-		className="clickable bold kt-primary m-t-10 kt-transparent m-t-20"
-		onClick={loadMoreRecords}
-	>
-		See
-		&nbsp;
-		{ getPageRemainder(meta.count, proposals.length, 10) }
-		&nbsp;
-		more request for proposals
-		&nbsp;
-	</Button>
-      );
-    }
-  };
+  const getRemainder = () => getPageRemainder(meta.count, proposals.length, 10);
+
+  //   if (rem > 0) {
+  //     return (
+  // <Button
+  // 	className="clickable bold kt-primary m-t-10 kt-transparent m-t-20"
+  // 	onClick={loadMoreRecords}
+  // >
+  // 	See
+  // 	&nbsp;
+  // 	{ getPageRemainder(meta.count, proposals.length, 10) }
+  // 	&nbsp;
+  // 	more request for proposals
+  // 	&nbsp;
+  // </Button>
+  //     );
+  //   }
   return (
 	<MainContent
 		classes="m-t-20 rfx"
@@ -112,7 +111,13 @@ const RFX = ({
 						<KtLoader />
 					)}
 				</div>
-				{meta && getFootNote()}
+				{meta && getRemainder() > 0 && (
+					<PaginationFootnote
+						remainder={getRemainder()}
+						handleAction={() => loadMoreRecords}
+						caption="request for proposals"
+					/>
+				)}
 			</div>
 		</KtWrapper>
 	</MainContent>

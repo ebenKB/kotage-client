@@ -112,7 +112,7 @@ const SignIn = ({
         });
       }
     } catch (error) {
-      console.log(error.message);
+      console.log('ERROR AR LOGIN', error.message);
     }
   };
 
