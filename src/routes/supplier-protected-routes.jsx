@@ -18,7 +18,7 @@ const routes = [
     main: () => <SupplierDashboard />,
   },
   {
-    path: '/supplier/rfx/:id/response',
+    path: '/supplier/rfp/:id/response',
     exact: true,
     main: () => <BidResponse />,
   },

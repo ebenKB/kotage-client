@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Table } from 'semantic-ui-react';
 import {
-  format,
+  format, formatDistance,
 } from 'date-fns';
 import { Link, useParams } from 'react-router-dom';
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
@@ -73,19 +73,23 @@ const SupplierRfxDashboard = ({ findSupplierRfp }) => {
 					at
 					{' '}
 					{format(new Date(currentProposal.bid_deadline), 'h:m:ss aaaa')}
+          &nbsp;
+					<span>(</span>
+					<span>{formatDistance(new Date(currentProposal.bid_deadline), new Date())}</span>
+					<span>)</span>
 				</div>
 				<KtWrapperLite
 					classes="m-t-20"
 				>
 					<div className="">
 						<p>
-							All RSVP should be acknowledged on or before
+							RSVP Deadline:
 							<span className="kt-primary m-l-5">
 								{format(new Date(currentProposal.rsvp_deadline), 'iiii do LLLL, yyyy  hh:mm:ss aaaa')}
 							</span>
 						</p>
 						<p>
-							All Questions should submitted on or before
+							Questions Deadline:
 							<span className="kt-primary m-l-5">
 								{format(new Date(currentProposal.question_deadline), 'iiii do LLLL, yyyy hh:mm:ss aaaa')}
 							</span>
@@ -156,25 +160,25 @@ const SupplierRfxDashboard = ({ findSupplierRfp }) => {
 						<FileHandler files={currentProposal.files} />
 					</div>
 				</KtWrapperLite>
+				<div className="m-t-20 flex-center">
+					<Link to="/supplier/rfx">
+						<Button
+							small
+							default
+							content="Go Back"
+							className="tiny"
+						/>
+					</Link>
+					<Link to={`/supplier/rfp/${currentProposal.id}/response`}>
+						<Button
+							small
+							content="Create Bid Response"
+							className="kt-sucess green tiny"
+						/>
+					</Link>
+				</div>
 			</>
 		)}
-		<div className="m-t-20 flex-center">
-			<Link to="/supplier/rfx">
-				<Button
-					small
-					default
-					content="Go Back"
-					className="tiny"
-				/>
-			</Link>
-			<Link to="/supplierrfx/:id/response">
-				<Button
-					small
-					content="Create Bid Response"
-					className="kt-sucess green tiny"
-				/>
-			</Link>
-		</div>
 	</MainContent>
   );
 };
