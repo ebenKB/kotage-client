@@ -1,3 +1,4 @@
+/* eslint-disable react/forbid-prop-types */
 /* eslint-disable camelcase */
 import React, { useState, useEffect } from 'react';
 import { Button, Table } from 'semantic-ui-react';
@@ -21,7 +22,7 @@ import { findSupplierEventByID } from '../../../redux/actions/supplierRfpActions
 import ParseHtml from '../../snippets/parse-html/parse-html';
 import FileHandler from '../../file-handler/file-handler';
 
-const SupplierRfxDashboard = ({ findSupplierRfp }) => {
+const SupplierRfxDashboard = ({ findSupplierRfp, currentTenant }) => {
   const params = useParams();
   const [currentProposal, setCurrentProposal] = useState(null);
 
@@ -157,7 +158,11 @@ const SupplierRfxDashboard = ({ findSupplierRfp }) => {
 				>
 					<Divider type="thick" title="Rfp Attachments" />
 					<div className="m-t-20">
-						<FileHandler files={currentProposal.files} />
+						<FileHandler
+							files={currentProposal.files}
+							tenantID={currentTenant.tenant_id}
+							objectOwnerID={currentProposal.id}
+						/>
 					</div>
 				</KtWrapperLite>
 				<div className="m-t-20 flex-center">
@@ -185,10 +190,15 @@ const SupplierRfxDashboard = ({ findSupplierRfp }) => {
 
 SupplierRfxDashboard.propTypes = {
   findSupplierRfp: PropTypes.func.isRequired,
+  currentTenant: PropTypes.object.isRequired,
 };
 
 const mapDispatchToProps = {
   findSupplierRfp: findSupplierEventByID,
 };
 
-export default connect(null, mapDispatchToProps)(SupplierRfxDashboard);
+const mapStateToProps = (state) => ({
+  currentTenant: state.tenant.currentTenant,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(SupplierRfxDashboard);

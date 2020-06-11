@@ -125,7 +125,12 @@ export const prepareFileForDownloadSync = async (fileUrl) => {
   return fileData;
 };
 
-// signs file url from AWS-S3
+/**
+ * signs file url from AWS-S3
+ * @param {*} url the s3 url of the file
+ * @param {*} tenant_id the tenant who is logged in
+ * @param {*} objectOwnerId the object that the file is attached to. e.g rfp ID
+ */
 export const getFileSignedUrl = (url, tenant_id, objectOwnerId) => {
   const AxiosInstance = Axios.create({ headers: { Authorization: getToken() } });
   return new Promise((resolve, reject) => {
