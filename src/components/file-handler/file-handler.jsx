@@ -25,7 +25,7 @@ class FileHandler extends Component {
     if (shouldSignUrl) {
       this.signUrl();
     } else {
-      this.downloadAllFiles(files);
+      this.downloadFiles(files);
     }
   }
 
@@ -115,7 +115,6 @@ render() {
 			</div>
 		)}
 	</>
-
   );
 }
 }
@@ -123,6 +122,8 @@ render() {
 FileHandler.propTypes = {
   files: PropTypes.object.isRequired,
   shouldSignUrl: PropTypes.bool,
+  tenantID: PropTypes.string.isRequired,
+  objectOwnerID: PropTypes.string.isRequired,
 };
 
 FileHandler.defaultProps = {
