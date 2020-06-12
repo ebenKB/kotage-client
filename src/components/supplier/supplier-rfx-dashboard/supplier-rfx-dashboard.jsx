@@ -219,7 +219,7 @@ const SupplierRfxDashboard = ({
 						{currentProposal.questions.map((q) => (
 							<div className="flex-center m-t-20">
 								<Bullet className="small logo m-r-5" />
-								<p>{q}</p>
+								<p>{q.question}</p>
 							</div>
 						))}
 						{currentProposal.questions.length === 0 && (
