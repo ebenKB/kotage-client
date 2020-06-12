@@ -6,7 +6,6 @@ import { Switch, Route } from 'react-router-dom';
 import Layout from './components/Layout/layout';
 import SignIn from './components/auth/sign-in/sign-in';
 import PageNotFound from './pages/_404';
-// import UserInvitation from './components/forms/user-invitation/new-invitation/user-invitation';
 import CreateNewTenant from './components/forms/tenant/create-new-tenant';
 import CreateUser from './components/forms/user/create-user/create-user';
 import ResetPassword from './components/forms/user/reset-password/reset-password';
