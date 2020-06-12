@@ -1,4 +1,5 @@
-const Crypto = require('crypto-js');
+// const Crypto = require('crypto-js');
+import Crypto from 'crypto-js';
 
 export default class Signature {
   static getSignature(config, date, policyBase64) {
