@@ -1,4 +1,7 @@
-import { GET_SUPPLIER_RFP, SET_CURRENT_SUPPLIER_RFP, FIND_SUPPLIER_EVENT_BY_ID } from '../types/supplierRfpTypes';
+import {
+  GET_SUPPLIER_RFP, SET_CURRENT_SUPPLIER_RFP,
+  FIND_SUPPLIER_EVENT_BY_ID, GET_SUPPLIER_RFP_BY_ID, CLEAR_CURRENT_RFP,
+} from '../types/supplierRfpTypes';
 
 const initialState = {
   loading: false,
@@ -20,6 +23,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         proposals: action.payload.proposals,
+        currentProposal: null,
         meta: action.payload.meta,
       };
     }
@@ -38,6 +42,19 @@ export default (state = initialState, action) => {
       };
     }
 
+    case GET_SUPPLIER_RFP_BY_ID: {
+      return {
+        ...state,
+        currentProposal: { ...action.payload },
+      };
+    }
+
+    case CLEAR_CURRENT_RFP: {
+      return {
+        ...state,
+        currentProposal: null,
+      };
+    }
     default: {
       return null;
     }

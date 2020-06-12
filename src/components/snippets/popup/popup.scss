@@ -3,7 +3,12 @@
   font-size: 0.9rem;
 }
 
-.ui.popup .popup-wrapper .popup-header {
+.ui.popup.popup-wrapper {
+  color: var(--kt-dark);
+  max-width: max-content;
+}
+
+.ui.popup.popup-wrapper .popup-header {
   // background: var(--kotage-light);
   border-bottom: 1px solid #DFDFDF;
   color: var(--kt-dark);
@@ -13,7 +18,7 @@
 
 .ui.popup .popup-body {
   background: var(--kt-white);
-  padding: 20px;
+  // padding: 20px;
 }
 
 .ui.popup .popup-body p {

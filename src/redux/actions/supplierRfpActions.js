@@ -1,7 +1,8 @@
 /* eslint-disable camelcase */
 import Axios from '../../utils/axios/axios';
 import {
-  GET_SUPPLIER_RFP, CREATE_BID_RESPONSE, SET_CURRENT_SUPPLIER_RFP, FIND_SUPPLIER_EVENT_BY_ID,
+  GET_SUPPLIER_RFP, CREATE_BID_RESPONSE, SET_CURRENT_SUPPLIER_RFP, GET_SUPPLIER_RFP_BY_ID,
+  FIND_SUPPLIER_EVENT_BY_ID, CLEAR_CURRENT_RFP,
 } from '../types/supplierRfpTypes';
 
 import { deserializeProposal } from '../../serializers/supplier-rfp-serializer';
@@ -55,6 +56,10 @@ export const setCurrentSupplierRfp = (rfp) => async (dispatch) => {
 export const findSupplierEventByID = (id) => async (dispatch, getState) => (
   new Promise((resolve, reject) => {
     try {
+      // clear the current proposal to remove the cache
+      dispatch({
+        type: CLEAR_CURRENT_RFP,
+      });
       const { supplierRfp: { proposals } } = getState();
       const foundProposal = proposals.find((p) => p.id === parseInt(id, 10));
       if (foundProposal) {
@@ -65,6 +70,28 @@ export const findSupplierEventByID = (id) => async (dispatch, getState) => (
         resolve(foundProposal);
       } else resolve(null);
     } catch (error) {
+      reject(error);
+    }
+  })
+);
+
+export const getSupplierRfpByID = (id) => async (dispatch, getState) => (
+  new Promise((resolve, reject) => {
+    try {
+      const { user, tenant: { currentTenant } } = getState();
+      const promise = Axios
+        .get(`/v1/${user.currentUser.tenant_id}/events/rfp?proposal_request_id=${id}&tenant_id=${currentTenant.id}`);
+      promise.then((data) => {
+        const { data: { proposal_request } } = data;
+        dispatch({
+          type: GET_SUPPLIER_RFP_BY_ID,
+          payload: deserializeProposal(proposal_request),
+        });
+        resolve(proposal_request);
+      });
+    } catch (error) {
+      console.log('error here');
+      // do something here
       reject(error);
     }
   })

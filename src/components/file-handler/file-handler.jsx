@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 /* eslint-disable react/boolean-prop-naming */
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/forbid-prop-types */
@@ -6,9 +7,11 @@ import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
 import { Button } from 'semantic-ui-react';
 import AttachmentIcon from '@material-ui/icons/Attachment';
+import { withRouter } from 'react-router';
 import { getFileSignedUrl, prepareFileForDownload, downloadMultipleZip } from '../../utils/app/file';
 import KtFileItem from '../snippets/kt-file-item/kt-file-item';
 import KtLoader from '../loader/loader';
+import { setNotification } from '../../redux/actions/appActions';
 
 
 class FileHandler extends Component {
@@ -29,7 +32,7 @@ class FileHandler extends Component {
     }
   }
 
-signUrl = () => {
+signUrl = async () => {
   const { files, tenantID, objectOwnerID } = this.props;
   let promises = [];
   for (const file of files) {
@@ -37,19 +40,39 @@ signUrl = () => {
     promises = [...promises, url];
   }
 
-  Promise.all(promises)
-    .then((results) => {
-      this.setState((state) => ({
-        ...state,
-        signedUrls: results,
-      }));
-      const { signedUrls } = this.state;
-      this.downloadFiles(signedUrls);
-    })
-    .catch((error) => console.log('error in the promise', error));
+  try {
+    const results = await Promise.all(promises);
+    this.setState((state) => ({
+      ...state,
+      signedUrls: results,
+    }));
+    const { signedUrls } = this.state;
+    this.downloadFiles(signedUrls);
+  } catch (error) {
+    if (error.response) {
+      const { response: { data: { invalid_token } } } = error;
+      if (invalid_token) {
+        // eslint-disable-next-line react/prop-types
+        this.props.history.push('/auth/signin');
+      } else {
+        setNotification(error, 'error');
+      }
+    }
+  }
+
+  // Promise.all(promises)
+  // .then((results) => {
+  //   this.setState((state) => ({
+  //     ...state,
+  //     signedUrls: results,
+  //   }));
+  //   const { signedUrls } = this.state;
+  //   this.downloadFiles(signedUrls);
+  // })
+  // .catch((error) => console.log('error in the promise', error));
 };
 
-downloadFiles = (urls) => {
+downloadFiles = async (urls) => {
   let promises = [];
   for (const url of urls) {
     const file = prepareFileForDownload(url);
@@ -71,7 +94,8 @@ downloadFiles = (urls) => {
           ...state,
           files: [...state.files, file],
         }));
-      });
+      })
+      .catch(() => console.log('err'));
   }
 };
 
@@ -130,4 +154,4 @@ FileHandler.defaultProps = {
   shouldSignUrl: false,
 };
 
-export default FileHandler;
+export default withRouter(FileHandler);

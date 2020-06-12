@@ -1,11 +1,13 @@
 /* eslint-disable react/forbid-prop-types */
 /* eslint-disable camelcase */
 import React, { useState, useEffect } from 'react';
-import { Button, Table } from 'semantic-ui-react';
+import {
+  Button, Table, Form, Radio,
+} from 'semantic-ui-react';
 import {
   format, formatDistance,
 } from 'date-fns';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useHistory } from 'react-router-dom';
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import MessageIcon from '@material-ui/icons/MailOutline';
 import BookmarkBorderIcon from '@material-ui/icons/BookmarkBorder';
@@ -18,18 +20,44 @@ import Divider from '../../kt-divider/divider';
 import RfpTitle from '../supplier-rfp-title/rfp-title';
 import KtDetailsCaption from '../../kt-details-caption/kt-details-caption';
 import { ReactComponent as Bullet } from '../../../svg/menu.svg';
-import { findSupplierEventByID } from '../../../redux/actions/supplierRfpActions';
+import { findSupplierEventByID, getSupplierRfpByID } from '../../../redux/actions/supplierRfpActions';
 import ParseHtml from '../../snippets/parse-html/parse-html';
 import FileHandler from '../../file-handler/file-handler';
+import PopupDropdown from '../../snippets/popup/popup';
+import { setNotification } from '../../../redux/actions/appActions';
 
-const SupplierRfxDashboard = ({ findSupplierRfp, currentTenant }) => {
+const SupplierRfxDashboard = ({
+  currentProposal, findSupplierRfp, refreshSupplierRfp, currentTenant,
+}) => {
   const params = useParams();
-  const [currentProposal, setCurrentProposal] = useState(null);
+  // const [currentProposal, setCurrentProposal] = useState(null);
+  const history = useHistory();
 
+  const findSupplierRfpByID = async () => {
+    await findSupplierRfp(params.id);
+  };
+
+  const refresh = async () => {
+    try {
+      await refreshSupplierRfp(params.id);
+    } catch (error) {
+      console.log('got error');
+      if (error.response) {
+        const { response: { data: { invalid_token } } } = error;
+        if (invalid_token) {
+          history.push('/auth/signin');
+        } else {
+          setNotification(error, 'error');
+        }
+      }
+    }
+  };
   useEffect(() => {
-    findSupplierRfp(params.id)
-      .then((proposal) => setCurrentProposal(proposal));
+    findSupplierRfpByID();
+    refresh();
   }, [params]);
+
+  const [willParticipate, setParticipation] = useState(false);
 
   return (
 	<MainContent
@@ -40,12 +68,58 @@ const SupplierRfxDashboard = ({ findSupplierRfp, currentTenant }) => {
 				<RfpTitle classes="m-t-20" />
 				<div className="flex-center">
 					<div className="m-r-15">
-						<Button
-							icon={<BookmarkBorderIcon className="kt-primary logo" />}
-							small
-							content="Acknowledge participation"
-							className="kt-sucess kt-transparent kt-primary tiny flex flex-center"
-						/>
+						<PopupDropdown
+							position="bottom center"
+							classes="popup-wrapper"
+							trigger={(
+								<Button
+									icon={<BookmarkBorderIcon className="kt-primary logo" />}
+									small
+									content="Acknowledge participation"
+									className="kt-sucess kt-transparent kt-primary tiny flex flex-center"
+								/>
+							)}
+						>
+							<p className="bold m-t-10 popup-header">Will you participate in this bid?</p>
+							<div className="m-t-0 popup-body">
+								<div className="p-l-20">
+									<Form>
+										<Form.Field>
+											<Radio
+												label="Yes"
+												name="radioGroup"
+												value="yes"
+												checked={willParticipate}
+												onChange={() => setParticipation(!willParticipate)}
+											/>
+										</Form.Field>
+										<Form.Field>
+											<Radio
+												label="No"
+												name="radioGroup"
+												value="no"
+												checked={!willParticipate}
+												onChange={() => setParticipation(!willParticipate)}
+											/>
+										</Form.Field>
+									</Form>
+								</div>
+							</div>
+							<div className="m-t-20 flex-center">
+								<Button
+									basic
+									size="tiny"
+									fluid
+									content="Cancel"
+								/>
+								<Button
+									size="tiny"
+									fluid
+									positive
+									content="Send"
+								/>
+							</div>
+						</PopupDropdown>
 					</div>
 					<div className="m-r-15">
 						<Button
@@ -158,11 +232,14 @@ const SupplierRfxDashboard = ({ findSupplierRfp, currentTenant }) => {
 				>
 					<Divider type="thick" title="Rfp Attachments" />
 					<div className="m-t-20">
-						<FileHandler
-							files={currentProposal.files}
-							tenantID={currentTenant.tenant_id}
-							objectOwnerID={currentProposal.id}
-						/>
+						{currentProposal.files && (
+							<FileHandler
+								files={currentProposal.files}
+								tenantID={currentTenant.id}
+								objectOwnerID={currentProposal.id}
+								shouldSignUrl
+							/>
+						)}
 					</div>
 				</KtWrapperLite>
 				<div className="m-t-20 flex-center">
@@ -191,14 +268,18 @@ const SupplierRfxDashboard = ({ findSupplierRfp, currentTenant }) => {
 SupplierRfxDashboard.propTypes = {
   findSupplierRfp: PropTypes.func.isRequired,
   currentTenant: PropTypes.object.isRequired,
+  refreshSupplierRfp: PropTypes.func.isRequired,
+  currentProposal: PropTypes.object.isRequired,
 };
 
 const mapDispatchToProps = {
   findSupplierRfp: findSupplierEventByID,
+  refreshSupplierRfp: getSupplierRfpByID,
 };
 
 const mapStateToProps = (state) => ({
   currentTenant: state.tenant.currentTenant,
+  currentProposal: state.supplierRfp.currentProposal,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SupplierRfxDashboard);

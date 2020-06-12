@@ -134,14 +134,12 @@ export const prepareFileForDownloadSync = async (fileUrl) => {
 export const getFileSignedUrl = (url, tenant_id, objectOwnerId) => {
   const AxiosInstance = Axios.create({ headers: { Authorization: getToken() } });
   return new Promise((resolve, reject) => {
-    try {
-      AxiosInstance.post(`${process.env.REACT_APP_apiHost}/${process.env.REACT_APP_apiNamespace}/v1/
-        ${tenant_id}/rfp/${objectOwnerId}/file_presigned`, {
+    AxiosInstance
+      .post(`${process.env.REACT_APP_apiHost}/${process
+        .env.REACT_APP_apiNamespace}/v1/${tenant_id}/rfp/${objectOwnerId}/file_presigned`, {
         filename: getFullFilePath(url),
-      }).then((data) => resolve(data.data));
-    } catch (error) {
-      reject(error);
-    }
+      }).then((data) => resolve(data.data))
+      .catch((error) => reject(error));
   });
 };
 
