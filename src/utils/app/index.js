@@ -157,13 +157,14 @@ export const getNameFromFileName = (fileName) => {
 
 const uploadToS3 = (file, tenant_uid, item_id, folderName) => new Promise((resolve, reject) => {
   if (folderName !== null && folderName !== '' && folderName !== undefined) {
-    import('react-s3').then((reactS3) => {
+    import('../../react-s3/ReactS3').then((reactS3) => {
       const config = {
         bucketName: process.env.REACT_APP_bucketName,
         dirName: `kotage/${tenant_uid}/${folderName}/${item_id}`,
         region: process.env.REACT_APP_awsRegion,
         accessKeyId: process.env.REACT_APP_awsAccessKeyId,
         secretAccessKey: process.env.REACT_APP_awsSecretAccessKey,
+        newFileName: file.data.name.replace(/\s/g, '_'),
         meta: {
           owner: tenant_uid,
         },
