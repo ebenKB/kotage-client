@@ -36,11 +36,11 @@ const KtFileItem = ({ fileObject, user }) => {
 
   const getFileTitle = () => (
 	<span>
-		{fileObject && fileObject.fileName}
+		{fileObject && `${fileObject.fileName.substring(0, 9)}...`}
     &nbsp;
 		<span className="xsm bold">
 			<span>(</span>
-			<span>{ fileObject && fileObject.fileSize}</span>
+			<span>{fileObject && fileObject.fileSize}</span>
 			<span>)</span>
 		</span>
 	</span>
