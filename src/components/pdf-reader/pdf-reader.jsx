@@ -63,7 +63,7 @@ class PdfReader extends Component {
 
     const { scale, pageNumber, numPages } = this.state;
     const {
-      fileObject, user, handleCloseAction,
+      fileObject, user, handleCloseAction, details,
     } = this.props;
 
     return (
@@ -78,6 +78,7 @@ class PdfReader extends Component {
 			handleZoomOut={this.zoomout}
 			handleZoomIn={this.zoomin}
 			handleFitScreen={this.fitToScreen}
+			details={details}
 		>
 			<Document
 				file={fileObject.staticUrl}

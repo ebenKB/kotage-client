@@ -20,7 +20,8 @@ import {
 } from '../../../utils/app/fileTypes';
 
 
-const KtFileItem = ({ fileObject, user }) => {
+// eslint-disable-next-line react/prop-types
+const KtFileItem = ({ fileObject, details, user }) => {
   const [canPreview, setCanPreview] = useState(false);
 
   const getDownloadLink = () => (
@@ -80,6 +81,7 @@ const KtFileItem = ({ fileObject, user }) => {
       return (
 	<PdfReader
 		fileObject={fileObject}
+		details={details}
 		user={user}
 		handleCloseAction={() => setCanPreview(false)}
 	/>
@@ -88,6 +90,7 @@ const KtFileItem = ({ fileObject, user }) => {
     return (
 	<ImageReader
 		fileObject={fileObject}
+		details={details}
 		user={user}
 		handleCloseAction={() => setCanPreview(false)}
 	/>

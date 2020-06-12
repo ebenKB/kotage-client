@@ -10,11 +10,11 @@ import AddBoxIcon from '@material-ui/icons/AddBox';
 import MinusIcon from '@material-ui/icons/IndeterminateCheckBox';
 import FullscreenIcon from '@material-ui/icons/Fullscreen';
 import Input from '../form-fields/input/input';
-import MessageHeaderCaption from '../snippets/message-header-caption/message-header-caption';
+// import MessageHeaderCaption from '../snippets/message-header-caption/message-header-caption';
 import { getFileNameAndExtension } from '../../utils/app/file';
 
 const FilePreview = ({
-  type, fileObject, user, handleCloseAction, children, ...rest
+  type, fileObject, user, handleCloseAction, details, children, ...rest
 }) => {
   const showAdvancedControls = () => {
     if (type === 'pdf') {
@@ -105,9 +105,10 @@ const FilePreview = ({
 					{children}
 				</div>
 				<div className="kt-bg-shadow preview-controls">
-					<MessageHeaderCaption
+					{/* <MessageHeaderCaption
 						user={user}
-					/>
+					/> */}
+					{details}
 					<Divider type="faint" />
 				</div>
 			</div>

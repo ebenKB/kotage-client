@@ -105,6 +105,8 @@ downloadAllFiles = () => {
 
 render() {
   const { files, signedUrls } = this.state;
+  // eslint-disable-next-line react/prop-types
+  const { details } = this.props;
   return (
 	<>
 		<div className="flex-center">
@@ -114,6 +116,7 @@ render() {
 			{files.map((file) => (
 				<KtFileItem
 					fileObject={file}
+					details={details}
 				/>
 			))}
 		</div>

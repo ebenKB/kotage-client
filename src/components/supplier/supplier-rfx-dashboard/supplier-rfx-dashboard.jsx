@@ -234,6 +234,7 @@ const SupplierRfxDashboard = ({
 					<div className="m-t-20">
 						{currentProposal.files && (
 							<FileHandler
+								details={<RfpTitle />}
 								files={currentProposal.files}
 								tenantID={currentTenant.id}
 								objectOwnerID={currentProposal.id}
