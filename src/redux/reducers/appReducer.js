@@ -55,18 +55,6 @@ export default (state = initialState, action) => {
       };
     }
 
-    // case 'persist/REHYDRATE': {
-    //   if (action.payload) {
-    //     const { app } = action.payload;
-    //     return {
-    //       ...app,
-    //     };
-    //   }
-    //   return {
-    //     ...state,
-    //   };
-    // }
-
     default: {
       return state;
     }

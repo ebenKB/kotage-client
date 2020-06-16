@@ -4,7 +4,8 @@ import React from 'react';
 import { Button } from 'semantic-ui-react';
 import './notification.scss';
 import { connect } from 'react-redux';
-import { ReactComponent as Icon } from '../../svg/cancel-white.svg';
+import CloseIcon from '@material-ui/icons/HighlightOff';
+// import { ReactComponent as Icon } from '../../svg/cancel-white.svg';
 import { clearNotification } from '../../redux/actions/appActions';
 import { pretifyMessage } from '../../utils/app/index';
 
@@ -38,7 +39,8 @@ class Notification extends React.Component {
 		</span>
 		{type !== 'minimal' && (
 			<Button size="tiny" onClick={this.clearNotification} className="kt-transparent">
-				<Icon className="small logo" />
+				{/* <Icon className="small logo" /> */}
+				<CloseIcon className="logo" />
 			</Button>
 		)}
 	</div>
