@@ -1,8 +1,16 @@
 /* eslint-disable camelcase */
 import Axios from '../../utils/axios/axios';
 import {
-  GET_SUPPLIER_RFP, CREATE_BID_RESPONSE, SET_CURRENT_SUPPLIER_RFP, GET_SUPPLIER_RFP_BY_ID,
-  FIND_SUPPLIER_EVENT_BY_ID, CLEAR_CURRENT_RFP,
+  GET_SUPPLIER_RFP,
+  CREATE_BID_RESPONSE,
+  SET_CURRENT_SUPPLIER_RFP,
+  GET_SUPPLIER_RFP_BY_ID,
+  FIND_SUPPLIER_EVENT_BY_ID,
+  CLEAR_CURRENT_RFP,
+  CONFIRM_RSVP,
+  REVOKE_RSVP,
+  ACCEPT_RFP_TERMS,
+  CHECK_SUPPLIER_CLAIMS,
 } from '../types/supplierRfpTypes';
 
 import { deserializeProposal } from '../../serializers/supplier-rfp-serializer';
@@ -96,3 +104,58 @@ export const getSupplierRfpByID = (id) => async (dispatch, getState) => (
     }
   })
 );
+
+/**
+ * allow suppliers to confirm their RSVP on proposals that they have been invited to.
+ */
+export const confirmRSVP = (status) => async (dispatch, getState) => {
+  try {
+    const { tenant: { currentTenant: { id } }, supplierRfp: { currentProposal } } = getState();
+    const { tenant } = currentProposal;
+    await Axios
+      .post(`/v1/${id}/claims/rfp?proposal_request_id=${currentProposal.id}&event_owner_id=${tenant.id}`);
+    if (status) {
+      dispatch({
+        type: CONFIRM_RSVP,
+      });
+    } else {
+      dispatch({
+        type: REVOKE_RSVP,
+      });
+    }
+  } catch (error) {
+    console.log('An error ocurred while sending the rsvp', error);
+  }
+};
+
+export const acceptRfpTerms = (status) => async (dispatch, getState) => {
+  try {
+    const { tenant: { currentTenant: { id } }, supplierRfp: { currentProposal } } = getState();
+    const { tenant } = currentProposal;
+    await Axios
+      .post(`/v1/${id}/claims/rfp?proposal_request_id=${currentProposal.id}&event_owner_id=${tenant.id}`,
+        { agreed_to_participate: status });
+    dispatch({
+      type: ACCEPT_RFP_TERMS,
+    });
+  } catch (error) {
+    console.log('An error ocurred while sending the rsvp', error);
+  }
+};
+
+// check whether the supply has send an RSVP or has agreed to the terms and conditions of the bid
+export const checkSupplierRfpClaims = () => async (dispatch, getState) => {
+  try {
+    const { tenant: { currentTenant: { id } }, supplierRfp: { currentProposal } } = getState();
+    const { tenant } = currentProposal;
+    const { data } = await Axios
+      .get(`/v1/${id}/claims/rfp?proposal_request_id=${currentProposal.id}&event_owner_id=${tenant.id}`);
+    console.log('This is the data', data);
+    dispatch({
+      type: CHECK_SUPPLIER_CLAIMS,
+      payload: data.rfp_claim,
+    });
+  } catch (error) {
+    console.log('An error ocurred while sending the rsvp', error);
+  }
+};

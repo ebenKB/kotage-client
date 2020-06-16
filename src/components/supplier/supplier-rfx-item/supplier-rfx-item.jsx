@@ -36,13 +36,13 @@ const RfpItem = ({ proposal, type }) => {
 				<div className="sm-caption">
 					From
 					<span>&nbsp;</span>
-					<span className="bold">{proposal.tenant.company_name}</span>
+					<span className="bold">{proposal.tenant.company_name.toUpperCase()}</span>
 					<div>
 						<span>
 							The deadline for sending your bid response is
 							{' '}
 						</span>
-						<span className="kt-danger">{getDate()}</span>
+						<span className="bold">{getDate()}</span>
 					</div>
 				</div>
 			</div>

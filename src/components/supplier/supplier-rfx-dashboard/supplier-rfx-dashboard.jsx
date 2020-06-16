@@ -20,28 +20,36 @@ import Divider from '../../kt-divider/divider';
 import RfpTitle from '../supplier-rfp-title/rfp-title';
 import KtDetailsCaption from '../../kt-details-caption/kt-details-caption';
 import { ReactComponent as Bullet } from '../../../svg/menu.svg';
-import { findSupplierEventByID, getSupplierRfpByID } from '../../../redux/actions/supplierRfpActions';
+import {
+  findSupplierEventByID, getSupplierRfpByID, confirmRSVP, checkSupplierRfpClaims,
+} from '../../../redux/actions/supplierRfpActions';
 import ParseHtml from '../../snippets/parse-html/parse-html';
 import FileHandler from '../../file-handler/file-handler';
 import PopupDropdown from '../../snippets/popup/popup';
 import { setNotification } from '../../../redux/actions/appActions';
 
 const SupplierRfxDashboard = ({
-  currentProposal, findSupplierRfp, refreshSupplierRfp, currentTenant,
+  currentTenant,
+  respondToRSVP,
+  currentProposal,
+  findSupplierRfp,
+  refreshSupplierRfp,
+  checkSupplierStatus,
 }) => {
   const params = useParams();
-  // const [currentProposal, setCurrentProposal] = useState(null);
   const history = useHistory();
+  const [willParticipate, setParticipation] = useState(null);
 
   const findSupplierRfpByID = async () => {
-    await findSupplierRfp(params.id);
+    const proposal = await findSupplierRfp(params.id);
+    setParticipation(proposal.hasConfirmedRSVP);
   };
 
   const refresh = async () => {
     try {
       await refreshSupplierRfp(params.id);
+      await checkSupplierStatus();
     } catch (error) {
-      console.log('got error');
       if (error.response) {
         const { response: { data: { invalid_token } } } = error;
         if (invalid_token) {
@@ -52,12 +60,26 @@ const SupplierRfxDashboard = ({
       }
     }
   };
+
   useEffect(() => {
     findSupplierRfpByID();
     refresh();
   }, [params]);
 
-  const [willParticipate, setParticipation] = useState(false);
+  const canRSVP = () => {
+    const today = new Date();
+    const date = new Date(2020, 5, 16);
+    if (date - today > 0) {
+      return true;
+    }
+    return false;
+  };
+
+  const confirmParticipation = () => {
+    if (canRSVP) {
+      respondToRSVP(willParticipate);
+    }
+  };
 
   return (
 	<MainContent
@@ -77,6 +99,7 @@ const SupplierRfxDashboard = ({
 									small
 									content="Acknowledge participation"
 									className="kt-sucess kt-transparent kt-primary tiny flex flex-center"
+									disabled={currentProposal.hasConfirmedRSVP}
 								/>
 							)}
 						>
@@ -111,23 +134,28 @@ const SupplierRfxDashboard = ({
 									size="tiny"
 									fluid
 									content="Cancel"
+									onClick={() => console.log('We want to cancle')}
 								/>
 								<Button
 									size="tiny"
 									fluid
 									positive
 									content="Send"
+									onClick={confirmParticipation}
 								/>
 							</div>
 						</PopupDropdown>
 					</div>
 					<div className="m-r-15">
-						<Button
-							icon={<BookmarkBorderIcon className="kt-primary logo" />}
-							small
-							content="Accept Terms and Conditions"
-							className="kt-sucess kt-transparent kt-primary tiny flex flex-center"
-						/>
+						<Link to={`/supplier/rfp/${currentProposal.id}/terms-and-conditions`}>
+							<Button
+								icon={<BookmarkBorderIcon className="kt-primary logo" />}
+								small
+								content="Accept Terms and Conditions"
+								className="kt-sucess kt-transparent kt-primary tiny flex flex-center"
+								disabled={currentProposal.hasAcceptedTerms}
+							/>
+						</Link>
 					</div>
 					<Link to="/supplier/rfx/:id/message">
 						<Button
@@ -271,11 +299,15 @@ SupplierRfxDashboard.propTypes = {
   currentTenant: PropTypes.object.isRequired,
   refreshSupplierRfp: PropTypes.func.isRequired,
   currentProposal: PropTypes.object.isRequired,
+  respondToRSVP: PropTypes.func.isRequired,
+  checkSupplierStatus: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = {
   findSupplierRfp: findSupplierEventByID,
   refreshSupplierRfp: getSupplierRfpByID,
+  respondToRSVP: confirmRSVP,
+  checkSupplierStatus: checkSupplierRfpClaims,
 };
 
 const mapStateToProps = (state) => ({

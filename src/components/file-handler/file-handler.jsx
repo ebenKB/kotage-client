@@ -8,10 +8,11 @@ import { PropTypes } from 'prop-types';
 import { Button } from 'semantic-ui-react';
 import AttachmentIcon from '@material-ui/icons/Attachment';
 import { withRouter } from 'react-router';
+import { connect } from 'react-redux';
 import { getFileSignedUrl, prepareFileForDownload, downloadMultipleZip } from '../../utils/app/file';
 import KtFileItem from '../snippets/kt-file-item/kt-file-item';
 import KtLoader from '../loader/loader';
-import { setNotification } from '../../redux/actions/appActions';
+import { setNotification, downloadFile } from '../../redux/actions/appActions';
 
 
 class FileHandler extends Component {
@@ -47,7 +48,7 @@ signUrl = async () => {
       signedUrls: results,
     }));
     const { signedUrls } = this.state;
-    this.downloadFiles(signedUrls);
+    await this.downloadFiles(signedUrls);
   } catch (error) {
     if (error.response) {
       const { response: { data: { invalid_token } } } = error;
@@ -75,6 +76,7 @@ signUrl = async () => {
 downloadFiles = async (urls) => {
   let promises = [];
   for (const url of urls) {
+    console.log('This is the url we are using to download the files', url);
     const file = prepareFileForDownload(url);
     file.file_url = url;
     promises = [...promises, file];
@@ -157,4 +159,8 @@ FileHandler.defaultProps = {
   shouldSignUrl: false,
 };
 
-export default withRouter(FileHandler);
+const mapDispatchToProps = {
+  downloadFileAsBlob: downloadFile,
+};
+
+export default connect(null, mapDispatchToProps)(withRouter(FileHandler));

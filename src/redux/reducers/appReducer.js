@@ -3,12 +3,14 @@ import {
   CLEAR_NOTIFICATION,
   GET_CURRENCY_OPTIONS,
   SET_ACCOUNT_TYPE,
+  CACHE_FILE_BLOB,
 } from '../types/appTypes';
 
 const initialState = {
   accountType: null,
   notification: null,
   currencyOptions: null,
+  files: [],
 };
 
 export default (state = initialState, action) => {
@@ -45,6 +47,13 @@ export default (state = initialState, action) => {
           message: errorMessage,
           type: action.payload.type,
         },
+      };
+    }
+
+    case CACHE_FILE_BLOB: {
+      return {
+        ...state,
+        files: [...state.files, action.payload],
       };
     }
 

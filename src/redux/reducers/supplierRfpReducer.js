@@ -1,6 +1,12 @@
 import {
-  GET_SUPPLIER_RFP, SET_CURRENT_SUPPLIER_RFP,
-  FIND_SUPPLIER_EVENT_BY_ID, GET_SUPPLIER_RFP_BY_ID, CLEAR_CURRENT_RFP,
+  GET_SUPPLIER_RFP,
+  SET_CURRENT_SUPPLIER_RFP,
+  FIND_SUPPLIER_EVENT_BY_ID,
+  GET_SUPPLIER_RFP_BY_ID,
+  CLEAR_CURRENT_RFP,
+  CONFIRM_RSVP,
+  REVOKE_RSVP,
+  CHECK_SUPPLIER_CLAIMS,
 } from '../types/supplierRfpTypes';
 
 const initialState = {
@@ -15,6 +21,7 @@ const initialState = {
   rfpInboxMeta: null,
   meta: null,
   currentPage: 1,
+  bidResponseDraft: null,
 };
 
 export default (state = initialState, action) => {
@@ -55,8 +62,44 @@ export default (state = initialState, action) => {
         currentProposal: null,
       };
     }
+
+    case CONFIRM_RSVP: {
+      return {
+        ...state,
+        currentProposal: {
+          ...state.currentProposal,
+          hasConfirmedRSVP: true,
+        },
+      };
+    }
+    case CHECK_SUPPLIER_CLAIMS: {
+      const data = action.payload;
+      const proposal = state.currentProposal;
+      if (data.agreed_to_participate) {
+        proposal.hasAcceptedTerms = true;
+        console.log('set to true');
+      }
+      if (data.claimed) {
+        proposal.hasConfirmedRSVP = true;
+        console.log('set rsvp to true');
+      }
+      return {
+        ...state,
+        currentProposal: { ...proposal },
+      };
+    }
+
+    case REVOKE_RSVP: {
+      return {
+        ...state,
+        currentProposal: {
+          ...state.currentProposal,
+          hasConfirmedRSVP: false,
+        },
+      };
+    }
     default: {
-      return null;
+      return { ...state };
     }
   }
 };

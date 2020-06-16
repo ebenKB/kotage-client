@@ -1,9 +1,16 @@
 /* eslint-disable import/prefer-default-export */
+import RawAxios from 'axios';
 import Axios from '../../utils/axios/axios';
+
 import {
-  CLEAR_NOTIFICATION, SET_APP_NOTIFICATION, GET_CURRENCY_OPTIONS, SET_ACCOUNT_TYPE,
+  CLEAR_NOTIFICATION,
+  SET_APP_NOTIFICATION,
+  GET_CURRENCY_OPTIONS,
+  SET_ACCOUNT_TYPE,
+  CACHE_FILE_BLOB,
 } from '../types/appTypes';
-// import { getFullFilePath } from '../../utils/app/file';
+
+import { createStaticFileUrl, getFileNameAndExtension, getFileSize } from '../../utils/app/file';
 
 // clear notification from the app state
 export const clearNotification = () => async (dispatch) => new Promise((resolve) => {
@@ -51,18 +58,39 @@ export const setAccountType = (type) => async (dispatch) => {
   });
 };
 
-// export const downloadFile = (url) => (dispatch) => new Promise((resolve) => {
-//   Axios({
-//     url,
-//     method: 'GET',
-//     responseType: 'blob',
-//   })
-//     .then((response) => {
-//       resolve(response);
-//       dispatch({ type: DOWNLOAD_FILE });
-//     })
-//     .catch((err) => console.log('an error occured while', err));
-// });
+export const cacheFileBlob = (file) => async (dispatch) => {
+  dispatch({
+    type: CACHE_FILE_BLOB,
+    payload: file,
+  });
+};
+
+export const downloadFile = (url) => async (dispatch) => new Promise((resolve, reject) => {
+  console.log('downloading the file', url);
+  RawAxios({
+    url,
+    method: 'GET',
+    responseType: 'blob',
+  })
+    .then((response) => {
+      const fileData = {
+        staticUrl: createStaticFileUrl(response.data),
+        remoteUrl: url,
+        fileName: getFileNameAndExtension(url),
+        fileSize: getFileSize(response.data.size),
+        fileType: response.data.type,
+        data: response.data,
+      };
+      resolve(fileData);
+      dispatch({
+        type: CACHE_FILE_BLOB,
+        payload: fileData,
+      });
+    })
+    .catch((err) => {
+      reject(err);
+    });
+});
 
 // export const getFileSignedUrl = (url, objectOwnerId) => async (dispatch, getState) => new
 // Promise(() => {

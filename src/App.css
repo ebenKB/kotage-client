@@ -256,12 +256,12 @@ svg.faint {
 }
 
 .flex-center {
-  display: flex;
+  display: flex !important;
   align-items: center;
 }
 
 .flex-inline {
-  display: flex;
+  display: flex !important;
   justify-content: space-between;
 }
 

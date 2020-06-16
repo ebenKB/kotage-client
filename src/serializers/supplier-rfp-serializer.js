@@ -25,6 +25,7 @@ export const deserializeProposal = (proposal) => {
       file: req.file,
     }))),
     tenant: (proposal.tenant && {
+      id: proposal.tenant.id,
       company_name: proposal.tenant.company_name,
       email: proposal.tenant.email,
     }),
@@ -41,6 +42,8 @@ export const deserializeProposal = (proposal) => {
         id: question.id,
         question: question.question,
       }))),
+    hasConfirmedRSVP: proposal.hasConfirmedRSVP !== undefined ? proposal.hasConfirmedRSVP : false,
+    hasAcceptedTerms: proposal.hasAcceptedTerms !== undefined ? proposal.hasAcceptedTerms : false,
   };
   return newProposal;
 };
