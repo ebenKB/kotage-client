@@ -38,6 +38,7 @@ const SupplierRfxDashboard = ({
 }) => {
   const params = useParams();
   const history = useHistory();
+  const [hasInit, setInit] = useState(false);
   const [willParticipate, setParticipation] = useState(null);
 
   const findSupplierRfpByID = async () => {
@@ -62,9 +63,14 @@ const SupplierRfxDashboard = ({
   };
 
   useEffect(() => {
-    findSupplierRfpByID();
-    refresh();
-  }, [params]);
+    if (!hasInit) {
+      findSupplierRfpByID();
+      refresh();
+      setInit(true);
+    } else {
+      setParticipation(currentProposal.hasConfirmedRSVP);
+    }
+  }, [params, currentProposal]);
 
   const canRSVP = () => {
     const today = new Date();
@@ -99,7 +105,6 @@ const SupplierRfxDashboard = ({
 									small
 									content="Acknowledge participation"
 									className="kt-sucess kt-transparent kt-primary tiny flex flex-center"
-									disabled={currentProposal.hasConfirmedRSVP}
 								/>
 							)}
 						>

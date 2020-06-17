@@ -9,10 +9,10 @@ import { Button } from 'semantic-ui-react';
 import AttachmentIcon from '@material-ui/icons/Attachment';
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
-import { getFileSignedUrl, prepareFileForDownload, downloadMultipleZip } from '../../utils/app/file';
+import { getFileSignedUrl, downloadMultipleZip } from '../../utils/app/file';
 import KtFileItem from '../snippets/kt-file-item/kt-file-item';
 import KtLoader from '../loader/loader';
-import { setNotification, downloadFile } from '../../redux/actions/appActions';
+import { setNotification, downloadFile, cacheFileBlob } from '../../redux/actions/appActions';
 
 
 class FileHandler extends Component {
@@ -76,8 +76,9 @@ signUrl = async () => {
 downloadFiles = async (urls) => {
   let promises = [];
   for (const url of urls) {
-    console.log('This is the url we are using to download the files', url);
-    const file = prepareFileForDownload(url);
+    // const file = prepareFileForDownload(url);
+    // eslint-disable-next-line react/prop-types
+    const file = this.props.downloadFileAsBlob(url);
     file.file_url = url;
     promises = [...promises, file];
   }
@@ -96,6 +97,7 @@ downloadFiles = async (urls) => {
           ...state,
           files: [...state.files, file],
         }));
+        // this.props.saveFileAsCache(file);
       })
       .catch(() => console.log('err'));
   }
@@ -153,6 +155,7 @@ FileHandler.propTypes = {
   shouldSignUrl: PropTypes.bool,
   tenantID: PropTypes.string.isRequired,
   objectOwnerID: PropTypes.string.isRequired,
+  // saveFileAsCache: PropTypes.func.isRequired,
 };
 
 FileHandler.defaultProps = {
@@ -161,6 +164,7 @@ FileHandler.defaultProps = {
 
 const mapDispatchToProps = {
   downloadFileAsBlob: downloadFile,
+  saveFileAsCache: cacheFileBlob,
 };
 
 export default connect(null, mapDispatchToProps)(withRouter(FileHandler));

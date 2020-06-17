@@ -58,38 +58,48 @@ export const setAccountType = (type) => async (dispatch) => {
   });
 };
 
-export const cacheFileBlob = (file) => async (dispatch) => {
-  dispatch({
-    type: CACHE_FILE_BLOB,
-    payload: file,
-  });
+export const cacheFileBlob = (file) => async (dispatch, getState) => {
+  // check if the file is not already cached
+  const { app: { files } } = getState();
+  const existing = files.find((f) => f.remoteUrl.split('?')[0] === file.remoteUrl.split('?')[0]);
+  if (!existing) {
+    dispatch({
+      type: CACHE_FILE_BLOB,
+      payload: file,
+    });
+  }
 };
 
-export const downloadFile = (url) => async (dispatch) => new Promise((resolve, reject) => {
-  console.log('downloading the file', url);
-  RawAxios({
-    url,
-    method: 'GET',
-    responseType: 'blob',
-  })
-    .then((response) => {
-      const fileData = {
-        staticUrl: createStaticFileUrl(response.data),
-        remoteUrl: url,
-        fileName: getFileNameAndExtension(url),
-        fileSize: getFileSize(response.data.size),
-        fileType: response.data.type,
-        data: response.data,
-      };
-      resolve(fileData);
-      dispatch({
-        type: CACHE_FILE_BLOB,
-        payload: fileData,
-      });
+export const downloadFile = (url) => async (dispatch, getState) => new
+Promise((resolve, reject) => {
+  // check if the file is available in the cache
+  const { app: { files } } = getState();
+  const file = files.find((f) => f.remoteUrl.split('?')[0] === url.split('?')[0]);
+  if (file) {
+    resolve(file);
+  } else {
+    // continue to download the file
+    RawAxios({
+      url,
+      method: 'GET',
+      responseType: 'blob',
     })
-    .catch((err) => {
-      reject(err);
-    });
+      .then((response) => {
+        const fileData = {
+          staticUrl: createStaticFileUrl(response.data),
+          remoteUrl: url,
+          fileName: getFileNameAndExtension(url),
+          fileSize: getFileSize(response.data.size),
+          fileType: response.data.type,
+          data: response.data,
+        };
+        resolve(fileData);
+        dispatch(cacheFileBlob(fileData));
+      })
+      .catch((err) => {
+        reject(err);
+      });
+  }
 });
 
 // export const getFileSignedUrl = (url, objectOwnerId) => async (dispatch, getState) => new
