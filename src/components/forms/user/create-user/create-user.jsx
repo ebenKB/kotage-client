@@ -90,7 +90,7 @@ class CreateUser extends React.Component {
 		{invitation && (
 			<div className="p-t-150 user-form">
 				<p className="text-center">
-          Used Kotage before?
+					Used Kotage before?
 					<Link to="/auth/signin"> Login</Link>
 				</p>
 				<div className="user small-form__wrapper fit-auto">
@@ -99,7 +99,7 @@ class CreateUser extends React.Component {
 						<span className="big">
 							{' '}
 							{/* { titleize(currentTenant.company_name) } */}
-              {titleize(companyName)}
+							{titleize(companyName)}
 						</span>
 						<span> on Kotage</span>
 					</div>
@@ -186,7 +186,7 @@ class CreateUser extends React.Component {
 								className="fluid green"
 								loading={this.props.loading}
 							>
-                OK, Let's go
+								OK, Let's go
 							</Button>
 						</div>
 					</ValidatorForm>

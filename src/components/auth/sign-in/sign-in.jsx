@@ -137,7 +137,7 @@ const SignIn = ({
 				</Button>
 			</div>
 			<div className="m-t-10">
-        Login as
+				Login as
 				<span>
           &nbsp;
 					<Button size="small" className="transparent" onClick={toggleLogin}>
@@ -146,7 +146,7 @@ const SignIn = ({
 				</span>
 				<span> | </span>
 				<Link to="/tenant/signup">
-          create an account
+					create an account
 				</Link>
 			</div>
 		</Form>
@@ -203,7 +203,7 @@ const SignIn = ({
 						{/* show the right login type to the user */}
 						{loginType}
 						{ ' ' }
-            Login
+						Login
 					</span>
 				</div>
 				<div className="m-b-10 m-t-5">

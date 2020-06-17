@@ -93,16 +93,18 @@ const NewMessage = ({
   };
 
   const handleSubmit = async () => {
-    const files = await
-    uploadFiles(message.files, tenantUid, RFP_MESSAGE_FOLDERNAME);
-    message.files = files;
-    setMessage(message);
-    let supplier_ids = null;
-    if (selectedSuppliers.length > 0) {
+    if (selectedSuppliers && selectedSuppliers.length > 0) {
+      const files = await
+      uploadFiles(message.files, tenantUid, RFP_MESSAGE_FOLDERNAME);
+      message.files = files;
+      setMessage(message);
+      let supplier_ids = null;
       supplier_ids = selectedSuppliers.map((s) => s.account_id);
+      createNewMessage(message, supplier_ids)
+        .then(() => history.goBack());
+    } else {
+      alert('select some suppliers');
     }
-    createNewMessage(message, supplier_ids)
-      .then(() => history.goBack());
   };
 
   return (
