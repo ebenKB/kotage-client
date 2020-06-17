@@ -85,7 +85,7 @@ render() {
 						<Dropzone />
 					</div>
 				</div>
-				<div className="m-t-20 m-b-40 text-right">
+				<div className="m-t-20 m-b-20 text-right">
 					<AddItem
 						title="Add new document"
 					/>
