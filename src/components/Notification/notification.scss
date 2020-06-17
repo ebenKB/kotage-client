@@ -13,12 +13,26 @@
   justify-content: space-between;
   box-shadow: 0px 2px 6px rgba(191, 218, 245, 0.7);
   padding: 12px;
-  width: 380px;
+  width: 450px;
   border-radius: 4px;
   font-weight: 600;
   background: var(--kt-white);
-  right: 22px;
+  // right: -455px;
+  right: 50px;
+  top: 20px;
+  z-index: 1000;
 }
+
+// .notification.slide-in {
+//   right: 50px;
+//   transition: all 30s;
+// }
+
+
+// .notification.slide-out {
+//   right: -455px;
+//   transition: all 3s;
+// }
 
 .notification.kt-success svg {
   fill: var(--kt-green)

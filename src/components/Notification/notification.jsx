@@ -5,7 +5,6 @@ import { Button } from 'semantic-ui-react';
 import './notification.scss';
 import { connect } from 'react-redux';
 import CloseIcon from '@material-ui/icons/HighlightOff';
-// import { ReactComponent as Icon } from '../../svg/cancel-white.svg';
 import { clearNotification } from '../../redux/actions/appActions';
 import { pretifyMessage } from '../../utils/app/index';
 
@@ -33,7 +32,10 @@ class Notification extends React.Component {
     const { type } = this.props;
     const { appError } = this.props;
     return (
-	<div className={`${type !== 'minimal' ? 'notification' : 'minimal'} ${appError.type === 'error' ? 'kt-danger' : 'kt-success'}`}>
+	<div
+		className={`${type !== 'minimal' ? 'notification' : 'minimal'} 
+    ${appError.type === 'error' ? 'kt-danger' : 'kt-success'} slide-in`}
+	>
 		<span>
 			{ pretifyMessage(appError.message) }
 		</span>

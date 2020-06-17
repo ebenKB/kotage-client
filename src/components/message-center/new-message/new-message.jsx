@@ -19,10 +19,16 @@ import Dropzone from '../../dropzone/dropzone';
 import Divider from '../../kt-divider/divider';
 import { RFP_MESSAGE_FOLDERNAME } from '../../../utils/app/definitions';
 import FloatingSupplierList from '../../floating-supplier-list/floating-supplier-list';
+import { setNotification } from '../../../redux/actions/appActions';
 
 
 const NewMessage = ({
-  createNewMessage, isLoading, currentProposal, currentProposalId, tenantUid,
+  createNewMessage,
+  isLoading,
+  currentProposal,
+  currentProposalId,
+  showNotification,
+  tenantUid,
 }) => {
   const history = useHistory();
   const [message, setMessage] = useState(
@@ -103,7 +109,9 @@ const NewMessage = ({
       createNewMessage(message, supplier_ids)
         .then(() => history.goBack());
     } else {
-      alert('select some suppliers');
+      showNotification({
+        message: 'Select at least one supplier to continue.',
+      }, 'error');
     }
   };
 
@@ -193,6 +201,7 @@ const NewMessage = ({
 
 const mapDispatchToProps = {
   createNewMessage: createRfpMessage,
+  showNotification: setNotification,
 };
 
 const mapStateToProps = (state) => ({
@@ -208,6 +217,7 @@ NewMessage.propTypes = {
   currentProposalId: PropTypes.string.isRequired,
   tenantUid: PropTypes.string.isRequired,
   currentProposal: PropTypes.object.isRequired,
+  showNotification: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(NewMessage);
