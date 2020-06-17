@@ -151,7 +151,7 @@ const SupplierRfxDashboard = ({
 							</div>
 						</PopupDropdown>
 					</div>
-					<div className="m-r-15">
+					{/* <div className="m-r-15">
 						<Link to={`/supplier/rfp/${currentProposal.id}/terms-and-conditions`}>
 							<Button
 								icon={<BookmarkBorderIcon className="kt-primary logo" />}
@@ -161,7 +161,7 @@ const SupplierRfxDashboard = ({
 								disabled={currentProposal.hasAcceptedTerms}
 							/>
 						</Link>
-					</div>
+					</div> */}
 					<Link to="/supplier/rfx/:id/message">
 						<Button
 							icon={<MessageIcon className="m-r-4" />}
@@ -285,7 +285,7 @@ const SupplierRfxDashboard = ({
 							className="tiny"
 						/>
 					</Link>
-					<Link to={`/supplier/rfp/${currentProposal.id}/response`}>
+					<Link to={`/supplier/rfp/${currentProposal.id}/terms-and-conditions`}>
 						<Button
 							small
 							content="Create Bid Response"
