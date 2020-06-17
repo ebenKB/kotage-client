@@ -7,7 +7,6 @@ import Help from '../../../utils/requisitions/new/help';
 import FormGroup from '../../form-fields/form-group/form-group';
 import Divider from '../../kt-divider/divider';
 import Dropzone from '../../dropzone/dropzone';
-import AddItem from '../../snippets/add-item/add-item';
 
 class EventResponse extends Component {
   constructor(props) {
@@ -37,13 +36,23 @@ class EventResponse extends Component {
     };
   }
 
-addTechnicalProposal = (file) => {
-  console.log('', file);
+addTechnicalProposal = (files) => {
+  this.setState((state) => ({
+    ...state,
+    technicalProposals: [...state.technicalProposals, ...files],
+  }));
 }
 
-addCommercialProposal = (file) => {
-  console.log('', file);
+addCommercialProposal = (files) => {
+  this.setState((state) => ({
+    ...state,
+    commercialProposals: [...state.commercialProposals, ...files],
+  }));
 }
+
+handleSubmit = () => {
+  console.log('We want to submit the form');
+};
 
 render() {
   const { questions } = this.state;
@@ -54,9 +63,20 @@ render() {
 		<KtWrapper
 			header="Bid Response"
 			canPerform
+			handleAction={this.handleSubmit}
 		>
 			<ValidatorForm>
-				<Divider title="Reaponse To Questions" type="thick" isNumbered number={1} />
+				<Divider title="Bid Details" type="thick" isNumbered number={1} />
+				<div className="m-t-20">
+					{/* <FormGroup
+						center
+						type="text"
+						labelName=""
+						label="Total Bid Amount"
+						placeholder="Bid amount"
+					/> */}
+				</div>
+				<Divider classes="m-t-40" title="Reaponse To Questions" type="thick" isNumbered number={2} />
 				{questions.map((q) => (
 					<div className="m-t-20" key={q.id}>
 						<FormGroup
@@ -69,26 +89,20 @@ render() {
 					</div>
 				))}
 				<div className="m-t-40">
-					<Divider title="Technical Proposal" type="thick" isNumbered number={2} />
+					<Divider title="Technical Proposal" type="thick" isNumbered number={3} />
 					<div className="m-t-20">
-						<Dropzone />
-					</div>
-					<div className="m-t-20 float-r">
-						<AddItem
-							title="Add new document"
+						<Dropzone
+							onFilesChange={this.addTechnicalProposal}
 						/>
 					</div>
 				</div>
 				<div className="m-t-40">
-					<Divider title="Commercial Proposal" type="thick" isNumbered number={3} />
+					<Divider title="Commercial Proposal" type="thick" isNumbered number={4} />
 					<div className="m-t-20">
-						<Dropzone />
+						<Dropzone
+							onFilesChange={this.addCommercialProposal}
+						/>
 					</div>
-				</div>
-				<div className="m-t-20 m-b-20 text-right">
-					<AddItem
-						title="Add new document"
-					/>
 				</div>
 			</ValidatorForm>
 		</KtWrapper>
