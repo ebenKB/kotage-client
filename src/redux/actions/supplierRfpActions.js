@@ -11,13 +11,25 @@ import {
   REVOKE_RSVP,
   ACCEPT_RFP_TERMS,
   CHECK_SUPPLIER_CLAIMS,
+  SET_SUPPLIER_LOADING,
+  SET_SUPPLIER_DONE_LOADING,
 } from '../types/supplierRfpTypes';
 
 import { deserializeProposal } from '../../serializers/supplier-rfp-serializer';
 
+export const setLoading = () => async (dispatch) => dispatch({
+  type: SET_SUPPLIER_LOADING,
+});
+
+export const setDoneLoading = () => async (dispatch) => dispatch({
+  type: SET_SUPPLIER_DONE_LOADING,
+});
+
+
 // eslint-disable-next-line import/prefer-default-export
 export const getSupplierRfp = (page = 1) => async (dispatch, getState) => new
 Promise((resolve, reject) => {
+  dispatch(setLoading());
   const { user } = getState();
   const promise = Axios.get(`/v1/${user.currentUser.tenant_id}/events/rfp?page=${page}`);
 
@@ -98,7 +110,6 @@ export const getSupplierRfpByID = (id) => async (dispatch, getState) => (
         resolve(proposal_request);
       });
     } catch (error) {
-      console.log('error here');
       // do something here
       reject(error);
     }
@@ -150,7 +161,6 @@ export const checkSupplierRfpClaims = () => async (dispatch, getState) => {
     const { tenant } = currentProposal;
     const { data } = await Axios
       .get(`/v1/${id}/claims/rfp?proposal_request_id=${currentProposal.id}&event_owner_id=${tenant.id}`);
-    console.log('This is the data', data);
     dispatch({
       type: CHECK_SUPPLIER_CLAIMS,
       payload: data.rfp_claim,

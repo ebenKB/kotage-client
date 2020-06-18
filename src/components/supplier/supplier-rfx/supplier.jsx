@@ -12,8 +12,11 @@ import { getSupplierRfp } from '../../../redux/actions/supplierRfpActions';
 import { getPageRemainder } from '../../../utils/app/index';
 import PaginationFootnote from '../../pagination-footnote/pagination-footnote';
 import { setNotification } from '../../../redux/actions/appActions';
+import KtLoader from '../../loader/loader';
 
-const supplier = ({ proposals, meta, getSupplierRfpEvents }) => {
+const supplier = ({
+  proposals, meta, getSupplierRfpEvents, loading,
+}) => {
   const history = useHistory();
 
   useEffect(() => {
@@ -55,6 +58,9 @@ const supplier = ({ proposals, meta, getSupplierRfpEvents }) => {
 					</>
 				))}
 			</div>
+			{loading && (
+				<KtLoader />
+			)}
 			<div className="m-t-20">
 				{meta && getRemainder() > 0 && (
 					<PaginationFootnote
@@ -73,6 +79,7 @@ const mapDispatchToProps = {
 };
 
 const mapStateToProps = (state) => ({
+  loading: state.supplierRfp.loading,
   proposals: state.supplierRfp && state.supplierRfp.proposals,
   meta: state.supplierRfp && state.supplierRfp.meta,
 });

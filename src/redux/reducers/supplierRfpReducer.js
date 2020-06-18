@@ -7,6 +7,8 @@ import {
   CONFIRM_RSVP,
   REVOKE_RSVP,
   CHECK_SUPPLIER_CLAIMS,
+  SET_SUPPLIER_LOADING,
+  SET_SUPPLIER_DONE_LOADING,
 } from '../types/supplierRfpTypes';
 
 const initialState = {
@@ -32,6 +34,7 @@ export default (state = initialState, action) => {
         proposals: action.payload.proposals,
         currentProposal: null,
         meta: action.payload.meta,
+        loading: false,
       };
     }
 
@@ -77,11 +80,9 @@ export default (state = initialState, action) => {
       const proposal = state.currentProposal;
       if (data.agreed_to_participate) {
         proposal.hasAcceptedTerms = true;
-        console.log('set to true');
       }
       if (data.claimed) {
         proposal.hasConfirmedRSVP = true;
-        console.log('set rsvp to true');
       }
       return {
         ...state,
@@ -98,6 +99,21 @@ export default (state = initialState, action) => {
         },
       };
     }
+
+    case SET_SUPPLIER_LOADING: {
+      return {
+        ...state,
+        loading: true,
+      };
+    }
+
+    case SET_SUPPLIER_DONE_LOADING: {
+      return {
+        ...state,
+        loading: false,
+      };
+    }
+
     default: {
       return { ...state };
     }
