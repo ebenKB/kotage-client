@@ -1,3 +1,4 @@
+/* eslint-disable react/boolean-prop-naming */
 /* eslint-disable react/forbid-prop-types */
 /* eslint-disable camelcase */
 import React, { useState, useEffect } from 'react';
@@ -29,6 +30,7 @@ import PopupDropdown from '../../snippets/popup/popup';
 import { setNotification } from '../../../redux/actions/appActions';
 
 const SupplierRfxDashboard = ({
+  loading,
   currentTenant,
   respondToRSVP,
   currentProposal,
@@ -82,9 +84,13 @@ const SupplierRfxDashboard = ({
   };
 
   const confirmParticipation = () => {
-    if (canRSVP) {
+    if (canRSVP && willParticipate !== currentProposal.hasConfirmedRSVP) {
       respondToRSVP(willParticipate);
     }
+  };
+
+  const revertChange = () => {
+    setParticipation(currentProposal.hasConfirmedRSVP);
   };
 
   return (
@@ -139,9 +145,10 @@ const SupplierRfxDashboard = ({
 									size="tiny"
 									fluid
 									content="Cancel"
-									onClick={() => console.log('We want to cancle')}
+									onClick={revertChange}
 								/>
 								<Button
+									loading={loading}
 									size="tiny"
 									fluid
 									positive
@@ -300,6 +307,7 @@ const SupplierRfxDashboard = ({
 };
 
 SupplierRfxDashboard.propTypes = {
+  loading: PropTypes.bool.isRequired,
   findSupplierRfp: PropTypes.func.isRequired,
   currentTenant: PropTypes.object.isRequired,
   refreshSupplierRfp: PropTypes.func.isRequired,
@@ -316,6 +324,7 @@ const mapDispatchToProps = {
 };
 
 const mapStateToProps = (state) => ({
+  loading: state.supplierRfp.loading,
   currentTenant: state.tenant.currentTenant,
   currentProposal: state.supplierRfp.currentProposal,
 });

@@ -121,6 +121,7 @@ export const getSupplierRfpByID = (id) => async (dispatch, getState) => (
  */
 export const confirmRSVP = (status) => async (dispatch, getState) => {
   try {
+    dispatch(setLoading());
     const { tenant: { currentTenant: { id } }, supplierRfp: { currentProposal } } = getState();
     const { tenant } = currentProposal;
     await Axios
@@ -134,6 +135,7 @@ export const confirmRSVP = (status) => async (dispatch, getState) => {
         type: REVOKE_RSVP,
       });
     }
+    dispatch(setDoneLoading());
   } catch (error) {
     console.log('An error ocurred while sending the rsvp', error);
   }
@@ -141,6 +143,7 @@ export const confirmRSVP = (status) => async (dispatch, getState) => {
 
 export const acceptRfpTerms = (status) => async (dispatch, getState) => {
   try {
+    dispatch(setLoading());
     const { tenant: { currentTenant: { id } }, supplierRfp: { currentProposal } } = getState();
     const { tenant } = currentProposal;
     await Axios
@@ -149,6 +152,7 @@ export const acceptRfpTerms = (status) => async (dispatch, getState) => {
     dispatch({
       type: ACCEPT_RFP_TERMS,
     });
+    dispatch(setDoneLoading());
   } catch (error) {
     console.log('An error ocurred while sending the rsvp', error);
   }

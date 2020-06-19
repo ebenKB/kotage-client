@@ -12,7 +12,7 @@ class AccordionStandard extends Component {
   constructor(props) {
     super(props);
     // set activeIndex to 0 to open the first item by default
-    this.state = { activeIndex: props.accountType === 'buyer' ? -1 : 0 };
+    this.state = { activeIndex: props.accountType === 'buyer' ? -1 : -1 };
   }
 
   handleClick = (e, titleProps) => {
@@ -121,7 +121,10 @@ class AccordionStandard extends Component {
 									className="m-b-10"
 								/>
 								<Accordion.Content active={activeIndex === 0} className="menu-option">
-									<Link to="/supplier/rfx">View Bids</Link>
+									<Link to="/supplier/rfx">Active Bids</Link>
+								</Accordion.Content>
+								<Accordion.Content active={activeIndex === 0} className="menu-option">
+									<Link to="/supplier/rfx">Sent Bids</Link>
 								</Accordion.Content>
 							</Menu.Item>
 						</Accordion>
