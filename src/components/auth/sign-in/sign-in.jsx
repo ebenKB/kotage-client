@@ -104,11 +104,12 @@ const SignIn = ({
         setUserAccountType(loginType.toLowerCase());
         getCurrentTenant(currentUser.tenant_id);
         clearAppNotifications().then(() => {
-          if (loginType.toLowerCase() === 'buyer') {
-            history.push('/');
-          } else if (loginType.toLowerCase() === 'supplier') {
-            history.push('/supplier/rfx');
-          }
+          history.push('/');
+          // if (loginType.toLowerCase() === 'buyer') {
+          //   history.push('/');
+          // } else if (loginType.toLowerCase() === 'supplier') {
+          //   history.push('/supplier/rfx');
+          // }
         });
       }
     } catch (error) {

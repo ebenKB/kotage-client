@@ -1,0 +1,15 @@
+.activity-item {
+  // border-bottom: 1px solid rgb(223, 221, 221);
+  // padding: 8px;
+  // border-radius: 5px;
+  // background: rgb(157, 221, 157);
+  // color: white;
+}
+
+.activity-item:not(:last-child) {
+  margin-bottom: 10px;
+}
+
+.activity-item__wrapper {
+  min-height: 90%;
+}

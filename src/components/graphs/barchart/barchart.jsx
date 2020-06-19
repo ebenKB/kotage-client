@@ -17,7 +17,9 @@ class BarChart extends Component {
         datasets: [{
           label: this.props.title,
           data: this.props.data.map((d) => d.value),
-          background: this.props.color,
+          barThickness: 50,
+          maxBarThickness: 60,
+          backgroundColor: this.props.color,
         }],
       },
     });

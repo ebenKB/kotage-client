@@ -4,6 +4,7 @@ import Doughnut from '../../graphs/doughnut/doughnut';
 import './supplier-home-dashboard.scss';
 import GraphItem from '../../graph-item/graph-item';
 import BarChart from '../../graphs/barchart/barchart';
+import ActivityItem from '../../activity-item/activity-item';
 
 const SupplierHomeDashoard = () => (
 	<div>
@@ -24,24 +25,26 @@ const SupplierHomeDashoard = () => (
 					colors={['#00000', '#FFFF33', '#70ccd1', '#3e517a', '#b08ea2', '']}
 				/>
 			</GraphItem>
-			<GraphItem>
+			<GraphItem
+				title="Bids"
+			>
 				<BarChart
 					data={[
 					  {
 					    label: 'Bids Sent',
-					    value: 30,
+					    value: 35,
 					  },
 					  {
 					    label: 'Bids Approved',
-					    value: 30,
+					    value: 135,
 					  },
 					  {
 					    label: 'Bids Rejected',
-					    value: 35,
+					    value: 25,
 					  },
 					  ]}
-					title="sample 1"
-					color="#70CAD1"
+					title="Number of Bids"
+					color="#FF6384"
 				/>
 			</GraphItem>
 			<GraphItem
@@ -52,20 +55,19 @@ const SupplierHomeDashoard = () => (
 					data={
             [
               { label: 'Proposals Received', value: 40 },
-              { label: 'Proposals Responded To', value: 30 },
+              { label: 'Proposals Responded To', value: 40 },
+              { label: 'Proposals Responded To', value: 40 },
             ]
             }
 					title="Some chart data here"
 					colors={['#BBB6DF', '#EE82EE']}
 				/>
 			</GraphItem>
-			<div className="graph-item bold">Recent activities here</div>
-		</div>
-		<div className="m-t-50">
-			Total Bids Recieved | Total Bids Responded to
-		</div>
-		<div className="m-t-50">
-			Recent Activities - new proposals received
+			<GraphItem
+				title="Recent Activities"
+			>
+				<ActivityItem />
+			</GraphItem>
 		</div>
 	</div>
 );

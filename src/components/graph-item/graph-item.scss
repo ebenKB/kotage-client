@@ -1,4 +1,15 @@
 .graph-item  {
   border: 1px solid #DFDFDF;
   padding: 10px;
+  min-height: 300px;
+
+  .caption-icon {
+    visibility: hidden;
+  }
+}
+
+.graph-item:hover {
+  .caption-icon {
+    visibility: visible;
+  }
 }
