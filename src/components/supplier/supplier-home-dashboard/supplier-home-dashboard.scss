@@ -1,6 +1,5 @@
 .graph-container {
   width: 80%;
-  // margin-left: 20%;
   display: grid;
   grid-template-columns: 1fr 1fr;
   column-gap: 10px;
@@ -8,5 +7,8 @@
 
   .graph-item {
     width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 20px;
   }
 }
