@@ -83,3 +83,7 @@
   min-width: 10em;
   padding: 2em;
 }
+
+.ui.table {
+  color: var(--kt-dark);
+}

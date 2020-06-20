@@ -8,6 +8,8 @@ import ActivityItem from '../../activity-item/activity-item';
 
 const SupplierHomeDashoard = () => (
 	<div>
+		<h3>Add notification icon at the top</h3>
+		<p>And show number of unread messages</p>
 		<div className="m-t-20 graph-container">
 			<GraphItem
 				title="Requiring Attention"
@@ -22,7 +24,7 @@ const SupplierHomeDashoard = () => (
             ]
             }
 					title="Some chart data here"
-					colors={['#00000', '#FFFF33', '#70ccd1', '#3e517a', '#b08ea2', '']}
+					colors={['#00000', '#00ae55', '#70ccd1', '#3e517a', '#b08ea2', '']}
 				/>
 			</GraphItem>
 			<GraphItem
@@ -60,7 +62,7 @@ const SupplierHomeDashoard = () => (
             ]
             }
 					title="Some chart data here"
-					colors={['#BBB6DF', '#EE82EE']}
+					colors={['#BBB6DF', '#EE82EE', '#70aad1']}
 				/>
 			</GraphItem>
 			<GraphItem
