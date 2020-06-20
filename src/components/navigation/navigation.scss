@@ -5,13 +5,15 @@
 .nav-wrapper {
   color: var(--kt-dark);
   margin-top: 20px;
+
+  .btn-a__toggle a.light {
+    font-weight: 300;
+  }
 }
 
 .nav-main__wrappper {
   position: fixed;
-  // font-size: 0.9em;
 }
-
 
 .ui.accordion .item .active.title {
   color: var(--kt-black);

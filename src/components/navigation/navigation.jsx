@@ -1,18 +1,21 @@
 /* eslint-disable react/prop-types */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Accordion, Menu } from 'semantic-ui-react';
+import { Accordion, Menu, Button } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import { ReactComponent as Logo } from '../../svg/home.svg';
 
 import './navigation.scss';
 import Can from '../can/can';
 
+
 class AccordionStandard extends Component {
   constructor(props) {
     super(props);
     // set activeIndex to 0 to open the first item by default
-    this.state = { activeIndex: props.accountType === 'buyer' ? -1 : -1 };
+    this.state = {
+      activeIndex: props.accountType === 'buyer' ? -1 : -1,
+    };
   }
 
   handleClick = (e, titleProps) => {
@@ -27,11 +30,16 @@ class AccordionStandard extends Component {
     const { currentTenant, accountType } = this.props;
     return (
 	<div className="nav-wrapper">
-		<div className="m-l-16 m-b-15 content menu-option bold">
-			<Link to="/">
-				<Logo className="kt-logo__small" />
-				Welcome
-			</Link>
+		<div className="m-l-16 m-b-15 content menu-option">
+			<Button
+				className="kt-transparent btn-a__toggle"
+				onClick={() => this.setState((state) => ({ ...state, activeIndex: -1 }))}
+			>
+				<Link to="/" className={`${activeIndex === -1 ? 'bold' : 'light'}`}>
+					<Logo className="kt-logo__small" />
+					Welcome
+				</Link>
+			</Button>
 		</div>
 		{accountType && (
 			<>
