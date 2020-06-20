@@ -145,6 +145,7 @@ const SupplierRfxDashboard = ({
 									size="tiny"
 									fluid
 									content="Cancel"
+									disabled={currentProposal.hasConfirmedRSVP === willParticipate}
 									onClick={revertChange}
 								/>
 								<Button

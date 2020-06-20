@@ -22,9 +22,6 @@ const ActivityItem = () => (
 					<Table.Row>
 						<Table.Cell>ASA savings and Loans has invited you to a proposal.</Table.Cell>
 					</Table.Row>
-					<Table.Row>
-						<Table.Cell>MTN Ghana has invited you to a new proposal.</Table.Cell>
-					</Table.Row>
 				</Table.Body>
 			</Table>
 		</div>

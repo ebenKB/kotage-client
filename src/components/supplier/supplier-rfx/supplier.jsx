@@ -47,7 +47,7 @@ const supplier = ({
 			header="Active Events"
 		>
 			<div>
-				<Divider type="faint" />
+				{/* <Divider type="faint" /> */}
 				{proposals && proposals.map((p) => (
 					<>
 						<SupplierRfxItem
