@@ -22,8 +22,9 @@ const Check = (accountType, rules, role, action, data) => {
   return false;
 };
 
-const Can = (props) => (
-  Check(props.accountType, rbacrules, props.roleType,
-    props.perform, props.data) ? props.yes() : props.no());
+const Can = ({
+  accountType, roleType, perform, yes, no, data,
+}) => (
+  Check(accountType, rbacrules, roleType, perform, data) ? yes() : no());
 
 export default Can;
