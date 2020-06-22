@@ -37,7 +37,7 @@ function KtDropzone({ onFilesChange }) {
     // check if the user tries to upload duplicate files and filter them out
     let filteredFiles = newFiles;
     for (const f of files) {
-      filteredFiles = filteredFiles.filter((x) => x.name !== f.name);
+      filteredFiles = filteredFiles.filter((x) => x.name !== f.data.name);
     }
 
     // check if there were duplicate files found
