@@ -16,6 +16,7 @@ class EventResponse extends Component {
 
     this.state = {
       totalBidValue: null,
+      currency: null,
       questions: [
         {
           id: 1,
@@ -38,6 +39,14 @@ class EventResponse extends Component {
       ],
     };
   }
+
+setBidCurrency = (selectedOption) => {
+  console.log('This is the selected option', selectedOption);
+  this.setState((state) => ({
+    ...state,
+    currency: `${selectedOption.name}_${selectedOption.key}`,
+  }));
+};
 
 addTechnicalProposal = (files) => {
   this.setState((state) => ({
@@ -68,7 +77,7 @@ handleInputChange = ({ inputValue, selectedOption }) => {
 formatCurrency = () => {
   const { currentProposal } = this.props;
   return {
-    key: currentProposal.currency.id,
+    key: currentProposal.currency.symbol,
     text: currentProposal.currency.name.toUpperCase(),
     value: currentProposal.currency.id,
   };

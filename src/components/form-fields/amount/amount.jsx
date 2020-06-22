@@ -7,20 +7,20 @@ import './amount.scss';
 import { Dropdown } from 'semantic-ui-react';
 import Input from '../input/input';
 
-const options = [
-  { key: 1, text: 'GHC', value: 1 },
-  { key: 2, text: 'USD', value: 2 },
-];
+// const options = [
+//   { key: 1, text: 'GHC', value: 1 },
+//   { key: 2, text: 'USD', value: 2 },
+// ];
 
 const amount = ({
-  name, inputValue, defaultSelect = 1, selectOptions = options, ...rest
+  name, inputValue, defaultSelect = 1, selectOptions, ...rest
 }) => {
   const [selectedOption, setSelectedOption] = useState(defaultSelect);
 
   const handleDropChange = ({ value }) => {
     setSelectedOption(value);
     rest.handleInputChange({
-      selectedOption: options.find((f) => f.value === value),
+      selectedOption: selectedOption.find((f) => f.value === value),
       inputValue,
     });
   };
@@ -28,7 +28,15 @@ const amount = ({
   return (
 	<div className="amount-group">
 		<Input
-			label={<Dropdown value={selectedOption} defaultValue={defaultSelect} options={selectOptions} onChange={(e, data) => handleDropChange(data)} className="custom" />}
+			label={(
+				<Dropdown
+					value={selectedOption}
+					defaultValue={defaultSelect}
+					options={selectOptions}
+					onChange={(e, data) => handleDropChange(data)}
+					className="custom"
+				/>
+			)}
 			labelPosition="left"
 			placeholder="Amount"
 			type="number"
@@ -36,7 +44,7 @@ const amount = ({
 			value={inputValue}
 			min={0}
 			onChange={(e) => rest.handleInputChange({
-			  selectedOption: options.find((f) => f.value === selectedOption),
+			  selectedOption: selectOptions.find((f) => f.value === selectedOption),
 			  inputValue: e.target.value,
 			})}
 			{...rest}
