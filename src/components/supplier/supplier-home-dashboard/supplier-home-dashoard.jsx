@@ -46,7 +46,7 @@ const SupplierHomeDashoard = () => (
 					  },
 					  ]}
 					title="Number of Bids"
-					color="#FF6384"
+					color="#ffc400"
 				/>
 			</GraphItem>
 			<GraphItem

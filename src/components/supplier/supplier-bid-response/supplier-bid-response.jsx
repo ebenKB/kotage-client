@@ -93,6 +93,7 @@ render() {
 		<KtWrapper
 			header="Bid Response"
 			canPerform
+			actionName="Submit"
 			handleAction={this.handleSubmit}
 		>
 			{currentProposal && (

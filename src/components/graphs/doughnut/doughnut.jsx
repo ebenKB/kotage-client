@@ -28,37 +28,19 @@ class Doughnut extends Component {
         animation: {
           animateScale: true,
         },
-        cutoutPercentage: 60,
+        cutoutPercentage: 55,
         plugins: {
           doughnutlabel: {
             labels: [
               {
-                text: 'The title',
-                font: {
-                  size: '60',
-                },
-                color: 'red',
-              },
-              {
                 text: '90',
                 font: {
-                  size: '50',
+                  size: '60',
+                  family: 'Arial, Helvetica, sans-serif',
+                  style: 'italic',
+                  weight: 'bold',
                 },
-                color: 'grey',
-              },
-              {
-                text: '$100.000',
-                font: {
-                  size: '30',
-                },
-                color: 'red',
-              },
-              {
-                text: '95%',
-                font: {
-                  size: '45',
-                },
-                color: 'green',
+                color: '#bc2c1a',
               },
             ],
           },

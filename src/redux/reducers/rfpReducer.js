@@ -33,7 +33,7 @@ export default (state = initialState, action) => {
       if (action.payload) {
         return {
           ...state,
-          proposals: [state.proposals, action.payload],
+          proposals: [action.payload, ...state.proposals],
           loading: false,
         };
       }

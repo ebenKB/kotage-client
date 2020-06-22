@@ -52,10 +52,11 @@ Promise((resolve, reject) => {
   });
 });
 
-export const createBidResponse = () => async (dispatch) => {
+export const createBidResponse = (bid) => async (dispatch) => {
+  console.log('This is the bid that we want to create', bid);
   dispatch({
     type: CREATE_BID_RESPONSE,
-    payload: null,
+    payload: bid,
   });
 };
 
