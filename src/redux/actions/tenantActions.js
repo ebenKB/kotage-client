@@ -6,7 +6,7 @@ import { SET_APP_NOTIFICATION } from '../types/appTypes';
 import {
   SET_LOADING, DONE_LOADING, SET_ERROR, GET_TENANT, ADD_SUPPLIER, GET_SUPPLIER, GET_SUPPLIERS,
 } from '../types/tenantTypes';
-import deserializeSupplier from '../../serializers/supplier-serializer';
+import { deserializeSupplier } from '../../serializers/supplier-serializers';
 import { setNotification } from './appActions';
 
 /**

@@ -3,20 +3,27 @@
 import React, { Component } from 'react';
 import { ValidatorForm } from 'react-form-validator-core';
 import { connect } from 'react-redux';
+import { createBidResponse } from '../../../redux/actions/supplierRfpActions';
 import KtWrapper from '../../kt-wrapper/kt-wrapper';
 import MainContent from '../../kt-main-content/mainContent';
 import Help from '../../../utils/requisitions/new/help';
 import FormGroup from '../../form-fields/form-group/form-group';
 import Divider from '../../kt-divider/divider';
 import Dropzone from '../../dropzone/dropzone';
+import { uploadFiles } from '../../../utils/app/index';
+import { RFP_FOLDER_NAME } from '../../../utils/app/definitions';
 
 class EventResponse extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      totalBidValue: null,
+      totalBidValue: 0,
+      rfpID: null,
       currency: null,
+      rfpQuestionResponses: [],
+      technicalRequirements: [],
+      commercialRequirements: [],
       questions: [
         {
           id: 1,
@@ -27,51 +34,63 @@ class EventResponse extends Component {
           question: 'How many years have you been in operations?',
         },
       ],
-      technicalProposals: [
-        {
-          file: null,
-        },
-      ],
-      commercialProposals: [
-        {
-          file: null,
-        },
-      ],
     };
   }
 
 setBidCurrency = (selectedOption) => {
-  console.log('This is the selected option', selectedOption);
   this.setState((state) => ({
     ...state,
-    currency: `${selectedOption.name}_${selectedOption.key}`,
+    currency: `${selectedOption.text}_${selectedOption.key}`,
   }));
 };
 
 addTechnicalProposal = (files) => {
   this.setState((state) => ({
     ...state,
-    technicalProposals: [...state.technicalProposals, ...files],
+    technicalRequirements: [...state.technicalRequirements, ...files],
   }));
 }
 
 addCommercialProposal = (files) => {
   this.setState((state) => ({
     ...state,
-    commercialProposals: [...state.commercialProposals, ...files],
+    commercialRequirements: [...state.commercialRequirements, ...files],
   }));
 }
 
-handleSubmit = () => {
-  console.log('We want to submit the form');
+handleSubmit = async () => {
+  const { createBid, tenantUID, currentProposal: { id } } = this.props;
+  const { commercialRequirements, technicalRequirements } = this.state;
+
+  // set the owner
+  this.setState((state) => ({
+    ...state,
+    rfpID: id,
+  }));
+  // upload commercial proposals to remote server
+  const commercialReqFiles = await uploadFiles(commercialRequirements, tenantUID, RFP_FOLDER_NAME);
+  this.setState((state) => ({
+    ...state,
+    commercialRequirements: commercialReqFiles,
+  }));
+
+  // upload technical requirements
+  const technicalReqFiles = await uploadFiles(technicalRequirements, tenantUID, RFP_FOLDER_NAME);
+  this.setState((state) => ({
+    ...state,
+    technicalRequirements: technicalReqFiles,
+  }));
+
+  const { currentProposal } = this.props;
+  createBid(this.state, currentProposal.tenant.id);
 };
 
 handleInputChange = ({ inputValue, selectedOption }) => {
-  console.log('The input has changed', selectedOption, inputValue);
   this.setState((state) => ({
     ...state,
     totalBidValue: inputValue,
   }));
+  this.setBidCurrency(selectedOption);
 }
 
 formatCurrency = () => {
@@ -83,8 +102,25 @@ formatCurrency = () => {
   };
 }
 
+handleQuestionAnswer = (e, q) => {
+  const { rfpQuestionResponses } = this.state;
+  // const question = rfpQuestionResponses.find((ques) => ques.id === q.id);
+  const newAnswers = rfpQuestionResponses.map((ques) => {
+    if (ques.id === q.id) {
+      return {
+        question_id: q.id,
+        answer: e.target.value,
+      };
+    } return ques;
+  });
+  this.setState((state) => ({
+    ...state,
+    rfpQuestionResponses: newAnswers,
+  }));
+}
+
 render() {
-  const { questions, totalBidValue } = this.state;
+  const { totalBidValue } = this.state;
   const { currentProposal } = this.props;
   return (
 	<MainContent
@@ -111,9 +147,8 @@ render() {
 							handleInputChange={(data) => this.handleInputChange(data)}
 						/>
 					</div>
-
 					<Divider classes="m-t-40" title="Reaponse To Questions" type="thick" isNumbered number={2} />
-					{questions.map((q) => (
+					{currentProposal.length > 0 && currentProposal.questions.map((q) => (
 						<div className="m-t-20" key={q.id}>
 							<FormGroup
 								inline={false}
@@ -121,14 +156,18 @@ render() {
 								labelName=""
 								label={q.question}
 								placeholder="Type your response here"
+								onChange={(e) => this.handleQuestionAnswer(e, q)}
 							/>
 						</div>
 					))}
+					{currentProposal.questions.length === 0 && (
+						<div className="m-t-20">The buyer did not ask any questions</div>
+					)}
 					<div className="m-t-40">
 						<Divider title="Technical Proposal" type="thick" isNumbered number={3} />
 						<div className="m-t-20">
 							<Dropzone
-								onFilesChange={this.addTechnicalProposal}
+								onFilesChange={(files) => this.addTechnicalProposal(files)}
 							/>
 						</div>
 					</div>
@@ -136,7 +175,7 @@ render() {
 						<Divider title="Commercial Proposal" type="thick" isNumbered number={4} />
 						<div className="m-t-20">
 							<Dropzone
-								onFilesChange={this.addCommercialProposal}
+								onFilesChange={(files) => this.addCommercialProposal(files)}
 							/>
 						</div>
 					</div>
@@ -151,6 +190,11 @@ render() {
 
 const mapStateProps = (state) => ({
   currentProposal: state.supplierRfp.currentProposal,
+  tenantUID: state.tenant.currentTenant.id,
 });
 
-export default connect(mapStateProps, null)(EventResponse);
+const mapDispatchToProps = {
+  createBid: createBidResponse,
+};
+
+export default connect(mapStateProps, mapDispatchToProps)(EventResponse);

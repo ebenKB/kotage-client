@@ -1,4 +1,6 @@
 /* eslint-disable camelcase */
+import { serializeSupplierBid } from '../../serializers/supplier-serializers';
+import { deserializeProposal } from '../../serializers/supplier-rfp-serializer';
 import Axios from '../../utils/axios/axios';
 import {
   GET_SUPPLIER_RFP,
@@ -14,8 +16,6 @@ import {
   SET_SUPPLIER_LOADING,
   SET_SUPPLIER_DONE_LOADING,
 } from '../types/supplierRfpTypes';
-
-import { deserializeProposal } from '../../serializers/supplier-rfp-serializer';
 
 export const setLoading = () => async (dispatch) => dispatch({
   type: SET_SUPPLIER_LOADING,
@@ -52,11 +52,16 @@ Promise((resolve, reject) => {
   });
 });
 
-export const createBidResponse = (bid) => async (dispatch) => {
-  console.log('This is the bid that we want to create', bid);
+export const createBidResponse = (bid, owner_id) => async (dispatch, getState) => {
+  const { tenant: { currentTenant } } = getState();
+
+  console.log('This is the bid that we want to create', serializeSupplierBid(bid));
+  const newBid = await Axios
+    .post(`/v1/${currentTenant.id}/bids/rfp?proposal_request_id?=${bid.rfpID}&event_owner_id=${owner_id}`, serializeSupplierBid(bid));
+  console.log('This is the request we got back', newBid);
   dispatch({
     type: CREATE_BID_RESPONSE,
-    payload: bid,
+    payload: newBid,
   });
 };
 

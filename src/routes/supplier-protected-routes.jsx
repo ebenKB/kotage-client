@@ -6,6 +6,7 @@ const BidResponse = lazy(() => import('../components/supplier/supplier-bid-respo
 const MessageCenter = lazy(() => import('../components/message-center/message-center'));
 const NewMessage = lazy(() => import('../components/message-center/new-message/new-message'));
 const TermsConditions = lazy(() => import('../pages/supplier/rfp-tems-conditions'));
+const SupplierNotifications = lazy(() => import('../components/supplier/supplier-notification/supplier-notification'));
 
 const routes = [
   {
@@ -37,6 +38,11 @@ const routes = [
     path: '/supplier/rfx/:id/message/create/new',
     exact: true,
     main: () => <NewMessage />,
+  },
+  {
+    path: '/supplier/notifications',
+    exact: true,
+    main: () => <SupplierNotifications />,
   },
 ];
 

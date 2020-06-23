@@ -13,12 +13,11 @@ import { getNameFromFileName } from '../../utils/app/index';
 import './dropzone.scss';
 import DropzoneItem from './dropzone-item/dropzone-item';
 
-
-const dropzoneRef = createRef();
 function KtDropzone({ onFilesChange }) {
   const [hasEntered, setHasEntered] = useState(false);
   const [error, setError] = useState(null);
   const [files, setFiles] = useState([]);
+  const dropzoneRef = createRef();
 
   useEffect(() => {
     // attach the files to the requisitions
@@ -66,6 +65,7 @@ function KtDropzone({ onFilesChange }) {
 
   // open file explorer to select files
   const openDialog = () => {
+    // const dropzoneRef = createRef();
     if (dropzoneRef.current) {
       dropzoneRef.current.open();
     }
@@ -112,7 +112,7 @@ function KtDropzone({ onFilesChange }) {
 							handleFileUpdate={(old, newFile) => updateFile(old, newFile)}
 							deleteFile={() => handleDeleteFile(file)}
 							idx={idx}
-							key={idx}
+							key={`${idx}_${file.name}`}
 						/>
 					))}
 				</div>
@@ -135,9 +135,9 @@ function KtDropzone({ onFilesChange }) {
 						<div>
 							<p>
 								<span className="bold">
-                  Drop&nbsp;
+									Drop&nbsp;
 								</span>
-                  your documents here or&nbsp;
+								your documents here or&nbsp;
 								<Button
 									type="button"
 									onClick={openDialog}

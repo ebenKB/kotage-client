@@ -90,7 +90,7 @@ const DropzoneItem = ({
 			<Button
 				onClick={() => handleDelete(idx)}
 			>
-        DELETE
+				DELETE
 			</Button>
 		</Button.Group>
 	</div>
