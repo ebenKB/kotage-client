@@ -22,7 +22,7 @@ export const serializeSupplierBid = (bid) => ({
     .map((t) => ({ filename: t.title, url: t.url })),
   commercial_requirements_attributes: bid.commercialRequirements
     .map((c) => ({ filename: c.title, url: c.url })),
-  rfp_answers_attributes: null,
+  rfp_answers_attributes: bid.rfpQuestionResponses,
 });
 
 export const deserializeSupplierBid = (bid) => ({
