@@ -17,7 +17,7 @@ export const deserializeSupplier = (supplier) => {
 export const serializeSupplierBid = (bid) => ({
   bid_amount: bid.totalBidValue,
   proposal_request_id: bid.rfpID,
-  currency: bid.currency,
+  bid_currency: bid.currency,
   technical_requirements_attributes: bid.technicalRequirements
     .map((t) => ({ filename: t.title, url: t.url })),
   commercial_requirements_attributes: bid.commercialRequirements
@@ -26,5 +26,22 @@ export const serializeSupplierBid = (bid) => ({
 });
 
 export const deserializeSupplierBid = (bid) => ({
-  currency: bid.currency,
+  id: bid.id,
+  ownerUID: bid.owner_uid,
+  currency: {
+    name: bid.bid_currency.split('_')[0],
+    symbol: bid.bid_currency.split('_')[1],
+  },
+  totalBidValue: bid.bid_amount,
+  bidValidity: bid.bid_validity,
+  buyerAccepted: bid.buyer_accepted,
+  revised: bid.revised,
+  rfpAnswers: bid.rfp_answers,
+  rfpID: bid.proposal_request_id,
+  supplier: {
+    id: bid.supplier.id,
+  },
+  technicalRequirements: bid.technical_requirements,
+  commercialRequirements: bid.commercial_requirements,
+  bid_date: bid.bid_at,
 });

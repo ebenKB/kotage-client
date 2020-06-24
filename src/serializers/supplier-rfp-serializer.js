@@ -42,12 +42,29 @@ export const deserializeProposal = (proposal) => {
         id: question.id,
         question: question.question,
       }))),
-    hasConfirmedRSVP: proposal.hasConfirmedRSVP !== undefined ? proposal.hasConfirmedRSVP : false,
-    hasAcceptedTerms: proposal.hasAcceptedTerms !== undefined ? proposal.hasAcceptedTerms : false,
+    // hasConfirmedRSVP: proposal.hasConfirmedRSVP
+    //   !== undefined ? proposal.hasConfirmedRSVP : false,
+    // hasAcceptedTerms: proposal.hasAcceptedTerms
+    //   !== undefined ? proposal.hasAcceptedTerms : false,
   };
+
+  // check if there supplier has claimed the event
+  if (proposal.rfp_claims) {
+    const [claim] = proposal.rfp_claims;
+    if (claim) {
+      newProposal.hasAcceptedTerms = claim.agreed_to_participate;
+      newProposal.hasConfirmedRSVP = claim.claimed;
+      newProposal.hasResponded = claim.has_responded;
+      newProposal.claimedAtTime = getTimeOnly(claim.claimed_at);
+      newProposal.claimedAtDate = getDateOnly(claim.claimed_at);
+      newProposal.respondedAt = claim.responded_at;
+    } else {
+      newProposal.hasConfirmedRSVP = false;
+      newProposal.hasAcceptedTerms = false;
+      newProposal.hasResponded = false;
+    }
+  }
   return newProposal;
 };
 
-export const serializeSupplierRfp = (rfp) => {
-  console.log('This is the rfp', rfp);
-};
+export const serializeSupplierRfp = (rfp) => rfp;

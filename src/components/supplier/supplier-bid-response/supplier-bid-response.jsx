@@ -3,7 +3,7 @@
 import React, { Component } from 'react';
 import { ValidatorForm } from 'react-form-validator-core';
 import { connect } from 'react-redux';
-import { createBidResponse } from '../../../redux/actions/supplierRfpActions';
+import { createBid } from '../../../redux/actions/supplierBidActions';
 import KtWrapper from '../../kt-wrapper/kt-wrapper';
 import MainContent from '../../kt-main-content/mainContent';
 import Help from '../../../utils/requisitions/new/help';
@@ -59,7 +59,7 @@ addCommercialProposal = (files) => {
 }
 
 handleSubmit = async () => {
-  const { createBid, tenantUID, currentProposal: { id } } = this.props;
+  const { respondToRfp, tenantUID, currentProposal: { id } } = this.props;
   const { commercialRequirements, technicalRequirements } = this.state;
 
   // set the owner
@@ -67,14 +67,15 @@ handleSubmit = async () => {
     ...state,
     rfpID: id,
   }));
-  // upload commercial proposals to remote server
+
+  // upload commercial requirements to remote server
   const commercialReqFiles = await uploadFiles(commercialRequirements, tenantUID, RFP_FOLDER_NAME);
   this.setState((state) => ({
     ...state,
     commercialRequirements: commercialReqFiles,
   }));
 
-  // upload technical requirements
+  // upload technical requirements to remote serve
   const technicalReqFiles = await uploadFiles(technicalRequirements, tenantUID, RFP_FOLDER_NAME);
   this.setState((state) => ({
     ...state,
@@ -82,7 +83,7 @@ handleSubmit = async () => {
   }));
 
   const { currentProposal } = this.props;
-  createBid(this.state, currentProposal.tenant.id);
+  respondToRfp(this.state, currentProposal.tenant.id);
 };
 
 handleInputChange = ({ inputValue, selectedOption }) => {
@@ -93,6 +94,9 @@ handleInputChange = ({ inputValue, selectedOption }) => {
   this.setBidCurrency(selectedOption);
 }
 
+/**
+ * format currency options to be parseable by the dropdown component
+ */
 formatCurrency = () => {
   const { currentProposal } = this.props;
   return {
@@ -127,7 +131,7 @@ render() {
 		help={Help}
 	>
 		<KtWrapper
-			header="Bid Response"
+			header="New Bid"
 			canPerform
 			actionName="Submit"
 			handleAction={this.handleSubmit}
@@ -142,6 +146,7 @@ render() {
 							labelName=""
 							label="Total Bid Amount"
 							placeholder="Bid amount"
+							selectDisabled
 							inputValue={totalBidValue}
 							selectOptions={[{ ...this.formatCurrency() }]}
 							handleInputChange={(data) => this.handleInputChange(data)}
@@ -194,7 +199,7 @@ const mapStateProps = (state) => ({
 });
 
 const mapDispatchToProps = {
-  createBid: createBidResponse,
+  respondToRfp: createBid,
 };
 
 export default connect(mapStateProps, mapDispatchToProps)(EventResponse);

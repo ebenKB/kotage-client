@@ -132,7 +132,7 @@ class AccordionStandard extends Component {
 									<Link to="/supplier/rfx">Active Bids</Link>
 								</Accordion.Content>
 								<Accordion.Content active={activeIndex === 0} className="menu-option">
-									<Link to="/supplier/rfx">Sent Bids</Link>
+									<Link to="/supplier/bids">Sent Bids</Link>
 								</Accordion.Content>
 							</Menu.Item>
 						</Accordion>

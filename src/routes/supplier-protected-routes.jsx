@@ -7,6 +7,7 @@ const MessageCenter = lazy(() => import('../components/message-center/message-ce
 const NewMessage = lazy(() => import('../components/message-center/new-message/new-message'));
 const TermsConditions = lazy(() => import('../pages/supplier/rfp-tems-conditions'));
 const SupplierNotifications = lazy(() => import('../components/supplier/supplier-notification/supplier-notification'));
+const Bids = lazy(() => import('../components/supplier/bids/bids'));
 
 const routes = [
   {
@@ -43,6 +44,11 @@ const routes = [
     path: '/supplier/notifications',
     exact: true,
     main: () => <SupplierNotifications />,
+  },
+  {
+    path: '/supplier/bids',
+    exact: true,
+    main: () => <Bids />,
   },
 ];
 

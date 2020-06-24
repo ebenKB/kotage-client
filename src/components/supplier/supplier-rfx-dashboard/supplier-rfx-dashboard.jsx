@@ -22,7 +22,7 @@ import RfpTitle from '../supplier-rfp-title/rfp-title';
 import KtDetailsCaption from '../../kt-details-caption/kt-details-caption';
 import { ReactComponent as Bullet } from '../../../svg/menu.svg';
 import {
-  findSupplierEventByID, getSupplierRfpByID, confirmRSVP, checkSupplierRfpClaims,
+  findSupplierEventByID, getSupplierRfpByID, confirmRSVP,
 } from '../../../redux/actions/supplierRfpActions';
 import ParseHtml from '../../snippets/parse-html/parse-html';
 import FileHandler from '../../file-handler/file-handler';
@@ -36,7 +36,7 @@ const SupplierRfxDashboard = ({
   currentProposal,
   findSupplierRfp,
   refreshSupplierRfp,
-  checkSupplierStatus,
+  // checkSupplierStatus,
 }) => {
   const params = useParams();
   const history = useHistory();
@@ -51,7 +51,7 @@ const SupplierRfxDashboard = ({
   const refresh = async () => {
     try {
       await refreshSupplierRfp(params.id);
-      await checkSupplierStatus();
+      // await checkSupplierStatus();
     } catch (error) {
       if (error.response) {
         const { response: { data: { invalid_token } } } = error;
@@ -314,14 +314,14 @@ SupplierRfxDashboard.propTypes = {
   refreshSupplierRfp: PropTypes.func.isRequired,
   currentProposal: PropTypes.object.isRequired,
   respondToRSVP: PropTypes.func.isRequired,
-  checkSupplierStatus: PropTypes.func.isRequired,
+  // checkSupplierStatus: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = {
   findSupplierRfp: findSupplierEventByID,
   refreshSupplierRfp: getSupplierRfpByID,
   respondToRSVP: confirmRSVP,
-  checkSupplierStatus: checkSupplierRfpClaims,
+  // checkSupplierStatus: checkSupplierRfpClaims,
 };
 
 const mapStateToProps = (state) => ({

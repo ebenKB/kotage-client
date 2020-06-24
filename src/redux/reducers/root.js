@@ -9,6 +9,7 @@ import countryReducer from './countryReducer';
 import appReducer from './appReducer';
 import proposalReducer from './rfpReducer';
 import supplierRfpReducer from './supplierRfpReducer';
+import supplierBidReducer from './supplierBidReducer';
 
 const persistConfig = {
   key: 'root',
@@ -24,6 +25,7 @@ const reducers = combineReducers({
   countries: countryReducer,
   app: appReducer,
   supplierRfp: supplierRfpReducer,
+  supplierBids: supplierBidReducer,
 });
 
 const rootReducer = (state, action) => {

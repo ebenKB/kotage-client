@@ -13,7 +13,7 @@ import Input from '../input/input';
 // ];
 
 const amount = ({
-  name, inputValue, defaultSelect = 1, selectOptions, ...rest
+  name, inputValue, defaultSelect = 1, selectOptions, selectDisabled, ...rest
 }) => {
   const [selectedOption, setSelectedOption] = useState(defaultSelect);
 
@@ -35,6 +35,7 @@ const amount = ({
 					options={selectOptions}
 					onChange={(e, data) => handleDropChange(data)}
 					className="custom"
+					disabled={selectDisabled}
 				/>
 			)}
 			labelPosition="left"

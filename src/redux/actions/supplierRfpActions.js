@@ -1,10 +1,8 @@
 /* eslint-disable camelcase */
-import { serializeSupplierBid } from '../../serializers/supplier-serializers';
 import { deserializeProposal } from '../../serializers/supplier-rfp-serializer';
 import Axios from '../../utils/axios/axios';
 import {
   GET_SUPPLIER_RFP,
-  CREATE_BID_RESPONSE,
   SET_CURRENT_SUPPLIER_RFP,
   GET_SUPPLIER_RFP_BY_ID,
   FIND_SUPPLIER_EVENT_BY_ID,
@@ -15,7 +13,7 @@ import {
   CHECK_SUPPLIER_CLAIMS,
   SET_SUPPLIER_LOADING,
   SET_SUPPLIER_DONE_LOADING,
-} from '../types/supplierRfpTypes';
+} from '../types/supplierTypes';
 
 export const setLoading = () => async (dispatch) => dispatch({
   type: SET_SUPPLIER_LOADING,
@@ -51,19 +49,6 @@ Promise((resolve, reject) => {
     reject(error);
   });
 });
-
-export const createBidResponse = (bid, owner_id) => async (dispatch, getState) => {
-  const { tenant: { currentTenant } } = getState();
-
-  console.log('This is the bid that we want to create', serializeSupplierBid(bid));
-  const newBid = await Axios
-    .post(`/v1/${currentTenant.id}/bids/rfp?proposal_request_id?=${bid.rfpID}&event_owner_id=${owner_id}`, serializeSupplierBid(bid));
-  console.log('This is the request we got back', newBid);
-  dispatch({
-    type: CREATE_BID_RESPONSE,
-    payload: newBid,
-  });
-};
 
 export const setCurrentSupplierRfp = (rfp) => async (dispatch) => {
   dispatch({
@@ -130,13 +115,16 @@ export const confirmRSVP = (status) => async (dispatch, getState) => {
     dispatch(setLoading());
     const { tenant: { currentTenant: { id } }, supplierRfp: { currentProposal } } = getState();
     const { tenant } = currentProposal;
-    await Axios
-      .post(`/v1/${id}/claims/rfp?proposal_request_id=${currentProposal.id}&event_owner_id=${tenant.id}`);
     if (status) {
+      await Axios
+        .post(`/v1/${id}/claims/rfp?proposal_request_id=${currentProposal.id}&event_owner_id=${tenant.id}`);
       dispatch({
         type: CONFIRM_RSVP,
       });
     } else {
+      await Axios
+        .post(`/v1/${id}/claims/rfp?proposal_request_id=${currentProposal.id}&event_owner_id=${tenant.id}`,
+          { agreed_to_participate: status });
       dispatch({
         type: REVOKE_RSVP,
       });

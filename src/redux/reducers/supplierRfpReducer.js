@@ -9,11 +9,13 @@ import {
   CHECK_SUPPLIER_CLAIMS,
   SET_SUPPLIER_LOADING,
   SET_SUPPLIER_DONE_LOADING,
-} from '../types/supplierRfpTypes';
+  VIEW_BIDS,
+} from '../types/supplierTypes';
 
 const initialState = {
   loading: false,
   proposals: [],
+  // bids: [],
   currentProposal: null,
   rfpInbox: null,
   rfpOutbox: null,
@@ -28,6 +30,13 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
+    // case CREATE_BID_RESPONSE: {
+    //   return {
+    //     ...state,
+    //     bids: [action.payload, ...state.bids],
+    //   };
+    // }
+
     case GET_SUPPLIER_RFP: {
       return {
         ...state,
@@ -75,6 +84,7 @@ export default (state = initialState, action) => {
         },
       };
     }
+
     case CHECK_SUPPLIER_CLAIMS: {
       const data = action.payload;
       const proposal = state.currentProposal;
@@ -111,6 +121,12 @@ export default (state = initialState, action) => {
       return {
         ...state,
         loading: false,
+      };
+    }
+
+    case VIEW_BIDS: {
+      return {
+        ...state,
       };
     }
 
