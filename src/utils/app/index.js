@@ -212,13 +212,19 @@ export const uploadFiles = (files, tenant_uid, directory) => new
 Promise(async (resolve, reject) => {
   try {
     let response = [];
+    let promises = [];
     const object_id = shortid.generate();
     // const folderName = process.env.REACT_APP_rfpFolderName;
     for (const file of files) {
       // const data = await uploadToFileServer(file, tenant_uid, rfp_id);
-      const data = await uploadToS3(file, tenant_uid, object_id, directory);
-      response = [...response, { title: file.title, url: data.location }];
+      const promise = uploadToS3(file, tenant_uid, object_id, directory);
+      promises = [...promises, promise];
+      // response = [...response, { title: file.title, url: data.location }];
     }
+    const data = await Promise.all(promises);
+    console.log('DATA after promise', data);
+    response = data.map((d, idx) => ({ title: files[idx].title, url: d.location }));
+    // console.log('after DOWNLOAD AND THIS IS THE DATA', data);
     resolve(response);
   } catch (error) {
     reject(error);

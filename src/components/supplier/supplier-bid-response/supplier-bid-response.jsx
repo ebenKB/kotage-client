@@ -190,7 +190,7 @@ render() {
 
 const mapStateProps = (state) => ({
   currentProposal: state.supplierRfp.currentProposal,
-  tenantUID: state.tenant.currentTenant.id,
+  tenantUID: state.tenant.currentTenant.account_id,
 });
 
 const mapDispatchToProps = {

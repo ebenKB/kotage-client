@@ -30,27 +30,28 @@ const DropzoneItem = ({
 
   // this function returns the appropriate icon based on the file type
   const getFileIcon = () => {
-    if (file.type === PDF) {
+    const { data: { type } } = file;
+    if (type === PDF) {
       return (<PDFIcon className="dark medium logo" />);
     }
 
-    if (file.type === WORD) {
+    if (type === WORD) {
       return (<WORDIcon className="dark medium logo" />);
     }
 
-    if (file.type === CSV) {
+    if (type === CSV) {
       return (<CSVIcon className="dark medium logo" />);
     }
 
-    if (file.type === JPEG) {
+    if (type === JPEG) {
       return (<JPEGIcon className="dark medium logo" />);
     }
 
-    if (file.type === EXCEL) {
+    if (type === EXCEL) {
       return (<EXCELIcon className="dark medium logo" />);
     }
 
-    if (file.type === PPTX) {
+    if (type === PPTX) {
       return (<PowerPointIcon className="dark medium logo" />);
     }
 
