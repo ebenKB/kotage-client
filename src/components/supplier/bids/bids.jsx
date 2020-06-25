@@ -17,11 +17,9 @@ const Bids = ({ getBids, bids }) => {
 			header="Sent Bids"
 		>
 			{bids && bids.map((bid) => (
-				<div>
-					<SupplierBidItem
-						bid={bid}
-					/>
-				</div>
+				<SupplierBidItem
+					bid={bid}
+				/>
 			))}
 		</KtWrapper>
 	</MainContent>

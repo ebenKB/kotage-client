@@ -29,7 +29,7 @@ const RfpItem = ({ type, proposal }) => (proposal && (
 					{ type }
 				</Label>
 				<div className="sm-caption">
-          This proposal was created by
+					This proposal was created by
 					{' '}
 					<span className="bold">Alexander Churchill</span>
 					{' '}
@@ -37,7 +37,7 @@ const RfpItem = ({ type, proposal }) => (proposal && (
 					<span className="bold">23 May, 2018</span>
 					<div>
 						<span>
-              The deadline for the proposal is
+							The deadline for the proposal is
 							{' '}
 						</span>
 						<span className="bold">1st April, 2018</span>
