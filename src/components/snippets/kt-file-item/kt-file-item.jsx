@@ -8,6 +8,7 @@ import { ReactComponent as JPEGIcon } from '../../../svg/jpg-alt.svg';
 import { ReactComponent as WORDIcon } from '../../../svg/word-alt.svg';
 import { ReactComponent as PNGIcon } from '../../../svg/png-alt.svg';
 import { ReactComponent as EXCELIcon } from '../../../svg/xls-alt.svg';
+import { ReactComponent as FileIcon } from '../../../svg/file.svg';
 import './kt-file-item.scss';
 import PdfReader from '../../pdf-reader/pdf-reader';
 import { ReactComponent as Download } from '../../../svg/download.svg';
@@ -52,7 +53,7 @@ const KtFileItem = ({ fileObject, details, user }) => {
       return 'pdf';
     }
 
-    if (fileObject.fileType === PNG || fileObject.fileType === JPEG || fileObject.fileType) {
+    if (fileObject.fileType === PNG || fileObject.fileType === JPEG) {
       return 'image';
     }
     return 'none';
@@ -73,7 +74,7 @@ const KtFileItem = ({ fileObject, details, user }) => {
     if (fileObject.fileType === EXCEL || (getFileExtension(fileObject.fileName) === '.xlsx')) {
       return (<EXCELIcon className="big logo auto-height m-r-5" />);
     }
-    return (<span />);
+    return (<FileIcon className="big logo auto-height m-r-5" />);
   };
 
   const getPreview = () => {
@@ -97,6 +98,8 @@ const KtFileItem = ({ fileObject, details, user }) => {
     );
   };
 
+  const canShowPreview = () => getFileType() === 'pdf' || getFileType() === 'image';
+
   return (
 	<div className="m-b-20 flex-center file-item kt-bg-shadow">
 		<div className="flex-center item">
@@ -108,11 +111,13 @@ const KtFileItem = ({ fileObject, details, user }) => {
 		<div className="file-item__cta text-center">
 			<div className="file-item__cta-logo">
 				{fileObject && getDownloadLink()}
-				<span className="m-l-5 kt-item__cta-tool-tip" attr-data="Preview">
-					<Button className="kt-transparent" onClick={() => setCanPreview(true)}>
-						<Preview className="medium logo auto-height" />
-					</Button>
-				</span>
+				{canShowPreview() && (
+					<span className="m-l-5 kt-item__cta-tool-tip" attr-data="Preview">
+						<Button className="kt-transparent" onClick={() => setCanPreview(true)}>
+							<Preview className="medium logo auto-height" />
+						</Button>
+					</span>
+				)}
 			</div>
 		</div>
 		{canPreview && getPreview()}

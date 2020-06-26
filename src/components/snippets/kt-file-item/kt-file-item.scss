@@ -4,6 +4,10 @@
   position: relative;
 }
 
+.file-item:not(:last-child) {
+  margin-right: 8px;
+}
+
 .flex-center .file-item__cta {
   display: block;
   position: absolute;

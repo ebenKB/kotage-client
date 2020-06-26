@@ -23,7 +23,6 @@ export const setDoneLoading = () => async (dispatch) => dispatch({
   type: SET_SUPPLIER_DONE_LOADING,
 });
 
-
 // eslint-disable-next-line import/prefer-default-export
 export const getSupplierRfp = (page = 1) => async (dispatch, getState) => new
 Promise((resolve, reject) => {
@@ -32,7 +31,6 @@ Promise((resolve, reject) => {
   const promise = Axios.get(`/v1/${user.currentUser.tenant_id}/events/rfp?page=${page}`);
 
   promise.then((data) => {
-    // deserialize the requests
     const { data: { proposal_requests, meta } } = data;
     const deserializedProposals = proposal_requests
       .map((proposal) => deserializeProposal(proposal));
@@ -45,6 +43,7 @@ Promise((resolve, reject) => {
       },
     });
     resolve(proposal_requests);
+    return dispatch(setDoneLoading());
   }).catch((error) => {
     reject(error);
   });
@@ -57,38 +56,10 @@ export const setCurrentSupplierRfp = (rfp) => async (dispatch) => {
   });
 };
 
-
-/**
- * find an existing proposal from the list of proposals in the cache
- * without making a newtwork request
- * @param {*} id the id of the proposal to find
- * @param return the found proposal or null if not found
- */
-export const findSupplierEventByID = (id) => async (dispatch, getState) => (
-  new Promise((resolve, reject) => {
-    try {
-      // clear the current proposal to remove the cache
-      dispatch({
-        type: CLEAR_CURRENT_RFP,
-      });
-      const { supplierRfp: { proposals } } = getState();
-      const foundProposal = proposals.find((p) => p.id === parseInt(id, 10));
-      if (foundProposal) {
-        dispatch({
-          type: FIND_SUPPLIER_EVENT_BY_ID,
-          payload: foundProposal,
-        });
-        resolve(foundProposal);
-      } else resolve(null);
-    } catch (error) {
-      reject(error);
-    }
-  })
-);
-
 export const getSupplierRfpByID = (id) => async (dispatch, getState) => (
   new Promise((resolve, reject) => {
     try {
+      dispatch(setLoading());
       const { user, tenant: { currentTenant } } = getState();
       const promise = Axios
         .get(`/v1/${user.currentUser.tenant_id}/events/rfp?proposal_request_id=${id}&tenant_id=${currentTenant.id}`);
@@ -99,9 +70,42 @@ export const getSupplierRfpByID = (id) => async (dispatch, getState) => (
           payload: deserializeProposal(proposal_request),
         });
         resolve(proposal_request);
+        return dispatch(setDoneLoading());
       });
     } catch (error) {
       // do something here
+      reject(error);
+    }
+  })
+);
+
+/**
+ * find an existing proposal from the list of proposals in the cache
+ * if the proposal is not found in the cache, get the proposal from the api
+ * without making a newtwork request
+ * @param {*} id the id of the proposal to find
+ * @param return the found proposal or null if not found
+ */
+export const findSupplierEventByID = (id) => async (dispatch, getState) => (
+  new Promise((resolve, reject) => {
+    try {
+      dispatch(setLoading());
+      dispatch({ type: CLEAR_CURRENT_RFP });
+      const { supplierRfp: { proposals } } = getState();
+      const foundProposal = proposals.find((p) => p.id === parseInt(id, 10));
+      if (foundProposal) {
+        dispatch({
+          type: FIND_SUPPLIER_EVENT_BY_ID,
+          payload: foundProposal,
+        });
+        resolve(foundProposal);
+      } else {
+        // if the rfp is not found in the cache, query from the api
+        getSupplierRfpByID(id)
+          .then((rfp) => resolve(rfp));
+        dispatch(setDoneLoading());
+      }
+    } catch (error) {
       reject(error);
     }
   })
@@ -125,6 +129,7 @@ export const confirmRSVP = (status) => async (dispatch, getState) => {
       await Axios
         .post(`/v1/${id}/claims/rfp?proposal_request_id=${currentProposal.id}&event_owner_id=${tenant.id}`,
           { agreed_to_participate: status });
+
       dispatch({
         type: REVOKE_RSVP,
       });
@@ -143,6 +148,7 @@ export const acceptRfpTerms = (status) => async (dispatch, getState) => {
     await Axios
       .post(`/v1/${id}/claims/rfp?proposal_request_id=${currentProposal.id}&event_owner_id=${tenant.id}`,
         { agreed_to_participate: status });
+
     dispatch({
       type: ACCEPT_RFP_TERMS,
     });
@@ -159,6 +165,7 @@ export const checkSupplierRfpClaims = () => async (dispatch, getState) => {
     const { tenant } = currentProposal;
     const { data } = await Axios
       .get(`/v1/${id}/claims/rfp?proposal_request_id=${currentProposal.id}&event_owner_id=${tenant.id}`);
+
     dispatch({
       type: CHECK_SUPPLIER_CLAIMS,
       payload: data.rfp_claim,

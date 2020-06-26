@@ -14,3 +14,4 @@ export const SET_SUPPLIER_DONE_LOADING = 'SET_SUPPLIER_DONE_LOADING';
 export const VIEW_BIDS = 'VIEW_BIDS';
 export const FIND_BID_ID = 'FIND_BID_ID';
 export const GET_BID_BY_ID = 'GET_BID_BY_ID';
+export const CLEAR_CURRENT_BID = 'CLEAR_CURRENT_BID';

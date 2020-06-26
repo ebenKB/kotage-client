@@ -1,6 +1,12 @@
 
 .kt-divider {
-  // padding-bottom: 4px;
+  .logo {
+    visibility: hidden;
+  }
+}
+
+.kt-divider.hoverable:hover .logo {
+  visibility: visible;
 }
 
 .kt-divider.faint {

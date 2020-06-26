@@ -1,7 +1,16 @@
 /* eslint-disable camelcase */
 import Axios from '../../utils/axios/axios';
-import { VIEW_BIDS, CREATE_BID_RESPONSE, FIND_BID_ID } from '../types/supplierTypes';
-import { serializeSupplierBid, deserializeSupplierBid } from '../../serializers/supplier-serializers';
+import {
+  VIEW_BIDS,
+  CREATE_BID_RESPONSE,
+  FIND_BID_ID,
+  CLEAR_CURRENT_BID,
+} from '../types/supplierTypes';
+
+import {
+  serializeSupplierBid,
+  deserializeSupplierBid,
+} from '../../serializers/supplier-serializers';
 
 export const getAllSupplierBids = () => async (dispatch, getState) => {
   const { tenant: { currentTenant: { id } } } = getState();
@@ -26,11 +35,18 @@ export const createBid = (bid, owner_id) => async (dispatch, getState) => {
   });
 };
 
+export const clearCurrentBid = () => async (dispatch) => {
+  dispatch({
+    type: CLEAR_CURRENT_BID,
+  });
+};
+
 /**
  * Find a bid by ID from the cache
  * @param {*} id the id of the bid to find
  */
 export const findBidByID = (id) => async (dispatch, getState) => {
+  dispatch(clearCurrentBid());
   const { supplierBids: { bids } } = getState();
   const foundBid = bids.find((bid) => bid.id === parseInt(id, 10));
   if (foundBid) {
@@ -40,6 +56,7 @@ export const findBidByID = (id) => async (dispatch, getState) => {
     });
   }
 };
+
 
 /**
  * Find a bid by ID from the api

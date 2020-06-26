@@ -42,19 +42,24 @@ signUrl = async () => {
   }
 
   try {
-    const results = await Promise.all(promises);
-    this.setState((state) => ({
-      ...state,
-      signedUrls: results,
-    }));
+    // const results = await Promise.all(promises);
+    const results = await Promise.allSettled(promises);
+    for (const result of results) {
+      if (result.status === 'fulfilled') {
+        this.setState((state) => ({
+          ...state,
+          signedUrls: [...state.signedUrls, result.value],
+        }));
+      }
+    }
     const { signedUrls } = this.state;
     await this.downloadFiles(signedUrls);
   } catch (error) {
     if (error.response) {
       const { response: { data: { invalid_token } } } = error;
       if (invalid_token) {
-        // eslint-disable-next-line react/prop-types
-        this.props.history.push('/auth/signin');
+        const { history } = this.props;
+        history.push('/auth/signin');
       } else {
         setNotification(error, 'error');
       }
@@ -155,6 +160,7 @@ FileHandler.propTypes = {
   shouldSignUrl: PropTypes.bool,
   tenantID: PropTypes.string.isRequired,
   objectOwnerID: PropTypes.string.isRequired,
+  history: PropTypes.object.isRequired,
   // saveFileAsCache: PropTypes.func.isRequired,
 };
 
