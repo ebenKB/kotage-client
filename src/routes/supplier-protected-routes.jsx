@@ -9,6 +9,7 @@ const TermsConditions = lazy(() => import('../pages/supplier/rfp-tems-conditions
 const SupplierNotifications = lazy(() => import('../components/supplier/supplier-notification/supplier-notification'));
 const Bids = lazy(() => import('../components/supplier/bids/bids'));
 const ShowBid = lazy(() => import('../components/supplier/show-bid/show-bid'));
+const ReviseBid = lazy(() => import('../components/supplier/revise-bid/revise-bid'));
 
 const routes = [
   {
@@ -55,6 +56,11 @@ const routes = [
     path: '/supplier/bids/:id',
     exact: true,
     main: () => <ShowBid />,
+  },
+  {
+    path: '/supplier/bids/:id/revise',
+    exact: true,
+    main: () => <ReviseBid />,
   },
 ];
 

@@ -54,7 +54,7 @@ const ShowBid = ({
 						</span>
 					</div>
 					<div className="m-t-10 dar flex-center">
-						Created on
+						Submitted on
 						<span className="bold">
 							&nbsp;
 							{format(new Date(currentBid.bid_date), 'iiii do LLLL, yyyy')}
@@ -121,7 +121,7 @@ const ShowBid = ({
 							content="Go Back"
 						/>
 					</Link>
-					<Link to="/">
+					<Link to={`/supplier/bids/${currentBid.id}/revise`}>
 						<Button
 							size="tiny"
 							positive
