@@ -7,7 +7,6 @@ import KtWrapper from '../../kt-wrapper/kt-wrapper';
 import { getAllSupplierBids } from '../../../redux/actions/supplierBidActions';
 import SupplierBidItem from '../supplier-bid-item/supplier-bid-item';
 
-
 const Bids = ({ getBids, bids }) => {
   useEffect(() => { getBids(); }, []);
 
@@ -16,6 +15,31 @@ const Bids = ({ getBids, bids }) => {
 		<KtWrapper
 			header="Sent Bids"
 		>
+			{bids && bids.map((bid) => (
+				<SupplierBidItem
+					bid={bid}
+				/>
+			))}
+			{bids && bids.map((bid) => (
+				<SupplierBidItem
+					bid={bid}
+				/>
+			))}
+			{bids && bids.map((bid) => (
+				<SupplierBidItem
+					bid={bid}
+				/>
+			))}
+			{bids && bids.map((bid) => (
+				<SupplierBidItem
+					bid={bid}
+				/>
+			))}
+			{bids && bids.map((bid) => (
+				<SupplierBidItem
+					bid={bid}
+				/>
+			))}
 			{bids && bids.map((bid) => (
 				<SupplierBidItem
 					bid={bid}

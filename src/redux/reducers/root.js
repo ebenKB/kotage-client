@@ -32,7 +32,8 @@ const rootReducer = (state, action) => {
   let newState = state;
   if (action.type === LOGOUT) {
     storage.removeItem('persist:root');
-    newState = undefined;
+    // newState = undefined;
+    newState = { ...newState, user: undefined, tenant: undefined };
   }
   return reducers(newState, action);
 };

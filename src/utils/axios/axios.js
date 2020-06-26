@@ -19,13 +19,17 @@ Axios.interceptors.request.use((config) => {
 }, (error) => Promise.reject(error));
 
 Axios.interceptors.response.use((response) => response, (err) => {
-  const { response: { status } } = err;
-  // force users to login when their token is not valid or expired or not present
-  if (status === 401) {
-    return store.dispatch({
-      type: LOGOUT,
-    });
+  const { response } = err;
+  if (response) {
+    const { status } = response;
+    // force users to login when their token is not valid or expired or not present
+    if (status === 401) {
+      return store.dispatch({
+        type: LOGOUT,
+      });
+    }
   }
+
   return Promise.reject(err);
 });
 

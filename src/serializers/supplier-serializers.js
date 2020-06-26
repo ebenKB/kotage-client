@@ -41,7 +41,15 @@ export const deserializeSupplierBid = (bid) => ({
   supplier: {
     id: bid.supplier.id,
   },
-  technicalRequirements: bid.technical_requirements,
-  commercialRequirements: bid.commercial_requirements,
+  technicalRequirements: bid.technical_requirements.map((t) => ({
+    id: t.id,
+    title: t.filename,
+    file: t.url,
+  })),
+  commercialRequirements: bid.commercial_requirements.map((c) => ({
+    id: c.id,
+    title: c.filename,
+    file: c.url,
+  })),
   bid_date: bid.bid_at,
 });

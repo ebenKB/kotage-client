@@ -1,4 +1,6 @@
-import { CREATE_BID_RESPONSE, VIEW_BIDS } from '../types/supplierTypes';
+import {
+  CREATE_BID_RESPONSE, VIEW_BIDS, GET_BID_BY_ID, FIND_BID_ID,
+} from '../types/supplierTypes';
 
 const initialState = {
   bids: [],
@@ -18,6 +20,21 @@ export default (state = initialState, action) => {
       return {
         ...state,
         bids: [...action.payload],
+      };
+    }
+
+    case GET_BID_BY_ID: {
+      return {
+        ...state,
+        currentBid: action.payload,
+      };
+    }
+
+    case FIND_BID_ID: {
+      console.log('WE FOUND A BID', action.payload);
+      return {
+        ...state,
+        currentBid: action.payload,
       };
     }
 
