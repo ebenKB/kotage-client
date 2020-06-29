@@ -261,6 +261,10 @@ svg.faint {
   align-items: center;
 }
 
+.flex-center.space-between {
+  justify-content: space-between;
+}
+
 .flex-inline {
   display: flex !important;
   justify-content: space-between;

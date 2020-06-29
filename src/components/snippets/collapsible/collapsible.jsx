@@ -2,13 +2,13 @@
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable react/jsx-fragments */
 /* eslint-disable react/prop-types */
-import React, { useState, Fragment } from 'react';
+import React, { useState } from 'react';
 import useCollapse from 'react-collapsed';
 import { Icon } from 'semantic-ui-react';
 import './collapsible.scss';
 import Divider from '../../kt-divider/divider';
 
-const Collapsible = (props) => {
+const Collapsible = ({ title, children, classes }) => {
   const [isOpen, setOpen] = useState(false);
   const { getCollapseProps, getToggleProps } = useCollapse({ isOpen });
 
@@ -17,19 +17,19 @@ const Collapsible = (props) => {
       return (
 	<div className="collapse-header">
 		<Icon name="angle down" />
-		<Divider type="thick" title={props.title} classes="m-t-10" />
+		<Divider type="thick" title={title} classes="m-t-10" />
 	</div>
       );
     }
     return (
 	<div className="collapse-header">
 		<Icon name="angle up" />
-		<Divider type="thick" title={props.title} classes="m-t-10" />
+		<Divider type="thick" title={title} classes="m-t-10" />
 	</div>
     );
   };
   return (
-	<Fragment>
+	<div className={classes}>
 		<button
 			type="button"
 			className="collapsibe-btn"
@@ -38,9 +38,9 @@ const Collapsible = (props) => {
 			{getContent()}
 		</button>
 		<section {...getCollapseProps()}>
-			{props.children}
+			{children}
 		</section>
-	</Fragment>
+	</div>
   );
 };
 

@@ -1,5 +1,10 @@
 import {
-  CREATE_BID_RESPONSE, VIEW_BIDS, GET_BID_BY_ID, FIND_BID_ID, CLEAR_CURRENT_BID,
+  CREATE_BID_RESPONSE,
+  VIEW_BIDS,
+  GET_BID_BY_ID,
+  FIND_BID_ID,
+  CLEAR_CURRENT_BID,
+  REVISE_EXISTING_BID,
 } from '../types/supplierTypes';
 
 const initialState = {
@@ -43,6 +48,20 @@ export default (state = initialState, action) => {
         currentBid: null,
       };
     }
+
+    case REVISE_EXISTING_BID: {
+      console.log('We are revising the bid', action.payload);
+      const updatedBids = state.bids.map((bid) => {
+        if (bid.id === action.payload.id) {
+          return action.payload;
+        } return bid;
+      });
+      return {
+        ...state,
+        bid: updatedBids,
+      };
+    }
+
     default: {
       return { ...state };
     }

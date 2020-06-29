@@ -3,7 +3,8 @@
 import React, { Component } from 'react';
 import { ValidatorForm } from 'react-form-validator-core';
 import { connect } from 'react-redux';
-import { createBid } from '../../../redux/actions/supplierBidActions';
+import { Button } from 'semantic-ui-react';
+import { createBid, reviseExistingBid } from '../../../redux/actions/supplierBidActions';
 import KtWrapper from '../../kt-wrapper/kt-wrapper';
 import MainContent from '../../kt-main-content/mainContent';
 import Help from '../../../utils/requisitions/new/help';
@@ -12,6 +13,8 @@ import Divider from '../../kt-divider/divider';
 import Dropzone from '../../dropzone/dropzone';
 import { uploadFiles } from '../../../utils/app/index';
 import { RFP_FOLDER_NAME } from '../../../utils/app/definitions';
+import { ReactComponent as CloseIcon } from '../../../svg/close.svg';
+import Collapsible from '../../snippets/collapsible/collapsible';
 
 class EventResponse extends Component {
   constructor(props) {
@@ -44,8 +47,28 @@ addCommercialProposal = (files) => {
   }));
 }
 
+deleteBidFile = (file, type) => {
+  if (type === 'commercial_req') {
+    const { commercialRequirements } = this.state;
+    const newFiles = commercialRequirements.filter((c) => c.id !== file.id);
+    this.setState((state) => ({
+      ...state,
+      commercialRequirements: newFiles,
+    }));
+  } else if (type === 'technical_req') {
+    const { technicalRequirements } = this.state;
+    const newFiles = technicalRequirements.filter((t) => t.id !== file.id);
+    this.setState((state) => ({
+      ...state,
+      technicalRequirements: newFiles,
+    }));
+  }
+};
+
 handleSubmit = async () => {
-  const { respondToRfp, tenantUID, currentProposal: { id } } = this.props;
+  const {
+    respondToRfp, reviseBid, tenantUID, currentProposal: { id }, actionType,
+  } = this.props;
   const { commercialRequirements, technicalRequirements } = this.state;
 
   // set the owner
@@ -54,22 +77,67 @@ handleSubmit = async () => {
     rfpID: id,
   }));
 
-  // upload commercial requirements to remote server
-  const commercialReqFiles = await uploadFiles(commercialRequirements, tenantUID, RFP_FOLDER_NAME);
-  this.setState((state) => ({
-    ...state,
-    commercialRequirements: commercialReqFiles,
-  }));
+  /**
+   * if the user want to edit, sort out the files that have alredy been uploaded to the server
+   * and upload only those that are new
+   */
+  if (actionType === 'edit') {
+    const existingCommReq = commercialRequirements.filter((c) => c.id !== null);
+    const newCommReq = commercialRequirements.filter((c) => c.id === null);
 
-  // upload technical requirements to remote serve
-  const technicalReqFiles = await uploadFiles(technicalRequirements, tenantUID, RFP_FOLDER_NAME);
-  this.setState((state) => ({
-    ...state,
-    technicalRequirements: technicalReqFiles,
-  }));
+    // upload commercial requirements to remote server
+    const commercialReqFiles = await uploadFiles(newCommReq, tenantUID, RFP_FOLDER_NAME);
+    this.setState((state) => ({
+      ...state,
+      commercialRequirements: [
+        ...commercialReqFiles,
+        ...existingCommReq.map((e) => ({ title: e.title, url: e.file })),
+      ],
+    }));
+
+    const existingTechReq = technicalRequirements.filter((t) => t.id !== null);
+    const newTechReq = technicalRequirements.filter((t) => t.id === null);
+
+    // upload technical requirements to remote serve
+    const technicalReqFiles = await uploadFiles(newTechReq, tenantUID, RFP_FOLDER_NAME);
+    this.setState((state) => ({
+      ...state,
+      technicalRequirements: [
+        ...technicalReqFiles,
+        ...existingTechReq.map((e) => ({ title: e.title, url: e.file })),
+      ],
+    }));
+
+    // preformat currency
+    const { currency } = this.state;
+    this.setState((state) => ({
+      ...state,
+      currency: `${currency.name}_${currency.symbol}`,
+    }));
+  } else if (actionType === 'save') {
+    // upload commercial requirements to remote server
+    const commercialReqFiles = await
+    uploadFiles(commercialRequirements, tenantUID, RFP_FOLDER_NAME);
+    this.setState((state) => ({
+      ...state,
+      commercialRequirements: commercialReqFiles,
+    }));
+
+    // upload technical requirements to remote serve
+    const technicalReqFiles = await uploadFiles(technicalRequirements, tenantUID, RFP_FOLDER_NAME);
+    this.setState((state) => ({
+      ...state,
+      technicalRequirements: technicalReqFiles,
+    }));
+  }
 
   const { currentProposal } = this.props;
-  respondToRfp(this.state, currentProposal.tenant.id);
+  if (actionType.toLowerCase() === 'save') {
+    respondToRfp(this.state, currentProposal.tenant.id);
+  } else if (actionType.toLowerCase() === 'edit') {
+    console.log('We want to edit the proposal', this.state);
+    reviseBid(this.state, currentProposal.tenant.id);
+  }
 };
 
 handleInputChange = ({ inputValue, selectedOption }) => {
@@ -110,8 +178,10 @@ handleQuestionAnswer = (e, q) => {
 }
 
 render() {
-  const { totalBidValue } = this.state;
-  const { currentProposal, title } = this.props;
+  const { totalBidValue, technicalRequirements, commercialRequirements } = this.state;
+  const {
+    currentProposal, title, actionName,
+  } = this.props;
   return (
 	<MainContent
 		help={Help}
@@ -119,7 +189,7 @@ render() {
 		<KtWrapper
 			header={title}
 			canPerform
-			actionName="Submit"
+			actionName={actionName}
 			handleAction={this.handleSubmit}
 		>
 			{currentProposal && (
@@ -157,7 +227,29 @@ render() {
 					<div className="m-t-40">
 						<Divider title="Technical Proposal" type="thick" isNumbered number={3} />
 						<div className="m-t-20">
+							{technicalRequirements && (
+								<Collapsible
+									title={`${technicalRequirements.length} existing files`}
+									classes="m-b-20"
+								>
+									{technicalRequirements && technicalRequirements.map((t) => (
+										<div className="p-l-50 p-r-50">
+											<div className="fluid flex-center space-between">
+												<p>{t.title}</p>
+												<Button
+													size="tiny"
+													content={<CloseIcon className="small dark logo" />}
+													className="kt-transparent"
+													onClick={() => this.deleteBidFile(t, 'technical_req')}
+												/>
+											</div>
+											<Divider type="faint" classes="m-t-5 m-b-5" />
+										</div>
+									))}
+								</Collapsible>
+							)}
 							<Dropzone
+								existingFiles={technicalRequirements.map((f) => ({ data: f }))}
 								onFilesChange={(files) => this.addTechnicalProposal(files)}
 							/>
 						</div>
@@ -165,6 +257,27 @@ render() {
 					<div className="m-t-40">
 						<Divider title="Commercial Proposal" type="thick" isNumbered number={4} />
 						<div className="m-t-20">
+							{commercialRequirements && (
+								<Collapsible
+									classes="m-b-20"
+									title={`${commercialRequirements.length} existing files`}
+								>
+									{commercialRequirements && commercialRequirements.map((c) => (
+										<div className="p-l-50 p-r-50">
+											<div className="fluid flex-center space-between">
+												<p>{c.title}</p>
+												<Button
+													size="tiny"
+													content={<CloseIcon className="small dark logo" />}
+													className="kt-transparent"
+													onClick={() => this.deleteBidFile(c, 'commercial_req')}
+												/>
+											</div>
+											<Divider type="faint" classes="m-t-5 m-b-5" />
+										</div>
+									))}
+								</Collapsible>
+							)}
 							<Dropzone
 								onFilesChange={(files) => this.addCommercialProposal(files)}
 							/>
@@ -186,6 +299,7 @@ const mapStateProps = (state) => ({
 
 const mapDispatchToProps = {
   respondToRfp: createBid,
+  reviseBid: reviseExistingBid,
 };
 
 export default connect(mapStateProps, mapDispatchToProps)(EventResponse);
