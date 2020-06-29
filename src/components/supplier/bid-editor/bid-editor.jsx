@@ -108,7 +108,7 @@ handleSubmit = async () => {
       ],
     }));
 
-    // preformat currency
+    // preformat currency using NAME_SYMBOL
     const { currency } = this.state;
     this.setState((state) => ({
       ...state,
