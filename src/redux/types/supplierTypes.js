@@ -16,3 +16,4 @@ export const FIND_BID_ID = 'FIND_BID_ID';
 export const GET_BID_BY_ID = 'GET_BID_BY_ID';
 export const CLEAR_CURRENT_BID = 'CLEAR_CURRENT_BID';
 export const REVISE_EXISTING_BID = 'REVISE_EXISTING_BID';
+export const DELETE_BID = 'DELETE_BID';

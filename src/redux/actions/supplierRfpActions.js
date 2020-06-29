@@ -140,14 +140,14 @@ export const confirmRSVP = (status) => async (dispatch, getState) => {
   }
 };
 
-export const acceptRfpTerms = (status) => async (dispatch, getState) => {
+export const acceptRfpTerms = () => async (dispatch, getState) => {
   try {
     dispatch(setLoading());
     const { tenant: { currentTenant: { id } }, supplierRfp: { currentProposal } } = getState();
     const { tenant } = currentProposal;
     await Axios
       .post(`/v1/${id}/claims/rfp?proposal_request_id=${currentProposal.id}&event_owner_id=${tenant.id}`,
-        { agreed_to_participate: status });
+        { agreed_to_participate: true });
 
     dispatch({
       type: ACCEPT_RFP_TERMS,

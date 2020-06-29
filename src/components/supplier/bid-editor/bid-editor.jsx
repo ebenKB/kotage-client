@@ -67,14 +67,15 @@ deleteBidFile = (file, type) => {
 
 handleSubmit = async () => {
   const {
-    respondToRfp, reviseBid, tenantUID, currentProposal: { id }, actionType,
+    respondToRfp, reviseBid, tenantUID, currentProposal, actionType,
   } = this.props;
+
   const { commercialRequirements, technicalRequirements } = this.state;
 
   // set the owner
   this.setState((state) => ({
     ...state,
-    rfpID: id,
+    rfpID: currentProposal.id,
   }));
 
   /**
@@ -100,6 +101,7 @@ handleSubmit = async () => {
 
     // upload technical requirements to remote serve
     const technicalReqFiles = await uploadFiles(newTechReq, tenantUID, RFP_FOLDER_NAME);
+    console.log('After Technical upload', technicalReqFiles);
     this.setState((state) => ({
       ...state,
       technicalRequirements: [
@@ -109,7 +111,8 @@ handleSubmit = async () => {
     }));
 
     // preformat currency using NAME_SYMBOL
-    const { currency } = this.state;
+    const { currency } = currentProposal;
+    console.log('This is the currency we are setting', currency);
     this.setState((state) => ({
       ...state,
       currency: `${currency.name}_${currency.symbol}`,
@@ -131,7 +134,6 @@ handleSubmit = async () => {
     }));
   }
 
-  const { currentProposal } = this.props;
   if (actionType.toLowerCase() === 'save') {
     respondToRfp(this.state, currentProposal.tenant.id);
   } else if (actionType.toLowerCase() === 'edit') {

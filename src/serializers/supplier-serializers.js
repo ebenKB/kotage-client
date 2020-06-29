@@ -29,7 +29,7 @@ export const deserializeSupplierBid = (bid) => ({
   id: bid.id,
   ownerUID: bid.owner_uid,
   currency: {
-    name: bid.bid_currency.split('_')[0],
+    name: bid.bid_currency.split('_')[0].toUpperCase(),
     symbol: bid.bid_currency.split('_')[1],
   },
   totalBidValue: bid.bid_amount,

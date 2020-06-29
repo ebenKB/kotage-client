@@ -6,6 +6,7 @@ import {
   FIND_BID_ID,
   CLEAR_CURRENT_BID,
   REVISE_EXISTING_BID,
+  DELETE_BID,
 } from '../types/supplierTypes';
 
 import {
@@ -44,10 +45,18 @@ export const createBid = (bid, owner_id) => async (dispatch, getState) => {
 export const reviseExistingBid = (bid, owner_id) => async (dispatch, getState) => {
   const { tenant: { currentTenant } } = getState();
   const { data: { rfp_bid } } = await Axios
-    .put(`/v1/${currentTenant.id}/bids/rfp?proposal_request_id=${bid.rfpID}&event_owner_id=${owner_id}`, serializeSupplierBid(bid));
+    .put(`/v1/${currentTenant.id}/bids/${bid.id}?proposal_request_id=${bid.rfpID}&event_owner_id=${owner_id}`, serializeSupplierBid(bid));
   dispatch({
     type: REVISE_EXISTING_BID,
     payload: deserializeSupplierBid(rfp_bid),
+  });
+};
+
+export const deleteBid = (id) => async (dispatch) => {
+  console.log('We want to delete the bid', id);
+  dispatch({
+    type: DELETE_BID,
+    payload: id,
   });
 };
 

@@ -5,6 +5,7 @@ import {
   FIND_BID_ID,
   CLEAR_CURRENT_BID,
   REVISE_EXISTING_BID,
+  DELETE_BID,
 } from '../types/supplierTypes';
 
 const initialState = {
@@ -46,6 +47,15 @@ export default (state = initialState, action) => {
       return {
         ...state,
         currentBid: null,
+      };
+    }
+
+    case DELETE_BID: {
+      const { bids } = state;
+      const newBids = bids.filter((b) => b.id !== action.payload);
+      return {
+        ...state,
+        bids: newBids,
       };
     }
 

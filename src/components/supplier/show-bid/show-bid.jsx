@@ -11,7 +11,7 @@ import { getSupplierRfpByID } from '../../../redux/actions/supplierRfpActions';
 import Divider from '../../kt-divider/divider';
 import MainContent from '../../kt-main-content/mainContent';
 import Help from '../../../utils/requisitions/new/help';
-import { findBidByID } from '../../../redux/actions/supplierBidActions';
+import { findBidByID, deleteBid } from '../../../redux/actions/supplierBidActions';
 import KtWrapperLite from '../../kt-wrapper-lite/kt-wrapper-lite';
 import FileHandler from '../../file-handler/file-handler';
 import RfpTitle from '../supplier-rfp-title/rfp-title';
@@ -19,21 +19,34 @@ import KtLoader from '../../loader/loader';
 
 
 const ShowBid = ({
-  findBid, currentBid, tenantID, getSupplierRfpDetails, currentRfp, loadingRfp,
+  findBid,
+  currentBid,
+  tenantID,
+  getSupplierRfpDetails,
+  currentRfp,
+  loadingRfp,
+  deleteBidPermanently,
 }) => {
   const { id } = useParams();
   const [hasInit, setHasInit] = useState(false);
-
   useEffect(() => {
     if (!hasInit) {
       if (currentBid === null) {
         findBid(id);
       } else if (currentBid) {
         getSupplierRfpDetails(currentBid.rfpID);
-        setHasInit(true);
+        if (currentRfp) {
+          setHasInit(true);
+        }
       }
     }
   }, [currentBid]);
+
+  const handleDeleteBid = () => {
+    console.log('We have to delete the bid');
+    deleteBidPermanently(currentBid.id);
+  };
+
   return (
 	<MainContent
 		help={Help}
@@ -114,7 +127,18 @@ const ShowBid = ({
 						)}
 					</div>
 				</KtWrapperLite>
-				<div className="flex-center m-t-20">
+				<KtWrapperLite
+					classes="m-t-20"
+				>
+					<Divider ishoverable type="thick" title="Dangerous Action" classes="" />
+					<p className="m-t-10">This action is not reversible.</p>
+					<Button
+						content="Delete Bid"
+						className="kt-danger kt-transparent"
+						onClick={handleDeleteBid}
+					/>
+				</KtWrapperLite>
+				<div className="flex-center m-t-40">
 					<Link to="/supplier/bids">
 						<Button
 							size="tiny"
@@ -138,6 +162,7 @@ const ShowBid = ({
 const mapDispatchToProps = {
   findBid: findBidByID,
   getSupplierRfpDetails: getSupplierRfpByID,
+  deleteBidPermanently: deleteBid,
 };
 
 const mapStateToProps = (state) => ({
@@ -154,6 +179,7 @@ ShowBid.propTypes = {
   getSupplierRfpDetails: PropTypes.func.isRequired,
   currentRfp: PropTypes.object.isRequired,
   loadingRfp: PropTypes.bool.isRequired,
+  deleteBidPermanently: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(ShowBid));
