@@ -9,7 +9,7 @@ const DatePicker = ({ placeholder }) => (
 			placeholder={placeholder}
 		/>
 		<span className="open-button">
-      icon here
+			icon here
 		</span>
 	</div>
 );

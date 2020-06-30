@@ -234,20 +234,22 @@ render() {
 									title={`${technicalRequirements.length} existing files`}
 									classes="m-b-20"
 								>
-									{technicalRequirements && technicalRequirements.map((t) => (
-										<div className="p-l-50 p-r-50">
-											<div className="fluid flex-center space-between">
-												<p>{t.title}</p>
-												<Button
-													size="tiny"
-													content={<CloseIcon className="small dark logo" />}
-													className="kt-transparent"
-													onClick={() => this.deleteBidFile(t, 'technical_req')}
-												/>
+									<div className="m-t-10">
+										{technicalRequirements && technicalRequirements.map((t) => (
+											<div className="">
+												<div className="fluid flex-center space-between">
+													<p>{t.title}</p>
+													<Button
+														size="tiny"
+														content={<CloseIcon className="small dark logo" />}
+														className="kt-transparent"
+														onClick={() => this.deleteBidFile(t, 'technical_req')}
+													/>
+												</div>
+												<Divider type="faint" classes="m-t-5 m-b-5" />
 											</div>
-											<Divider type="faint" classes="m-t-5 m-b-5" />
-										</div>
-									))}
+										))}
+									</div>
 								</Collapsible>
 							)}
 							<Dropzone
@@ -264,20 +266,22 @@ render() {
 									classes="m-b-20"
 									title={`${commercialRequirements.length} existing files`}
 								>
-									{commercialRequirements && commercialRequirements.map((c) => (
-										<div className="p-l-50 p-r-50">
-											<div className="fluid flex-center space-between">
-												<p>{c.title}</p>
-												<Button
-													size="tiny"
-													content={<CloseIcon className="small dark logo" />}
-													className="kt-transparent"
-													onClick={() => this.deleteBidFile(c, 'commercial_req')}
-												/>
+									<div className="m-t-10">
+										{commercialRequirements && commercialRequirements.map((c) => (
+											<div className="">
+												<div className="fluid flex-center space-between">
+													<p>{c.title}</p>
+													<Button
+														size="tiny"
+														content={<CloseIcon className="small dark logo" />}
+														className="kt-transparent"
+														onClick={() => this.deleteBidFile(c, 'commercial_req')}
+													/>
+												</div>
+												<Divider type="faint" classes="m-t-5 m-b-5" />
 											</div>
-											<Divider type="faint" classes="m-t-5 m-b-5" />
-										</div>
-									))}
+										))}
+									</div>
 								</Collapsible>
 							)}
 							<Dropzone

@@ -28,6 +28,7 @@ export const serializeSupplierBid = (bid) => ({
 export const deserializeSupplierBid = (bid) => ({
   id: bid.id,
   ownerUID: bid.owner_uid,
+  status: bid.status,
   currency: {
     name: bid.bid_currency.split('_')[0].toUpperCase(),
     symbol: bid.bid_currency.split('_')[1],

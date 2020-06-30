@@ -16,7 +16,7 @@ import KtWrapperLite from '../../kt-wrapper-lite/kt-wrapper-lite';
 import FileHandler from '../../file-handler/file-handler';
 import RfpTitle from '../supplier-rfp-title/rfp-title';
 import KtLoader from '../../loader/loader';
-
+import Modal from '../../modal/modal';
 
 const ShowBid = ({
   findBid,
@@ -29,6 +29,7 @@ const ShowBid = ({
 }) => {
   const { id } = useParams();
   const [hasInit, setHasInit] = useState(false);
+
   useEffect(() => {
     if (!hasInit) {
       if (currentBid === null) {
@@ -41,6 +42,8 @@ const ShowBid = ({
       }
     }
   }, [currentBid]);
+
+  const [canShowModal, setCanShowModal] = useState(false);
 
   const handleDeleteBid = () => {
     console.log('We have to delete the bid');
@@ -135,8 +138,19 @@ const ShowBid = ({
 					<Button
 						content="Delete Bid"
 						className="kt-danger kt-transparent"
-						onClick={handleDeleteBid}
+						onClick={() => setCanShowModal(true)}
 					/>
+					{canShowModal && (
+						<Modal
+							heading="Dangerous Action"
+							type="danger"
+							confirmActionText="Delete Permanently"
+							handleConfirmAction={handleDeleteBid}
+							handleDeclineAction={() => setCanShowModal(false)}
+						>
+							Please note that this bid will be deleted permanently
+						</Modal>
+					)}
 				</KtWrapperLite>
 				<div className="flex-center m-t-40">
 					<Link to="/supplier/bids">

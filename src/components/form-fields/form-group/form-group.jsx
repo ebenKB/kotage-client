@@ -6,7 +6,6 @@ import {
   Form, TextArea, Placeholder, Dropdown,
 } from 'semantic-ui-react';
 
-import Input from '../input/input';
 import Amount from '../amount/amount';
 
 import './form-group.scss';
@@ -14,6 +13,7 @@ import Dropzone from '../../dropzone/dropzone';
 import KtTextArea from '../textarea/textarea';
 import InputValidator from '../input-validator/input-validator';
 import RichTextEditor from '../../rich-text-editor/rich-text-editor';
+import DatePicker from '../../pickers/date-picker';
 
 const FormGroup = ({
   type,
@@ -40,7 +40,13 @@ const FormGroup = ({
     if (type === 'text' || type === 'password' || type === 'number' || type === 'email') {
       return <InputValidator type={type} placeholder={placeholder} {...rest} />;
     } else if (type === 'date') {
-      return <Input type={type} {...rest} />;
+      return (
+	<DatePicker
+		isDisablePast={rest.isDisablePast}
+		handleChange={(data) => rest.onChange(data)}
+		value={rest.dateValue}
+	/>
+      );
     } else if (type === 'dropdown') {
       return (
 	<Dropdown

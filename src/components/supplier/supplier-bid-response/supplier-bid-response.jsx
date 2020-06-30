@@ -18,7 +18,8 @@ class EventResponse extends Component {
     super(props);
 
     this.state = {
-      totalBidValue: 0,
+      totalBidValue: '',
+      bidValidity: null,
       rfpID: null,
       currency: null,
       rfpQuestionResponses: [],
@@ -86,13 +87,23 @@ handleSubmit = async () => {
   respondToRfp(this.state, currentProposal.tenant.id);
 };
 
-handleInputChange = ({ inputValue, selectedOption }) => {
+handleAmountInputChange = ({ inputValue, selectedOption }) => {
   this.setState((state) => ({
     ...state,
     totalBidValue: inputValue,
   }));
   this.setBidCurrency(selectedOption);
 }
+
+handleDateInputChange = (date) => {
+  // const { name, value } = e.target;
+  // const bid = this.state;
+  // bid[name] = value;
+  this.setState((state) => ({
+    ...state,
+    bidValidity: date,
+  }));
+};
 
 /**
  * format currency options to be parseable by the dropdown component
@@ -124,7 +135,7 @@ handleQuestionAnswer = (e, q) => {
 }
 
 render() {
-  const { totalBidValue } = this.state;
+  const { totalBidValue, bidValidity } = this.state;
   const { currentProposal } = this.props;
   return (
 	<MainContent
@@ -149,7 +160,7 @@ render() {
 							selectDisabled
 							inputValue={totalBidValue}
 							selectOptions={[{ ...this.formatCurrency() }]}
-							handleInputChange={(data) => this.handleInputChange(data)}
+							handleInputChange={(data) => this.handleAmountInputChange(data)}
 						/>
 					</div>
 					<Divider classes="m-t-40" title="Reaponse To Questions" type="thick" isNumbered number={2} />
@@ -181,6 +192,22 @@ render() {
 						<div className="m-t-20">
 							<Dropzone
 								onFilesChange={(files) => this.addCommercialProposal(files)}
+							/>
+						</div>
+					</div>
+					<div className="m-t-40">
+						<Divider title="Timeline" type="thick" isNumbered number={5} />
+						<div className="m-t-20">
+							<FormGroup
+								inline
+								center
+								type="date"
+								labelName="bidValidity"
+								label="Bid Validity"
+								placeholder="Type your response here"
+								value={bidValidity}
+								name="bidValidity"
+								onChange={(data) => this.handleDateInputChange(data)}
 							/>
 						</div>
 					</div>
