@@ -259,6 +259,9 @@ svg.faint {
 .flex-center {
   display: flex !important;
   align-items: center;
+}
+
+.wrap {
   flex-wrap: wrap;
 }
 

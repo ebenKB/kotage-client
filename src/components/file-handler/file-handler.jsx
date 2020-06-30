@@ -130,7 +130,7 @@ render() {
 			))}
 		</div>
 		{files && files.length > 0 && (
-			<div className="m-t-10 flex-center">
+			<div className="m-t-10 flex-center wrap">
 				<Button
 
 					default

@@ -293,13 +293,15 @@ const SupplierRfxDashboard = ({
 							className="tiny"
 						/>
 					</Link>
-					<Link to={`/supplier/rfp/${currentProposal.id}/terms-and-conditions`}>
-						<Button
-							small
-							content="Create Bid Response"
-							className="kt-sucess green tiny"
-						/>
-					</Link>
+					{!currentProposal.hasResponded && (
+						<Link to={`/supplier/rfp/${currentProposal.id}/terms-and-conditions`}>
+							<Button
+								small
+								content="Create Bid Response"
+								className="kt-sucess green tiny"
+							/>
+						</Link>
+					)}
 				</div>
 			</>
 		)}
