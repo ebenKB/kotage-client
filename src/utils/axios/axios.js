@@ -3,6 +3,7 @@ import axios from 'axios';
 import { LOGOUT } from '../../redux/types/userTypes';
 import { getToken } from '../app/index';
 import { store } from '../../redux/store';
+import { SET_APP_NOTIFICATION } from '../../redux/types/appTypes';
 
 // initialize axios
 const Axios = axios.create({
@@ -30,6 +31,15 @@ Axios.interceptors.response.use((response) => response, (err) => {
     }
   }
 
+  store.dispatch(
+    {
+      type: SET_APP_NOTIFICATION,
+      payload: {
+        type: 'error',
+        notification: err,
+      },
+    },
+  );
   return Promise.reject(err);
 });
 

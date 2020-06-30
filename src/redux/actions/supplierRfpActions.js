@@ -46,6 +46,7 @@ Promise((resolve, reject) => {
     return dispatch(setDoneLoading());
   }).catch((error) => {
     reject(error);
+    return dispatch(setDoneLoading());
   });
 });
 

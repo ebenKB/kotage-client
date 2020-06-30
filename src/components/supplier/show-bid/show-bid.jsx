@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react';
 import { PropTypes } from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useHistory } from 'react-router-dom';
 import { format } from 'date-fns';
 import {
   Button, Input, Form,
@@ -28,10 +28,13 @@ const ShowBid = ({
   getSupplierRfpDetails,
   currentRfp,
   loadingRfp,
+  loadingBid,
   deleteBidPermanently,
 }) => {
   const { id } = useParams();
   const [hasInit, setHasInit] = useState(false);
+  const [bidToDelete, setBidToDelete] = useState('');
+  const history = useHistory();
 
   useEffect(() => {
     if (!hasInit) {
@@ -49,8 +52,17 @@ const ShowBid = ({
   const [canShowModal, setCanShowModal] = useState(false);
 
   const handleDeleteBid = () => {
-    console.log('We have to delete the bid');
-    deleteBidPermanently(currentBid.id);
+    if (bidToDelete === currentRfp.title) {
+      deleteBidPermanently(currentBid.id, currentRfp.id, currentRfp.tenant.id);
+      setCanShowModal(false);
+      history.push('/supplier/bids');
+    } else console.log('wrong title', bidToDelete);
+  };
+
+  const handleBidToDeleteChange = (e) => {
+    e.preventDefault();
+    const { value } = e.target;
+    setBidToDelete(value);
   };
 
   return (
@@ -147,6 +159,7 @@ const ShowBid = ({
 						<Modal
 							heading="Dangerous Action"
 							type="danger"
+              loading={loadingBid}
 							confirmActionText="Delete Permanently"
 							handleConfirmAction={handleDeleteBid}
 							handleDeclineAction={() => setCanShowModal(false)}
@@ -155,7 +168,13 @@ const ShowBid = ({
 								<label htmlFor="confirmDelete">
 									<p>Enter title of the proposal to delete Bid.</p>
 								</label>
-								<Input type="text" name="confirmDelete" fluid />
+								<Input
+									type="text"
+									name="bidToDelete"
+									fluid
+									value={bidToDelete}
+									onChange={handleBidToDeleteChange}
+								/>
 							</Form.Field>
 						</Modal>
 					)}
@@ -192,6 +211,7 @@ const mapStateToProps = (state) => ({
   tenantID: state.tenant.currentTenant.id,
   currentRfp: state.supplierRfp.currentProposal,
   loadingRfp: state.supplierRfp.loading,
+  loadingBid: state.supplierBids.loading,
 });
 
 ShowBid.propTypes = {
@@ -202,6 +222,7 @@ ShowBid.propTypes = {
   currentRfp: PropTypes.object.isRequired,
   loadingRfp: PropTypes.bool.isRequired,
   deleteBidPermanently: PropTypes.func.isRequired,
+  loadingBid: PropTypes.bool.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(ShowBid));

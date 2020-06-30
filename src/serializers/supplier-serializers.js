@@ -16,6 +16,7 @@ export const deserializeSupplier = (supplier) => {
 
 export const serializeSupplierBid = (bid) => ({
   bid_amount: bid.totalBidValue,
+  bid_validity: bid.bidValidity,
   proposal_request_id: bid.rfpID,
   bid_currency: bid.currency,
   technical_requirements_attributes: bid.technicalRequirements

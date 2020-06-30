@@ -1,3 +1,5 @@
+/* eslint-disable react/boolean-prop-naming */
+/* eslint-disable react/require-default-props */
 /* eslint-disable react/forbid-prop-types */
 import React, { useState } from 'react';
 import { PropTypes } from 'prop-types';
@@ -8,7 +10,13 @@ import './modal.scss';
 
 
 const Modal = ({
-  heading, children, confirmActionText, handleConfirmAction, handleDeclineAction, type,
+  heading,
+  children,
+  confirmActionText,
+  handleConfirmAction,
+  handleDeclineAction,
+  type,
+  loading,
 }) => {
   const [canShowModal, setCanShowModal] = useState(true);
   const closeModal = () => {
@@ -55,6 +63,7 @@ const Modal = ({
 					color={getColor()}
 					size="small"
 					onClick={handleConfirmAction}
+					loading={loading}
 				/>
 				<span className="m-l-5 m-r-5">or</span>
 				<Button
@@ -76,5 +85,10 @@ Modal.propTypes = {
   children: PropTypes.object.isRequired,
   heading: PropTypes.string.isRequired,
   handleDeclineAction: PropTypes.func.isRequired,
+  loading: PropTypes.bool,
+};
+
+Modal.defaultProps = {
+  loading: false,
 };
 export default Modal;

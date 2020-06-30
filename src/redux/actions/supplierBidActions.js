@@ -7,6 +7,8 @@ import {
   CLEAR_CURRENT_BID,
   REVISE_EXISTING_BID,
   DELETE_BID,
+  SET_LOADING,
+  DONE_LOADING,
 } from '../types/supplierTypes';
 
 import {
@@ -14,19 +16,44 @@ import {
   deserializeSupplierBid,
 } from '../../serializers/supplier-serializers';
 
+export const setLoading = () => async (dispatch) => {
+  dispatch({
+    type: SET_LOADING,
+  });
+};
+
+export const doneLoading = () => async (dispatch) => {
+  dispatch({
+    type: DONE_LOADING,
+  });
+};
+
+/**
+ * get all suppliers from the api
+ */
 export const getAllSupplierBids = () => async (dispatch, getState) => {
-  const { tenant: { currentTenant: { id } } } = getState();
-  const { data } = await Axios.get(`/v1/${id}/bids/rfp`);
-  if (data) {
-    const { rfp_bids } = data;
-    const deserialzedBids = rfp_bids.map((bid) => deserializeSupplierBid(bid));
-    dispatch({
-      type: VIEW_BIDS,
-      payload: deserialzedBids,
-    });
+  try {
+    dispatch(setLoading);
+    const { tenant: { currentTenant: { id } } } = getState();
+    const { data } = await Axios.get(`/v1/${id}/bids/rfp`);
+    if (data) {
+      const { rfp_bids } = data;
+      const deserialzedBids = rfp_bids.map((bid) => deserializeSupplierBid(bid));
+      dispatch({
+        type: VIEW_BIDS,
+        payload: deserialzedBids,
+      });
+    }
+  } catch (error) {
+    dispatch(doneLoading());
   }
 };
 
+/**
+ * create a new bid
+ * @param {*} bid the new bid to create
+ * @param {*} owner_id the one who owns the bid
+ */
 export const createBid = (bid, owner_id) => async (dispatch, getState) => {
   const { tenant: { currentTenant } } = getState();
   const { data: { rfp_bid } } = await Axios
@@ -52,12 +79,19 @@ export const reviseExistingBid = (bid, owner_id) => async (dispatch, getState) =
   });
 };
 
-export const deleteBid = (id) => async (dispatch) => {
-  console.log('We want to delete the bid', id);
-  dispatch({
-    type: DELETE_BID,
-    payload: id,
-  });
+export const deleteBid = (bidID, rfpID, owner_id) => async (dispatch, getState) => {
+  try {
+    dispatch(setLoading);
+    const { tenant: { currentTenant: { id } } } = getState();
+    await Axios
+      .delete(`/v1/${id}/bids/${bidID}?proposal_request_id=${rfpID}&event_owner_id=${owner_id}&type=forever`);
+    dispatch({
+      type: DELETE_BID,
+      payload: bidID,
+    });
+  } catch (error) {
+    dispatch(doneLoading());
+  }
 };
 
 export const clearCurrentBid = () => async (dispatch) => {

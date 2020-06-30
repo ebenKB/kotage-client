@@ -6,6 +6,8 @@ import {
   CLEAR_CURRENT_BID,
   REVISE_EXISTING_BID,
   DELETE_BID,
+  SET_LOADING,
+  DONE_LOADING,
 } from '../types/supplierTypes';
 
 const initialState = {
@@ -69,6 +71,20 @@ export default (state = initialState, action) => {
       return {
         ...state,
         bid: updatedBids,
+      };
+    }
+
+    case SET_LOADING: {
+      return {
+        ...state,
+        loading: true,
+      };
+    }
+
+    case DONE_LOADING: {
+      return {
+        ...state,
+        loading: false,
       };
     }
 

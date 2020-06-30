@@ -13,11 +13,20 @@
   border-bottom: 1px solid #DFDFDF;
 }
 
+.kt-divider.danger {
+  color: var(--kt-red);
+}
+
+.kt-divider.success {
+  color: var(--kt-green);
+}
+
 .kt-divider.thick {
   border-bottom: 2px solid #D9E2E8;
 }
 
-.kt-divider.thick.kt-success {
+.kt-divider.thick.kt-success,
+.kt-divider.faint.kt-success {
   border-bottom: 2px solid var(--kt-green);
 }
 
