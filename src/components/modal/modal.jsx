@@ -23,6 +23,11 @@ const Modal = ({
     if (type.toLowerCase() === 'primary') {
       return 'primary';
     }
+
+    if (type.toLowerCase() === 'danger') {
+      return 'red';
+    }
+
     return 'default';
   };
 

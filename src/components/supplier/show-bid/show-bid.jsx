@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/boolean-prop-naming */
 /* eslint-disable react/forbid-prop-types */
 import React, { useEffect, useState } from 'react';
@@ -6,7 +7,9 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { useParams, Link } from 'react-router-dom';
 import { format } from 'date-fns';
-import { Button } from 'semantic-ui-react';
+import {
+  Button, Input, Form,
+} from 'semantic-ui-react';
 import { getSupplierRfpByID } from '../../../redux/actions/supplierRfpActions';
 import Divider from '../../kt-divider/divider';
 import MainContent from '../../kt-main-content/mainContent';
@@ -148,7 +151,12 @@ const ShowBid = ({
 							handleConfirmAction={handleDeleteBid}
 							handleDeclineAction={() => setCanShowModal(false)}
 						>
-							Please note that this bid will be deleted permanently
+							<Form.Field>
+								<label htmlFor="confirmDelete">
+									<p>Enter title of the proposal to delete Bid.</p>
+								</label>
+								<Input type="text" name="confirmDelete" fluid />
+							</Form.Field>
 						</Modal>
 					)}
 				</KtWrapperLite>
