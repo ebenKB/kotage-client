@@ -154,6 +154,7 @@ const SupplierRfxDashboard = ({
 									fluid
 									positive
 									content="Send"
+									disabled={currentProposal.hasResponded}
 									onClick={confirmParticipation}
 								/>
 							</div>

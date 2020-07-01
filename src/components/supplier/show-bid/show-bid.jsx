@@ -72,7 +72,9 @@ const ShowBid = ({
 	>
 		{currentBid && (
 			<>
-				{loadingRfp && <KtLoader />}
+				{loadingRfp && (
+					<div className="m-b-10"><KtLoader /></div>
+				) }
 				{!loadingRfp && currentRfp && <RfpTitle classes="m-t-20" />}
 				<KtWrapperLite>
 					<Divider ishoverable type="thick" title="Bid Details" />
@@ -92,7 +94,11 @@ const ShowBid = ({
 						</span>
 					</div>
 				</KtWrapperLite>
-				{loadingRfp && <KtLoader />}
+				{loadingRfp && (
+					<div className="m-t-10">
+						<KtLoader />
+					</div>
+				)}
 				{!loadingRfp && currentRfp && (
 					<KtWrapperLite
 						classes="m-t-20"
@@ -159,14 +165,14 @@ const ShowBid = ({
 						<Modal
 							heading="Dangerous Action"
 							type="danger"
-              loading={loadingBid}
+							loading={loadingBid}
 							confirmActionText="Delete Permanently"
 							handleConfirmAction={handleDeleteBid}
 							handleDeclineAction={() => setCanShowModal(false)}
 						>
 							<Form.Field>
 								<label htmlFor="confirmDelete">
-									<p>Enter title of the proposal to delete Bid.</p>
+									<div className="m-b-10">Enter title of the proposal to delete Bid.</div>
 								</label>
 								<Input
 									type="text"
