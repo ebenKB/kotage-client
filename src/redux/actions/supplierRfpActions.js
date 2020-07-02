@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import transformBidRecentActivity from '../../transform/supplier-transforms';
+import { transformBidRecentActivity, transformSupplierRfpAnalytics } from '../../transform/supplier-transforms';
 import { deserializeProposal } from '../../serializers/supplier-rfp-serializer';
 import Axios from '../../utils/axios/axios';
 import {
@@ -15,6 +15,7 @@ import {
   SET_SUPPLIER_LOADING,
   SET_SUPPLIER_DONE_LOADING,
   GET_RECENT_ACTIVITIES,
+  GET_SUPPLIER_RFP_ANALYTICS,
 } from '../types/supplierTypes';
 
 export const setLoading = () => async (dispatch) => dispatch({
@@ -193,6 +194,21 @@ export const getRecentActivities = (page) => async (dispatch, getState) => {
         data: newData,
         meta,
       },
+    });
+    dispatch(setDoneLoading());
+  } catch (error) {
+    dispatch(setDoneLoading());
+  }
+};
+
+export const getSupplierRfpAnalytics = () => async (dispatch, getState) => {
+  try {
+    dispatch(setLoading());
+    const { tenant: { currentTenant: { id } } } = getState();
+    const { data: { rfp_analytics } } = await Axios.get(`/v1/${id}/events/rfp/analytics`);
+    dispatch({
+      type: GET_SUPPLIER_RFP_ANALYTICS,
+      payload: transformSupplierRfpAnalytics(rfp_analytics[0]),
     });
     dispatch(setDoneLoading());
   } catch (error) {

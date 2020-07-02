@@ -11,6 +11,7 @@ import {
   SET_SUPPLIER_DONE_LOADING,
   VIEW_BIDS,
   GET_RECENT_ACTIVITIES,
+  GET_SUPPLIER_RFP_ANALYTICS,
 } from '../types/supplierTypes';
 
 const initialState = {
@@ -30,6 +31,7 @@ const initialState = {
     meta: null,
     data: null,
   },
+  analytics: null,
 };
 
 export default (state = initialState, action) => {
@@ -143,6 +145,12 @@ export default (state = initialState, action) => {
       };
     }
 
+    case GET_SUPPLIER_RFP_ANALYTICS: {
+      return {
+        ...state,
+        analytics: action.payload,
+      };
+    }
     case VIEW_BIDS: {
       return {
         ...state,

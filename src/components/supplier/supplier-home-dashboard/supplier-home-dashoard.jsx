@@ -10,10 +10,17 @@ import BarChart from '../../graphs/barchart/barchart';
 import ActivityItem from '../../activity-item/activity-item';
 import { getAllSupplierBids } from '../../../redux/actions/supplierBidActions';
 import './supplier-home-dashboard.scss';
-import { getRecentActivities } from '../../../redux/actions/supplierRfpActions';
+import { getRecentActivities, getSupplierRfpAnalytics } from '../../../redux/actions/supplierRfpActions';
 
 const SupplierHomeDashoard = ({
-  bids, getAllBids, loadingBids, loadingRfp, getAllRecentActivites, recentActivities,
+  bids,
+  getAllBids,
+  loadingBids,
+  loadingRfp,
+  getAllRecentActivites,
+  recentActivities,
+  getRfpAnalytics,
+  analytics,
 }) => {
   const [hasInit, setInit] = useState(false);
   const [activityPage, setActivityPage] = useState(1);
@@ -23,17 +30,19 @@ const SupplierHomeDashoard = ({
       if (!recentActivities.data) {
         getAllRecentActivites(activityPage);
       }
+
+      if (!analytics) {
+        getRfpAnalytics();
+      }
+
+      if (bids.length < 1) {
+        getAllBids();
+      }
     }
-    if (bids.length < 1 && !hasInit) {
-      getAllBids();
-      // if (!loadingBids) {
-      //   setInit(true);
-      // }
-    }
-    if (bids && recentActivities && !loadingBids) {
+    if (bids && recentActivities && analytics && !loadingBids) {
       setInit(true);
     }
-  });
+  }, [hasInit]);
 
   const getTotalBidsSent = () => bids.length;
 
@@ -118,22 +127,24 @@ const SupplierHomeDashoard = ({
 							color="#ffc400"
 						/>
 					</GraphItem>
-					<GraphItem
-						title="Proposals"
-					>
-						<Doughnut
-							className="graph-continer"
-							data={
+					{analytics && (
+						<GraphItem
+							title="Proposals"
+						>
+							<Doughnut
+								className="graph-continer"
+								data={
             [
-              { label: 'Proposals Received', value: 40 },
-              { label: 'Proposals Responded To', value: 40 },
-              { label: 'Proposals Not Responded To', value: 30 },
+              { label: 'Proposals Received', value: analytics.eventInvites },
+              { label: 'Proposals Responded To', value: analytics.bidSubmitted },
+              { label: 'Proposals Not Responded To', value: analytics.notAttendedTo },
             ]
             }
-							title="Some chart data here"
-							colors={['#BBB6DF', '#EE82EE', '#70aad1']}
-						/>
-					</GraphItem>
+								title="Some chart data here"
+								colors={['#BBB6DF', '#EE82EE', '#70aad1']}
+							/>
+						</GraphItem>
+					)}
 					<GraphItem
 						title="Recent Activities"
 					>
@@ -153,9 +164,11 @@ const SupplierHomeDashoard = ({
 const mapDispatchToProps = {
   getAllBids: getAllSupplierBids,
   getAllRecentActivites: getRecentActivities,
+  getRfpAnalytics: getSupplierRfpAnalytics,
 };
 
 const mapStateToProps = (state) => ({
+  analytics: state.supplierRfp.analytics,
   bids: state.supplierBids.bids,
   loadingBids: state.supplierBids.loading,
   loadingRfp: state.supplierRfp.loading,
@@ -169,6 +182,8 @@ SupplierHomeDashoard.propTypes = {
   loadingRfp: PropTypes.bool.isRequired,
   getAllRecentActivites: PropTypes.func.isRequired,
   recentActivities: PropTypes.object.isRequired,
+  getRfpAnalytics: PropTypes.func.isRequired,
+  analytics: PropTypes.object.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SupplierHomeDashoard);

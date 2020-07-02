@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-const transformBidRecentActivity = (activity) => {
+export const transformBidRecentActivity = (activity) => {
   const {
     key, trackable_id, trackable_type, owner_id,
   } = activity;
@@ -20,4 +20,10 @@ const transformBidRecentActivity = (activity) => {
   return recentActivity;
 };
 
-export default transformBidRecentActivity;
+export const transformSupplierRfpAnalytics = (analytics) => ({
+  bidSubmitted: analytics.bid_submissions,
+  bidsClaimed: analytics.claimed_but_not_submitted_bid,
+  eventInvites: analytics.event_invites,
+  pendingAction: analytics.no_action,
+  notAttendedTo: analytics.event_invites - analytics.bid_submissions,
+});
