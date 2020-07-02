@@ -2,6 +2,8 @@
 /* eslint-disable react/destructuring-assignment */
 import React, { Component } from 'react';
 import Chart from 'chart.js';
+import 'chartjs-plugin-doughnutlabel';
+import 'chartjs-plugin-labels';
 
 
 class Doughnut extends Component {
@@ -11,13 +13,16 @@ class Doughnut extends Component {
   }
 
   componentDidMount() {
+    const { data, colors } = this.props;
+    const total = data.map((d) => d.value).reduce((accum, value) => accum + value);
+
     this.myChart = new Chart(this.chartRef.current, {
       type: 'doughnut',
       data: {
-        labels: this.props.data.map((d) => d.label),
+        labels: data.map((d) => d.label),
         datasets: [{
-          data: this.props.data.map((d) => d.value),
-          backgroundColor: this.props.colors,
+          data: data.map((d) => d.value),
+          backgroundColor: colors,
         }],
       },
       options: {
@@ -30,19 +35,23 @@ class Doughnut extends Component {
         },
         cutoutPercentage: 55,
         plugins: {
+          // labels for chartjs-plugin-doughnutlabel
           doughnutlabel: {
             labels: [
               {
-                text: '90',
+                text: total,
                 font: {
-                  size: '60',
-                  family: 'Arial, Helvetica, sans-serif',
-                  style: 'italic',
-                  weight: 'bold',
+                  size: '16',
                 },
-                color: '#bc2c1a',
+                color: '#1a1a1a',
               },
             ],
+          },
+          // labels for chartjs-plugin-labels
+          labels: {
+            render: 'value',
+            fontColor: ['white', 'white', 'white'],
+            precision: 2,
           },
         },
       },
