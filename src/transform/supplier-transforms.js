@@ -8,13 +8,15 @@ const transformBidRecentActivity = (activity) => {
     ownerID: owner_id,
   };
   if (key === 'rfp_bid.update') {
-    recentActivity.message = `${trackable_type.toUpperCase()} ${trackable_id} was updated`;
+    recentActivity.message = `${trackable_type.toUpperCase()} ${trackable_id} was updated.`;
+    recentActivity.type = 'update';
   } else if (key === 'rfp_bid.create') {
-    recentActivity.message = `${trackable_type} ${trackable_id} was created.`;
+    recentActivity.message = `${trackable_type.toUpperCase()} ${trackable_id} was created.`;
+    recentActivity.type = 'create';
   } else if (key === 'rfp_bid.destroy') {
-    recentActivity.message = `${trackable_type} ${trackable_id} was deleted`;
+    recentActivity.message = `${trackable_type.toUpperCase()} ${trackable_id} was deleted.`;
+    recentActivity.type = 'delete';
   }
-  console.log('This is the activity', recentActivity);
   return recentActivity;
 };
 
