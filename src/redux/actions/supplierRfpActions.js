@@ -1,4 +1,5 @@
 /* eslint-disable camelcase */
+import transformBidRecentActivity from '../../transform/supplier-transforms';
 import { deserializeProposal } from '../../serializers/supplier-rfp-serializer';
 import Axios from '../../utils/axios/axios';
 import {
@@ -13,6 +14,7 @@ import {
   CHECK_SUPPLIER_CLAIMS,
   SET_SUPPLIER_LOADING,
   SET_SUPPLIER_DONE_LOADING,
+  GET_RECENT_ACTIVITIES,
 } from '../types/supplierTypes';
 
 export const setLoading = () => async (dispatch) => dispatch({
@@ -156,6 +158,7 @@ export const acceptRfpTerms = () => async (dispatch, getState) => {
     dispatch(setDoneLoading());
   } catch (error) {
     console.log('An error ocurred while sending the rsvp', error);
+    dispatch(setDoneLoading());
   }
 };
 
@@ -173,5 +176,26 @@ export const checkSupplierRfpClaims = () => async (dispatch, getState) => {
     });
   } catch (error) {
     console.log('An error ocurred while sending the rsvp', error);
+  }
+};
+
+export const getRecentActivities = (page) => async (dispatch, getState) => {
+  try {
+    dispatch(setLoading());
+    const { tenant: { currentTenant } } = getState();
+    const { data } = await Axios.get(`/v1/${currentTenant.id}/activities?page=${page}`);
+    const activities = data['public_activity/activities'];
+    const meta = data.meta.pagination;
+    const newData = activities.map((activity) => transformBidRecentActivity(activity));
+    dispatch({
+      type: GET_RECENT_ACTIVITIES,
+      payload: {
+        data: newData,
+        meta,
+      },
+    });
+    dispatch(setDoneLoading());
+  } catch (error) {
+    dispatch(setDoneLoading());
   }
 };

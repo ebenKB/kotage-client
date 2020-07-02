@@ -10,16 +10,28 @@ import BarChart from '../../graphs/barchart/barchart';
 import ActivityItem from '../../activity-item/activity-item';
 import { getAllSupplierBids } from '../../../redux/actions/supplierBidActions';
 import './supplier-home-dashboard.scss';
+import { getRecentActivities } from '../../../redux/actions/supplierRfpActions';
 
-const SupplierHomeDashoard = ({ bids, getAllBids, loading }) => {
+const SupplierHomeDashoard = ({
+  bids, getAllBids, loadingBids, loadingRfp, getAllRecentActivites, recentActivities,
+}) => {
   const [hasInit, setInit] = useState(false);
+  const [activityPage, setActivityPage] = useState(1);
 
   useEffect(() => {
+    if (!hasInit) {
+      if (!recentActivities.data) {
+        getAllRecentActivites(activityPage);
+      }
+    }
     if (bids.length < 1 && !hasInit) {
       getAllBids();
-      if (!loading) {
-        setInit(true);
-      }
+      // if (!loadingBids) {
+      //   setInit(true);
+      // }
+    }
+    if (bids && recentActivities && !loadingBids) {
+      setInit(true);
     }
   });
 
@@ -50,6 +62,12 @@ const SupplierHomeDashoard = ({ bids, getAllBids, loading }) => {
       return bids.filter((b) => b.status === 'approved').length;
     }
     return 0;
+  };
+
+  const loadMoreRecentActivities = () => {
+    const newPage = activityPage + 1;
+    setActivityPage(newPage);
+    getAllRecentActivites(newPage);
   };
 
   return (
@@ -119,7 +137,11 @@ const SupplierHomeDashoard = ({ bids, getAllBids, loading }) => {
 					<GraphItem
 						title="Recent Activities"
 					>
-						<ActivityItem />
+						<ActivityItem
+							recentActivities={recentActivities}
+							loadMoreRecords={loadMoreRecentActivities}
+							loading={loadingRfp}
+						/>
 					</GraphItem>
 				</>
 			)}
@@ -130,17 +152,23 @@ const SupplierHomeDashoard = ({ bids, getAllBids, loading }) => {
 
 const mapDispatchToProps = {
   getAllBids: getAllSupplierBids,
+  getAllRecentActivites: getRecentActivities,
 };
 
 const mapStateToProps = (state) => ({
   bids: state.supplierBids.bids,
-  loading: state.supplierBids.loading,
+  loadingBids: state.supplierBids.loading,
+  loadingRfp: state.supplierRfp.loading,
+  recentActivities: state.supplierRfp.recentActivities,
 });
 
 SupplierHomeDashoard.propTypes = {
   bids: PropTypes.object.isRequired,
   getAllBids: PropTypes.func.isRequired,
-  loading: PropTypes.bool.isRequired,
+  loadingBids: PropTypes.bool.isRequired,
+  loadingRfp: PropTypes.bool.isRequired,
+  getAllRecentActivites: PropTypes.func.isRequired,
+  recentActivities: PropTypes.object.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SupplierHomeDashoard);

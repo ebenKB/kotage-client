@@ -7,7 +7,7 @@ const PaginationFootnote = ({ remainder, handleAction, caption }) => (
 		{remainder > 0 && (
 			<Button
 				className="clickable bold kt-primary m-t-10 kt-transparent m-t-20"
-				onClick={() => handleAction}
+				onClick={handleAction}
 			>
 				See
 				&nbsp;

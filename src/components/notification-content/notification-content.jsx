@@ -11,7 +11,10 @@ const NotificationContent = () => (
 	>
 		<h3>Notification</h3>
 		<div>
-			There is some content here
+			MTN Ghana has invited you to a new proposals
+		</div>
+		<div>
+			ASA saving and Loans has invited you to a new proposals
 		</div>
 	</PopupDropdown>
 );

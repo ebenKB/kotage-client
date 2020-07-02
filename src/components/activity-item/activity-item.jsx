@@ -1,37 +1,57 @@
+/* eslint-disable react/boolean-prop-naming */
+/* eslint-disable react/forbid-prop-types */
 import React from 'react';
 import './activity-item.scss';
-import { Table, Button } from 'semantic-ui-react';
+import { Table } from 'semantic-ui-react';
+import { PropTypes } from 'prop-types';
+import PaginationFootnote from '../pagination-footnote/pagination-footnote';
+import { getPageRemainder } from '../../utils/app/index';
+import KtLoader from '../loader/loader';
 
-const ActivityItem = () => (
+const ActivityItem = ({ recentActivities, loadMoreRecords, loading }) => {
+  const getRemainder = () => {
+    const { meta, data } = recentActivities;
+    return getPageRemainder(meta.count, data.length, 10);
+  };
+
+  return (
 	<div className="activity-item">
 		<div className="activity-item__wrapper">
-			<Table striped compact="very">
-				<Table.Body>
-					<Table.Row>
-						<Table.Cell>MTN Ghana has invited you to a new proposal.</Table.Cell>
-					</Table.Row>
-					<Table.Row>
-						<Table.Cell>MTN Ghana has invited you to a new proposal.</Table.Cell>
-					</Table.Row>
-					<Table.Row>
-						<Table.Cell>Your bid to MTN Ghana has been accpeted.</Table.Cell>
-					</Table.Row>
-					<Table.Row>
-						<Table.Cell>Your bid to Tigo Ghana has been rejected.</Table.Cell>
-					</Table.Row>
-					<Table.Row>
-						<Table.Cell>ASA savings and Loans has invited you to a proposal.</Table.Cell>
-					</Table.Row>
-				</Table.Body>
-			</Table>
+			{recentActivities && recentActivities.data && (
+				<Table striped compact="very">
+					<Table.Body>
+						{recentActivities.data.map((r) => (
+							<Table.Row key={r.id}>
+								<Table.Cell>{r.message}</Table.Cell>
+							</Table.Row>
+						))}
+					</Table.Body>
+				</Table>
+			)}
 		</div>
+		{loading && (
+			<div className="m-t-10 m-b-10">
+				<KtLoader />
+			</div>
+		)}
 		<div className="m-t-20 kt-primary">
-			<Button
-				content="See more recent activities"
-				className="kt-transparent kt-primary"
-			/>
+			{getRemainder() > 0 && (
+				<PaginationFootnote
+					handleAction={() => loadMoreRecords()}
+					remainder={getRemainder()}
+					caption="recent activites"
+				/>
+			)}
 		</div>
 	</div>
-);
+  );
+};
+
+
+ActivityItem.propTypes = {
+  recentActivities: PropTypes.object.isRequired,
+  loadMoreRecords: PropTypes.func.isRequired,
+  loading: PropTypes.bool.isRequired,
+};
 
 export default ActivityItem;

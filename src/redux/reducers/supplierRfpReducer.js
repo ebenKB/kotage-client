@@ -10,12 +10,12 @@ import {
   SET_SUPPLIER_LOADING,
   SET_SUPPLIER_DONE_LOADING,
   VIEW_BIDS,
+  GET_RECENT_ACTIVITIES,
 } from '../types/supplierTypes';
 
 const initialState = {
   loading: false,
   proposals: [],
-  // bids: [],
   currentProposal: null,
   rfpInbox: null,
   rfpOutbox: null,
@@ -26,6 +26,10 @@ const initialState = {
   meta: null,
   currentPage: 1,
   bidResponseDraft: null,
+  recentActivities: {
+    meta: null,
+    data: null,
+  },
 };
 
 export default (state = initialState, action) => {
@@ -121,6 +125,21 @@ export default (state = initialState, action) => {
       return {
         ...state,
         loading: false,
+      };
+    }
+
+    case GET_RECENT_ACTIVITIES: {
+      const { meta } = action.payload;
+      let { recentActivities: { data } } = state;
+      if (data === null) {
+        data = [];
+      }
+      return {
+        ...state,
+        recentActivities: {
+          meta,
+          data: [...data, ...action.payload.data],
+        },
       };
     }
 
