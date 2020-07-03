@@ -12,6 +12,8 @@ import {
   VIEW_BIDS,
   GET_RECENT_ACTIVITIES,
   GET_SUPPLIER_RFP_ANALYTICS,
+  GET_PROPOSALS_CLOSING_SOON,
+  GET_RSVP_CLOSING_SOON,
 } from '../types/supplierTypes';
 
 const initialState = {
@@ -149,6 +151,35 @@ export default (state = initialState, action) => {
       return {
         ...state,
         analytics: action.payload,
+      };
+    }
+    case GET_PROPOSALS_CLOSING_SOON: {
+      let { analytics } = state;
+      if (analytics === null) {
+        analytics = {
+          proposalsClosingSoon: action.payload,
+        };
+      } else {
+        analytics.proposalsClosingSoon = action.payload;
+      }
+      return {
+        ...state,
+        analytics: { ...analytics },
+      };
+    }
+
+    case GET_RSVP_CLOSING_SOON: {
+      let { analytics } = state;
+      if (analytics === null) {
+        analytics = {
+          RSVPClosingSoon: action.payload,
+        };
+      } else {
+        analytics.RSVPClosingSoon = action.payload;
+      }
+      return {
+        ...state,
+        analytics: { ...analytics },
       };
     }
     case VIEW_BIDS: {

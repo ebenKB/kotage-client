@@ -10,6 +10,7 @@ class BarChart extends Component {
   }
 
   componentDidMount() {
+    console.log('This is the data', this.props.data);
     this.myChart = new Chart(this.chartRef.current, {
       type: 'bar',
       data: {
@@ -21,6 +22,14 @@ class BarChart extends Component {
           maxBarThickness: 60,
           backgroundColor: this.props.color,
         }],
+      },
+      options: {
+        plugins: {
+          labels: {
+            showZero: false,
+            render: 'value',
+          },
+        },
       },
     });
   }

@@ -16,6 +16,8 @@ import {
   SET_SUPPLIER_DONE_LOADING,
   GET_RECENT_ACTIVITIES,
   GET_SUPPLIER_RFP_ANALYTICS,
+  GET_PROPOSALS_CLOSING_SOON,
+  GET_RSVP_CLOSING_SOON,
 } from '../types/supplierTypes';
 
 export const setLoading = () => async (dispatch) => dispatch({
@@ -209,6 +211,37 @@ export const getSupplierRfpAnalytics = () => async (dispatch, getState) => {
     dispatch({
       type: GET_SUPPLIER_RFP_ANALYTICS,
       payload: transformSupplierRfpAnalytics(rfp_analytics[0]),
+    });
+    dispatch(setDoneLoading());
+  } catch (error) {
+    dispatch(setDoneLoading());
+  }
+};
+
+export const getSupplierRfpClosing = (start_date, end_date) => async (dispatch, getState) => {
+  try {
+    dispatch(setLoading());
+    const { tenant: { currentTenant: { id } } } = getState();
+    const { data: { proposal_requests } } = await
+    Axios.get(`/v1/${id}/events/deadlines/bids?start_date=${start_date}&end_date=${end_date}`);
+    dispatch({
+      type: GET_PROPOSALS_CLOSING_SOON,
+      payload: proposal_requests.length,
+    });
+  } catch (error) {
+    dispatch(setDoneLoading());
+  }
+};
+
+export const getRSVPClosingSoon = (start_date, end_date) => async (dispatch, getState) => {
+  try {
+    dispatch(setLoading());
+    const { tenant: { currentTenant: { id } } } = getState();
+    const { data: { proposal_requests } } = await
+    Axios.get(`/v1/${id}/events/deadlines/rsvp?start_date=${start_date}&end_date=${end_date}`);
+    dispatch({
+      type: GET_RSVP_CLOSING_SOON,
+      payload: proposal_requests.length,
     });
     dispatch(setDoneLoading());
   } catch (error) {

@@ -10,7 +10,12 @@ import BarChart from '../../graphs/barchart/barchart';
 import ActivityItem from '../../activity-item/activity-item';
 import { getAllSupplierBids } from '../../../redux/actions/supplierBidActions';
 import './supplier-home-dashboard.scss';
-import { getRecentActivities, getSupplierRfpAnalytics } from '../../../redux/actions/supplierRfpActions';
+import {
+  getRecentActivities,
+  getSupplierRfpAnalytics,
+  getSupplierRfpClosing,
+  getRSVPClosingSoon,
+} from '../../../redux/actions/supplierRfpActions';
 
 const SupplierHomeDashoard = ({
   bids,
@@ -21,9 +26,13 @@ const SupplierHomeDashoard = ({
   recentActivities,
   getRfpAnalytics,
   analytics,
+  getSupplierRfpCloingSoon,
+  getSupplierRSVPClosingSoon,
 }) => {
   const [hasInit, setInit] = useState(false);
   const [activityPage, setActivityPage] = useState(1);
+  const [canShowDeadlines, setCanShowDeadlines] = useState(false);
+  const [canShowRecentActivities, setCanShowRecentActivities] = useState(false);
 
   useEffect(() => {
     if (!hasInit) {
@@ -33,6 +42,13 @@ const SupplierHomeDashoard = ({
 
       if (!analytics) {
         getRfpAnalytics();
+        const today = new Date();
+        const closingDate = new Date();
+        closingDate.setDate(today.getDate() + 31);
+        const startDate = `${today.getFullYear()}-${today.getMonth()}-${today.getDate()}`;
+        const endDate = `${closingDate.getFullYear()}-${closingDate.getMonth()}-${closingDate.getDate()}`;
+        getSupplierRfpCloingSoon(startDate, endDate);
+        getSupplierRSVPClosingSoon(startDate, endDate);
       }
 
       if (bids.length < 1) {
@@ -42,7 +58,15 @@ const SupplierHomeDashoard = ({
     if (bids && recentActivities && analytics && !loadingBids) {
       setInit(true);
     }
-  }, [hasInit]);
+
+    if (recentActivities.data && recentActivities.data.length > 0) {
+      setCanShowRecentActivities(true);
+    }
+
+    if (analytics && analytics.proposalsClosingSoon && analytics.RSVPClosingSoon) {
+      setCanShowDeadlines(true);
+    }
+  }, [hasInit, analytics, recentActivities]);
 
   const getTotalBidsSent = () => bids.length;
 
@@ -59,7 +83,7 @@ const SupplierHomeDashoard = ({
 
   const getBidsRejected = () => {
     if (bids) {
-      return bids.filter((b) => b.status === 'rejected');
+      return bids.filter((b) => b.status === 'rejected').length;
     }
     return 0;
   };
@@ -73,6 +97,9 @@ const SupplierHomeDashoard = ({
     return 0;
   };
 
+  // const checkIfCanShowDeadlines = () => analytics
+  //   && analytics.proposalsClosingSoon && analytics.RSVPClosingSoon;
+
   const loadMoreRecentActivities = () => {
     const newPage = activityPage + 1;
     setActivityPage(newPage);
@@ -83,24 +110,25 @@ const SupplierHomeDashoard = ({
 	<div>
 		<p>And show number of unread messages</p>
 		<div className="m-t-20 graph-container">
-			{bids.length > 0 && (
-				<>
+			<>
+				{canShowDeadlines && (
 					<GraphItem
 						title="Requiring Attention"
 					>
 						<Doughnut
 							className="graph-continer"
 							data={
-            [
-              { label: 'Bid Responses', value: 40 },
-              { label: 'Proposals Closing Soon', value: 30 },
-              { label: 'RSVP Closing Soon', value: 50 },
-            ]
-            }
+                  [
+                    { label: 'Proposals Closing Soon', value: analytics.proposalsClosingSoon },
+                    { label: 'RSVP Closing Soon', value: analytics.RSVPClosingSoon },
+                  ]
+                }
 							title="Some chart data here"
-							colors={['#00000', '#00ae55', '#70ccd1', '#3e517a', '#b08ea2', '']}
+							colors={['#de7163', '#70ccd1']}
 						/>
 					</GraphItem>
+				)}
+				{bids.length > 0 && (
 					<GraphItem
 						title="Bids"
 					>
@@ -127,24 +155,26 @@ const SupplierHomeDashoard = ({
 							color="#ffc400"
 						/>
 					</GraphItem>
-					{analytics && (
-						<GraphItem
-							title="Proposals"
-						>
-							<Doughnut
-								className="graph-continer"
-								data={
+				)}
+				{analytics && (
+					<GraphItem
+						title="Proposals"
+					>
+						<Doughnut
+							className="graph-continer"
+							data={
             [
               { label: 'Proposals Received', value: analytics.eventInvites },
               { label: 'Proposals Responded To', value: analytics.bidSubmitted },
               { label: 'Proposals Not Responded To', value: analytics.notAttendedTo },
             ]
             }
-								title="Some chart data here"
-								colors={['#BBB6DF', '#EE82EE', '#70aad1']}
-							/>
-						</GraphItem>
-					)}
+							title="Some chart data here"
+							colors={['#BBB6DF', '#EE82EE', '#70aad1']}
+						/>
+					</GraphItem>
+				)}
+				{canShowRecentActivities > 0 && (
 					<GraphItem
 						title="Recent Activities"
 					>
@@ -154,8 +184,8 @@ const SupplierHomeDashoard = ({
 							loading={loadingRfp}
 						/>
 					</GraphItem>
-				</>
-			)}
+				)}
+			</>
 		</div>
 	</div>
   );
@@ -165,6 +195,8 @@ const mapDispatchToProps = {
   getAllBids: getAllSupplierBids,
   getAllRecentActivites: getRecentActivities,
   getRfpAnalytics: getSupplierRfpAnalytics,
+  getSupplierRfpCloingSoon: getSupplierRfpClosing,
+  getSupplierRSVPClosingSoon: getRSVPClosingSoon,
 };
 
 const mapStateToProps = (state) => ({
@@ -184,6 +216,8 @@ SupplierHomeDashoard.propTypes = {
   recentActivities: PropTypes.object.isRequired,
   getRfpAnalytics: PropTypes.func.isRequired,
   analytics: PropTypes.object.isRequired,
+  getSupplierRfpCloingSoon: PropTypes.func.isRequired,
+  getSupplierRSVPClosingSoon: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SupplierHomeDashoard);
