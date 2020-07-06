@@ -11,6 +11,7 @@ import {
   DONE_LOADING,
 } from '../types/supplierTypes';
 
+import { setBidLoading, bidDoneLoading } from './ui';
 import {
   serializeSupplierBid,
   deserializeSupplierBid,
@@ -33,7 +34,7 @@ export const doneLoading = () => async (dispatch) => {
  */
 export const getAllSupplierBids = () => async (dispatch, getState) => {
   try {
-    dispatch(setLoading);
+    dispatch(setBidLoading());
     const { tenant: { currentTenant: { id } } } = getState();
     const { data } = await Axios.get(`/v1/${id}/bids/rfp`);
     if (data) {
@@ -43,9 +44,10 @@ export const getAllSupplierBids = () => async (dispatch, getState) => {
         type: VIEW_BIDS,
         payload: deserialzedBids,
       });
+      dispatch(bidDoneLoading());
     }
   } catch (error) {
-    dispatch(doneLoading());
+    dispatch(bidDoneLoading());
   }
 };
 

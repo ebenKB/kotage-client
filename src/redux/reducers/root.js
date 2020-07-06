@@ -10,11 +10,12 @@ import appReducer from './appReducer';
 import proposalReducer from './rfpReducer';
 import supplierRfpReducer from './supplierRfpReducer';
 import supplierBidReducer from './supplierBidReducer';
+import uiReducer from './ui';
 
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['user', 'tenant', 'requisitions', 'app', 'supplierRfp'],
+  whitelist: ['user', 'tenant', 'requisitions', 'app', 'supplierRfp', 'ui'],
 };
 
 const reducers = combineReducers({
@@ -26,6 +27,7 @@ const reducers = combineReducers({
   app: appReducer,
   supplierRfp: supplierRfpReducer,
   supplierBids: supplierBidReducer,
+  ui: uiReducer,
 });
 
 const rootReducer = (state, action) => {

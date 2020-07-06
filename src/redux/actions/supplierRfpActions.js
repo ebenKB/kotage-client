@@ -1,5 +1,8 @@
 /* eslint-disable camelcase */
-import { transformBidRecentActivity, transformSupplierRfpAnalytics } from '../../transform/supplier-transforms';
+import {
+  transformBidRecentActivity,
+  transformSupplierRfpAnalytics,
+} from '../../transform/supplier-transforms';
 import { deserializeProposal } from '../../serializers/supplier-rfp-serializer';
 import Axios from '../../utils/axios/axios';
 import {
@@ -19,6 +22,14 @@ import {
   GET_PROPOSALS_CLOSING_SOON,
   GET_RSVP_CLOSING_SOON,
 } from '../types/supplierTypes';
+import {
+  setAnalyticsLoading,
+  setAnalyticsDoneLoading,
+  supplierRfpClosingDoneloading,
+  setRSVPClosingLoading,
+  supplierRfpClosingLoading,
+  RSVPClosingDoneLoading,
+} from './ui';
 
 export const setLoading = () => async (dispatch) => dispatch({
   type: SET_SUPPLIER_LOADING,
@@ -128,6 +139,7 @@ export const confirmRSVP = (status) => async (dispatch, getState) => {
     if (status) {
       await Axios
         .post(`/v1/${id}/claims/rfp?proposal_request_id=${currentProposal.id}&event_owner_id=${tenant.id}`);
+
       dispatch({
         type: CONFIRM_RSVP,
       });
@@ -205,22 +217,22 @@ export const getRecentActivities = (page) => async (dispatch, getState) => {
 
 export const getSupplierRfpAnalytics = () => async (dispatch, getState) => {
   try {
-    dispatch(setLoading());
+    dispatch(setAnalyticsLoading());
     const { tenant: { currentTenant: { id } } } = getState();
     const { data: { rfp_analytics } } = await Axios.get(`/v1/${id}/events/rfp/analytics`);
     dispatch({
       type: GET_SUPPLIER_RFP_ANALYTICS,
       payload: transformSupplierRfpAnalytics(rfp_analytics[0]),
     });
-    dispatch(setDoneLoading());
+    dispatch(setAnalyticsDoneLoading());
   } catch (error) {
-    dispatch(setDoneLoading());
+    dispatch(setAnalyticsDoneLoading());
   }
 };
 
 export const getSupplierRfpClosing = (start_date, end_date) => async (dispatch, getState) => {
   try {
-    dispatch(setLoading());
+    dispatch(supplierRfpClosingLoading());
     const { tenant: { currentTenant: { id } } } = getState();
     const { data: { proposal_requests } } = await
     Axios.get(`/v1/${id}/events/deadlines/bids?start_date=${start_date}&end_date=${end_date}`);
@@ -228,14 +240,15 @@ export const getSupplierRfpClosing = (start_date, end_date) => async (dispatch, 
       type: GET_PROPOSALS_CLOSING_SOON,
       payload: proposal_requests.length,
     });
+    dispatch(supplierRfpClosingDoneloading());
   } catch (error) {
-    dispatch(setDoneLoading());
+    dispatch(supplierRfpClosingDoneloading());
   }
 };
 
 export const getRSVPClosingSoon = (start_date, end_date) => async (dispatch, getState) => {
   try {
-    dispatch(setLoading());
+    dispatch(setRSVPClosingLoading());
     const { tenant: { currentTenant: { id } } } = getState();
     const { data: { proposal_requests } } = await
     Axios.get(`/v1/${id}/events/deadlines/rsvp?start_date=${start_date}&end_date=${end_date}`);
@@ -243,8 +256,8 @@ export const getRSVPClosingSoon = (start_date, end_date) => async (dispatch, get
       type: GET_RSVP_CLOSING_SOON,
       payload: proposal_requests.length,
     });
-    dispatch(setDoneLoading());
+    dispatch(RSVPClosingDoneLoading());
   } catch (error) {
-    dispatch(setDoneLoading());
+    dispatch(RSVPClosingDoneLoading());
   }
 };
