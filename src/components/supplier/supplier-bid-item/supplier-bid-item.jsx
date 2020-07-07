@@ -33,7 +33,7 @@ const SupplierBidItem = ({ bid }) => (
 					</span>
 				</div>
 			</div>
-			<div className="kt-primary">Pending</div>
+			<div className="kt-primary">{bid.status}</div>
 		</div>
 	</KtItem>
 );
