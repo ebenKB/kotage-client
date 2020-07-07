@@ -18,12 +18,18 @@ const PreviewMessage = lazy(() => import('../components/message-preview/message-
 const InviteSupplier = lazy(() => import('../components/invite-supplier/invite-supplier'));
 const RFxNew = lazy(() => import('../components/rfx/rfx-new/rfx-new'));
 const CompareBids = lazy(() => import('../components/compare-bids/compare-bids'));
+const TenantSettings = lazy(() => import('../pages/buyer/settings/settings'));
 
 const routes = [
   {
     exact: true,
     path: '/users',
     main: () => <Users />,
+  },
+  {
+    exact: true,
+    path: '/user/settings',
+    main: () => <TenantSettings />,
   },
   {
     exact: true,
@@ -45,7 +51,6 @@ const routes = [
     path: '/:company_id/requisitions/new',
     main: () => <NewRequisition />,
   },
-
   {
     exact: true,
     path: '/vendors/new',
@@ -63,6 +68,7 @@ const routes = [
     path: '/rfx',
     main: () => <RFX />,
   },
+
   {
     exact: true,
     path: '/rfx/new',
