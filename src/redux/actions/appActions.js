@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 /* eslint-disable import/prefer-default-export */
 import RawAxios from 'axios';
 import Axios from '../../utils/axios/axios';
@@ -11,6 +12,7 @@ import {
 } from '../types/appTypes';
 
 import { createStaticFileUrl, getFileNameAndExtension, getFileSize } from '../../utils/app/file';
+import { setSendUserFeedackLoading, setSendUserFeedbackDoneLoading } from './ui';
 
 // clear notification from the app state
 export const clearNotification = () => async (dispatch) => new Promise((resolve) => {
@@ -102,11 +104,15 @@ Promise((resolve, reject) => {
   }
 });
 
-// export const getFileSignedUrl = (url, objectOwnerId) => async (dispatch, getState) => new
-// Promise(() => {
-//   const { user } = getState();
-//   Axios.post(`/v1/${user.currentUser.tenant_id}/rfp/${objectOwnerId}`, {
-//     filename: getFullFilePath(url),
-//   })
-//     .then((data) => console.log('The is the signed url', data));
-// });
+export const sendUserFeedback = (content) => async (dispatch, getState) => {
+  console.log('We are about to send user feedback here');
+  try {
+    dispatch(setSendUserFeedackLoading());
+    const { user: { currentUser: { tenant_id } } } = getState();
+    const { data } = await Axios.post(`/v1/${tenant_id}/feedbacks`, { content });
+    console.log('We sent a feedbck', data);
+    dispatch(setSendUserFeedbackDoneLoading());
+  } catch (error) {
+    console.log('an error occured while sending the feedback', error);
+  }
+};

@@ -52,7 +52,6 @@ const RFX = ({
 		<Divider type="thick" />
 	</div>
   );
-
   const loadMoreRecords = () => {
     // check if there are more records to load
     if (proposals.length < meta.count && meta.next) {

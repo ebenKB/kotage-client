@@ -10,12 +10,15 @@ import {
   SUPPLIER_RFP_CLOSING_DONE_LOADING,
   LOADING_RSVP_CLOSING_SOON,
   DONE_PUBLISHING_RFP,
+  IS_SENDING_FEEDBACK,
+  DONE_SENDING_FEEDBACK,
 } from '../types/ui';
 
 const initialState = {
   buyer: {
     isLoadingRFP: false,
     isPublishingRfp: false,
+    isSendingFeedback: false,
   },
   supplier: {
     isLoadingSupplierRfp: false,
@@ -136,6 +139,26 @@ export default (state = initialState, action) => {
         buyer: {
           ...state.buyer,
           isPublishingRfp: false,
+        },
+      };
+    }
+
+    case IS_SENDING_FEEDBACK: {
+      return {
+        ...state,
+        buyer: {
+          ...state.buyer,
+          isSendingFeedback: true,
+        },
+      };
+    }
+
+    case DONE_SENDING_FEEDBACK: {
+      return {
+        ...state,
+        buyer: {
+          ...state.buyer,
+          isSendingFeedback: false,
         },
       };
     }

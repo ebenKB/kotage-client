@@ -11,6 +11,8 @@ import {
   SUPPLIER_RFP_CLOSING_DONE_LOADING,
   IS_PUBLISHING_RFP,
   DONE_PUBLISHING_RFP,
+  IS_SENDING_FEEDBACK,
+  DONE_SENDING_FEEDBACK,
 } from '../types/ui';
 
 // supplier actions
@@ -60,4 +62,12 @@ export const setPublishRfpLoading = () => async (dispatch) => dispatch({
 
 export const setPublishRfpDoneLoding = () => async (dispatch) => dispatch({
   type: DONE_PUBLISHING_RFP,
+});
+
+export const setSendUserFeedackLoading = () => async (dispatch) => dispatch({
+  type: IS_SENDING_FEEDBACK,
+});
+
+export const setSendUserFeedbackDoneLoading = () => async (dispatch) => dispatch({
+  type: DONE_SENDING_FEEDBACK,
 });
