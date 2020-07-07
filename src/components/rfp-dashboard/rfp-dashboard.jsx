@@ -6,7 +6,7 @@ import { PropTypes } from 'prop-types';
 import { connect } from 'react-redux';
 import { Button, Checkbox } from 'semantic-ui-react';
 import { CircularProgressbar } from 'react-circular-progressbar';
-import { getCurrentProposal } from '../../redux/actions/rfpActions';
+import { getCurrentProposal, publishRfp } from '../../redux/actions/rfpActions';
 import Divider from '../kt-divider/divider';
 import 'react-circular-progressbar/dist/styles.css';
 import './rfp-dashboard.scss';
@@ -18,9 +18,12 @@ import FormGroup from '../form-fields/form-group/form-group';
 import SupplierDetailsCaptionGroup from '../snippets/supplier-details-caption-group/supplier-details-caption-group';
 import RfpTitle from '../snippets/rfp-title/rfp-title';
 
-const RfpDashboard = ({ match, getProposal, proposal }) => {
+const RfpDashboard = ({
+  match, getProposal, proposal, publishEvent, isPublishingRfp,
+}) => {
   const { params } = match;
   const { id } = params;
+
   useEffect(() => {
     getProposal(id);
   }, [id]);
@@ -28,6 +31,13 @@ const RfpDashboard = ({ match, getProposal, proposal }) => {
   const handleSearch = (val) => {
     // handle supplier search here
     console.log(val);
+  };
+
+  const handlePublishRfp = () => {
+    console.log('we want to pubish the event');
+    if (proposal) {
+      publishEvent(proposal.id);
+    }
   };
 
   return (
@@ -142,10 +152,21 @@ const RfpDashboard = ({ match, getProposal, proposal }) => {
 							</FormGroup>
 						</div>
 					</KtWrapperLite>
-					<div className="footer">
+					<div className="footer flex-center">
+						{proposal.published_at === null && (
+							<div className="m-t-20">
+								<Button
+									size="tiny"
+									content="Publish"
+									positive
+									onClick={handlePublishRfp}
+									loading={isPublishingRfp}
+								/>
+							</div>
+						)}
 						<div className="m-t-20">
 							<Link to={`/rfx/proposal/show/${proposal.id}`}>
-								<Button content="VIEW RFP" color="green" />
+								<Button size="tiny" content="View RFP" default />
 							</Link>
 						</div>
 					</div>
@@ -160,6 +181,8 @@ RfpDashboard.propTypes = {
   match: PropTypes.object.isRequired,
   getProposal: PropTypes.func.isRequired,
   proposal: PropTypes.object,
+  publishEvent: PropTypes.func.isRequired,
+  isPublishingRfp: PropTypes.bool.isRequired,
 };
 
 RfpDashboard.defaultProps = {
@@ -168,10 +191,12 @@ RfpDashboard.defaultProps = {
 
 const mapDispatchToProps = {
   getProposal: getCurrentProposal,
+  publishEvent: publishRfp,
 };
 
 const mapStateToProps = (state) => ({
   proposal: state.rfp.currentProposal,
+  isPublishingRfp: state.ui.buyer.isPublishingRfp,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(RfpDashboard));

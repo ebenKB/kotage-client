@@ -2,17 +2,20 @@ import {
   LOADING_RECENT_ACTIVITIES,
   RECENT_ACTIVITIES_DONE_LOADING,
   LOADING_BIDS,
+  IS_PUBLISHING_RFP,
   BIDS_DONE_LOADING,
   LOADING_ANALYTICS,
   ANALYTICS_DONE_LOADING,
   LOADING_SUPPLIER_RFP_CLOSING_SOON,
   SUPPLIER_RFP_CLOSING_DONE_LOADING,
   LOADING_RSVP_CLOSING_SOON,
+  DONE_PUBLISHING_RFP,
 } from '../types/ui';
 
 const initialState = {
   buyer: {
     isLoadingRFP: false,
+    isPublishingRfp: false,
   },
   supplier: {
     isLoadingSupplierRfp: false,
@@ -116,6 +119,27 @@ export default (state = initialState, action) => {
         },
       };
     }
+
+    case IS_PUBLISHING_RFP: {
+      return {
+        ...state,
+        buyer: {
+          ...state.buyer,
+          isPublishingRfp: true,
+        },
+      };
+    }
+
+    case DONE_PUBLISHING_RFP: {
+      return {
+        ...state,
+        buyer: {
+          ...state.buyer,
+          isPublishingRfp: false,
+        },
+      };
+    }
+
     default: {
       return { ...state };
     }

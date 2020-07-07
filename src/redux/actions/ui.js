@@ -9,8 +9,11 @@ import {
   RSVP_CLOSING_SOON_DONE_LOADING,
   LOADING_SUPPLIER_RFP_CLOSING_SOON,
   SUPPLIER_RFP_CLOSING_DONE_LOADING,
+  IS_PUBLISHING_RFP,
+  DONE_PUBLISHING_RFP,
 } from '../types/ui';
 
+// supplier actions
 export const setBidLoading = () => async (dispatch) => dispatch({
   type: LOADING_BIDS,
 });
@@ -49,4 +52,12 @@ export const supplierRfpClosingLoading = () => async (dispatch) => dispatch({
 
 export const supplierRfpClosingDoneloading = () => async (dispatch) => dispatch({
   type: SUPPLIER_RFP_CLOSING_DONE_LOADING,
+});
+
+export const setPublishRfpLoading = () => async (dispatch) => dispatch({
+  type: IS_PUBLISHING_RFP,
+});
+
+export const setPublishRfpDoneLoding = () => async (dispatch) => dispatch({
+  type: DONE_PUBLISHING_RFP,
 });

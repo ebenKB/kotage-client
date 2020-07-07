@@ -4,11 +4,18 @@
 /* eslint-disable camelcase */
 /* eslint-disable import/prefer-default-export */
 import {
-  CREATE_PROPOSAL, SET_RFP_LOADING,
-  SET_RFP_DONE_LOADING, GET_RFP,
-  GET_PROPOSAL_BY_ID, CREATE_MESSAGE,
-  GET_RFP_OUTBOX, GET_RFP_INBOX, FIND_RFP_MESSAGE,
-  UPDATE_RFP, SET_CURRENT_MESSAGE_BLOB, CLEAR_RFP_OUTBOX,
+  UPDATE_RFP,
+  GET_RFP,
+  CREATE_PROPOSAL,
+  SET_RFP_LOADING,
+  CREATE_MESSAGE,
+  GET_RFP_OUTBOX,
+  GET_RFP_INBOX,
+  FIND_RFP_MESSAGE,
+  CLEAR_RFP_OUTBOX,
+  SET_RFP_DONE_LOADING,
+  GET_PROPOSAL_BY_ID,
+  SET_CURRENT_MESSAGE_BLOB,
 } from '../types/rfpTypes';
 import Axios from '../../utils/axios/axios';
 import { getToken } from '../../utils/app/index';
@@ -16,7 +23,7 @@ import { setNotification } from './appActions';
 import {
   serializeProposal, deserializeProposal, serializeRfpMessage, deserializeRfpMessage,
 } from '../../serializers/rfp-serializer';
-
+import { setPublishRfpLoading, setPublishRfpDoneLoding } from './ui';
 // set default auth token
 Axios.defaults.headers.common['Authorization'] = `Bearer ${getToken()}`;
 
@@ -209,5 +216,27 @@ export const setCurrenMessageBlob = (blob) => async (dispatch) => {
     });
   } catch (error) {
     console.log(error);
+  }
+};
+
+export const publishRfp = (rfpID) => async (dispatch, getState) => {
+  try {
+    dispatch(setPublishRfpLoading());
+    const { user: { currentUser: { tenant_id } } } = getState();
+    const { data } = await Axios.post(`/v1/${tenant_id}/rfp/${rfpID}/publish`);
+    console.log('Done publishing and this is the data', data);
+    dispatch(setPublishRfpDoneLoding());
+  } catch (error) {
+    console.log('an error occurred while publishing the event');
+    dispatch(setPublishRfpDoneLoding());
+  }
+};
+
+export const unpublishRfp = (rfpID) => async (dispatch, getState) => {
+  try {
+    const { user: { currentUser: { tenant_id } } } = getState();
+    await Axios.post(`/v1/${tenant_id}/rfp/${rfpID}/unpublish`);
+  } catch (error) {
+    console.log('an error occurred while publishing the event');
   }
 };
