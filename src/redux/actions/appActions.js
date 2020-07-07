@@ -105,14 +105,12 @@ Promise((resolve, reject) => {
 });
 
 export const sendUserFeedback = (content) => async (dispatch, getState) => {
-  console.log('We are about to send user feedback here');
   try {
     dispatch(setSendUserFeedackLoading());
     const { user: { currentUser: { tenant_id } } } = getState();
-    const { data } = await Axios.post(`/v1/${tenant_id}/feedbacks`, { content });
-    console.log('We sent a feedbck', data);
+    await Axios.post(`/v1/${tenant_id}/feedbacks`, { content });
     dispatch(setSendUserFeedbackDoneLoading());
   } catch (error) {
-    console.log('an error occured while sending the feedback', error);
+    dispatch(setSendUserFeedbackDoneLoading());
   }
 };

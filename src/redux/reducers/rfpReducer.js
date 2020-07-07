@@ -11,6 +11,7 @@ import {
   UPDATE_RFP,
   SET_CURRENT_MESSAGE_BLOB,
   CLEAR_RFP_OUTBOX,
+  PUBLISH_RFP,
 } from '../types/rfpTypes';
 
 const initialState = {
@@ -148,6 +149,20 @@ export default (state = initialState, action) => {
       };
     }
 
+    case PUBLISH_RFP: {
+      const proposals = state.proposals.map((p) => {
+        if (p.id === action.payload) {
+          const proposal = p;
+          proposal.published_at = new Date();
+          return p;
+        }
+        return p;
+      });
+      return {
+        ...state,
+        proposals,
+      };
+    }
     default: return state;
   }
 };

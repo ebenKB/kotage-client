@@ -16,6 +16,7 @@ import {
   SET_RFP_DONE_LOADING,
   GET_PROPOSAL_BY_ID,
   SET_CURRENT_MESSAGE_BLOB,
+  PUBLISH_RFP,
 } from '../types/rfpTypes';
 import Axios from '../../utils/axios/axios';
 import { getToken } from '../../utils/app/index';
@@ -223,11 +224,13 @@ export const publishRfp = (rfpID) => async (dispatch, getState) => {
   try {
     dispatch(setPublishRfpLoading());
     const { user: { currentUser: { tenant_id } } } = getState();
-    const { data } = await Axios.post(`/v1/${tenant_id}/rfp/${rfpID}/publish`);
-    console.log('Done publishing and this is the data', data);
+    await Axios.post(`/v1/${tenant_id}/rfp/${rfpID}/publish`);
+    dispatch({
+      type: PUBLISH_RFP,
+      payload: rfpID,
+    });
     dispatch(setPublishRfpDoneLoding());
   } catch (error) {
-    console.log('an error occurred while publishing the event');
     dispatch(setPublishRfpDoneLoding());
   }
 };
