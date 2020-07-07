@@ -84,7 +84,7 @@ class Settings extends Component {
 					/>
 					<FormGroup
 						type="text"
-						label="Phone"
+						label="Company Phone"
 						labelName="companyphone"
 						inline={false}
 						center
