@@ -93,20 +93,22 @@ class Settings extends Component {
 				</div>
 				<div className="m-t-20 two-equal-grid">
 					<FormGroup
-						type="text"
+						type="dropdown"
 						label="Country"
 						labelName="country"
 						inline={false}
 						center
 						value="Ghana"
+						classes="fluid"
 					/>
 					<FormGroup
-						type="text"
+						type="dropdown"
 						label="Timezone"
 						labelName="timezone"
 						inline={false}
 						center
 						value="UTC + 00"
+						classes="fluid"
 					/>
 				</div>
 			</KtWrapperLite>

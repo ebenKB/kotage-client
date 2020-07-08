@@ -55,7 +55,8 @@ const FormGroup = ({
 		selection
 		options={options}
 		defaultValue={rest.defaultValue}
-		className={`md-dropdown ${rest.classes}`}
+		/* className={`md-dropdown ${classes}`} */
+		className={`${classes}`}
 		onChange={(e, data) => rest.onChange(data.value)}
 	/>
       );
