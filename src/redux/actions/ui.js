@@ -58,6 +58,7 @@ export const supplierRfpClosingDoneloading = () => async (dispatch) => dispatch(
   type: SUPPLIER_RFP_CLOSING_DONE_LOADING,
 });
 
+// buyer actions
 export const setPublishRfpLoading = () => async (dispatch) => dispatch({
   type: IS_PUBLISHING_RFP,
 });

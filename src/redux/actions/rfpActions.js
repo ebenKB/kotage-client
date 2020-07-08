@@ -247,12 +247,11 @@ export const unpublishRfp = (rfpID) => async (dispatch, getState) => {
     const { user: { currentUser: { tenant_id } } } = getState();
     await Axios.post(`/v1/${tenant_id}/rfp/${rfpID}/unpublish`);
   } catch (error) {
-    console.log('an error occurred while publishing the event');
+    // do something here
   }
 };
 
 export const getRfpStakeholder = (userID) => async (dispatch, getState) => {
-  console.log('getting the stake holder');
   try {
     dispatch(setGetRfpStakeholderLoading());
     const { user: { currentUser: { tenant_id } } } = getState();
@@ -265,7 +264,6 @@ export const getRfpStakeholder = (userID) => async (dispatch, getState) => {
     return user;
   } catch (error) {
     dispatch(setGetRfpStakeholderDoneLoading());
-    console.log('an error occurred while fetching the data', error);
     return null;
   }
 };
