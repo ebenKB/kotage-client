@@ -14,11 +14,14 @@ import {
   DONE_SENDING_FEEDBACK,
   IS_FETCHING_RFP_STAKEHOLDER,
   DONE_FETCHING_RFP_STAKEHOLDER,
+  IS_UPDATING_RFP,
+  DONE_UPDATING_RFP,
 } from '../types/ui';
 
 const initialState = {
   buyer: {
     isLoadingRFP: false,
+    isUpdatingRfp: false,
     isPublishingRfp: false,
     isSendingFeedback: false,
     isFetchingRfpStakeholder: false,
@@ -79,16 +82,43 @@ export default (state = initialState, action) => {
     case IS_FETCHING_RFP_STAKEHOLDER: {
       return {
         ...state,
-        isFetchingRfpStakeholder: true,
+        buyer: {
+          ...state.buyer,
+          isFetchingRfpStakeholder: true,
+        },
       };
     }
 
     case DONE_FETCHING_RFP_STAKEHOLDER: {
       return {
         ...state,
-        isFetchingRfpStakeholder: false,
+        buyer: {
+          ...state.buyer,
+          isFetchingRfpStakeholder: false,
+        },
       };
     }
+
+    case IS_UPDATING_RFP: {
+      return {
+        ...state,
+        buyer: {
+          ...state.buyer,
+          isUpdatingRfp: true,
+        },
+      };
+    }
+
+    case DONE_UPDATING_RFP: {
+      return {
+        ...state,
+        buyer: {
+          ...state.buyer,
+          isUpdatingRfp: false,
+        },
+      };
+    }
+
     // end buyer activites
     // supplier activities
     case LOADING_BIDS: {
@@ -132,7 +162,6 @@ export default (state = initialState, action) => {
       };
     }
 
-
     case LOADING_RSVP_CLOSING_SOON: {
       return {
         ...state,
@@ -142,6 +171,7 @@ export default (state = initialState, action) => {
         },
       };
     }
+
     case LOADING_RECENT_ACTIVITIES: {
       return {
         ...state,

@@ -15,6 +15,8 @@ import {
   DONE_SENDING_FEEDBACK,
   IS_FETCHING_RFP_STAKEHOLDER,
   DONE_FETCHING_RFP_STAKEHOLDER,
+  IS_UPDATING_RFP,
+  DONE_UPDATING_RFP,
 } from '../types/ui';
 
 // supplier actions
@@ -82,3 +84,11 @@ export const setGetRfpStakeholderLoading = () => async (dispatch) => dispatch(
 export const setGetRfpStakeholderDoneLoading = () => async (dispatch) => (dispatch({
   type: DONE_FETCHING_RFP_STAKEHOLDER,
 }));
+
+export const setUpdateRfpLoading = () => async (dispatch) => dispatch({
+  type: IS_UPDATING_RFP,
+});
+
+export const setUpdateRfpDoneLoading = () => async (dispatch) => dispatch({
+  type: DONE_UPDATING_RFP,
+});

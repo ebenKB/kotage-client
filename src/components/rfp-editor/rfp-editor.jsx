@@ -6,19 +6,16 @@ import React from 'react';
 import { connect } from 'react-redux';
 import shortid from 'shortid';
 import { ValidatorForm } from 'react-form-validator-core';
-// import { Button } from 'semantic-ui-react';
 import { getCurrencyOptions } from '../../redux/actions/appActions';
+import { createProposal, updateExistingRfp } from '../../redux/actions/rfpActions';
 import MainContent from '../kt-main-content/mainContent';
 import KtWrapper from '../kt-wrapper/kt-wrapper';
 import Divider from '../kt-divider/divider';
 import FormGroup from '../form-fields/form-group/form-group';
 import DateTimeGroup from '../form-fields/date-time-form-group/date-time-group';
 import KtDocsGroup from '../form-fields/kt-docs-group/kt-docs-group';
-// import FloatingSupplierList from '../floating-supplier-list/floating-supplier-list';
 import Help from '../../utils/requisitions/new/help';
-// import SupplierListItem from '../snippets/supplier-list-item/supplier-list-item';
 import StakeholderGroup from '../stakeholder-group/stakeholder-group';
-import { createProposal, updateExistingRfp } from '../../redux/actions/rfpActions';
 import QuestionCreator from '../snippets/question-creator/question-creator';
 import './rfp-editor.scss';
 import SupplierDirectorySection from '../supplier-directory-section/supplier-directory-section';
@@ -33,18 +30,6 @@ class RfpEditor extends React.Component {
       type: options.type,
       heading: options.heading,
       shouldFetchData: false,
-      // currencyOptions: [
-      //   {
-      //     key: '1',
-      //     text: 'GHC',
-      //     value: '1',
-      //   },
-      //   {
-      //     key: '2',
-      //     text: 'USD',
-      //     value: '2',
-      //   },
-      // ],
     };
     this.myRef = React.createRef();
   }
@@ -65,14 +50,13 @@ class RfpEditor extends React.Component {
     } = this.state;
 
     const {
-      loading, publishAction, currencies,
+      loading, publishAction, currencies, isUpdatingRfp,
     } = this.props;
 
     const handleSubmit = (e) => {
       e.preventDefault();
       const { editProposal } = this.props;
       // handleSaveAction();
-      console.log('We want to submit');
       if (type === 'edit') {
         editProposal(newProposal.id, newProposal);
       } else if (type === 'create') {
@@ -82,7 +66,6 @@ class RfpEditor extends React.Component {
 
     const handlePublish = () => {
       this.myRef.current.isFormValid(false).then((value) => {
-        console.log(value);
         if (value) {
           publishAction();
         }
@@ -268,6 +251,7 @@ class RfpEditor extends React.Component {
 				canPublish={type === 'create'}
 				isDisabled={loading}
 				isLoading={loading}
+				isLoadingSecondary={isUpdatingRfp}
 				cancelUrl="/rfx"
 				handleAction={handleSubmit}
 				handlePublishAction={handlePublish}
@@ -319,7 +303,7 @@ class RfpEditor extends React.Component {
 							classes="small"
 							center
 							options={currencies}
-							defaultValue={newProposal.defaultValue}
+							defaultValue={newProposal.currency.id}
 							onChange={(id) => setCurrency(id)}
 						/>
 					</div>
@@ -404,6 +388,7 @@ const mapStateToProps = (state) => ({
   tenantUid: state.tenant.currentTenant.account_id,
   loading: state.rfp.loading,
   currencies: state.app.currencyOptions,
+  isUpdatingRfp: state.ui.buyer.isUpdatingRfp,
 });
 
 const mapDispatchToProps = {
