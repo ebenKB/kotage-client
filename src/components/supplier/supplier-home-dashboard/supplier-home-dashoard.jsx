@@ -109,6 +109,7 @@ const SupplierHomeDashoard = ({
 					{canShowDeadlines && (
 						<GraphItem
 							title="Requiring Attention"
+							subtitle="Events closing in 30 days"
 						>
 							<Doughnut
 								className="graph-continer"
