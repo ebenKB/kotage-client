@@ -13,6 +13,8 @@ import {
   DONE_PUBLISHING_RFP,
   IS_SENDING_FEEDBACK,
   DONE_SENDING_FEEDBACK,
+  IS_FETCHING_RFP_STAKEHOLDER,
+  DONE_FETCHING_RFP_STAKEHOLDER,
 } from '../types/ui';
 
 // supplier actions
@@ -71,3 +73,11 @@ export const setSendUserFeedackLoading = () => async (dispatch) => dispatch({
 export const setSendUserFeedbackDoneLoading = () => async (dispatch) => dispatch({
   type: DONE_SENDING_FEEDBACK,
 });
+
+export const setGetRfpStakeholderLoading = () => async (dispatch) => dispatch(
+  { type: IS_FETCHING_RFP_STAKEHOLDER },
+);
+
+export const setGetRfpStakeholderDoneLoading = () => async (dispatch) => (dispatch({
+  type: DONE_FETCHING_RFP_STAKEHOLDER,
+}));

@@ -17,6 +17,7 @@ import {
   GET_PROPOSAL_BY_ID,
   SET_CURRENT_MESSAGE_BLOB,
   PUBLISH_RFP,
+  GET_RFP_STAKEHOLDER,
 } from '../types/rfpTypes';
 import Axios from '../../utils/axios/axios';
 import { getToken } from '../../utils/app/index';
@@ -24,7 +25,13 @@ import { setNotification } from './appActions';
 import {
   serializeProposal, deserializeProposal, serializeRfpMessage, deserializeRfpMessage,
 } from '../../serializers/rfp-serializer';
-import { setPublishRfpLoading, setPublishRfpDoneLoding } from './ui';
+import {
+  setPublishRfpLoading,
+  setPublishRfpDoneLoding,
+  setGetRfpStakeholderLoading,
+  setGetRfpStakeholderDoneLoading,
+} from './ui';
+
 // set default auth token
 Axios.defaults.headers.common['Authorization'] = `Bearer ${getToken()}`;
 
@@ -241,5 +248,24 @@ export const unpublishRfp = (rfpID) => async (dispatch, getState) => {
     await Axios.post(`/v1/${tenant_id}/rfp/${rfpID}/unpublish`);
   } catch (error) {
     console.log('an error occurred while publishing the event');
+  }
+};
+
+export const getRfpStakeholder = (userID) => async (dispatch, getState) => {
+  console.log('getting the stake holder');
+  try {
+    dispatch(setGetRfpStakeholderLoading());
+    const { user: { currentUser: { tenant_id } } } = getState();
+    const { data: { user } } = await Axios.get(`/v1/${tenant_id}/users/${userID}`);
+    dispatch({
+      type: GET_RFP_STAKEHOLDER,
+      payload: user,
+    });
+    dispatch(setGetRfpStakeholderDoneLoading());
+    return user;
+  } catch (error) {
+    dispatch(setGetRfpStakeholderDoneLoading());
+    console.log('an error occurred while fetching the data', error);
+    return null;
   }
 };

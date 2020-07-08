@@ -12,6 +12,8 @@ import {
   DONE_PUBLISHING_RFP,
   IS_SENDING_FEEDBACK,
   DONE_SENDING_FEEDBACK,
+  IS_FETCHING_RFP_STAKEHOLDER,
+  DONE_FETCHING_RFP_STAKEHOLDER,
 } from '../types/ui';
 
 const initialState = {
@@ -19,6 +21,7 @@ const initialState = {
     isLoadingRFP: false,
     isPublishingRfp: false,
     isSendingFeedback: false,
+    isFetchingRfpStakeholder: false,
   },
   supplier: {
     isLoadingSupplierRfp: false,
@@ -32,6 +35,7 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
+    // buyer activities
     case LOADING_RECENT_ACTIVITIES: {
       return {
         ...state,
@@ -163,6 +167,21 @@ export default (state = initialState, action) => {
       };
     }
 
+    case IS_FETCHING_RFP_STAKEHOLDER: {
+      return {
+        ...state,
+        isFetchingRfpStakeholder: true,
+      };
+    }
+
+    case DONE_FETCHING_RFP_STAKEHOLDER: {
+      return {
+        ...state,
+        isFetchingRfpStakeholder: false,
+      };
+    }
+
+    // supplier activities
     default: {
       return { ...state };
     }

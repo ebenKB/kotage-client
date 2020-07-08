@@ -12,6 +12,7 @@ import {
   SET_CURRENT_MESSAGE_BLOB,
   CLEAR_RFP_OUTBOX,
   PUBLISH_RFP,
+  GET_RFP_STAKEHOLDER,
 } from '../types/rfpTypes';
 
 const initialState = {
@@ -67,6 +68,28 @@ export default (state = initialState, action) => {
         meta: action.payload.meta,
         currentPage: action.payload.page,
         loading: false,
+      };
+    }
+
+    // load the details of the stakeholder and attach it to the current proposal.
+    case GET_RFP_STAKEHOLDER: {
+      const stakeholder = action.payload;
+      const { currentProposal: { stakeholders } } = state;
+      const newStakeholders = stakeholders.map((s) => {
+        if (s.user_id === stakeholder.id) {
+          return {
+            ...s,
+            ...stakeholder,
+          };
+        }
+        return s;
+      });
+      return {
+        ...state,
+        currentProposal: {
+          ...state.currentProposal,
+          stakeholders: newStakeholders,
+        },
       };
     }
 
