@@ -267,3 +267,14 @@ export const getRfpStakeholder = (userID) => async (dispatch, getState) => {
     return null;
   }
 };
+
+export const updateExistingRfp = (rfpID, newRfp) => async (dispatch, getState) => {
+  console.log(rfpID, newRfp);
+  const { user: { currentUser: { tenant_id } } } = getState();
+  const { data: { proposal_request } } = await Axios.put(`/v1/${tenant_id}/rfp/${rfpID}`, newRfp);
+  console.log('This is the data', proposal_request);
+  dispatch({
+    type: UPDATE_RFP,
+    payload: proposal_request,
+  });
+};

@@ -18,7 +18,7 @@ import KtDocsGroup from '../form-fields/kt-docs-group/kt-docs-group';
 import Help from '../../utils/requisitions/new/help';
 // import SupplierListItem from '../snippets/supplier-list-item/supplier-list-item';
 import StakeholderGroup from '../stakeholder-group/stakeholder-group';
-import { createProposal } from '../../redux/actions/rfpActions';
+import { createProposal, updateExistingRfp } from '../../redux/actions/rfpActions';
 import QuestionCreator from '../snippets/question-creator/question-creator';
 import './rfp-editor.scss';
 import SupplierDirectorySection from '../supplier-directory-section/supplier-directory-section';
@@ -29,6 +29,7 @@ class RfpEditor extends React.Component {
     const { proposal, options } = this.props;
     this.state = {
       newProposal: proposal,
+      options,
       type: options.type,
       heading: options.heading,
       shouldFetchData: false,
@@ -67,9 +68,16 @@ class RfpEditor extends React.Component {
       loading, publishAction, currencies,
     } = this.props;
 
-    const handleSubmit = () => {
+    const handleSubmit = (e) => {
+      e.preventDefault();
+      const { editProposal } = this.props;
       // handleSaveAction();
       console.log('We want to submit');
+      if (type === 'edit') {
+        editProposal(newProposal.id, newProposal);
+      } else if (type === 'create') {
+        // save the proposal as draft
+      }
     };
 
     const handlePublish = () => {
@@ -243,7 +251,7 @@ class RfpEditor extends React.Component {
         proposal.files = files;
       }
     };
-
+    const { options: { actionName } } = this.state;
     return (
 	<ValidatorForm
 		ref={this.myRef}
@@ -264,6 +272,7 @@ class RfpEditor extends React.Component {
 				handleAction={handleSubmit}
 				handlePublishAction={handlePublish}
 				saveBtnClasses="default"
+				actionName={actionName}
 			>
 				<Divider type="thick" title="Setup Your Event" classes="m-t-10" isNumbered number="1" />
 				<div className="kt-content__wrapper">
@@ -398,6 +407,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
+  editProposal: updateExistingRfp,
   createNewProposal: createProposal,
   getAllCurrencies: getCurrencyOptions,
 };

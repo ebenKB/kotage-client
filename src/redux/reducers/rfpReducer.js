@@ -166,9 +166,16 @@ export default (state = initialState, action) => {
     }
 
     case UPDATE_RFP: {
+      const { proposals } = state;
+      const updatedRfps = proposals.map((p) => {
+        if (p.id === action.payload.id) {
+          return action.payload;
+        }
+        return p;
+      });
       return {
         ...state,
-        currentProposal: action.payload,
+        proposals: updatedRfps,
       };
     }
 
