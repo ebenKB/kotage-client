@@ -1,3 +1,4 @@
+
 import {
   CREATE_PROPOSAL,
   SET_RFP_LOADING,
@@ -13,6 +14,7 @@ import {
   CLEAR_RFP_OUTBOX,
   PUBLISH_RFP,
   GET_RFP_STAKEHOLDER,
+  CLEAR_CURRENT_RFP,
 } from '../types/rfpTypes';
 
 const initialState = {
@@ -77,9 +79,10 @@ export default (state = initialState, action) => {
       const { currentProposal: { stakeholders } } = state;
       const newStakeholders = stakeholders.map((s) => {
         if (s.user_id === stakeholder.id) {
+          const { id, ...rest } = stakeholder;
           return {
             ...s,
-            ...stakeholder,
+            ...rest,
           };
         }
         return s;
@@ -176,6 +179,13 @@ export default (state = initialState, action) => {
       return {
         ...state,
         proposals: updatedRfps,
+      };
+    }
+
+    case CLEAR_CURRENT_RFP: {
+      return {
+        ...state,
+        currentProposal: null,
       };
     }
 

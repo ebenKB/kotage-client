@@ -58,6 +58,7 @@ class RfpEditor extends React.Component {
       const { editProposal } = this.props;
       // handleSaveAction();
       if (type === 'edit') {
+        console.log('This is the proposal that we want to edit', newProposal);
         editProposal(newProposal.id, newProposal);
       } else if (type === 'create') {
         // save the proposal as draft
@@ -192,7 +193,7 @@ class RfpEditor extends React.Component {
 
     const removeStakeholder = (id) => {
       const proposal = newProposal;
-      proposal.stakeholders = newProposal.stakeholders.filter((s) => (s.id !== id));
+      proposal.stakeholders = newProposal.stakeholders.filter((s) => (s.user_id !== id));
       this.setState((state) => ({
         ...state,
         newProposal: proposal,
@@ -303,7 +304,7 @@ class RfpEditor extends React.Component {
 							classes="small"
 							center
 							options={currencies}
-							defaultValue={newProposal.currency.id}
+							defaultValue={newProposal.currency && newProposal.currency.id}
 							onChange={(id) => setCurrency(id)}
 						/>
 					</div>
@@ -347,6 +348,7 @@ class RfpEditor extends React.Component {
 					<Divider type="thick" title="Response Sheet" classes="m-t-40" isNumbered number="3" />
 					<div className="m-b-20 m-t-20">
 						<QuestionCreator
+							questions={newProposal.questions}
 							setQuestions={(questions) => setQuestions(questions)}
 						/>
 					</div>

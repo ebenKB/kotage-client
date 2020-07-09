@@ -1,5 +1,7 @@
+/* eslint-disable react/forbid-prop-types */
+/* eslint-disable no-shadow */
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { PropTypes } from 'prop-types';
 import shortid from 'shortid';
 import './question-creator.scss';
@@ -7,28 +9,33 @@ import AddItem from '../add-item/add-item';
 import SimpleQuestion from './simple-question/simple-question';
 
 
-const QuestionCreator = ({ className, setQuestions }) => {
+const QuestionCreator = ({ className, setQuestions, questions }) => {
   const [simpleQuestions, setSimpleQuestions] = useState([]);
 
+  useEffect(() => {
+    if (questions) {
+      setSimpleQuestions(questions);
+    }
+  }, []);
   const addNewSimpleQuestion = () => {
     // check if the most previous question is not empty
     if (simpleQuestions.length === 0 || (simpleQuestions[simpleQuestions.length - 1].question !== '')) {
-      setSimpleQuestions((questions) => [{ id: shortid.generate(), question: '' }, ...questions]);
+      setSimpleQuestions((questions) => [{ key: shortid.generate(), question: '' }, ...questions]);
     }
   };
 
-  const updateQuestion = (id, idx, newValue) => {
+  const updateQuestion = (key, idx, newValue) => {
     const questions = simpleQuestions;
     questions[idx] = {
-      id,
+      key,
       question: newValue,
     };
     setSimpleQuestions(() => ([...questions]));
     setQuestions(simpleQuestions);
   };
 
-  const deleteQuestion = (id) => {
-    const newQuestions = simpleQuestions.filter((q) => q.id !== id);
+  const deleteQuestion = (key) => {
+    const newQuestions = simpleQuestions.filter((q) => q.key !== key);
     setSimpleQuestions(() => [...newQuestions]);
     setQuestions(simpleQuestions);
   };
@@ -45,10 +52,10 @@ const QuestionCreator = ({ className, setQuestions }) => {
 				{simpleQuestions.map((q, idx) => (
 					<SimpleQuestion
 						index={idx}
-						key={q.id}
+						key={q.key}
 						question={q}
-						handleChange={(id, value) => updateQuestion(id, idx, value)}
-						deleteQuestion={(id) => deleteQuestion(id)}
+						handleChange={(key, value) => updateQuestion(key, idx, value)}
+						deleteQuestion={(key) => deleteQuestion(key)}
 					/>
 				))}
 			</div>
@@ -60,10 +67,12 @@ const QuestionCreator = ({ className, setQuestions }) => {
 QuestionCreator.propTypes = {
   className: PropTypes.string,
   setQuestions: PropTypes.func.isRequired,
+  questions: PropTypes.array,
 };
 
 QuestionCreator.defaultProps = {
   className: '',
+  questions: null,
 };
 
 export default QuestionCreator;

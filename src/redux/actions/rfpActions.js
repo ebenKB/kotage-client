@@ -18,6 +18,7 @@ import {
   SET_CURRENT_MESSAGE_BLOB,
   PUBLISH_RFP,
   GET_RFP_STAKEHOLDER,
+  CLEAR_CURRENT_RFP,
 } from '../types/rfpTypes';
 import Axios from '../../utils/axios/axios';
 import { getToken } from '../../utils/app/index';
@@ -103,7 +104,12 @@ Promise((resolve, reject) => {
     });
 });
 
+export const clearCurrentRfp = () => async (dispatch) => {
+  dispatch({ type: CLEAR_CURRENT_RFP });
+};
+
 export const getCurrentProposal = (id) => async (dispatch) => {
+  dispatch(clearCurrentRfp());
   dispatch(
     {
       type: GET_PROPOSAL_BY_ID,
@@ -274,10 +280,10 @@ export const updateExistingRfp = (rfpID, newRfp) => async (dispatch, getState) =
   try {
     dispatch(setUpdateRfpLoading());
     const { user: { currentUser: { tenant_id } } } = getState();
-    const { data: { proposal_request } } = await Axios.put(`/v1/${tenant_id}/rfp/${rfpID}`, newRfp);
+    const { data: { proposal_request } } = await Axios.put(`/v1/${tenant_id}/rfp/${rfpID}`, serializeProposal(newRfp, 'edit'));
     dispatch({
       type: UPDATE_RFP,
-      payload: proposal_request,
+      payload: deserializeProposal(proposal_request),
     });
     dispatch(setUpdateRfpDoneLoading());
   } catch (error) {

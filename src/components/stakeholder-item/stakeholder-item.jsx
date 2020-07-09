@@ -33,7 +33,7 @@ const StakeholderItem = ({
 				<div>
 					<DeleteButton
 						type="icon"
-						handleAction={() => removeStakeholder(stakeholder.id)}
+						handleAction={() => removeStakeholder(stakeholder.user_id)}
 					/>
 				</div>
 			)}

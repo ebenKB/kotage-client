@@ -9,7 +9,7 @@ import DeleteButton from '../../../buttons/delete-button';
 const SimpleQuestion = ({ question, handleChange, deleteQuestion }) => {
   const handleOnChange = (e) => {
     e.preventDefault();
-    handleChange(question.id, e.target.value);
+    handleChange(question.key, e.target.value);
   };
 
   return (
@@ -28,7 +28,7 @@ const SimpleQuestion = ({ question, handleChange, deleteQuestion }) => {
 		<DeleteButton
 			classes="cta"
 			type="icon"
-			handleAction={() => deleteQuestion(question.id)}
+			handleAction={() => deleteQuestion(question.key)}
 		/>
 	</div>
   );

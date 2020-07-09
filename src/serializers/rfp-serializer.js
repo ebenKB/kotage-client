@@ -26,11 +26,14 @@ export const deserializeProposal = (proposal) => {
       title: req.title,
       file: req.file,
     }))),
+
     suppliers: (proposal.proposal_suppliers && proposal.proposal_suppliers.map((supplier) => {
       const s = supplier.supplier.tenant_supplier.tenant;
-      const supplier_id = supplier.supplier.id;
+      // eslint-disable-next-line no-shadow
+      const { id, supplier_id } = supplier;
       return {
-        id: supplier_id,
+        id,
+        supplier_id,
         uid: s.uid,
         email: s.email,
         phone: s.phone,
@@ -40,11 +43,15 @@ export const deserializeProposal = (proposal) => {
         timezone: s.timezone,
       };
     })),
+
     stakeholders: (proposal.proposal_stakeholders && proposal.proposal_stakeholders.map((s) => ({
       id: s.id,
       user_id: s.user_id,
       access_level: s.access_level,
     }))),
+
+    // attach the proposal responses
+    response_sheet_id: proposal.proposal_response_sheet.id,
     documents: (proposal.proposal_response_sheet
       && proposal.proposal_response_sheet.proposal_document_requests
       && proposal.proposal_response_sheet.proposal_document_requests.map((doc) => ({
@@ -52,13 +59,16 @@ export const deserializeProposal = (proposal) => {
         name: doc.document_name,
         description: doc.description,
       }))),
+
     questions: (proposal.proposal_response_sheet
       && proposal.proposal_response_sheet.proposal_questions
       && proposal.proposal_response_sheet.proposal_questions.map((question) => ({
         id: question.id,
+        key: question.id,
         question: question.question,
       }))),
   };
+
   return newProposal;
 };
 
@@ -66,7 +76,7 @@ export const deserializeProposal = (proposal) => {
  * format outgoing data
  * @param {*} proposal
  */
-export const serializeProposal = (proposal) => {
+export const serializeProposal = (proposal, type = 'create') => {
   const newProposal = {
     title: proposal.title,
     tenant_id: proposal.tenant_id,
@@ -78,29 +88,90 @@ export const serializeProposal = (proposal) => {
     question_deadline: mergeDateAndTime(proposal.question_deadline_date,
       proposal.question_deadline_time),
     currency_id: proposal.currency_id,
-    proposal_stakeholders_attributes: proposal.stakeholders
-      .map((user) => (
-        {
-          user_id: user.id,
-          access_level: user.access_level,
-        })),
-    proposal_suppliers_attributes: proposal.suppliers.map((s) => (
-      {
-        supplier_id: s.id,
-      })),
-    proposal_attachments_attributes: proposal.files.map((f) => ({
-      file: f.url,
-      title: f.title,
-    })),
+    // proposal_stakeholders_attributes: proposal.stakeholders
+    //   .map((user) => (
+    //     {
+    //       user_id: user.id,
+    //       access_level: user.access_level,
+    //     })),
+    // proposal_suppliers_attributes: proposal.suppliers.map((s) => (
+    //   {
+    //     supplier_id: s.id,
+    //   })),
+    // proposal_attachments_attributes: proposal.files.map((f) => ({
+    //   file: f.url,
+    //   title: f.title,
+    // })),
   };
 
+  if (type === 'create') { // attach associated records without their IDs
+    newProposal.proposal_stakeholders_attributes = proposal.stakeholders
+      .map((user) => ({
+        user_id: user.id,
+        access_level: user.access_level,
+      }));
+
+    newProposal.proposal_suppliers_attributes = proposal.suppliers.map((s) => (
+      {
+        supplier_id: s.supplier_id,
+      }));
+
+    newProposal.proposal_attachments_attributes = proposal.files.map((f) => ({
+      file: f.url,
+      title: f.title,
+    }));
+
+    newProposal.proposal_response_sheet_attributes = {
+      proposal_document_requests_attributes: proposal.documents
+        .map((doc) => ({ document_name: doc.name, description: doc.description })),
+
+      proposal_questions_attributes: proposal.questions
+        .map((question) => ({ question: question.question })),
+    };
+  } else if (type === 'edit') { // add IDs to associated records
+    newProposal.proposal_stakeholders_attributes = proposal.stakeholders
+      .map((s) => ({
+        id: s.id,
+        user_id: s.user_id,
+        access_level: s.access_level,
+      }));
+
+    newProposal.proposal_suppliers_attributes = proposal.suppliers.map((s) => (
+      {
+        id: s.id,
+        supplier_id: s.supplier_id,
+      }));
+
+    newProposal.proposal_attachments_attributes = proposal.files.map((f) => ({
+      id: f.id,
+      file: f.url,
+      title: f.title,
+    }));
+
+    newProposal.proposal_response_sheet_attributes = {
+      id: proposal.response_sheet_id,
+      proposal_document_requests_attributes: proposal.documents
+        .map((doc) => ({
+          id: doc.id,
+          document_name: doc.name,
+          description: doc.description,
+        })),
+
+      proposal_questions_attributes: proposal.questions
+        .map((question) => ({
+          id: question.id,
+          question: question.question,
+        })),
+    };
+  }
+
   // attach the response sheet
-  newProposal.proposal_response_sheet_attributes = {
-    proposal_document_requests_attributes: proposal.documents
-      .map((doc) => ({ document_name: doc.name, description: doc.description })),
-    proposal_questions_attributes: proposal.questions
-      .map((question) => ({ question: question.question })),
-  };
+  // newProposal.proposal_response_sheet_attributes = {
+  //   proposal_document_requests_attributes: proposal.documents
+  //     .map((doc) => ({ document_name: doc.name, description: doc.description })),
+  //   proposal_questions_attributes: proposal.questions
+  //     .map((question) => ({ question: question.question })),
+  // };
   return newProposal;
 };
 
