@@ -28,6 +28,7 @@ const QuestionCreator = ({ className, setQuestions, questions }) => {
     const questions = simpleQuestions;
     questions[idx] = {
       key,
+      id: key,
       question: newValue,
     };
     setSimpleQuestions(() => ([...questions]));
