@@ -83,7 +83,7 @@ class KtWrapper extends React.Component {
 			<div className="kt-wrapper__footer text-right">
 				<div className="content">
 					<Link to={cancelUrl}>
-						<Button content="Cancel" className="default" />
+						<Button basic content="Cancel" className="default" />
 					</Link>
 					<Button
 						type="submit"
