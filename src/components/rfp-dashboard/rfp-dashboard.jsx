@@ -121,7 +121,7 @@ const RfpDashboard = ({
 							</div>
 							<div className="text-right m-t-20">
 								<Link to={`/rfx/proposal/${proposal.id}/compare-bids`}>
-									<Button content="Compare Bids" color="green" size="tiny" />
+									<Button content="Compare Bids" positive size="tiny" />
 								</Link>
 							</div>
 							<div className="m-t-20">

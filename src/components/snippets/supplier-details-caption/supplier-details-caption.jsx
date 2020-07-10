@@ -13,17 +13,19 @@ const SupplierDetailsCaption = ({ type }) => (
 				<div className="text-right">
 					<ButtonGroup>
 						<Button content="View Bid" />
-						<Button content={(
-							<PopupDropdown
-								trigger="Bid Action"
-								position="top center"
-							>
-								<div className="flex-center">
-									<Button content="Decline" />
-									<Button content="Accept" success />
-								</div>
-							</PopupDropdown>
-						)}
+						<Button
+							positive
+							content={(
+								<PopupDropdown
+									trigger="Bid Action"
+									position="top center"
+								>
+									<div className="flex-center">
+										<Button basic content="Decline" />
+										<Button basic positive content="Accept" success />
+									</div>
+								</PopupDropdown>
+							)}
 						/>
 
 					</ButtonGroup>

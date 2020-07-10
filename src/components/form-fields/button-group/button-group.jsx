@@ -3,7 +3,7 @@ import React from 'react';
 import './button-group.scss';
 
 const ButtonGroup = ({ children }) => (
-	<div className="kt-btn-group">
+	<div className="kt-btn-group positive">
 		{children}
 	</div>
 );
