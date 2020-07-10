@@ -54,6 +54,7 @@ const FormGroup = ({
 		search
 		selection
 		options={options}
+		loading={rest.loading}
 		defaultValue={rest.defaultValue}
 		/* className={`md-dropdown ${classes}`} */
 		className={`${classes}`}

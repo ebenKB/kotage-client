@@ -18,9 +18,20 @@ import SearcFilter from '../search-filter/filter';
 class KtWrapper extends React.Component {
   render() {
     const {
-      header, canFilter, canPerform, handleAction, cancelUrl = '/', isLoading = false,
-      actionName, isDisabled = false, canPublish = false, children, saveBtnClasses,
-      handlePublishAction, isLite, isLoadingSecondary,
+      header,
+      canFilter,
+      canPerform,
+      handleAction,
+      cancelUrl = '/',
+      isLoading = false,
+      actionName,
+      isDisabled = false,
+      canPublish = false,
+      children,
+      saveBtnClasses,
+      handlePublishAction,
+      isLite,
+      isLoadingSecondary,
     } = this.props;
     let {
       link = '', linkName = '',
