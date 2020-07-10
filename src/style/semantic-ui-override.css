@@ -87,3 +87,7 @@
 .ui.table {
   color: var(--kt-dark);
 }
+
+.ui.positive.button, .ui.positive.buttons .button {
+  background-color: var(--kt-green);
+}
