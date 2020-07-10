@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Label } from 'semantic-ui-react';
+// import { Label } from 'semantic-ui-react';
 import { ValidatorForm } from 'react-form-validator-core';
 import Axios from 'axios';
 import MainContent from '../../../components/kt-main-content/mainContent';
@@ -43,8 +43,13 @@ class Settings extends Component {
     });
   }
 
-  handleInputChange = (e) => {
+  handleUserInputChange = (e) => {
+    console.log(e.target);
     e.preventDefault();
+    const { name, value } = e.target;
+    const { user } = this.state;
+    user[name] = value;
+    this.setState((state) => ({ ...state, user }));
   };
 
   handleCountryChange = (country) => {
@@ -61,6 +66,10 @@ class Settings extends Component {
         },
       }));
     });
+  }
+
+  handleSubmit = () => {
+    console.log('We want to submit the update', this.state);
   }
 
   render() {
@@ -80,16 +89,21 @@ class Settings extends Component {
 			canPerform
 			actionName="Update"
 			header="Settings"
+			handleAction={this.handleSubmit}
 		>
-			<div className="m-b-20 dark text-right kt-primary">
-				<span>Kotage Number&nbsp;</span>
+			<div className="m-b-20 dark text-right">
+				<div className="xsm-caption dark">
+					<span>KOTAGE NUMBER</span>
+				</div>
+				<div className="md-caption bold big-caption kt-primary">bddd53f1b4</div>
+				{/* <span>Kotage Number&nbsp;</span>
 				<Label size="large">
 					<span className="md-caption bold">4545dfdf</span>
-				</Label>
+				</Label> */}
 			</div>
 			<ValidatorForm
 				ref={this.myRef}
-				onSubmit={console.log('We want to save the updates')}
+				onSubmit={this.handleSubmit}
 			>
 				<Divider type="thick" title="Account Settings" ishoverable />
 				<div className="m-t-20 two-equal-grid">
@@ -100,6 +114,8 @@ class Settings extends Component {
 						inline={false}
 						center
 						value={firstname}
+						name="firstname"
+						onChange={this.handleUserInputChange}
 					/>
 					<FormGroup
 						type="text"
@@ -108,6 +124,8 @@ class Settings extends Component {
 						inline={false}
 						center
 						value={lastname}
+						name="lastname"
+						onChange={this.handleUserInputChange}
 					/>
 				</div>
 				<div className="m-t-20 two-equal-grid">
@@ -118,6 +136,8 @@ class Settings extends Component {
 						inline={false}
 						center
 						value={phone}
+						name="phone"
+						onChange={this.handleUserInputChange}
 					/>
 					<FormGroup
 						type="email"
@@ -126,6 +146,7 @@ class Settings extends Component {
 						inline={false}
 						center
 						value={email}
+						name="email"
 					/>
 				</div>
 				<Divider type="thick" title="Company Settings" classes="m-t-40" ishoverable />
@@ -137,6 +158,7 @@ class Settings extends Component {
 						inline={false}
 						center
 						value={company.name}
+						name="name"
 					/>
 					<FormGroup
 						type="text"
@@ -145,6 +167,7 @@ class Settings extends Component {
 						inline={false}
 						center
 						value={company.email}
+						name="email"
 					/>
 				</div>
 				<div className="m-t-20 two-equal-grid">
@@ -155,6 +178,7 @@ class Settings extends Component {
 						inline={false}
 						center
 						value={company.phone}
+						name="phone"
 					/>
 					{countries && (
 						<FormGroup

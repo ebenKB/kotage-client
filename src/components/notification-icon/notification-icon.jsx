@@ -1,5 +1,5 @@
 import React from 'react';
-import NotificationsNoneIcon from '@material-ui/icons/NotificationsNone';
+import NotificationsNoneIcon from '@material-ui/icons/Notifications';
 import './notification-icon.scss';
 import { PropTypes } from 'prop-types';
 import { Link } from 'react-router-dom';
