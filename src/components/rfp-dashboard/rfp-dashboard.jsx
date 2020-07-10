@@ -166,7 +166,11 @@ const RfpDashboard = ({
 						)}
 						<div className="m-t-20">
 							<Link to={`/rfx/proposal/show/${proposal.id}`}>
-								<Button size="tiny" content="View RFP" basic />
+								<Button
+									size="tiny"
+									content="View RFP Details"
+									positive
+								/>
 							</Link>
 						</div>
 					</div>
