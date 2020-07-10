@@ -18,14 +18,16 @@ const StakeholderItemFetch = ({
     // fetch the stakeholder from here
     getStakeholder(stakeholderObj.user_id)
       .then((user) => {
-        setstakeholder({
-          id: user.id,
-          firstname: user.firstname,
-          lastname: user.lastname,
-          email: user.email,
-          phone: user.phone,
-          access_level: stakeholderObj.access_level,
-        });
+        if (user) {
+          setstakeholder({
+            id: user.id,
+            firstname: user.firstname,
+            lastname: user.lastname,
+            email: user.email,
+            phone: user.phone,
+            access_level: stakeholderObj.access_level,
+          });
+        }
       });
     // Axios.get(`/v1/${tenant_id}/users/${stakeholderObj.user_id}`)
     //   .then((data) => {
