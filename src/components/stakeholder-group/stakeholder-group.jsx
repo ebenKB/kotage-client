@@ -37,11 +37,14 @@ const StakeholderGroup = ({
 					</div>
 				))}
 				{mode === 'readonly' && stakeholders && stakeholders.map((stakeholder) => (
-					<StakeholderItemFetch
-						key={stakeholder.id}
-						mode={mode}
-						stakeholderObj={stakeholder}
-					/>
+					<div key={stakeholder.id}>
+						<StakeholderItemFetch
+							key={stakeholder.id}
+							mode={mode}
+							stakeholderObj={stakeholder}
+						/>
+						<Divider type="faint" title="" classes="form-item m-t-8" isNumbered={false} />
+					</div>
 				))}
 			</div>
 		)}

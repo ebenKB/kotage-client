@@ -4,9 +4,9 @@ import React, { useEffect } from 'react';
 import { withRouter } from 'react-router';
 import { PropTypes } from 'prop-types';
 import { connect } from 'react-redux';
-import { Button } from 'semantic-ui-react';
+// import { Button } from 'semantic-ui-react';
 // import { CircularProgressbar } from 'react-circular-progressbar';
-import AttachmentIcon from '@material-ui/icons/Attachment';
+// import AttachmentIcon from '@material-ui/icons/Attachment';
 import { getCurrentProposal } from '../../../../redux/actions/rfpActions';
 import Divider from '../../../kt-divider/divider';
 import 'react-circular-progressbar/dist/styles.css';
@@ -26,10 +26,11 @@ import TimelineItem from '../../../timeline-item/timeline-item';
 import StakeholderGroup from '../../../stakeholder-group/stakeholder-group';
 import DocumentListGroup from '../../../document-list-group/document-list-group';
 import RfpTitle from '../../../snippets/rfp-title/rfp-title';
-import KtDetailsCaption from '../../../kt-details-caption/kt-details-caption';
+import FileHandler from '../../../file-handler/file-handler';
+import ParseHtml from '../../../snippets/parse-html/parse-html';
 
 const ShowRfp = ({
-  match, getProposal, proposal, history,
+  match, getProposal, proposal, history, tenantID,
 }) => {
   const { params } = match;
   const { id } = params;
@@ -40,9 +41,6 @@ const ShowRfp = ({
   const handleAction = () => {
     history.push(`/rfx/proposal/${id}/edit`);
   };
-  // eslint-disable-next-line react/no-danger
-  const getDescription = () => (<div dangerouslySetInnerHTML={{ __html: proposal.description }} />
-  );
   return (
 	<MainContent
 		help={Help}
@@ -58,32 +56,15 @@ const ShowRfp = ({
 			cancelUrl={`/rfx/proposal/dashboard/${id}`}
 			handleAction={handleAction}
 		>
-			{/* <KtWrapperLite> */}
 			<div>
 				{proposal && (
 					<div>
-						<Divider type="faint" title="RFP DETAILS" classes="" isNumbered number="1" />
-						{/* <div className="m-t-20 m-b-20 kt-bg-shadow kt-text-caption__wrapper kt-move-left">
-							{getDescription()}
-						</div> */}
-						<KtDetailsCaption description={getDescription} classes="m-t-20 m-b-20  kt-move-left" />
-						<div className="kt-pad-left">
-							<div className="dark bold">Rfp Attachments</div>
-							{proposal.files && proposal.files.length > 0 && (
-								<div className="flex-center m-t-10">
-									<AttachmentIcon />
-									<Button
-										className="kt-transparent kt-primary"
-										content={`Download ${proposal.files.length} attachment(s)`}
-									/>
-								</div>
-							)}
-							{proposal.files && proposal.files.length === 0 && (
-								<p>There are no files attached to this proposal</p>
-							)}
+						<Divider ishoverable type="faint" title="RFP DETAILS" classes="" isNumbered number="1" />
+						<div className="m-t-20 m-b-20 kt-bg-shadow kt-text-caption__wrapper kt-move-left">
+							<ParseHtml content={proposal.description} />
 						</div>
 						<div className="m-t-40">
-							<Divider type="faint" title="EVENT TIMELINE" classes="" isNumbered number="2" />
+							<Divider ishoverable type="faint" title="EVENT TIMELINE" classes="" isNumbered number="2" />
 							<div className="kt-pad-left">
 								<TimelineItem
 									label="Bid Deadline:"
@@ -103,7 +84,7 @@ const ShowRfp = ({
 							</div>
 						</div>
 						<div className="m-t-40">
-							<Divider type="faint" title="RESPONSE SHEET" classes="" isNumbered number="3" />
+							<Divider ishoverable type="faint" title="RESPONSE SHEET" classes="" isNumbered number="3" />
 							<section className="m-t-20 kt-pad-left">
 								<QuestionListGroup
 									questions={proposal.questions}
@@ -116,7 +97,7 @@ const ShowRfp = ({
 							</section>
 						</div>
 						<div className="m-t-40">
-							<Divider type="faint" title="INVITED SUPPLIERS" classes="" isNumbered number="4" />
+							<Divider ishoverable type="faint" title="INVITED SUPPLIERS" classes="" isNumbered number="4" />
 							<div className="kt-pad-left">
 								<SupplierDirectorySection
 									proposal={proposal}
@@ -126,7 +107,7 @@ const ShowRfp = ({
 							</div>
 						</div>
 						<div className="m-t-40">
-							<Divider type="faint" title="STAKEHOLDERS" classes="" isNumbered number="5" />
+							<Divider ishoverable type="faint" title="STAKEHOLDERS" classes="" isNumbered number="5" />
 							<div className="kt-pad-left">
 								{proposal.stakeholders && (
 									<div className="m-t-20">
@@ -137,6 +118,24 @@ const ShowRfp = ({
 											classes="m-b-10"
 										/>
 									</div>
+								)}
+							</div>
+						</div>
+						<div className="m-t-40">
+							<Divider ishoverable type="faint" title="ATTACHMENTS" classes="" isNumbered number="6" />
+							<div className="kt-pad-left">
+								<div className="m-t-20">
+									{proposal.files && (
+										<FileHandler
+											tenantID={tenantID}
+											shouldSignUrl
+											files={proposal.files}
+											objectOwnerID={proposal.id}
+										/>
+									)}
+								</div>
+								{proposal.files && proposal.files.length === 0 && (
+									<p>There are no files attached to this proposal</p>
 								)}
 							</div>
 						</div>
@@ -196,6 +195,7 @@ ShowRfp.propTypes = {
   getProposal: PropTypes.func.isRequired,
   proposal: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
+  tenantID: PropTypes.number.isRequired,
 };
 
 const mapDispatchToProps = {
@@ -204,6 +204,7 @@ const mapDispatchToProps = {
 
 const mapStateToProps = (state) => ({
   proposal: state.rfp.currentProposal,
+  tenantID: state.tenant.currentTenant.id,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(ShowRfp));
