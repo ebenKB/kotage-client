@@ -69,7 +69,7 @@ class CreateTenantSecondaryForm extends React.Component {
 								type="text"
 								placeholder="Compnay Name"
 								className="fluid"
-								value={tenant.company_name}
+								value={tenant.name}
 								name="company_name"
 								onChange={onChange}
 								required

@@ -16,6 +16,8 @@ import {
   DONE_FETCHING_RFP_STAKEHOLDER,
   IS_UPDATING_RFP,
   DONE_UPDATING_RFP,
+  IS_UPDATING_ACCOUNT,
+  DONE_UPDATING_ACCOUNT,
 } from '../types/ui';
 
 const initialState = {
@@ -25,6 +27,7 @@ const initialState = {
     isPublishingRfp: false,
     isSendingFeedback: false,
     isFetchingRfpStakeholder: false,
+    isUpdatingAccount: false,
   },
   supplier: {
     isLoadingSupplierRfp: false,
@@ -115,6 +118,26 @@ export default (state = initialState, action) => {
         buyer: {
           ...state.buyer,
           isUpdatingRfp: false,
+        },
+      };
+    }
+
+    case IS_UPDATING_ACCOUNT: {
+      return {
+        ...state,
+        buyer: {
+          ...state.buyer,
+          isUpdatingAccount: true,
+        },
+      };
+    }
+
+    case DONE_UPDATING_ACCOUNT: {
+      return {
+        ...state,
+        buyer: {
+          ...state.buyer,
+          isUpdatingAccount: false,
         },
       };
     }

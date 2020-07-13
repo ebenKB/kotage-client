@@ -10,6 +10,7 @@ import {
   RESEND_INVITATION, DELETE_INVITATION, LOGOUT,
 } from '../types/userTypes';
 import { setNotification } from './appActions';
+import { setUpdateAccountLoading, setUpdateAccountDoneLoading } from './ui';
 
 /**
  * This function is used to send a new invitation to a user
@@ -316,6 +317,13 @@ export const softDeleteInvitation = (invitation_id) => async (dispatch, getState
   } catch (error) {
     dispatch(setNotification({ message: 'an error occurred while deleting the user' }, 'error'));
   }
+};
+
+export const updateUserDetails = (user_id, tenantID, newUser) => async (dispatch) => {
+  console.log('We are updating the user deatils', newUser, user_id);
+  dispatch(setUpdateAccountLoading());
+  await Axios.put(`/v1/${tenantID}/users/${user_id}`, newUser);
+  dispatch(setUpdateAccountDoneLoading());
 };
 
 export const refreshAuthToken = (token) => {

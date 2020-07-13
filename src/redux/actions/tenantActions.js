@@ -8,6 +8,8 @@ import {
 } from '../types/tenantTypes';
 import { deserializeSupplier } from '../../serializers/supplier-serializers';
 import { setNotification } from './appActions';
+import { serializeTenant, deserializeTenant } from '../../serializers/tenant-serializer';
+import { setUpdateAccountLoading, setUpdateAccountDoneLoading } from './ui';
 
 /**
  * this function creates a new tenant
@@ -33,7 +35,7 @@ export const getTenant = (tenant_id) => async (dispatch, getState) => {
       const { data } = await Axios.get(`/v1/${tenant_id}`);
       return dispatch({
         type: GET_TENANT,
-        payload: data.tenant,
+        payload: deserializeTenant(data.tenant),
       });
     } catch (error) {
       return dispatch(setNotification({ message: 'Sorry! an error occured' }, 'error'));
@@ -143,6 +145,12 @@ export const addSupplier = (tenant_id, uid) => async (dispatch) => (
       });
     }
   }));
+
+export const updateExistingTenant = (tenant_id, newTenant) => async (dispatch) => {
+  dispatch(setUpdateAccountLoading());
+  await Axios.put(`/v1/${tenant_id}`, serializeTenant(newTenant));
+  dispatch(setUpdateAccountDoneLoading());
+};
 
 export const setLoading = (dispatch) => dispatch({
   type: SET_LOADING,

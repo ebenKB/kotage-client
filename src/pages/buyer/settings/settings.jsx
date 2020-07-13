@@ -1,32 +1,35 @@
+/* eslint-disable react/forbid-prop-types */
 import React, { Component } from 'react';
 // import { Label } from 'semantic-ui-react';
 import { ValidatorForm } from 'react-form-validator-core';
 import Axios from 'axios';
+import { connect } from 'react-redux';
+import { PropTypes } from 'prop-types';
 import MainContent from '../../../components/kt-main-content/mainContent';
 import Help from '../../../utils/requisitions/new/help';
 import Divider from '../../../components/kt-divider/divider';
 import FormGroup from '../../../components/form-fields/form-group/form-group';
 import KtWrapper from '../../../components/kt-wrapper/kt-wrapper';
+import { updateExistingTenant } from '../../../redux/actions/tenantActions';
+import { updateUserDetails } from '../../../redux/actions/userActions';
 
 class Settings extends Component {
   constructor(props) {
     super(props);
+    const { tenant, user } = this.props;
     this.state = {
       loading: true,
       countries: null,
       timezones: null,
       user: {
-        firstname: 'Alexander',
-        lastname: 'Straight',
-        phone: '02478736459',
-        email: 'example@email.com',
+        firstname: user.firstname,
+        lastname: user.lastname,
+        phone: user.phone,
+        email: user.email,
+        job_function: user.job_function,
       },
-      company: {
-        name: 'Broker and Sons Limited',
-        email: 'email@example.com',
-        phone: '898989898989',
-        country: 'Ghana',
-        timezone: 'UTC',
+      tenant: {
+        ...tenant,
       },
     };
     this.myRef = React.createRef();
@@ -43,24 +46,27 @@ class Settings extends Component {
     });
   }
 
-  handleUserInputChange = (e) => {
-    console.log(e.target);
+  handleUserInputChange = (e, source) => {
     e.preventDefault();
     const { name, value } = e.target;
-    const { user } = this.state;
-    user[name] = value;
-    this.setState((state) => ({ ...state, user }));
+    const { user, tenant } = this.state;
+    if (source === 'user') {
+      user[name] = value;
+    } else if (source === 'tenant') {
+      tenant[name] = value;
+    }
+    this.setState((state) => ({ ...state, user, tenant }));
   };
 
   handleCountryChange = (country) => {
     this.setState((state) => ({ ...state, timezones: null }), () => {
-      const { countries, company } = this.state;
+      const { countries, tenant } = this.state;
       const selected = countries.find((c) => c.name === country);
       this.setState((state) => ({
         ...state,
         timezones: selected.timezones,
-        company: {
-          ...company,
+        tenant: {
+          ...tenant,
           country,
           timezone: selected.timezones[0],
         },
@@ -70,15 +76,30 @@ class Settings extends Component {
 
   handleSubmit = () => {
     console.log('We want to submit the update', this.state);
+    const { tenant, user } = this.state;
+    const {
+      updateTenant,
+      updateUser,
+      tenant: { id },
+    } = this.props;
+    updateTenant(id, tenant);
+    // eslint-disable-next-line react/destructuring-assignment
+    updateUser(this.props.user.id, id, user);
   }
 
   render() {
+    const {
+      isUpdatingAccount,
+      // user: {
+      //   firstname, lastname, phone, email,
+      // },
+    } = this.props;
     const {
       countries, timezones, loading,
       user: {
         firstname, lastname, phone, email,
       },
-      company,
+      tenant,
     } = this.state;
     return (
 	<MainContent
@@ -90,16 +111,13 @@ class Settings extends Component {
 			actionName="Update"
 			header="Settings"
 			handleAction={this.handleSubmit}
+			isLoadingSecondary={isUpdatingAccount}
 		>
 			<div className="m-b-20 dark text-right">
 				<div className="xsm-caption dark">
 					<span>KOTAGE NUMBER</span>
 				</div>
 				<div className="md-caption bold big-caption kt-primary">bddd53f1b4</div>
-				{/* <span>Kotage Number&nbsp;</span>
-				<Label size="large">
-					<span className="md-caption bold">4545dfdf</span>
-				</Label> */}
 			</div>
 			<ValidatorForm
 				ref={this.myRef}
@@ -115,17 +133,17 @@ class Settings extends Component {
 						center
 						value={firstname}
 						name="firstname"
-						onChange={this.handleUserInputChange}
+						onChange={(e) => this.handleUserInputChange(e, 'user')}
 					/>
 					<FormGroup
 						type="text"
 						label="Last Name"
-						labelName="firstname"
+						labelName="lastname"
 						inline={false}
 						center
 						value={lastname}
 						name="lastname"
-						onChange={this.handleUserInputChange}
+						onChange={(e) => this.handleUserInputChange(e, 'user')}
 					/>
 				</div>
 				<div className="m-t-20 two-equal-grid">
@@ -137,7 +155,7 @@ class Settings extends Component {
 						center
 						value={phone}
 						name="phone"
-						onChange={this.handleUserInputChange}
+						onChange={(e) => this.handleUserInputChange(e, 'user')}
 					/>
 					<FormGroup
 						type="email"
@@ -147,6 +165,7 @@ class Settings extends Component {
 						center
 						value={email}
 						name="email"
+						disabled
 					/>
 				</div>
 				<Divider type="thick" title="Company Settings" classes="m-t-40" ishoverable />
@@ -157,8 +176,9 @@ class Settings extends Component {
 						labelName="companyname"
 						inline={false}
 						center
-						value={company.name}
+						value={tenant.name}
 						name="name"
+						onChange={(e) => this.handleUserInputChange(e, 'tenant')}
 					/>
 					<FormGroup
 						type="text"
@@ -166,8 +186,9 @@ class Settings extends Component {
 						labelName="companyemail"
 						inline={false}
 						center
-						value={company.email}
+						value={tenant.email}
 						name="email"
+						disabled
 					/>
 				</div>
 				<div className="m-t-20 two-equal-grid">
@@ -177,8 +198,9 @@ class Settings extends Component {
 						labelName="companyphone"
 						inline={false}
 						center
-						value={company.phone}
+						value={tenant.phone}
 						name="phone"
+						onChange={(e) => this.handleUserInputChange(e, 'tenant')}
 					/>
 					{countries && (
 						<FormGroup
@@ -187,16 +209,16 @@ class Settings extends Component {
 							labelName="country"
 							inline={false}
 							center
-							value={company.country}
+							value={tenant.country}
 							options={countries.map((d, id) => ({ text: d.name, value: d.name, key: id }))}
 							classes="fluid"
 							onChange={(data) => this.handleCountryChange(data)}
-							defaultValue={company.country}
+							defaultValue={tenant.country}
 							loading={loading}
 						/>
 					)}
 				</div>
-				{company.timezone && !timezones && (
+				{tenant.timezone && !timezones && (
 					<div className="m-t-20 two-equal-grid">
 						<FormGroup
 							type="text"
@@ -204,7 +226,7 @@ class Settings extends Component {
 							labelName="timezone"
 							inline={false}
 							center
-							value={company.timezone}
+							value={tenant.timezone}
 							classes="fluid"
 							disabled
 						/>
@@ -218,124 +240,39 @@ class Settings extends Component {
 							labelName="timezone"
 							inline={false}
 							center
-							value={company.timezone}
+							value={tenant.timezone}
 							classes="fluid"
 							disabled
 							options={timezones && timezones.map((t, id) => ({ text: t, value: t, key: id }))}
-							defaultValue={company.timezone}
+							defaultValue={tenant.timezone}
 							onChange={() => console.log('The selection chnaged')}
 						/>
 					</div>
 				)}
 			</ValidatorForm>
 		</KtWrapper>
-		{/* <ValidatorForm
-			ref={this.myRef}
-			onSubmit={console.log('We want to save the updates')}
-		>
-			<div className="m-t-0 m-b-10">
-				<Divider type="thick" title="Kotage Number: bddd53f1b4" />
-			</div>
-			<KtWrapperLite>
-				<Divider type="thick" title="Account Settings" />
-				<div className="m-t-20 two-equal-grid">
-					<FormGroup
-						type="text"
-						label="First Name"
-						labelName="firstname"
-						inline={false}
-						center
-						value="Alexander"
-					/>
-					<FormGroup
-						type="text"
-						label="Last Name"
-						labelName="firstname"
-						inline={false}
-						center
-						value="Straight"
-					/>
-				</div>
-				<div className="m-t-20 two-equal-grid">
-					<FormGroup
-						type="text"
-						label="Phone"
-						labelName="Phone"
-						inline={false}
-						center
-						value="+233548086391"
-					/>
-					<FormGroup
-						type="email"
-						label="Email"
-						labelName="email"
-						inline={false}
-						center
-						value="example@email.com"
-						disabled
-					/>
-				</div>
-			</KtWrapperLite>
-			<KtWrapperLite
-				classes="m-t-20"
-			>
-				<Divider type="thick" title="Company Settings" />
-				<div className="m-t-20 two-equal-grid">
-					<FormGroup
-						type="text"
-						label="Company Name"
-						labelName="companyname"
-						inline={false}
-						center
-						value="Apotica Company Ltd"
-					/>
-					<FormGroup
-						type="text"
-						label="Company Phone"
-						labelName="companyphone"
-						inline={false}
-						center
-						value="+233548086391"
-					/>
-				</div>
-				<div className="m-t-20 two-equal-grid">
-					<FormGroup
-						type="dropdown"
-						label="Country"
-						labelName="country"
-						inline={false}
-						center
-						value="Ghana"
-						classes="fluid"
-					/>
-					<FormGroup
-						type="dropdown"
-						label="Timezone"
-						labelName="timezone"
-						inline={false}
-						center
-						value="UTC + 00"
-						classes="fluid"
-					/>
-				</div>
-			</KtWrapperLite>
-			<div className="flex-center m-t-20">
-				<Button
-					basic
-					size="small"
-					content="Cancel"
-				/>
-				<Button
-					positive
-					size="small"
-					content="Update"
-				/>
-			</div>
-		</ValidatorForm> */}
 	</MainContent>
     );
   }
 }
 
+const mapDispatchToProps = {
+  updateTenant: updateExistingTenant,
+  updateUser: updateUserDetails,
+};
 
-export default Settings;
+const mapStateToProps = (state) => ({
+  tenant: state.tenant.currentTenant,
+  user: state.user.currentUser,
+  isUpdatingAccount: state.ui.buyer.isUpdatingAccount,
+});
+
+Settings.propTypes = {
+  updateTenant: PropTypes.func.isRequired,
+  tenant: PropTypes.object.isRequired,
+  isUpdatingAccount: PropTypes.bool.isRequired,
+  user: PropTypes.object.isRequired,
+  updateUser: PropTypes.func.isRequired,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Settings);

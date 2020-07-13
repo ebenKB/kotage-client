@@ -17,6 +17,8 @@ import {
   DONE_FETCHING_RFP_STAKEHOLDER,
   IS_UPDATING_RFP,
   DONE_UPDATING_RFP,
+  IS_UPDATING_ACCOUNT,
+  DONE_UPDATING_ACCOUNT,
 } from '../types/ui';
 
 // supplier actions
@@ -91,4 +93,12 @@ export const setUpdateRfpLoading = () => async (dispatch) => dispatch({
 
 export const setUpdateRfpDoneLoading = () => async (dispatch) => dispatch({
   type: DONE_UPDATING_RFP,
+});
+
+export const setUpdateAccountLoading = () => async (dispatch) => dispatch({
+  type: IS_UPDATING_ACCOUNT,
+});
+
+export const setUpdateAccountDoneLoading = () => async (dispatch) => dispatch({
+  type: DONE_UPDATING_ACCOUNT,
 });

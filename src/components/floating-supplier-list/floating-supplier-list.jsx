@@ -51,7 +51,7 @@ const FloatingSupplierList = ({
       setIsSearching(true);
     } else { setIsSearching(false); }
     const newSuppliers = suppliers
-      .filter((s) => (s.company_name.toLowerCase().match(value.trim()))
+      .filter((s) => (s.name.toLowerCase().match(value.trim()))
         || (s.email.toLowerCase().match(value.trim())));
     setFilteredSuppliers(newSuppliers);
   };
