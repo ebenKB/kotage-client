@@ -43,7 +43,7 @@ const RichTextEditor = ({ onChange, defaultValue }) => {
   // return false to inherit default editor behaviour
   const handlePastedText = () => false;
 
-  const options = ['inline', 'list', 'textAlign', 'link', 'blockType', 'history'];
+  const options = ['history', 'inline', 'list', 'textAlign', 'link', 'blockType'];
 
   const toolbarOptions = {
     options,
