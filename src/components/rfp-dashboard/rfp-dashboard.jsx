@@ -197,13 +197,21 @@ const RfpDashboard = ({
 								label="Allow Late Bids:"
 								classes="custom"
 							>
-								<Checkbox disabled label="Allow suppliers to submit their Bids after submission deadline" />
+								<Checkbox
+									disabled
+									label="Allow suppliers to submit their Bids after submission deadline"
+									checked={proposal.allow_revise_bids}
+								/>
 							</FormGroup>
 							<FormGroup
 								label="Revise Bids:"
 								classes="m-t-20 custom"
 							>
-								<Checkbox disabled label="Allow suppliers to revise their Bids after submission deadline" />
+								<Checkbox
+									checked={proposal.allow_late_bids}
+									disabled
+									label="Allow suppliers to revise their Bids after submission deadline"
+								/>
 							</FormGroup>
 						</div>
 					</KtWrapperLite>
