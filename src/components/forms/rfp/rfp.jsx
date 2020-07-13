@@ -20,6 +20,8 @@ class RFP extends React.Component {
     this.state = {
       newProposal: {
         title: '',
+        allow_late_bids: false,
+        allow_revise_bids: false,
         description: null,
         bid_deadline_date: null,
         rsvp_deadline_date: null,

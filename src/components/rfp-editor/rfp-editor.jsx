@@ -143,6 +143,23 @@ class RfpEditor extends React.Component {
       }
     };
 
+    const handleCheckboxChange = (e, { checked }, option) => {
+      e.preventDefault();
+      if (option === 'allowbid') {
+        newProposal.allow_late_bids = checked;
+        this.setState((state) => ({
+          ...state,
+          newProposal,
+        }));
+      } else if (option === 'revisebid') {
+        newProposal.allow_revise_bids = checked;
+        this.setState((state) => ({
+          ...state,
+          newProposal,
+        }));
+      }
+    };
+
     const addSuppliers = (suppliers) => {
       if (suppliers && suppliers.length > 0) {
         let filteredSuppliers = [];
@@ -257,7 +274,7 @@ class RfpEditor extends React.Component {
 				cancelUrl="/rfx"
 				handleAction={handleSubmit}
 				handlePublishAction={handlePublish}
-				saveBtnClasses="default"
+				saveBtnClasses="basic default"
 				actionName={actionName}
 			>
 				<Divider type="thick" title="Setup Your Event" classes="m-t-10" isNumbered number="1" />
@@ -318,13 +335,21 @@ class RfpEditor extends React.Component {
 							label="Allow Late Bids:"
 							classes="custom"
 						>
-							<Checkbox label="Allow suppliers to submit their Bids after submission deadline" />
+							<Checkbox
+								onChange={(e, data) => handleCheckboxChange(e, data, 'allowbid')}
+								label="Allow suppliers to submit their Bids after submission deadline"
+								checked={newProposal.allow_late_bids}
+							/>
 						</FormGroup>
 						<FormGroup
 							label="Revise Bids:"
 							classes="m-t-20 custom"
 						>
-							<Checkbox label="Allow suppliers to revise their Bids after submission deadline" />
+							<Checkbox
+								onChange={(e, data) => handleCheckboxChange(e, data, 'revisebid')}
+								label="Allow suppliers to revise their Bids after submission deadline"
+								checked={newProposal.allow_revise_bids}
+							/>
 						</FormGroup>
 					</div>
 					<Divider type="thick" title="Timeline" classes="m-t-40" isNumbered number="2" />
