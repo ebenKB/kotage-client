@@ -1,3 +1,4 @@
+/* eslint-disable no-shadow */
 /* eslint-disable react/forbid-prop-types */
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
@@ -17,12 +18,14 @@ import KtTransparentInput from '../form-fields/kt-transparent-search-input/kt-tr
 import FormGroup from '../form-fields/form-group/form-group';
 import SupplierDetailsCaptionGroup from '../snippets/supplier-details-caption-group/supplier-details-caption-group';
 import RfpTitle from '../snippets/rfp-title/rfp-title';
+import EmptyContentWrapper from '../empty-content-wrapper/empty-content-wrapper';
 
 const RfpDashboard = ({
   match, getProposal, proposal, publishEvent, isPublishingRfp,
 }) => {
   const { params } = match;
   const { id } = params;
+  const [searchInput, setSearchInput] = useState('');
 
   const [suppliers] = useState([
     {
@@ -31,27 +34,57 @@ const RfpDashboard = ({
       submission_date: '24/06/2020',
     },
     {
-      name: 'Apotica Company Limited',
+      name: 'Kempinski Company Limited',
       phone: '0548086391',
       submission_date: '24/06/2020',
     },
     {
-      name: 'Apotica Company Limited',
+      name: 'ASA savings and Loans Limited',
+      phone: '0548086391',
+      submission_date: '24/06/2020',
+    },
+    {
+      name: 'Tigo Ghana Limited',
+      phone: '0548086391',
+      submission_date: null,
+    },
+    {
+      name: 'First Allied Bank',
       phone: '0548086391',
       submission_date: null,
     },
   ]);
+
+  const [filteredSuppliers, setFilteredSuppliers] = useState([]);
+
   useEffect(() => {
     getProposal(id);
   }, [id]);
 
+  /**
+   * return the found suppliers if the user is searching
+   * otherwise return all suppliers
+   */
+  const getSuppliers = () => {
+    if (searchInput.length > 0 || filteredSuppliers.length > 0) {
+      return filteredSuppliers;
+    }
+    return suppliers;
+  };
+
   const handleSearch = (val) => {
-    // handle supplier search here
-    console.log(val);
+    const filteredSuppliers = suppliers
+      .filter((s) => s.name.toLocaleLowerCase()
+        .match(new RegExp(val.trim().toLocaleLowerCase(), 'g')));
+    setFilteredSuppliers(filteredSuppliers);
+  };
+
+  const handleSearchInputChange = (value) => {
+    setSearchInput(value);
+    handleSearch(value);
   };
 
   const handlePublishRfp = () => {
-    console.log('we want to pubish the event');
     if (proposal) {
       publishEvent(proposal.id);
     }
@@ -145,11 +178,16 @@ const RfpDashboard = ({
 								<Divider type="faint" title="" classes="m-b-4" />
 								<KtTransparentInput
 									classes="fluid kt-transparent-input no-bg"
-									handleSearch={(value) => handleSearch(value)}
+									handleSearch={(value) => handleSearchInputChange(value)}
 								/>
 								<Divider type="faint" title="" classes="m-t-4" />
 							</div>
-							<SupplierDetailsCaptionGroup suppliers={suppliers} />
+							<SupplierDetailsCaptionGroup suppliers={getSuppliers()} />
+							{getSuppliers().length < 1 && (
+								<div className="m-t-20 m-b-20">
+									<EmptyContentWrapper message="No matching supplier found" />
+								</div>
+							)}
 						</section>
 					</KtWrapperLite>
 					<KtWrapperLite classes="m-t-20">

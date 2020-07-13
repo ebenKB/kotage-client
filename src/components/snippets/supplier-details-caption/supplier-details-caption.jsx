@@ -4,11 +4,11 @@ import { Button } from 'semantic-ui-react';
 import ButtonGroup from '../../form-fields/button-group/button-group';
 import PopupDropdown from '../popup/popup';
 
-const SupplierDetailsCaption = ({ type }) => (
+const SupplierDetailsCaption = ({ type, supplier }) => (
 	<div>
-		{type === 'active' && (
+		{type === 'active' && supplier && (
 			<div className="rfp-suppliers__item m-b-10 m-t-10 active">
-				<div className="bold">APOTICA COMPANY LIMITED</div>
+				<div className="bold">{supplier.name.toUpperCase()}</div>
 				<div>Submitted on 24/04/2020</div>
 				<div className="text-right">
 					<ButtonGroup>
@@ -32,9 +32,9 @@ const SupplierDetailsCaption = ({ type }) => (
 				</div>
 			</div>
 		)}
-		{type === 'pending' && (
+		{type === 'pending' && supplier && (
 			<div className="rfp-suppliers__item m-b-10 m-t-10">
-				<div className="bold">MTN GHANA LIMITED</div>
+				<div className="bold">{supplier.name.toUpperCase()}</div>
 				<div>Not submitted</div>
 			</div>
 		)}
