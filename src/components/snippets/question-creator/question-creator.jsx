@@ -43,11 +43,8 @@ const QuestionCreator = ({ className, setQuestions, questions }) => {
   return (
 	<div className={`docs-group m-t-30 ${className}`}>
 		<div className="bold">Questionaire</div>
+		<p className="m-t-10">Make your suppliers answer questions about this proposal</p>
 		<div className="docs-wrapper">
-			<AddItem
-				title="Add New Question"
-				handleClick={addNewSimpleQuestion}
-			/>
 			<div>
 				{/* show all questions here */}
 				{simpleQuestions.map((q, idx) => (
@@ -59,6 +56,12 @@ const QuestionCreator = ({ className, setQuestions, questions }) => {
 						deleteQuestion={(key) => deleteQuestion(key)}
 					/>
 				))}
+			</div>
+			<div className="m-t-10">
+				<AddItem
+					title="Add New Question"
+					handleClick={addNewSimpleQuestion}
+				/>
 			</div>
 		</div>
 	</div>

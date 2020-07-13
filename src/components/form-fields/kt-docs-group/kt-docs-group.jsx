@@ -9,22 +9,28 @@ import './kt-docs.scss';
 const KtDocs = ({
   className, documents, deleteDocument, addNewDocument, updateDocument,
 }) => (
-	<div className={`docs-group m-t-30 ${className}`}>
+	<div className={`docs-group m-t-10 ${className}`}>
 		<div className="bold">Documents</div>
-		<div className="docs-wrapper">
-			<div className="docs-wrapper__header bold light-caption">
-				<div className="">Name</div>
-				<div className="">Description</div>
-			</div>
+		<p className="m-t-10">
+			Ask you suppliers for additional documents.
+			Including a signed contract, proof of insurance or tax clearance
+		</p>
+		<div className="docs-wrapper m-t-10">
 			{documents && documents.map((doc, idx) => (
-				<KtDoc
-					key={doc.id}
-					doc={doc}
-					deleteDocument={(id) => deleteDocument(id)}
-					index={idx}
-					id={doc.id}
-					updateDocument={(index, newDoc) => updateDocument(index, newDoc)}
-				/>
+				<>
+					<div className="docs-wrapper__header bold light-caption">
+						<div className="">Name</div>
+						<div className="">Description</div>
+					</div>
+					<KtDoc
+						key={doc.id}
+						doc={doc}
+						deleteDocument={(id) => deleteDocument(id)}
+						index={idx}
+						id={doc.id}
+						updateDocument={(index, newDoc) => updateDocument(index, newDoc)}
+					/>
+				</>
 			))}
 			<div className="m-t-20">
 				<AddItem

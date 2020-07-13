@@ -18,14 +18,14 @@ const StakeholderGroup = ({
 		)}
 		{(stakeholders && stakeholders.length > 0) && (
 			<div>
-				<div className={`sm-caption faint ${classes} form-item stakeholder-group`}>
+				<div className={`sm-caption faint ${classes} stakeholder-group`}>
 					<div className="faint-caption">NAME OR EMAIL</div>
 					<div className="light-caption">PERMISSIONS</div>
 					{mode !== 'readonly' && (
 						<div className="light-caption">ACTION</div>
 					)}
 				</div>
-				<Divider type="faint" title="" classes="form-item m-t-8" isNumbered={false} />
+				<Divider type="faint" title="" classes=" m-t-8" isNumbered={false} />
 				{mode === 'write' && stakeholders && stakeholders.map((stakeholder) => (
 					<div key={stakeholder.id}>
 						<StakeholderItem
@@ -33,7 +33,7 @@ const StakeholderGroup = ({
 							removeStakeholder={(id) => removeStakeholder(id)}
 							mode={mode}
 						/>
-						<Divider type="faint" title="" classes="form-item m-t-8" isNumbered={false} />
+						<Divider type="faint" title="" classes="m-t-8" isNumbered={false} />
 					</div>
 				))}
 				{mode === 'readonly' && stakeholders && stakeholders.map((stakeholder) => (
@@ -43,7 +43,7 @@ const StakeholderGroup = ({
 							mode={mode}
 							stakeholderObj={stakeholder}
 						/>
-						<Divider type="faint" title="" classes="form-item m-t-8" isNumbered={false} />
+						<Divider type="faint" title="" classes="m-t-8" isNumbered={false} />
 					</div>
 				))}
 			</div>
@@ -51,7 +51,7 @@ const StakeholderGroup = ({
 		{mode === 'write' && (
 			<AddStakeholder
 				shouldFetchData={shouldFetchData}
-				className="form-item"
+				className=""
 				addNewStakeholder={(stakeholder, access) => addStakeholder(stakeholder, access)}
 			/>
 		)}

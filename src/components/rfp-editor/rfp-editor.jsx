@@ -6,6 +6,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import shortid from 'shortid';
 import { ValidatorForm } from 'react-form-validator-core';
+import { Checkbox } from 'semantic-ui-react';
 import { getCurrencyOptions } from '../../redux/actions/appActions';
 import { createProposal, updateExistingRfp } from '../../redux/actions/rfpActions';
 import MainContent from '../kt-main-content/mainContent';
@@ -295,6 +296,10 @@ class RfpEditor extends React.Component {
 							onFilesChange={(files) => setFiles(files)}
 						/>
 					</div>
+					<div className="form-item">
+						<Divider type="faint" title="" classes="m-t-20" />
+						<div className="bold m-t-10">Event Options</div>
+					</div>
 					<div className="form-item m-t-30">
 						<FormGroup
 							type="dropdown"
@@ -307,6 +312,20 @@ class RfpEditor extends React.Component {
 							defaultValue={newProposal.currency && newProposal.currency.id}
 							onChange={(id) => setCurrency(id)}
 						/>
+					</div>
+					<div className="form-item m-t-20">
+						<FormGroup
+							label="Allow Late Bids:"
+							classes="custom"
+						>
+							<Checkbox label="Allow suppliers to submit their Bids after submission deadline" />
+						</FormGroup>
+						<FormGroup
+							label="Revise Bids:"
+							classes="m-t-20 custom"
+						>
+							<Checkbox label="Allow suppliers to revise their Bids after submission deadline" />
+						</FormGroup>
 					</div>
 					<Divider type="thick" title="Timeline" classes="m-t-40" isNumbered number="2" />
 					<div className="form-item m-t-30">
@@ -346,18 +365,21 @@ class RfpEditor extends React.Component {
 						/>
 					</div>
 					<Divider type="thick" title="Response Sheet" classes="m-t-40" isNumbered number="3" />
-					<div className="m-b-20 m-t-20">
-						<QuestionCreator
-							questions={newProposal.questions}
-							setQuestions={(questions) => setQuestions(questions)}
+					<div className="form-item">
+						<div className="m-b-20 m-t-20">
+							<QuestionCreator
+								questions={newProposal.questions}
+								setQuestions={(questions) => setQuestions(questions)}
+							/>
+						</div>
+						<Divider type="faint" title="" classes="m-t-20" />
+						<KtDocsGroup
+							documents={newProposal.documents}
+							deleteDocument={(id) => deleteDocument(id)}
+							addNewDocument={addNewDocument}
+							updateDocument={(id, index, newDoc) => updateDocument(id, index, newDoc)}
 						/>
 					</div>
-					<KtDocsGroup
-						documents={newProposal.documents}
-						deleteDocument={(id) => deleteDocument(id)}
-						addNewDocument={addNewDocument}
-						updateDocument={(id, index, newDoc) => updateDocument(id, index, newDoc)}
-					/>
 					<Divider type="thick" title="Invite Suppliers" classes="m-t-40" isNumbered number="4" />
 					<div className="form-item">
 						<SupplierDirectorySection
@@ -367,15 +389,17 @@ class RfpEditor extends React.Component {
 						/>
 					</div>
 					<Divider type="thick" title="Invite Stakeholders" classes="m-t-40" isNumbered number="5" />
-					{newProposal.stakeholders && (
-						<StakeholderGroup
-							shouldFetchData={shouldFetchData}
-							stakeholders={newProposal.stakeholders}
-							addStakeholder={(stakeholder, access) => addNewStakeholder(stakeholder, access)}
-							removeStakeholder={(id) => removeStakeholder(id)}
-							classes="m-t-20 m-b-10 "
-						/>
-					)}
+					<div className="form-item">
+						{newProposal.stakeholders && (
+							<StakeholderGroup
+								shouldFetchData={shouldFetchData}
+								stakeholders={newProposal.stakeholders}
+								addStakeholder={(stakeholder, access) => addNewStakeholder(stakeholder, access)}
+								removeStakeholder={(id) => removeStakeholder(id)}
+								classes="m-t-20 m-b-10 "
+							/>
+						)}
+					</div>
 				</div>
 			</KtWrapper>
 		</MainContent>

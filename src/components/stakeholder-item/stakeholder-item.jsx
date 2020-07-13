@@ -16,7 +16,7 @@ const StakeholderItem = ({
   };
   return (
 	<div>
-		<div className="form-item stake-holder__item m-t-10 m-b-10">
+		<div className="stake-holder__item m-t-10 m-b-10">
 			<div>
 				<span className="bold">
 					{ stakeholder.firstname }
