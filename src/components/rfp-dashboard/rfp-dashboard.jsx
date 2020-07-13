@@ -1,5 +1,5 @@
 /* eslint-disable react/forbid-prop-types */
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router';
 import { PropTypes } from 'prop-types';
@@ -24,6 +24,23 @@ const RfpDashboard = ({
   const { params } = match;
   const { id } = params;
 
+  const [suppliers] = useState([
+    {
+      name: 'Apotica Company Limited',
+      phone: '0548086391',
+      submission_date: '24/06/2020',
+    },
+    {
+      name: 'Apotica Company Limited',
+      phone: '0548086391',
+      submission_date: '24/06/2020',
+    },
+    {
+      name: 'Apotica Company Limited',
+      phone: '0548086391',
+      submission_date: null,
+    },
+  ]);
   useEffect(() => {
     getProposal(id);
   }, [id]);
@@ -132,7 +149,7 @@ const RfpDashboard = ({
 								/>
 								<Divider type="faint" title="" classes="m-t-4" />
 							</div>
-							<SupplierDetailsCaptionGroup />
+							<SupplierDetailsCaptionGroup suppliers={suppliers} />
 						</section>
 					</KtWrapperLite>
 					<KtWrapperLite classes="m-t-20">
