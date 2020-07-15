@@ -17,14 +17,14 @@ const Collapsible = ({ title, children, classes }) => {
       return (
 	<div className="collapse-header">
 		<Icon name="angle down" />
-		<Divider type="thick" title={title} classes="m-t-10" />
+		<Divider type="thick" title={title} classes="m-t-10 m-b-10" />
 	</div>
       );
     }
     return (
 	<div className="collapse-header">
 		<Icon name="angle up" />
-		<Divider type="thick" title={title} classes="m-t-10" />
+		<Divider type="thick" title={title} classes="m-t-10 m-b-10" />
 	</div>
     );
   };

@@ -3,7 +3,7 @@
 import React, { Component } from 'react';
 import { ValidatorForm } from 'react-form-validator-core';
 import { connect } from 'react-redux';
-import { Button } from 'semantic-ui-react';
+// import { Button } from 'semantic-ui-react';
 import { createBid, reviseExistingBid } from '../../../redux/actions/supplierBidActions';
 import KtWrapper from '../../kt-wrapper/kt-wrapper';
 import MainContent from '../../kt-main-content/mainContent';
@@ -13,8 +13,9 @@ import Divider from '../../kt-divider/divider';
 import Dropzone from '../../dropzone/dropzone';
 import { uploadFiles } from '../../../utils/app/index';
 import { RFP_FOLDER_NAME } from '../../../utils/app/definitions';
-import { ReactComponent as CloseIcon } from '../../../svg/close.svg';
+// import { ReactComponent as CloseIcon } from '../../../svg/close.svg';
 import Collapsible from '../../snippets/collapsible/collapsible';
+import FileItemCaption from '../../file-item-caption/file-item-caption';
 
 class EventResponse extends Component {
   constructor(props) {
@@ -208,7 +209,9 @@ render() {
 			handleAction={this.handleSubmit}
 		>
 			{currentProposal && (
-				<ValidatorForm>
+				<ValidatorForm
+					onSubmit={this.handleSubmit}
+				>
 					<Divider title="Bid Details" type="thick" isNumbered number={1} />
 					<div className="m-t-20">
 						<FormGroup
@@ -250,7 +253,8 @@ render() {
 									<div className="m-t-10">
 										{technicalRequirements && technicalRequirements.map((t) => (
 											<div className="">
-												<div className="fluid flex-center space-between">
+												<FileItemCaption file={t} handleDeleteFile={() => this.deleteBidFile(t, 'technical_req')} />
+												{/* <div className="fluid flex-center space-between">
 													<p>{t.title}</p>
 													<Button
 														size="tiny"
@@ -259,7 +263,7 @@ render() {
 														onClick={() => this.deleteBidFile(t, 'technical_req')}
 													/>
 												</div>
-												<Divider type="faint" classes="m-t-5 m-b-5" />
+												<Divider type="faint" classes="m-t-5 m-b-5" /> */}
 											</div>
 										))}
 									</div>
@@ -282,7 +286,8 @@ render() {
 									<div className="m-t-10">
 										{commercialRequirements && commercialRequirements.map((c) => (
 											<div className="">
-												<div className="fluid flex-center space-between">
+												<FileItemCaption file={c} handleDeleteFile={() => this.deleteBidFile(c, 'commercial_req')} />
+												{/* <div className="fluid flex-center space-between">
 													<p>{c.title}</p>
 													<Button
 														size="tiny"
@@ -290,8 +295,8 @@ render() {
 														className="kt-transparent"
 														onClick={() => this.deleteBidFile(c, 'commercial_req')}
 													/>
-												</div>
-												<Divider type="faint" classes="m-t-5 m-b-5" />
+												</div> */}
+												{/* <Divider type="faint" classes="m-t-5 m-b-5" /> */}
 											</div>
 										))}
 									</div>

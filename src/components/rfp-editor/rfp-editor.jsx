@@ -20,6 +20,8 @@ import StakeholderGroup from '../stakeholder-group/stakeholder-group';
 import QuestionCreator from '../snippets/question-creator/question-creator';
 import './rfp-editor.scss';
 import SupplierDirectorySection from '../supplier-directory-section/supplier-directory-section';
+import FileItemCaption from '../file-item-caption/file-item-caption';
+import Collapsible from '../snippets/collapsible/collapsible';
 
 class RfpEditor extends React.Component {
   constructor(props) {
@@ -305,6 +307,14 @@ class RfpEditor extends React.Component {
 						/>
 					</div>
 					<div className="form-item m-t-30">
+						{newProposal && newProposal.files.length > 0 && newProposal.files.map((f) => (
+							<Collapsible
+								classes="m-b-20"
+								title={`${newProposal.files.length} existing files`}
+							>
+								<FileItemCaption file={f} handleDeleteFile={console.log('delete the file')} />
+							</Collapsible>
+						))}
 						<FormGroup
 							type="dropzone"
 							placeholder="Enter title"
