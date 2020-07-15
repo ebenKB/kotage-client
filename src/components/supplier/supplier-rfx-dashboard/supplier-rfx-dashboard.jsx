@@ -14,6 +14,7 @@ import MessageIcon from '@material-ui/icons/MailOutline';
 import BookmarkBorderIcon from '@material-ui/icons/BookmarkBorder';
 import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
+import EmptyContentWrapper from '../../empty-content-wrapper/empty-content-wrapper';
 import MainContent from '../../kt-main-content/mainContent';
 import Help from '../../../utils/requisitions/new/help';
 import KtWrapperLite from '../../kt-wrapper-lite/kt-wrapper-lite';
@@ -265,7 +266,9 @@ const SupplierRfxDashboard = ({
 							</div>
 						))}
 						{currentProposal.questions.length === 0 && (
-							<p>no questions found</p>
+							<div className="m-t-20">
+								<EmptyContentWrapper message="No questions available" />
+							</div>
 						)}
 					</KtWrapperLite>
 				)}
