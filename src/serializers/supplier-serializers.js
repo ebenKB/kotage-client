@@ -31,6 +31,7 @@ export const serializeSupplierBid = (bid) => ({
 export const deserializeSupplierBid = (bid) => ({
   id: bid.id,
   event_owner_id: bid.event_owner_id,
+  proposal_request_id: bid.proposal_request_id,
   ownerUID: bid.owner_uid,
   status: bid.status,
   currency: {

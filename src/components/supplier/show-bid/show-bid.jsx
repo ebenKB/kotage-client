@@ -53,7 +53,9 @@ const ShowBid = ({
 
   const handleDeleteBid = () => {
     if (bidToDelete === currentRfp.title) {
-      deleteBidPermanently(currentBid.id, currentRfp.id, currentRfp.tenant.id);
+      deleteBidPermanently(currentBid.id,
+        currentBid.proposal_request_id,
+        currentBid.event_owner_id);
       setCanShowModal(false);
       history.push('/supplier/bids');
     } else console.log('wrong title', bidToDelete);

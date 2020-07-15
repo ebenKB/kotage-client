@@ -44,6 +44,7 @@ function KtDropzone({ onFilesChange }) {
       setError(`${(newFiles.length - filteredFiles.length)} duplicate file(s) rejected`);
     }
     const formatedFileObject = filteredFiles.map((f) => ({
+      id: f.id,
       title: getNameFromFileName(f.name),
       data: f,
     }));
@@ -53,14 +54,11 @@ function KtDropzone({ onFilesChange }) {
   const updateFile = (oldFile, newFile) => {
     const newFiles = files.map((f) => {
       if (f.title === oldFile.title) {
-        // eslint-disable-next-line no-param-reassign
-        f.title = newFile.title;
+        return newFile;
       }
-      return f;
+      return null;
     });
-
     setFiles(newFiles);
-    console.log('We want to set the file title', newFile);
   };
 
   // open file explorer to select files

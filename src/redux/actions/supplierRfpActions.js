@@ -80,15 +80,16 @@ export const setCurrentSupplierRfp = (rfp) => async (dispatch) => {
 
 /**
  * Get the details of an event that a supplier has been invited to
- * @param {*} id the ID of the event
+ * @param {*} rfpID the ID of the rfp event
+ * @param {*} rfpOwnerID the ID of the tenant/account that created the rfp
  */
-export const getSupplierRfpByID = (id, rfpOwnerID) => async (dispatch, getState) => (
+export const getSupplierRfpByID = (rfpID, rfpOwnerID) => async (dispatch, getState) => (
   new Promise((resolve, reject) => {
     try {
       dispatch(setLoading());
       const { user } = getState();
       const promise = Axios
-        .get(`/v1/${user.currentUser.tenant_id}/events/rfp?proposal_request_id=${id}&tenant_id=${rfpOwnerID}`);
+        .get(`/v1/${user.currentUser.tenant_id}/events/rfp?proposal_request_id=${rfpID}&event_owner_id=${rfpOwnerID}`);
       promise.then((data) => {
         const { data: { proposal_request } } = data;
         dispatch({
@@ -99,7 +100,7 @@ export const getSupplierRfpByID = (id, rfpOwnerID) => async (dispatch, getState)
         return dispatch(setDoneLoading());
       });
     } catch (error) {
-      // do something here
+      dispatch(setDoneLoading());
       reject(error);
     }
   })
@@ -132,6 +133,7 @@ export const findSupplierEventByID = (id, event_owner_id) => async (dispatch, ge
         dispatch(setDoneLoading());
       }
     } catch (error) {
+      dispatch(setDoneLoading());
       reject(error);
     }
   })

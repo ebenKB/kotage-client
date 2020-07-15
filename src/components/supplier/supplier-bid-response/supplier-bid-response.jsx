@@ -12,6 +12,7 @@ import Divider from '../../kt-divider/divider';
 import Dropzone from '../../dropzone/dropzone';
 import { uploadFiles } from '../../../utils/app/index';
 import { RFP_FOLDER_NAME } from '../../../utils/app/definitions';
+import EmptyContentWrapper from '../../empty-content-wrapper/empty-content-wrapper';
 
 class EventResponse extends Component {
   constructor(props) {
@@ -180,7 +181,7 @@ render() {
 						</div>
 					))}
 					{currentProposal.questions.length === 0 && (
-						<div className="m-t-20">The buyer did not ask any questions</div>
+						<EmptyContentWrapper message="No questions available" />
 					)}
 					<div className="m-t-40">
 						<Divider title="Technical Proposal" type="thick" isNumbered number={3} />

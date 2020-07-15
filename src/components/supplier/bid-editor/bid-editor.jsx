@@ -40,12 +40,26 @@ addTechnicalProposal = (files) => {
   }));
 }
 
+updateTecnicalProposals = (newfiles) => {
+  this.setState((state) => ({
+    ...state,
+    technicalRequirements: newfiles,
+  }));
+}
+
 addCommercialProposal = (files) => {
   this.setState((state) => ({
     ...state,
     commercialRequirements: [...state.commercialRequirements, ...files],
   }));
 }
+
+updateCommercialProposals = (newFiles) => {
+  this.setState((state) => ({
+    ...state,
+    commercialRequirements: newFiles,
+  }));
+};
 
 deleteBidFile = (file, type) => {
   if (type === 'commercial_req') {
@@ -83,8 +97,9 @@ handleSubmit = async () => {
    * and upload only those that are new
    */
   if (actionType === 'edit') {
-    const existingCommReq = commercialRequirements.filter((c) => c.id !== null);
-    const newCommReq = commercialRequirements.filter((c) => c.id === null);
+    const existingCommReq = commercialRequirements
+      .filter((c) => c.id !== undefined && c.id !== null);
+    const newCommReq = commercialRequirements.filter((c) => c.id === undefined);
 
     // upload commercial requirements to remote server
     const commercialReqFiles = await uploadFiles(newCommReq, tenantUID, RFP_FOLDER_NAME);
@@ -92,27 +107,26 @@ handleSubmit = async () => {
       ...state,
       commercialRequirements: [
         ...commercialReqFiles,
-        ...existingCommReq.map((e) => ({ title: e.title, url: e.file })),
+        ...existingCommReq.map((e) => ({ id: e.id, title: e.title, url: e.file })),
       ],
     }));
 
-    const existingTechReq = technicalRequirements.filter((t) => t.id !== null);
-    const newTechReq = technicalRequirements.filter((t) => t.id === null);
+    const existingTechReq = technicalRequirements
+      .filter((t) => t.id !== undefined && t.id !== null);
+    const newTechReq = technicalRequirements.filter((t) => t.id === undefined);
 
     // upload technical requirements to remote serve
     const technicalReqFiles = await uploadFiles(newTechReq, tenantUID, RFP_FOLDER_NAME);
-    console.log('After Technical upload', technicalReqFiles);
     this.setState((state) => ({
       ...state,
       technicalRequirements: [
         ...technicalReqFiles,
-        ...existingTechReq.map((e) => ({ title: e.title, url: e.file })),
+        ...existingTechReq.map((e) => ({ id: e.id, title: e.title, url: e.file })),
       ],
     }));
 
     // preformat currency using NAME_SYMBOL
     const { currency } = currentProposal;
-    console.log('This is the currency we are setting', currency);
     this.setState((state) => ({
       ...state,
       currency: `${currency.name}_${currency.symbol}`,
@@ -137,7 +151,6 @@ handleSubmit = async () => {
   if (actionType.toLowerCase() === 'save') {
     respondToRfp(this.state, currentProposal.tenant.id);
   } else if (actionType.toLowerCase() === 'edit') {
-    console.log('We want to edit the proposal', this.state);
     reviseBid(this.state, currentProposal.tenant.id);
   }
 };
@@ -253,7 +266,7 @@ render() {
 								</Collapsible>
 							)}
 							<Dropzone
-								existingFiles={technicalRequirements.map((f) => ({ data: f }))}
+								/* handleUpdateFiles={this.updateTecnicalProposals} */
 								onFilesChange={(files) => this.addTechnicalProposal(files)}
 							/>
 						</div>
@@ -285,6 +298,7 @@ render() {
 								</Collapsible>
 							)}
 							<Dropzone
+								/* handleUpdateFiles={this.updateCommercialProposals} */
 								onFilesChange={(files) => this.addCommercialProposal(files)}
 							/>
 						</div>

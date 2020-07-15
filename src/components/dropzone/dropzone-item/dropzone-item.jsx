@@ -59,8 +59,7 @@ const DropzoneItem = ({
   };
 
   const updateFile = (e) => {
-    const newFile = file;
-    newFile.title = e.target.value;
+    const newFile = { ...file, title: e.target.value };
     handleFileUpdate(file, newFile);
   };
 

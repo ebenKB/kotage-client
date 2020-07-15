@@ -2,6 +2,11 @@
   color: var(--kt-dark-grey);
   opacity: 0.8;
 }
+
+.user-profile.ui.dropdown .menu {
+  padding: 15px !important;
+}
+
 .user-profile .user.icon.heading {
   color: var(--kt-dark-grey);
 }
