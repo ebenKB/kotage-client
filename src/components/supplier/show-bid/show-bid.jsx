@@ -41,7 +41,7 @@ const ShowBid = ({
       if (currentBid === null) {
         findBid(id);
       } else if (currentBid) {
-        getSupplierRfpDetails(currentBid.rfpID);
+        getSupplierRfpDetails(currentBid.rfpID, currentBid.event_owner_id);
         if (currentRfp) {
           setHasInit(true);
         }

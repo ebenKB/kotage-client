@@ -18,7 +18,7 @@ const routes = [
     main: () => <SupplierHome />,
   },
   {
-    path: '/supplier/rfp/dashboard/:id',
+    path: '/supplier/rfp/dashboard/:id/:tenant_id',
     exact: true,
     main: () => <SupplierDashboard />,
   },

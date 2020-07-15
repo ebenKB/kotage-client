@@ -19,7 +19,7 @@ const RfpItem = ({ proposal, type }) => {
 		<div className="kt-list__item-content">
 			<div>
 				<span className="bold big-caption kt-primary clickable">
-					<Link to={`/supplier/rfp/dashboard/${proposal.id}`}>
+					<Link to={`/supplier/rfp/dashboard/${proposal.id}/${proposal.tenant.id}`}>
 						<div className="dis-inline-block bold big-caption kt-primary clickable">
 							{(((proposal && proposal.title === null) || (proposal === null)) && ('Title of the Proposal'))}
 							{ proposal && proposal.title }

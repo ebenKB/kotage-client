@@ -17,14 +17,15 @@ const header = ({ currentUser }) => (
 				<Kotage className="kotage-logo" />
 			</div>
 			<Search />
-			<div className="flex-center">
-				<div className="m-r-10">
-					{/* <NotificationContent /> */}
-					<NotificationIcon />
+			<div>
+				<div className="float-r flex-center">
+					<div className="m-r-10">
+						<NotificationIcon />
+					</div>
+					<UserProfile
+						title={(currentUser && currentUser.firstname && currentUser.lastname) && `${currentUser.firstname} ${currentUser.lastname}`}
+					/>
 				</div>
-				<UserProfile
-					title={(currentUser && currentUser.firstname && currentUser.lastname) && `${currentUser.firstname} ${currentUser.lastname}`}
-				/>
 			</div>
 		</div>
 	</div>

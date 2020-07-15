@@ -18,6 +18,7 @@ class EventResponse extends Component {
     super(props);
 
     this.state = {
+      event_owner_id: null,
       totalBidValue: '',
       bidValidity: null,
       rfpID: null,
@@ -60,13 +61,16 @@ addCommercialProposal = (files) => {
 }
 
 handleSubmit = async () => {
-  const { respondToRfp, tenantUID, currentProposal: { id } } = this.props;
+  const {
+    respondToRfp, tenantUID, currentProposal, currentProposal: { id },
+  } = this.props;
   const { commercialRequirements, technicalRequirements } = this.state;
 
   // set the owner
   this.setState((state) => ({
     ...state,
     rfpID: id,
+    event_owner_id: currentProposal.tenant.id,
   }));
 
   // upload commercial requirements to remote server
@@ -83,7 +87,6 @@ handleSubmit = async () => {
     technicalRequirements: technicalReqFiles,
   }));
 
-  const { currentProposal } = this.props;
   respondToRfp(this.state, currentProposal.tenant.id);
 };
 

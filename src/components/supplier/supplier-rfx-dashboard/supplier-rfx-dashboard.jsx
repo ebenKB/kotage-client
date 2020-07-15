@@ -44,13 +44,13 @@ const SupplierRfxDashboard = ({
   const [willParticipate, setParticipation] = useState(null);
 
   const findSupplierRfpByID = async () => {
-    const proposal = await findSupplierRfp(params.id);
+    const proposal = await findSupplierRfp(params.id, params.tenant_id);
     setParticipation(proposal.hasConfirmedRSVP);
   };
 
   const refresh = async () => {
     try {
-      await refreshSupplierRfp(params.id);
+      await refreshSupplierRfp(params.id, params.tenant.id);
       // await checkSupplierStatus();
     } catch (error) {
       if (error.response) {

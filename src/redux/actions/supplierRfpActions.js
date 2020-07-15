@@ -39,6 +39,10 @@ export const setDoneLoading = () => async (dispatch) => dispatch({
   type: SET_SUPPLIER_DONE_LOADING,
 });
 
+/**
+ * Get events that a supplier has been invited to
+ * @param {*} page the current page that is being fetched
+ */
 // eslint-disable-next-line import/prefer-default-export
 export const getSupplierRfp = (page = 1) => async (dispatch, getState) => new
 Promise((resolve, reject) => {
@@ -66,6 +70,7 @@ Promise((resolve, reject) => {
   });
 });
 
+// set the current rfp as the one being viewed
 export const setCurrentSupplierRfp = (rfp) => async (dispatch) => {
   dispatch({
     type: SET_CURRENT_SUPPLIER_RFP,
@@ -73,13 +78,17 @@ export const setCurrentSupplierRfp = (rfp) => async (dispatch) => {
   });
 };
 
-export const getSupplierRfpByID = (id) => async (dispatch, getState) => (
+/**
+ * Get the details of an event that a supplier has been invited to
+ * @param {*} id the ID of the event
+ */
+export const getSupplierRfpByID = (id, rfpOwnerID) => async (dispatch, getState) => (
   new Promise((resolve, reject) => {
     try {
       dispatch(setLoading());
-      const { user, tenant: { currentTenant } } = getState();
+      const { user } = getState();
       const promise = Axios
-        .get(`/v1/${user.currentUser.tenant_id}/events/rfp?proposal_request_id=${id}&tenant_id=${currentTenant.id}`);
+        .get(`/v1/${user.currentUser.tenant_id}/events/rfp?proposal_request_id=${id}&tenant_id=${rfpOwnerID}`);
       promise.then((data) => {
         const { data: { proposal_request } } = data;
         dispatch({
@@ -103,7 +112,7 @@ export const getSupplierRfpByID = (id) => async (dispatch, getState) => (
  * @param {*} id the id of the proposal to find
  * @param return the found proposal or null if not found
  */
-export const findSupplierEventByID = (id) => async (dispatch, getState) => (
+export const findSupplierEventByID = (id, event_owner_id) => async (dispatch, getState) => (
   new Promise((resolve, reject) => {
     try {
       dispatch(setLoading());
@@ -118,7 +127,7 @@ export const findSupplierEventByID = (id) => async (dispatch, getState) => (
         resolve(foundProposal);
       } else {
         // if the rfp is not found in the cache, query from the api
-        getSupplierRfpByID(id)
+        getSupplierRfpByID(id, event_owner_id)
           .then((rfp) => resolve(rfp));
         dispatch(setDoneLoading());
       }
