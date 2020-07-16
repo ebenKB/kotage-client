@@ -11,7 +11,12 @@ import {
   DONE_LOADING,
 } from '../types/supplierTypes';
 
-import { setBidLoading, bidDoneLoading } from './ui';
+import {
+  setBidLoading,
+  bidDoneLoading,
+  setReviseBidLoading,
+  setReviseDoneLoading,
+} from './ui';
 import {
   serializeSupplierBid,
   deserializeSupplierBid,
@@ -72,14 +77,19 @@ export const createBid = (bid, owner_id) => async (dispatch, getState) => {
  * @param {*} owner_id the owner of the bid
  */
 export const reviseExistingBid = (bid, owner_id) => async (dispatch, getState) => {
-  console.log('this is the bid', bid);
-  const { tenant: { currentTenant } } = getState();
-  const { data: { rfp_bid } } = await Axios
-    .put(`/v1/${currentTenant.id}/bids/${bid.id}?proposal_request_id=${bid.rfpID}&event_owner_id=${owner_id}`, serializeSupplierBid(bid));
-  dispatch({
-    type: REVISE_EXISTING_BID,
-    payload: deserializeSupplierBid(rfp_bid),
-  });
+  try {
+    dispatch(setReviseBidLoading());
+    const { tenant: { currentTenant } } = getState();
+    const { data: { rfp_bid } } = await Axios
+      .put(`/v1/${currentTenant.id}/bids/${bid.id}?proposal_request_id=${bid.rfpID}&event_owner_id=${owner_id}`, serializeSupplierBid(bid));
+    dispatch({
+      type: REVISE_EXISTING_BID,
+      payload: deserializeSupplierBid(rfp_bid),
+    });
+    dispatch(setReviseDoneLoading());
+  } catch (error) {
+    dispatch(setReviseDoneLoading());
+  }
 };
 
 export const deleteBid = (bidID, rfpID, owner_id) => async (dispatch, getState) => {

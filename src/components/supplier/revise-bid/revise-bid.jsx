@@ -30,7 +30,7 @@ const ReviseBid = ({ currentBid }) => {
 		title="Revise Bid"
 		bid={bid}
 		actionType="edit"
-		actionName="Save"
+		actionName="Update"
 	/>
   );
 };

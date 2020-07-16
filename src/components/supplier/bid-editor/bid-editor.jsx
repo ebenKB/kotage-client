@@ -1,9 +1,12 @@
-/* eslint-disable react/prop-types */
+/* eslint-disable react/forbid-prop-types */
+/* eslint-disable react/boolean-prop-naming */
 /* eslint-disable react/no-unused-state */
 import React, { Component } from 'react';
 import { ValidatorForm } from 'react-form-validator-core';
 import { connect } from 'react-redux';
 // import { Button } from 'semantic-ui-react';
+import { withRouter } from 'react-router';
+import { PropTypes } from 'prop-types';
 import { createBid, reviseExistingBid } from '../../../redux/actions/supplierBidActions';
 import KtWrapper from '../../kt-wrapper/kt-wrapper';
 import MainContent from '../../kt-main-content/mainContent';
@@ -16,6 +19,7 @@ import { RFP_FOLDER_NAME } from '../../../utils/app/definitions';
 // import { ReactComponent as CloseIcon } from '../../../svg/close.svg';
 import Collapsible from '../../snippets/collapsible/collapsible';
 import FileItemCaption from '../../file-item-caption/file-item-caption';
+import EmptyContentWrapper from '../../empty-content-wrapper/empty-content-wrapper';
 
 class EventResponse extends Component {
   constructor(props) {
@@ -97,7 +101,7 @@ handleSubmit = async () => {
    * if the user want to edit, sort out the files that have alredy been uploaded to the server
    * and upload only those that are new
    */
-  if (actionType === 'edit') {
+  if (actionType.toLowerCase() === 'edit') {
     const existingCommReq = commercialRequirements
       .filter((c) => c.id !== undefined && c.id !== null);
     const newCommReq = commercialRequirements.filter((c) => c.id === undefined);
@@ -132,7 +136,9 @@ handleSubmit = async () => {
       ...state,
       currency: `${currency.name}_${currency.symbol}`,
     }));
-  } else if (actionType === 'save') {
+
+    reviseBid(this.state, currentProposal.tenant.id);
+  } else if (actionType.toLowerCase() === 'save') {
     // upload commercial requirements to remote server
     const commercialReqFiles = await
     uploadFiles(commercialRequirements, tenantUID, RFP_FOLDER_NAME);
@@ -147,13 +153,18 @@ handleSubmit = async () => {
       ...state,
       technicalRequirements: technicalReqFiles,
     }));
+
+    respondToRfp(this.state, currentProposal.tenant.id);
   }
 
-  if (actionType.toLowerCase() === 'save') {
-    respondToRfp(this.state, currentProposal.tenant.id);
-  } else if (actionType.toLowerCase() === 'edit') {
-    reviseBid(this.state, currentProposal.tenant.id);
-  }
+  // if (actionType.toLowerCase() === 'save') {
+  //   respondToRfp(this.state, currentProposal.tenant.id);
+  // } else if (actionType.toLowerCase() === 'edit') {
+  //   reviseBid(this.state, currentProposal.tenant.id);
+  // }
+
+  const { history } = this.props;
+  history.push('/supplier/bids');
 };
 
 handleInputChange = ({ inputValue, selectedOption }) => {
@@ -196,7 +207,7 @@ handleQuestionAnswer = (e, q) => {
 render() {
   const { totalBidValue, technicalRequirements, commercialRequirements } = this.state;
   const {
-    currentProposal, title, actionName,
+    currentProposal, title, actionName, isRevisingBid,
   } = this.props;
   return (
 	<MainContent
@@ -207,13 +218,14 @@ render() {
 			canPerform
 			actionName={actionName}
 			handleAction={this.handleSubmit}
+			isLoadingSecondary={isRevisingBid}
 		>
 			{currentProposal && (
 				<ValidatorForm
 					onSubmit={this.handleSubmit}
 				>
 					<Divider title="Bid Details" type="thick" isNumbered number={1} />
-					<div className="m-t-20">
+					<div className="form-item m-t-20">
 						<FormGroup
 							center
 							type="amount"
@@ -228,7 +240,7 @@ render() {
 					</div>
 					<Divider classes="m-t-40" title="Reaponse To Questions" type="thick" isNumbered number={2} />
 					{currentProposal.length > 0 && currentProposal.questions.map((q) => (
-						<div className="m-t-20" key={q.id}>
+						<div className="m-t-20 form-item" key={q.id}>
 							<FormGroup
 								inline={false}
 								type="text"
@@ -240,11 +252,11 @@ render() {
 						</div>
 					))}
 					{currentProposal.questions.length === 0 && (
-						<div className="m-t-20">The buyer did not ask any questions</div>
+						<EmptyContentWrapper message="The buyer did not ask any questions" />
 					)}
 					<div className="m-t-40">
 						<Divider title="Technical Proposal" type="thick" isNumbered number={3} />
-						<div className="m-t-20">
+						<div className="m-t-20 form-item">
 							{technicalRequirements && (
 								<Collapsible
 									title={`${technicalRequirements.length} existing files`}
@@ -254,16 +266,6 @@ render() {
 										{technicalRequirements && technicalRequirements.map((t) => (
 											<div className="">
 												<FileItemCaption file={t} handleDeleteFile={() => this.deleteBidFile(t, 'technical_req')} />
-												{/* <div className="fluid flex-center space-between">
-													<p>{t.title}</p>
-													<Button
-														size="tiny"
-														content={<CloseIcon className="small dark logo" />}
-														className="kt-transparent"
-														onClick={() => this.deleteBidFile(t, 'technical_req')}
-													/>
-												</div>
-												<Divider type="faint" classes="m-t-5 m-b-5" /> */}
 											</div>
 										))}
 									</div>
@@ -277,7 +279,7 @@ render() {
 					</div>
 					<div className="m-t-40">
 						<Divider title="Commercial Proposal" type="thick" isNumbered number={4} />
-						<div className="m-t-20">
+						<div className="m-t-20 form-item">
 							{commercialRequirements && (
 								<Collapsible
 									classes="m-b-20"
@@ -287,16 +289,6 @@ render() {
 										{commercialRequirements && commercialRequirements.map((c) => (
 											<div className="">
 												<FileItemCaption file={c} handleDeleteFile={() => this.deleteBidFile(c, 'commercial_req')} />
-												{/* <div className="fluid flex-center space-between">
-													<p>{c.title}</p>
-													<Button
-														size="tiny"
-														content={<CloseIcon className="small dark logo" />}
-														className="kt-transparent"
-														onClick={() => this.deleteBidFile(c, 'commercial_req')}
-													/>
-												</div> */}
-												{/* <Divider type="faint" classes="m-t-5 m-b-5" /> */}
 											</div>
 										))}
 									</div>
@@ -316,10 +308,10 @@ render() {
 }
 }
 
-
 const mapStateProps = (state) => ({
   currentProposal: state.supplierRfp.currentProposal,
   tenantUID: state.tenant.currentTenant.account_id,
+  isRevisingBid: state.ui.buyer.isRevisingBid,
 });
 
 const mapDispatchToProps = {
@@ -327,4 +319,17 @@ const mapDispatchToProps = {
   reviseBid: reviseExistingBid,
 };
 
-export default connect(mapStateProps, mapDispatchToProps)(EventResponse);
+EventResponse.propTypes = {
+  respondToRfp: PropTypes.func.isRequired,
+  reviseBid: PropTypes.func.isRequired,
+  tenantUID: PropTypes.bool.isRequired,
+  currentProposal: PropTypes.object.isRequired,
+  actionType: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  actionName: PropTypes.string.isRequired,
+  isRevisingBid: PropTypes.bool.isRequired,
+  history: PropTypes.object.isRequired,
+  bid: PropTypes.object.isRequired,
+};
+
+export default connect(mapStateProps, mapDispatchToProps)(withRouter(EventResponse));

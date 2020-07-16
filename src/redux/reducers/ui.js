@@ -18,6 +18,8 @@ import {
   DONE_UPDATING_RFP,
   IS_UPDATING_ACCOUNT,
   DONE_UPDATING_ACCOUNT,
+  REVISE_BID_LOADING,
+  REVISE_BID_DONE_LOADING,
 } from '../types/ui';
 
 const initialState = {
@@ -28,6 +30,7 @@ const initialState = {
     isSendingFeedback: false,
     isFetchingRfpStakeholder: false,
     isUpdatingAccount: false,
+    isRevisingBid: false,
   },
   supplier: {
     isLoadingSupplierRfp: false,
@@ -142,6 +145,25 @@ export default (state = initialState, action) => {
       };
     }
 
+    case REVISE_BID_LOADING: {
+      return {
+        ...state,
+        buyer: {
+          ...state.buyer,
+          isRevisingBid: true,
+        },
+      };
+    }
+
+    case REVISE_BID_DONE_LOADING: {
+      return {
+        ...state,
+        buyer: {
+          ...state.buyer,
+          isRevisingBid: false,
+        },
+      };
+    }
     // end buyer activites
     // supplier activities
     case LOADING_BIDS: {

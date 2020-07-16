@@ -62,7 +62,6 @@ export default (state = initialState, action) => {
     }
 
     case REVISE_EXISTING_BID: {
-      console.log('We are revising the bid', action.payload);
       const updatedBids = state.bids.map((bid) => {
         if (bid.id === action.payload.id) {
           return action.payload;
@@ -70,7 +69,8 @@ export default (state = initialState, action) => {
       });
       return {
         ...state,
-        bid: updatedBids,
+        currentBid: action.payload,
+        bids: [...updatedBids],
       };
     }
 

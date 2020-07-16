@@ -75,6 +75,7 @@ class RfpEditor extends React.Component {
         }
       });
     };
+
     const handleInputChange = (e) => {
       e.preventDefault();
       // check if we need to fetch any data for the form
@@ -115,6 +116,7 @@ class RfpEditor extends React.Component {
           newProposal: proposal,
         }));
     };
+
     const deleteDocument = (id) => {
       const newDocs = newProposal.documents.filter((doc) => doc.id !== id);
       const proposal = newProposal;

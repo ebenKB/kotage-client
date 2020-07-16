@@ -19,6 +19,8 @@ import {
   DONE_UPDATING_RFP,
   IS_UPDATING_ACCOUNT,
   DONE_UPDATING_ACCOUNT,
+  REVISE_BID_LOADING,
+  REVISE_BID_DONE_LOADING,
 } from '../types/ui';
 
 // supplier actions
@@ -60,6 +62,14 @@ export const supplierRfpClosingLoading = () => async (dispatch) => dispatch({
 
 export const supplierRfpClosingDoneloading = () => async (dispatch) => dispatch({
   type: SUPPLIER_RFP_CLOSING_DONE_LOADING,
+});
+
+export const setReviseBidLoading = () => async (dispatch) => dispatch({
+  type: REVISE_BID_LOADING,
+});
+
+export const setReviseDoneLoading = () => async (dispatch) => dispatch({
+  type: REVISE_BID_DONE_LOADING,
 });
 
 // buyer actions
