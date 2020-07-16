@@ -81,11 +81,11 @@ const ShowBid = ({
 				<KtWrapperLite>
 					<Divider ishoverable type="thick" title="Bid Details" />
 					<div className="m-t-20 dark flex-center">
-						Total Bid Value
+						{/* Total Bid Value */}
 						<span className="bold">
 							&nbsp;
 							{currentBid.currency.name}
-							{currentBid.totalBidValue}
+							<span className="big-caption">{currentBid.totalBidValue}</span>
 						</span>
 					</div>
 					<div className="m-t-10 dar flex-center">
