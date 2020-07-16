@@ -310,7 +310,7 @@ class RfpEditor extends React.Component {
 						{newProposal && newProposal.files.length > 0 && newProposal.files.map((f) => (
 							<Collapsible
 								classes="m-b-20"
-								title={`${newProposal.files.length} existing files`}
+								title={`${newProposal.files.length} existing file(s)`}
 							>
 								<FileItemCaption file={f} handleDeleteFile={console.log('delete the file')} />
 							</Collapsible>
