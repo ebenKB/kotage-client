@@ -22,9 +22,13 @@ export const serializeSupplierBid = (bid) => ({
   proposal_request_id: bid.rfpID,
   bid_currency: bid.currency,
   technical_requirements_attributes: bid.technicalRequirements
-    .map((t) => ({ id: t.id, filename: t.title, url: t.url })),
+    .map((t) => ({
+      id: t.id, filename: t.title, url: t.url, _destroy: t.destroy,
+    })),
   commercial_requirements_attributes: bid.commercialRequirements
-    .map((c) => ({ id: c.id, filename: c.title, url: c.url })),
+    .map((c) => ({
+      id: c.id, filename: c.title, url: c.url, _destroy: c.destroy,
+    })),
   rfp_answers_attributes: bid.rfpQuestionResponses,
 });
 

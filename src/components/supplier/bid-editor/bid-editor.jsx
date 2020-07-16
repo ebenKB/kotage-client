@@ -86,7 +86,7 @@ deleteBidFile = (file, type) => {
 
 handleSubmit = async () => {
   const {
-    respondToRfp, reviseBid, tenantUID, currentProposal, actionType,
+    handleAction, respondToRfp, tenantUID, currentProposal, actionType,
   } = this.props;
 
   const { commercialRequirements, technicalRequirements } = this.state;
@@ -102,34 +102,37 @@ handleSubmit = async () => {
    * and upload only those that are new
    */
   if (actionType.toLowerCase() === 'edit') {
-    const existingCommReq = commercialRequirements
-      .filter((c) => c.id !== undefined && c.id !== null);
-    const newCommReq = commercialRequirements.filter((c) => c.id === undefined);
+    handleAction(this.state);
+    // const existingCommReq = commercialRequirements
+    //   .filter((c) => c.id !== undefined && c.id !== null);
+    // const newCommReq = commercialRequirements.filter((c) => c.id === undefined);
 
-    // upload commercial requirements to remote server
-    const commercialReqFiles = await uploadFiles(newCommReq, tenantUID, RFP_FOLDER_NAME);
-    this.setState((state) => ({
-      ...state,
-      commercialRequirements: [
-        ...commercialReqFiles,
-        ...existingCommReq.map((e) => ({ id: e.id, title: e.title, url: e.file })),
-      ],
-    }));
+    // // upload commercial requirements to remote server
+    // const commercialReqFiles = await uploadFiles(newCommReq, tenantUID, RFP_FOLDER_NAME);
+    // this.setState((state) => ({
+    //   ...state,
+    //   commercialRequirements: [
+    //     ...commercialReqFiles,
+    //     ...existingCommReq.map((e) => ({ id: e.id, title: e.title, url: e.file })),
+    //   ],
+    // }));
 
-    const existingTechReq = technicalRequirements
-      .filter((t) => t.id !== undefined && t.id !== null);
-    const newTechReq = technicalRequirements.filter((t) => t.id === undefined);
+    // const existingTechReq = technicalRequirements
+    //   .filter((t) => t.id !== undefined && t.id !== null);
+    // const newTechReq = technicalRequirements.filter((t) => t.id === undefined);
 
-    // upload technical requirements to remote serve
-    const technicalReqFiles = await uploadFiles(newTechReq, tenantUID, RFP_FOLDER_NAME);
-    this.setState((state) => ({
-      ...state,
-      technicalRequirements: [
-        ...technicalReqFiles,
-        ...existingTechReq.map((e) => ({ id: e.id, title: e.title, url: e.file })),
-      ],
-    }));
+    // // upload technical requirements to remote serve
+    // const technicalReqFiles = await uploadFiles(newTechReq, tenantUID, RFP_FOLDER_NAME);
+    // this.setState((state) => ({
+    //   ...state,
+    //   technicalRequirements: [
+    //     ...technicalReqFiles,
+    //     ...existingTechReq.map((e) => ({ id: e.id, title: e.title, url: e.file })),
+    //   ],
+    // }));
 
+    // reviseBid(this.state, currentProposal.tenant.id);
+  } else if (actionType.toLowerCase() === 'save') {
     // preformat currency using NAME_SYMBOL
     const { currency } = currentProposal;
     this.setState((state) => ({
@@ -137,8 +140,6 @@ handleSubmit = async () => {
       currency: `${currency.name}_${currency.symbol}`,
     }));
 
-    reviseBid(this.state, currentProposal.tenant.id);
-  } else if (actionType.toLowerCase() === 'save') {
     // upload commercial requirements to remote server
     const commercialReqFiles = await
     uploadFiles(commercialRequirements, tenantUID, RFP_FOLDER_NAME);
@@ -321,7 +322,7 @@ const mapDispatchToProps = {
 
 EventResponse.propTypes = {
   respondToRfp: PropTypes.func.isRequired,
-  reviseBid: PropTypes.func.isRequired,
+  // reviseBid: PropTypes.func.isRequired,
   tenantUID: PropTypes.bool.isRequired,
   currentProposal: PropTypes.object.isRequired,
   actionType: PropTypes.string.isRequired,
@@ -330,6 +331,7 @@ EventResponse.propTypes = {
   isRevisingBid: PropTypes.bool.isRequired,
   history: PropTypes.object.isRequired,
   bid: PropTypes.object.isRequired,
+  handleAction: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateProps, mapDispatchToProps)(withRouter(EventResponse));
