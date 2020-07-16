@@ -16,12 +16,14 @@ const KtDocs = ({
 			Including a signed contract, proof of insurance or tax clearance
 		</p>
 		<div className="docs-wrapper m-t-10">
+			{documents && (
+				<div className="docs-wrapper__header bold light-caption">
+					<div className="">Name</div>
+					<div className="">Description</div>
+				</div>
+			)}
 			{documents && documents.map((doc, idx) => (
 				<>
-					<div className="docs-wrapper__header bold light-caption">
-						<div className="">Name</div>
-						<div className="">Description</div>
-					</div>
 					<KtDoc
 						key={doc.id}
 						doc={doc}
