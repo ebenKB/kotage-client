@@ -1,11 +1,11 @@
 /* eslint-disable react/forbid-prop-types */
 import React from 'react';
+import { Label } from 'semantic-ui-react';
 import { PropTypes } from 'prop-types';
 import { Link } from 'react-router-dom';
 import { format } from 'date-fns';
 import KtItem from '../../snippets/kt-list-item-wrapper/kt-item';
 import './supplier-bid-item.scss';
-
 
 const SupplierBidItem = ({ bid }) => (
 	<KtItem>
@@ -33,7 +33,9 @@ const SupplierBidItem = ({ bid }) => (
 					</span>
 				</div>
 			</div>
-			<div className="kt-primary">{bid.status}</div>
+			<Label size="tiny">
+				<span className="kt-primary">{bid.status}</span>
+			</Label>
 		</div>
 	</KtItem>
 );

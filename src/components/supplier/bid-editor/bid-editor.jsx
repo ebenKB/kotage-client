@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 // import { Button } from 'semantic-ui-react';
 import { withRouter } from 'react-router';
 import { PropTypes } from 'prop-types';
+// import deepEqual from '../../../utils/app/deep-equal';
 import { createBid, reviseExistingBid } from '../../../redux/actions/supplierBidActions';
 import KtWrapper from '../../kt-wrapper/kt-wrapper';
 import MainContent from '../../kt-main-content/mainContent';
@@ -31,7 +32,17 @@ class EventResponse extends Component {
     };
   }
 
+  // componentDidUpdate(prevProps, prevState) {
+  //   console.log('The component has updated', prevState);
+  //   const { checkIfDirty } = this.props;
+  //   if (!deepEqual(prevProps.bid, prevState)) {
+  //     console.log('it is dirty');
+  //     checkIfDirty(this.state);
+  //   }
+  // }
+
 setBidCurrency = (selectedOption) => {
+  // const { checkIfDirty } = this.props;
   this.setState((state) => ({
     ...state,
     currency: `${selectedOption.text}_${selectedOption.key}`,
@@ -164,8 +175,8 @@ handleSubmit = async () => {
   //   reviseBid(this.state, currentProposal.tenant.id);
   // }
 
-  const { history } = this.props;
-  history.push('/supplier/bids');
+  // const { history } = this.props;
+  // history.push('/supplier/bids');
 };
 
 handleInputChange = ({ inputValue, selectedOption }) => {
@@ -329,9 +340,10 @@ EventResponse.propTypes = {
   title: PropTypes.string.isRequired,
   actionName: PropTypes.string.isRequired,
   isRevisingBid: PropTypes.bool.isRequired,
-  history: PropTypes.object.isRequired,
+  // history: PropTypes.object.isRequired,
   bid: PropTypes.object.isRequired,
   handleAction: PropTypes.func.isRequired,
+  // checkIfDirty: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateProps, mapDispatchToProps)(withRouter(EventResponse));

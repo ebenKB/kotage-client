@@ -1,8 +1,11 @@
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable react/forbid-prop-types */
 import React, { Component } from 'react';
+import { Prompt } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
+import { withRouter } from 'react-router';
+import deepEqual from '../../../utils/app/deep-equal';
 import BidEditor from '../bid-editor/bid-editor';
 import { uploadFiles } from '../../../utils/app/index';
 import { RFP_FOLDER_NAME } from '../../../utils/app/definitions';
@@ -15,10 +18,18 @@ class ReviseBid extends Component {
     const { currentBid } = this.props;
     this.state = {
       bid: { ...currentBid },
+      isBlocking: true,
     };
   }
 
   // const [bid] = useState({ ...currentBid });
+  handleCheckIfDirty = (value) => {
+    const { bid } = this.state;
+    this.setState((state) => ({
+      ...state,
+      isBlocking: !deepEqual(bid, value),
+    }));
+  }
 
   handleUpdate = async (data) => {
     const editedBid = data;
@@ -90,19 +101,31 @@ class ReviseBid extends Component {
         console.log('This is the edited bid', editedBid);
       }
     }
-    reviseBid(editedBid, currentProposal.tenant.id);
+    this.setState((state) => ({ ...state, isBlocking: false }),
+      () => {
+        reviseBid(editedBid, currentProposal.tenant.id);
+        const { history } = this.props;
+        history.push('/supplier/bids');
+      });
   };
 
   render() {
-    const { bid } = this.state;
+    const { bid, isBlocking } = this.state;
     return (
-	<BidEditor
-		title="Revise Bid"
-		bid={bid}
-		actionType="edit"
-		actionName="Update"
-		handleAction={(editedBid) => this.handleUpdate(editedBid)}
-	/>
+	<>
+		<Prompt
+			when={isBlocking}
+			message={() => 'If you leave this page, you will loose unsaved changes. Do you want to continue?'}
+		/>
+		<BidEditor
+			title="Revise Bid"
+			bid={bid}
+			actionType="edit"
+			actionName="Update"
+			/* checkIfDirty={(value) => this.handleCheckIfDirty(value)} */
+			handleAction={(editedBid) => this.handleUpdate(editedBid)}
+		/>
+	</>
     );
   }
 }
@@ -112,6 +135,7 @@ ReviseBid.propTypes = {
   tenantUID: PropTypes.number.isRequired,
   currentProposal: PropTypes.object.isRequired,
   reviseBid: PropTypes.func.isRequired,
+  history: PropTypes.object.isRequired,
 };
 
 const mapDispatchToProps = {
@@ -124,4 +148,4 @@ const mapStateToProps = (state) => ({
   currentProposal: state.supplierRfp.currentProposal,
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(ReviseBid);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(ReviseBid));
