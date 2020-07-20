@@ -32,6 +32,7 @@ class FileHandler extends Component {
     }
   }
 
+// sign url to get authorized access to the file
 signUrl = async () => {
   const { files, tenantID, objectOwnerID } = this.props;
   let promises = [];
@@ -64,17 +65,6 @@ signUrl = async () => {
       }
     }
   }
-
-  // Promise.all(promises)
-  // .then((results) => {
-  //   this.setState((state) => ({
-  //     ...state,
-  //     signedUrls: results,
-  //   }));
-  //   const { signedUrls } = this.state;
-  //   this.downloadFiles(signedUrls);
-  // })
-  // .catch((error) => console.log('error in the promise', error));
 };
 
 downloadFiles = async (urls) => {
@@ -86,14 +76,7 @@ downloadFiles = async (urls) => {
     file.file_url = url;
     promises = [...promises, file];
   }
-  // Promise.all(promises)
-  //   .then((files) => {
-  //     console.log('Downloaded files: ', files);
-  //     this.setState((state) => ({
-  //       ...state,
-  //       files,
-  //     }));
-  //   });
+
   for (const promise of promises) {
     Promise.resolve(promise)
       .then((file) => {

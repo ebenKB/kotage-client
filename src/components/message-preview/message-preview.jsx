@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 /* eslint-disable react/forbid-prop-types */
 /* eslint-disable camelcase */
 import React from 'react';
@@ -63,23 +62,15 @@ class MessagePreview extends React.Component {
     const { user } = this.state;
     const { findRfpMessage, message, tenant_id } = this.props;
 
-    // eslint-disable-next-line react/prop-types
     const { match } = this.props;
-    // eslint-disable-next-line react/prop-types
     const { params } = match;
-    // eslint-disable-next-line react/prop-types
     const { message_id } = params;
 
     if (!message || message.id !== message_id) {
       findRfpMessage(message_id)
         .then((msg) => {
-          // if ((!hasSignedUrls && (!msg.files))
-          // || (msg.files && (msg.files.length < msg.attachments.length))) {
-          //   this.signFileUrls();
-          // }
-
           if (!user) {
-            getUser(msg.user_id, tenant_id)
+            getUser(msg.user_id, tenant_id) // get details of the user who created the message
               .then((data) => {
                 this.setState((state) => ({ ...state, user: data }));
               });
@@ -88,79 +79,9 @@ class MessagePreview extends React.Component {
     }
   }
 
-  // prepareFilesSync = () => {
-  //   const { signedAttachments } = this.state;
-  //   const { setMessageBlob } = this.props;
-  //   signedAttachments.map(async (file_url) => {
-  //     try {
-  //       const fileBody = await prepareFileForDownload(file_url);
-  //       if (fileBody) {
-  //         const fileObject = { file_url, ...fileBody };
-  //         setMessageBlob(fileObject);
-  //         // this.setState((state) => ({ ...state, files: [...state.files, fileObject] }));
-  //       }
-  //     } catch (error) {
-  //       this.setState((state) => ({ ...state, error, hasPreparedFiles: true }));
-  //     }
-  //   });
-  //   this.setState((state) => ({ ...state, hasPreparedFiles: true }));
-  // };
-
-  // signFileUrls = async () => {
-  //   const { message, tenant_id, currentRfpID } = this.props;
-  //   if ((message && !message.files)
-  //     || (message && message.files && message.files.length < message.attachments.length)) {
-  //     const { attachments } = message;
-  //     for (let i = 0; i < attachments.length; i += 1) {
-  //       try {
-  //         // eslint-disable-next-line no-await-in-loop
-  //         // const singedUrl = await
-  //         // getPresignUrlFromServer(getFullFilePath(attachments[i].file_url));
-  //       // eslint-disable-next-line no-await-in-loop
-  //         const singedUrl = await getFileSignedUrl(attachments[i].file_url,
-  //           tenant_id, currentRfpID);
-  //         this.setState((state) => ({
-  //           ...state,
-  //           signedAttachments: [...state.signedAttachments, singedUrl],
-  //         }));
-  //       } catch (error) {
-  //         this.setState((state) => ({ ...state, error }));
-  //       }
-  //       if (i === (attachments.length - 1)) {
-  //         this.setState((state) => ({ ...state, hasSignedUrls: true }));
-  //         this.prepareFilesSync();
-  //         this.setState((state) => ({ ...state, hasPrepareed: true }));
-  //       }
-  //     }
-  //   }
-  // };
-
-  // canLoadedFiles = () => {
-  //   const { message } = this.props;
-  //   const { error } = this.state;
-  //   if (message) {
-  //     if (message.attachments) {
-  //       if (message.files) {
-  //         if (message.files.length < message.attachments.length) {
-  //           if (!error) {
-  //             return true;
-  //           }
-  //         }
-  //       } else if (!error) {
-  //         return true;
-  //       }
-  //     }
-  //   }
-  //   return false;
-  // };
-
   render() {
-    // eslint-disable-next-line react/prop-types
     const { match, history, tenant_id } = this.props;
-    const { error } = this.state;
-    // eslint-disable-next-line react/prop-types
     const { params } = match;
-    // eslint-disable-next-line react/prop-types
     const { id } = params;
     const {
       user,
@@ -168,7 +89,6 @@ class MessagePreview extends React.Component {
 
     const { message } = this.props;
     const goBack = () => {
-      // eslint-disable-next-line react/prop-types
       history.goBack();
     };
 
@@ -214,37 +134,6 @@ class MessagePreview extends React.Component {
 								objectOwnerID={message.id}
 							/>
 						)}
-						<div className="file-item__wrapper">
-							{/* {message.files && message.files.map((file) => (
-								<KtFileItem
-									fileObject={file}
-									user={user}
-								/>
-							))} */}
-							{/* { this.canLoadedFiles() && (
-								<Loader
-									active
-									size="tiny"
-									inline
-									content={(
-										<span className="sm-caption">
-											Loading
-											&nbsp;
-											attachments
-										</span>
-									)}
-								/>
-							)} */}
-							{error && (
-								<span className="kt-danger">
-									Failed to load attachment
-									{/* <Button
-										content="Retry"
-										onClick={this.signFileUrls}
-									/> */}
-								</span>
-							)}
-						</div>
 						{message && message.files && (
 							<div className="m-t-20">
 								<Button
@@ -277,8 +166,8 @@ MessagePreview.propTypes = {
   findRfpMessage: PropTypes.func.isRequired,
   message: PropTypes.object,
   tenant_id: PropTypes.string.isRequired,
-  // setMessageBlob: PropTypes.func.isRequired,
-  // currentRfpID: PropTypes.string.isRequired,
+  history: PropTypes.object.isRequired,
+  match: PropTypes.object.isRequired,
 };
 
 MessagePreview.defaultProps = {
