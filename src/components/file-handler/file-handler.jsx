@@ -14,7 +14,6 @@ import KtFileItem from '../snippets/kt-file-item/kt-file-item';
 import KtLoader from '../loader/loader';
 import { setNotification, downloadFile, cacheFileBlob } from '../../redux/actions/appActions';
 
-
 class FileHandler extends Component {
   constructor(props) {
     super(props);
@@ -132,7 +131,6 @@ render() {
 		{files && files.length > 0 && (
 			<div className="m-t-10 flex-center wrap">
 				<Button
-
 					default
 					content={(
 						<span>
@@ -172,5 +170,6 @@ const mapDispatchToProps = {
   downloadFileAsBlob: downloadFile,
   saveFileAsCache: cacheFileBlob,
 };
+
 
 export default connect(null, mapDispatchToProps)(withRouter(FileHandler));

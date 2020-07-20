@@ -196,7 +196,7 @@ export const deserializeRfpMessage = (message) => {
     attachments: message.rfp_message_attachments.map((a) => ({
       id: a.id,
       title: a.title,
-      file_url: a.file_url,
+      file: a.file_url,
     })),
   };
   return newMessage;
