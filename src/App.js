@@ -71,11 +71,11 @@ function App() {
 						<route.main />
 					</SupplierProtectedRoutes>
 				))}
-				<Route path="*">
-					<PageNotFound />
-				</Route>
 			</Layout>
 		</Suspense>
+		<Route path="*">
+			<PageNotFound />
+		</Route>
 	</Switch>
   );
 }
