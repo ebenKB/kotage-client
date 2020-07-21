@@ -13,6 +13,7 @@ import { getFileSignedUrl, downloadMultipleZip } from '../../utils/app/file';
 import KtFileItem from '../snippets/kt-file-item/kt-file-item';
 import KtLoader from '../loader/loader';
 import { setNotification, downloadFile, cacheFileBlob } from '../../redux/actions/appActions';
+// import FileHandlerContext from '../../context/file-handler.context';
 
 class FileHandler extends Component {
   constructor(props) {
@@ -96,8 +97,10 @@ downloadAllFiles = () => {
 
 render() {
   const { files, signedUrls } = this.state;
+  const details = this.context;
   // eslint-disable-next-line react/prop-types
-  const { details } = this.props;
+
+  // const { details } = this.props;
   return (
 	<>
 		<div className="flex-center">
@@ -155,4 +158,5 @@ const mapDispatchToProps = {
 };
 
 
+// FileHandler.contextType = FileHandlerContext;
 export default connect(null, mapDispatchToProps)(withRouter(FileHandler));

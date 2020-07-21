@@ -3,7 +3,7 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
 import './pdf-preview.scss';
-import { Button, Divider } from 'semantic-ui-react';
+import { Button } from 'semantic-ui-react';
 import CancelOutlinedIcon from '@material-ui/icons/CancelOutlined';
 import DownloadIcon from '@material-ui/icons/GetApp';
 import AddBoxIcon from '@material-ui/icons/AddBox';
@@ -12,6 +12,7 @@ import FullscreenIcon from '@material-ui/icons/Fullscreen';
 import Input from '../form-fields/input/input';
 // import MessageHeaderCaption from '../snippets/message-header-caption/message-header-caption';
 import { getFileNameAndExtension } from '../../utils/app/file';
+import FileHandlerContext from '../../context/file-handler.context';
 
 const FilePreview = ({
   type, fileObject, user, handleCloseAction, details, children, ...rest
@@ -35,7 +36,7 @@ const FilePreview = ({
 									{' ('}
 									{rest.pages}
 									{' )'}
-									pages)
+									pages
 								</span>
 							)}
 							<Button
@@ -105,11 +106,9 @@ const FilePreview = ({
 					{children}
 				</div>
 				<div className="kt-bg-shadow preview-controls">
-					{/* <MessageHeaderCaption
-						user={user}
-					/> */}
-					{details}
-					<Divider type="faint" />
+					<FileHandlerContext.Consumer>
+						{(value) => value}
+					</FileHandlerContext.Consumer>
 				</div>
 			</div>
 		</div>

@@ -20,6 +20,7 @@ import FileHandler from '../../file-handler/file-handler';
 import RfpTitle from '../supplier-rfp-title/rfp-title';
 import KtLoader from '../../loader/loader';
 import Modal from '../../modal/modal';
+import FileHandlerContext from '../../../context/file-handler.context';
 
 const ShowBid = ({
   findBid,
@@ -127,13 +128,15 @@ const ShowBid = ({
 					<Divider ishoverable type="thick" title="Commercial Requirements" />
 					<div className="m-t-20">
 						{currentBid.commercialRequirements && (
-							<FileHandler
-								details={null}
-								files={currentBid.commercialRequirements}
-								tenantID={tenantID}
-								objectOwnerID={currentBid.id}
-								shouldSignUrl
-							/>
+							<FileHandlerContext.Provider value={<RfpTitle />}>
+								<FileHandler
+									details={null}
+									files={currentBid.commercialRequirements}
+									tenantID={tenantID}
+									objectOwnerID={currentBid.id}
+									shouldSignUrl
+								/>
+							</FileHandlerContext.Provider>
 						)}
 					</div>
 				</KtWrapperLite>
@@ -143,13 +146,15 @@ const ShowBid = ({
 					<Divider ishoverable type="thick" title="Technical Requirements" />
 					<div className="m-t-20">
 						{currentBid.technicalRequirements && (
-							<FileHandler
-								details={null}
-								files={currentBid.technicalRequirements}
-								tenantID={tenantID}
-								objectOwnerID={currentBid.id}
-								shouldSignUrl
-							/>
+							<FileHandlerContext.Provider value={<RfpTitle />}>
+								<FileHandler
+									details={null}
+									files={currentBid.technicalRequirements}
+									tenantID={tenantID}
+									objectOwnerID={currentBid.id}
+									shouldSignUrl
+								/>
+							</FileHandlerContext.Provider>
 						)}
 					</div>
 				</KtWrapperLite>

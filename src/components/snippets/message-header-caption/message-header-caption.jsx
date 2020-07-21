@@ -4,7 +4,7 @@ import { PropTypes } from 'prop-types';
 import UsernameWithInitialsLabel from '../Username-with-initials-label/username-with-initials-label';
 
 
-const MessageHeaderCaption = ({ user }) => (
+const MessageHeaderCaption = ({ user = null }) => (
 	<div>
 		<h3 className="dark">Message subject is here</h3>
 		<div className="flex">

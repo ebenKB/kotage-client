@@ -17,8 +17,8 @@ import { findRfpMessageById, setCurrenMessageBlob } from '../../redux/actions/rf
 import Help from '../../utils/requisitions/new/help';
 import RfpTitle from '../snippets/rfp-title/rfp-title';
 import { getUser } from '../../redux/actions/userActions';
-// import KtFileItem from '../snippets/kt-file-item/kt-file-item';
 import FileHandler from '../file-handler/file-handler';
+import FileHandlerContext from '../../context/file-handler.context';
 import './message-preview.scss';
 import {
   downloadMultipleZip,
@@ -61,7 +61,6 @@ class MessagePreview extends React.Component {
   componentDidMount() {
     const { user } = this.state;
     const { findRfpMessage, message, tenant_id } = this.props;
-
     const { match } = this.props;
     const { params } = match;
     const { message_id } = params;
@@ -127,12 +126,22 @@ class MessagePreview extends React.Component {
 						<p align="justify">{message.message}</p>
 						<Divider type="faint" classes="p-b-8 p-t-8" />
 						{message.attachments && (
-							<FileHandler
-								shouldSignUrl
-								files={message.attachments}
-								tenantID={tenant_id}
-								objectOwnerID={message.id}
-							/>
+							<FileHandlerContext.Provider value={(
+								<>
+									<MessageHeaderCaption
+										user={user}
+									/>
+									<Divider type="faint" />
+								</>
+							)}
+							>
+								<FileHandler
+									shouldSignUrl
+									files={message.attachments}
+									tenantID={tenant_id}
+									objectOwnerID={message.id}
+								/>
+							</FileHandlerContext.Provider>
 						)}
 						{message && message.files && (
 							<div className="m-t-20">
@@ -185,4 +194,5 @@ const mapStateToProps = (state) => ({
   currentRfpID: state.rfp.currentProposal.id,
 });
 
+MessagePreview.contextType = FileHandlerContext;
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(MessagePreview));

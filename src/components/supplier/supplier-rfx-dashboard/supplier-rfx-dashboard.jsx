@@ -29,6 +29,7 @@ import ParseHtml from '../../snippets/parse-html/parse-html';
 import FileHandler from '../../file-handler/file-handler';
 import PopupDropdown from '../../snippets/popup/popup';
 import { setNotification } from '../../../redux/actions/appActions';
+import FileHandlerContext from '../../../context/file-handler.context';
 
 const SupplierRfxDashboard = ({
   loading,
@@ -278,13 +279,14 @@ const SupplierRfxDashboard = ({
 					<Divider type="thick" title="Rfp Attachments" />
 					<div className="m-t-20">
 						{currentProposal.files && (
-							<FileHandler
-								details={<RfpTitle />}
-								files={currentProposal.files}
-								tenantID={currentTenant.id}
-								objectOwnerID={currentProposal.id}
-								shouldSignUrl
-							/>
+							<FileHandlerContext.Provider value={<RfpTitle />}>
+								<FileHandler
+									files={currentProposal.files}
+									tenantID={currentTenant.id}
+									objectOwnerID={currentProposal.id}
+									shouldSignUrl
+								/>
+							</FileHandlerContext.Provider>
 						)}
 					</div>
 				</KtWrapperLite>
