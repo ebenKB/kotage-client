@@ -103,7 +103,8 @@ const NewMessage = ({
     }
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     const validatorForm = ref.current;
     validatorForm.validate();
     const isValid = await validatorForm.isFormValid();
@@ -143,7 +144,7 @@ const NewMessage = ({
 			)}
 			<ValidatorForm
 				ref={ref}
-				onSubmit={handleSubmit}
+				onSubmit={null}
 			>
 				<div>
 					<InputValidator
