@@ -104,7 +104,6 @@ const NewMessage = ({
   };
 
   const handleSubmit = async () => {
-    console.log('We want to submit the message', message);
     const validatorForm = ref.current;
     validatorForm.validate();
     const isValid = await validatorForm.isFormValid();
@@ -123,7 +122,7 @@ const NewMessage = ({
           message: 'Select at least one supplier to continue.',
         }, 'error');
       }
-    } else console.log('The form is not valid');
+    }
   };
 
   return (
