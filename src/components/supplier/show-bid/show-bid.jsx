@@ -127,8 +127,16 @@ const ShowBid = ({
 				>
 					<Divider ishoverable type="thick" title="Commercial Requirements" />
 					<div className="m-t-20">
-						{currentBid.commercialRequirements && (
-							<FileHandlerContext.Provider value={<RfpTitle />}>
+						{currentRfp && currentBid.commercialRequirements && (
+							<FileHandlerContext.Provider
+								value={(
+									<div>
+										<RfpTitle />
+										<div>{currentRfp.tenant.company_name}</div>
+										<div>{currentRfp.tenant.email}</div>
+									</div>
+								)}
+							>
 								<FileHandler
 									details={null}
 									files={currentBid.commercialRequirements}
@@ -145,8 +153,16 @@ const ShowBid = ({
 				>
 					<Divider ishoverable type="thick" title="Technical Requirements" />
 					<div className="m-t-20">
-						{currentBid.technicalRequirements && (
-							<FileHandlerContext.Provider value={<RfpTitle />}>
+						{currentRfp && currentBid.technicalRequirements && (
+							<FileHandlerContext.Provider
+								value={(
+									<div>
+										<RfpTitle />
+										<div>{currentRfp.tenant.company_name}</div>
+										<div>{currentRfp.tenant.email}</div>
+									</div>
+								)}
+							>
 								<FileHandler
 									details={null}
 									files={currentBid.technicalRequirements}

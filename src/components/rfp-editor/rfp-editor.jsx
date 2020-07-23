@@ -38,7 +38,7 @@ class RfpEditor extends React.Component {
   }
 
   componentDidMount() {
-    if (!this.props.currencies) {
+    if (!this.props.currencies || this.props.currencies.length < 1) {
       try {
         this.props.getAllCurrencies();
       } catch (error) {
@@ -165,6 +165,7 @@ class RfpEditor extends React.Component {
     };
 
     const addSuppliers = (suppliers) => {
+      console.log('We have added a supplier', suppliers);
       if (suppliers && suppliers.length > 0) {
         let filteredSuppliers = [];
         for (const supplier of suppliers) {

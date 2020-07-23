@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import { LOGOUT } from '../types/userTypes';
+import { LOGOUT, LOGIN } from '../types/userTypes';
 import requisitionReducer from './requisitionReducer';
 import userReducer from './userReducer';
 import tenantReducer from './tenantReducer';
@@ -30,12 +30,16 @@ const reducers = combineReducers({
   ui: uiReducer,
 });
 
-const rootReducer = (state, action) => {
-  let newState = state;
+const rootReducer = (oldState, action) => {
+  let newState = oldState;
   if (action.type === LOGOUT) {
     storage.removeItem('persist:root');
-    // newState = undefined;
     newState = { ...newState, user: undefined, tenant: undefined };
+  } else if (action.type === LOGIN) {
+    const { user: { currentUser: { id } } } = newState;
+    if (id !== action.payload.id) {
+      newState = {}; // clear cached data
+    }
   }
   return reducers(newState, action);
 };

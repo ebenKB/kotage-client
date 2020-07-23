@@ -113,7 +113,8 @@ export const serializeProposal = (proposal, type = 'create') => {
 
     newProposal.proposal_suppliers_attributes = proposal.suppliers.map((s) => (
       {
-        supplier_id: s.supplier_id,
+        supplier_id: s.id,
+        // supplier_id: s.supplier_id,
       }));
 
     newProposal.proposal_attachments_attributes = proposal.files.map((f) => ({

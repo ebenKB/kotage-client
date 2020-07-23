@@ -51,8 +51,8 @@ const SupplierHomeDashoard = ({
         const today = new Date();
         const closingDate = new Date();
         closingDate.setDate(today.getDate() + 31);
-        const startDate = `${today.getFullYear()}-${today.getMonth()}-${today.getDate()}`;
-        const endDate = `${closingDate.getFullYear()}-${closingDate.getMonth()}-${closingDate.getDate()}`;
+        const startDate = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
+        const endDate = `${closingDate.getFullYear()}-${closingDate.getMonth() + 1}-${closingDate.getDate()}`;
         getSupplierRfpCloingSoon(startDate, endDate);
         getSupplierRSVPClosingSoon(startDate, endDate);
       }

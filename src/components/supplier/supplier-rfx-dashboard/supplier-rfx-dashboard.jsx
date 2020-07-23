@@ -279,7 +279,15 @@ const SupplierRfxDashboard = ({
 					<Divider type="thick" title="Rfp Attachments" />
 					<div className="m-t-20">
 						{currentProposal.files && (
-							<FileHandlerContext.Provider value={<RfpTitle />}>
+							<FileHandlerContext.Provider
+								value={(
+									<div>
+										<RfpTitle />
+										<div>{currentProposal.tenant.company_name}</div>
+										<div>{currentProposal.tenant.email}</div>
+									</div>
+								)}
+							>
 								<FileHandler
 									files={currentProposal.files}
 									tenantID={currentTenant.id}
@@ -293,6 +301,7 @@ const SupplierRfxDashboard = ({
 				<div className="m-t-20 flex-center">
 					<Link to="/supplier/rfx">
 						<Button
+							basic
 							small
 							default
 							content="Go Back"
