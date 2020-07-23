@@ -10,6 +10,7 @@ export const serializeTenant = (tenant) => ({
 
 export const deserializeTenant = (tenant) => ({
   id: tenant.id,
+  account_id: tenant.account_id,
   name: tenant.company_name,
   phone: tenant.phone,
   email: tenant.email,
