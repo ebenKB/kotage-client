@@ -3,7 +3,7 @@ const isObject = (object) => object !== null && typeof object === 'object';
 
 const deepEqual = (obj1, obj2) => {
   // check if they are objects
-  if (!isObject(obj1 || isObject(obj2))) {
+  if (!isObject(obj1) || !isObject(obj2)) {
     return false;
   }
 
