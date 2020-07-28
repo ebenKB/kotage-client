@@ -19,6 +19,7 @@ import {
   PUBLISH_RFP,
   GET_RFP_STAKEHOLDER,
   CLEAR_CURRENT_RFP,
+  GET_RFP_SUPPLIERS,
 } from '../types/rfpTypes';
 import Axios from '../../utils/axios/axios';
 import { getToken } from '../../utils/app/index';
@@ -290,3 +291,40 @@ export const updateExistingRfp = (rfpID, newRfp) => async (dispatch, getState) =
     dispatch(setUpdateRfpDoneLoading());
   }
 };
+
+export const getRfpSuppliers = () => async (dispatch, getState) => {
+  try {
+    console.log('We want  get the suppliers for the proposal', getState);
+    const suppliers = await Axios(`/v1/1/rfp/${4}/suppliers`);
+    console.log('These are the suppliers', suppliers);
+    dispatch({
+      type: GET_RFP_SUPPLIERS,
+      payload: {},
+    });
+  } catch (error) {
+    console.log('There is an error', error);
+  }
+};
+
+export const getRfpSupplierDetails = () => async () => new
+Promise((resolve, reject) => {
+  try {
+    const data = Axios(`/v1/1/rfp/${4}/suppliers/${1}/claim`);
+    const data2 = Axios(`/v1/1/rfp/${4}/analytics`);
+    console.log('This is the analytics', data2);
+    resolve(data);
+  } catch (error) {
+    reject(error);
+  }
+});
+
+export const getRfpAnalytics = () => async () => new
+Promise((resolve, reject) => {
+  try {
+    console.log('Getting the data');
+    const data = Axios(`/v1/1/rfp/${4}/analytics`);
+    resolve(data);
+  } catch (error) {
+    reject(error);
+  }
+});

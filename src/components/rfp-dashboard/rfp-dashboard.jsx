@@ -7,7 +7,9 @@ import { PropTypes } from 'prop-types';
 import { connect } from 'react-redux';
 import { Button, Checkbox } from 'semantic-ui-react';
 import { CircularProgressbar } from 'react-circular-progressbar';
-import { getCurrentProposal, publishRfp } from '../../redux/actions/rfpActions';
+import {
+  getCurrentProposal, publishRfp, getRfpSuppliers, getRfpAnalytics,
+} from '../../redux/actions/rfpActions';
 import Divider from '../kt-divider/divider';
 import 'react-circular-progressbar/dist/styles.css';
 import './rfp-dashboard.scss';
@@ -21,20 +23,27 @@ import RfpTitle from '../snippets/rfp-title/rfp-title';
 import EmptyContentWrapper from '../empty-content-wrapper/empty-content-wrapper';
 
 const RfpDashboard = ({
-  match, getProposal, proposal, publishEvent, isPublishingRfp,
+  match,
+  getProposal,
+  proposal,
+  publishEvent,
+  isPublishingRfp,
+  getSuppliersForProposal,
+  getProposalAnalytics,
 }) => {
   const { params } = match;
   const { id } = params;
   const [searchInput, setSearchInput] = useState('');
+  const [analytics, setAnalytics] = useState(null);
 
   const [suppliers] = useState([
     {
-      name: 'Apotica Company Limited',
+      company_name: 'Apotica Company Limited',
       phone: '0548086391',
       submission_date: '24/06/2020',
     },
     {
-      name: 'Kempinski Company Limited',
+      company_name: 'Kempinski Company Limited',
       phone: '0548086391',
       submission_date: '24/06/2020',
     },
@@ -44,12 +53,12 @@ const RfpDashboard = ({
       submission_date: '24/06/2020',
     },
     {
-      name: 'Tigo Ghana Limited',
+      company_name: 'Tigo Ghana Limited',
       phone: '0548086391',
       submission_date: null,
     },
     {
-      name: 'First Allied Bank',
+      company_name: 'First Allied Bank',
       phone: '0548086391',
       submission_date: null,
     },
@@ -59,8 +68,56 @@ const RfpDashboard = ({
 
   useEffect(() => {
     getProposal(id);
+    getSuppliersForProposal();
   }, [id]);
 
+  useEffect(() => {
+    if (!analytics) {
+      getProposalAnalytics()
+        .then(({ data }) => {
+          setAnalytics({ ...data.rfp_analytics[0] });
+        });
+    }
+  }, []);
+
+  // the total number of suppliers who have sent their RSVP
+  const getTotalRSVP = () => {
+    if (analytics) {
+      return (analytics.intend_to_bid + analytics.already_submitted_bid);
+    }
+    return null;
+  };
+
+  // get the total number of suppliers who have sent their RSVP but have not submitted any bid
+  const getIntendToBid = () => {
+    if (analytics) {
+      return (
+	<>
+		{getTotalRSVP()}
+		{' '}
+		out of
+		{' '}
+		{analytics.invited_suppliers}
+	</>
+      );
+    }
+    return null;
+  };
+
+  const getBidsReceived = () => {
+    if (analytics) {
+      return (
+	<>
+		{analytics.already_submitted_bid}
+		{' '}
+		out of
+		{' '}
+		{getTotalRSVP()}
+	</>
+      );
+    }
+    return null;
+  };
   /**
    * return the found suppliers if the user is searching
    * otherwise return all suppliers
@@ -69,7 +126,11 @@ const RfpDashboard = ({
     if (searchInput.length > 0 || filteredSuppliers.length > 0) {
       return filteredSuppliers;
     }
-    return suppliers;
+
+    if (proposal) {
+      return proposal.suppliers;
+    }
+    return [];
   };
 
   const handleSearch = (val) => {
@@ -122,17 +183,33 @@ const RfpDashboard = ({
 										<div className="bid-caption-item">
 											<div className="text-center">
 												<div className="xsm-caption m-b-10">Invited Suppliers</div>
-												<div className="square-caption">4</div>
+												<div className="square-caption">
+													{proposal.suppliers && proposal.suppliers.length}
+												</div>
 											</div>
 											<div className="text-center">
 												<div className="xsm-caption m-b-10">Intend to Bid</div>
-												<CircularProgressbar value={60} text={`${3}`} className="bold kt-circular-progress" strokeWidth={12} />
-												<div className="xsm-caption m-t-10">(3 of 4)</div>
+												{analytics && (
+													<CircularProgressbar
+														value={((getTotalRSVP() / analytics.invited_suppliers) * 100)}
+														text={`${getTotalRSVP()}`}
+														className="bold kt-circular-progress"
+														strokeWidth={12}
+													/>
+												)}
+												<div className="xsm-caption m-t-10">{getIntendToBid()}</div>
 											</div>
 											<div className="text-center">
 												<div className="xsm-caption m-b-10">Bids Received</div>
-												<CircularProgressbar value={75} text={`${3}`} className="bold kt-circular-progress" strokeWidth={12} />
-												<div className="xsm-caption m-t-10">(3 of 4)</div>
+												{analytics && (
+													<CircularProgressbar
+														value={((analytics.already_submitted_bid / getTotalRSVP()) * 100)}
+														text={`${getTotalRSVP()}`}
+														className="bold kt-circular-progress"
+														strokeWidth={12}
+													/>
+												)}
+												<div className="xsm-caption m-t-10">{getBidsReceived()}</div>
 											</div>
 										</div>
 									</div>
@@ -250,6 +327,8 @@ RfpDashboard.propTypes = {
   proposal: PropTypes.object,
   publishEvent: PropTypes.func.isRequired,
   isPublishingRfp: PropTypes.bool.isRequired,
+  getSuppliersForProposal: PropTypes.func.isRequired,
+  getProposalAnalytics: PropTypes.func.isRequired,
 };
 
 RfpDashboard.defaultProps = {
@@ -259,6 +338,8 @@ RfpDashboard.defaultProps = {
 const mapDispatchToProps = {
   getProposal: getCurrentProposal,
   publishEvent: publishRfp,
+  getSuppliersForProposal: getRfpSuppliers,
+  getProposalAnalytics: getRfpAnalytics,
 };
 
 const mapStateToProps = (state) => ({
