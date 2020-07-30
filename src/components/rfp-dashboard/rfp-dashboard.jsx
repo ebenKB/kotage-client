@@ -7,6 +7,7 @@ import { PropTypes } from 'prop-types';
 import { connect } from 'react-redux';
 import { Button, Checkbox } from 'semantic-ui-react';
 import { CircularProgressbar } from 'react-circular-progressbar';
+import { formatDistance } from 'date-fns';
 import {
   getCurrentProposal, publishRfp, getRfpSuppliers, getRfpAnalytics,
 } from '../../redux/actions/rfpActions';
@@ -35,35 +36,6 @@ const RfpDashboard = ({
   const { id } = params;
   const [searchInput, setSearchInput] = useState('');
   const [analytics, setAnalytics] = useState(null);
-
-  const [suppliers] = useState([
-    {
-      company_name: 'Apotica Company Limited',
-      phone: '0548086391',
-      submission_date: '24/06/2020',
-    },
-    {
-      company_name: 'Kempinski Company Limited',
-      phone: '0548086391',
-      submission_date: '24/06/2020',
-    },
-    {
-      name: 'ASA savings and Loans Limited',
-      phone: '0548086391',
-      submission_date: '24/06/2020',
-    },
-    {
-      company_name: 'Tigo Ghana Limited',
-      phone: '0548086391',
-      submission_date: null,
-    },
-    {
-      company_name: 'First Allied Bank',
-      phone: '0548086391',
-      submission_date: null,
-    },
-  ]);
-
   const [filteredSuppliers, setFilteredSuppliers] = useState([]);
 
   useEffect(() => {
@@ -134,8 +106,8 @@ const RfpDashboard = ({
   };
 
   const handleSearch = (val) => {
-    const filteredSuppliers = suppliers
-      .filter((s) => s.name.toLocaleLowerCase()
+    const filteredSuppliers = proposal.suppliers
+      .filter((s) => s.company_name.toLocaleLowerCase()
         .match(new RegExp(val.trim().toLocaleLowerCase(), 'g')));
     setFilteredSuppliers(filteredSuppliers);
   };
@@ -217,7 +189,9 @@ const RfpDashboard = ({
 										<Divider type="faint" title="" classes="m-b-10" />
 										All Bids are due in
 										{' '}
-										<span className="bold">6</span>
+										<span className="bold">
+											{formatDistance(new Date(proposal.bid_deadline_date), new Date())}
+										</span>
 										{' '}
 										days
 									</div>

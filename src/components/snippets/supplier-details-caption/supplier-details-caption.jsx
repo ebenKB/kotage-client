@@ -7,6 +7,8 @@ import { format } from 'date-fns';
 import ButtonGroup from '../../form-fields/button-group/button-group';
 import PopupDropdown from '../popup/popup';
 import { getRfpSupplierDetails } from '../../../redux/actions/rfpActions';
+import KtLoader from '../../loader/loader';
+import RfpSupplierItemWrapper from '../../rfp-supplier-item-wrapper/rfp-supplier-item-wrapper';
 
 const SupplierDetailsCaption = ({ type, supplier, getSupplierProposalDetails }) => {
   const [isLoadingBidDetails, setLoading] = useState(true);
@@ -26,9 +28,12 @@ const SupplierDetailsCaption = ({ type, supplier, getSupplierProposalDetails }) 
 
   return (
 	<div>
-		{isLoadingBidDetails && (<div>Loading</div>)}
+		{isLoadingBidDetails && (<KtLoader />)}
 		{bidDetails && bidDetails.has_responded && supplier && (
-			<div className="rfp-suppliers__item m-b-10 m-t-10 active">
+			<RfpSupplierItemWrapper
+				classes="m-b-10 m-t-10"
+				type="active"
+			>
 				<div className="bold">{supplier.company_name.toUpperCase()}</div>
 				{bidDetails && (
 					<div>
@@ -56,7 +61,7 @@ const SupplierDetailsCaption = ({ type, supplier, getSupplierProposalDetails }) 
 
 					</ButtonGroup>
 				</div>
-			</div>
+			</RfpSupplierItemWrapper>
 		)}
 		{type === 'pending' && supplier && (
 			<div className="rfp-suppliers__item m-b-10 m-t-10">

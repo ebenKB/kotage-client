@@ -12,6 +12,7 @@ import KtWrapperLite from '../kt-wrapper-lite/kt-wrapper-lite';
 import MainContent from '../kt-main-content/mainContent';
 import Help from '../../utils/requisitions/new/help';
 import './compare-bids.scss';
+import RfpSupplierItemWrapper from '../rfp-supplier-item-wrapper/rfp-supplier-item-wrapper';
 
 const CompareBids = () => (
 	<MainContent
@@ -34,21 +35,13 @@ const CompareBids = () => (
 				</div>
 			</div>
 			<div className="m-t-20">
-				<div className="rfp-suppliers__item m-b-10 m-t-10">
+				<RfpSupplierItemWrapper
+					classes="m-b-10 m-t-10"
+				>
 					<div className="bold">MTN GHANA LIMITED</div>
-					<div>25th May, 2020</div>
+					<div>Submitted on 25th May, 2020</div>
 					<div className="text-right">USD 90,000</div>
-				</div>
-				<div className="rfp-suppliers__item m-b-10 m-t-10">
-					<div className="bold">ASA SAVINGS LIMITED</div>
-					<div>25th May, 2020</div>
-					<div className="text-right">USD 85,000</div>
-				</div>
-				<div className="rfp-suppliers__item m-b-10 m-t-10">
-					<div className="bold">BANK OF GHANA LIMITED</div>
-					<div>25th May, 2020</div>
-					<div className="text-right">USD 80,000</div>
-				</div>
+				</RfpSupplierItemWrapper>
 			</div>
 		</KtWrapperLite>
 		<KtWrapperLite
@@ -65,10 +58,6 @@ const CompareBids = () => (
 				<LinkIcon className="m-r-10 kt-success small logo" />
 				<div className="bold">Are you officially registered with the National Tax Commission?</div>
 			</div>
-			{/* <div className="bid-response__headings m-t-20">
-				<div className="bold">Company</div>
-				<div className="bold">Response</div>
-			</div> */}
 			<div className="bid-response__headings m-t-20">
 				<div>Mtn Ghana Limited</div>
 				<div>Response</div>
@@ -85,10 +74,6 @@ const CompareBids = () => (
 				<LinkIcon className="m-r-10 small logo kt-success" />
 				<div className="bold">Do you have a competent team to handle this project?</div>
 			</div>
-			{/* <div className="bid-response__headings m-t-20">
-				<div className="bold">Company</div>
-				<div className="bold">Response</div>
-			</div> */}
 			<div className="bid-response__headings m-t-20">
 				<div>Mtn Ghana Limited</div>
 				<div>Response</div>
@@ -105,10 +90,6 @@ const CompareBids = () => (
 				<LinkIcon className="m-r-10 kt-success small logo" />
 				<div className="bold">Do you have a competent team to handle this project?</div>
 			</div>
-			{/* <div className="bid-response__headings m-t-20">
-				<div className="bold">Company</div>
-				<div className="bold">Response</div>
-			</div> */}
 			<div className="bid-response__headings m-t-20">
 				<div>Mtn Ghana Limited</div>
 				<div>Response</div>
