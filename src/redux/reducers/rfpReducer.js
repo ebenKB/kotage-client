@@ -20,6 +20,7 @@ import {
 const initialState = {
   loading: false,
   proposals: [],
+  proposalBids: [],
   currentProposal: null,
   rfpInbox: null,
   rfpOutbox: null,

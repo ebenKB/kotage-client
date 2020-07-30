@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 // import SortIcon from '@material-ui/icons/Sort';
 // import { Form, Radio, Button } from 'semantic-ui-react';
 // import PopupDropdown from '../snippets/popup/popup';
 // import { ReactComponent as Sort } from '../../svg/sort.svg';
 import { Dropdown, Button } from 'semantic-ui-react';
 // import AllInclusiveSharpIcon from '@material-ui/icons/AllInclusiveSharp';
+import { connect } from 'react-redux';
+import { PropTypes } from 'prop-types';
+import { useParams } from 'react-router-dom';
 import { ReactComponent as LinkIcon } from '../../svg/link.svg';
 import Divider from '../kt-divider/divider';
 import RfpTitle from '../snippets/rfp-title/rfp-title';
@@ -13,8 +16,14 @@ import MainContent from '../kt-main-content/mainContent';
 import Help from '../../utils/requisitions/new/help';
 import './compare-bids.scss';
 import RfpSupplierItemWrapper from '../rfp-supplier-item-wrapper/rfp-supplier-item-wrapper';
+import { getRfpBids } from '../../redux/actions/rfpActions';
 
-const CompareBids = () => (
+const CompareBids = ({ getBidsForProposal }) => {
+  const { id } = useParams();
+  useEffect(() => {
+    getBidsForProposal(id);
+  }, []);
+  return (
 	<MainContent
 		help={Help}
 	>
@@ -110,6 +119,15 @@ const CompareBids = () => (
 			</div>
 		</KtWrapperLite>
 	</MainContent>
-);
+  );
+};
 
-export default CompareBids;
+const mapDispatchToProps = {
+  getBidsForProposal: getRfpBids,
+};
+
+CompareBids.propTypes = {
+  getBidsForProposal: PropTypes.func.isRequired,
+};
+
+export default connect(null, mapDispatchToProps)(CompareBids);

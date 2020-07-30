@@ -310,8 +310,7 @@ export const getRfpSupplierDetails = () => async () => new
 Promise((resolve, reject) => {
   try {
     const data = Axios(`/v1/1/rfp/${4}/suppliers/${1}/claim`);
-    const data2 = Axios(`/v1/1/rfp/${4}/analytics`);
-    console.log('This is the analytics', data2);
+    // const data2 = Axios(`/v1/1/rfp/${4}/analytics`);
     resolve(data);
   } catch (error) {
     reject(error);
@@ -321,10 +320,16 @@ Promise((resolve, reject) => {
 export const getRfpAnalytics = () => async () => new
 Promise((resolve, reject) => {
   try {
-    console.log('Getting the data');
     const data = Axios(`/v1/1/rfp/${4}/analytics`);
     resolve(data);
   } catch (error) {
     reject(error);
   }
+});
+
+export const getRfpBids = (rfpID) => async () => new
+Promise((resolve, reject) => {
+  Axios.get(`/v1/1/rfp/${rfpID}/bids`)
+    .then((data) => resolve(data))
+    .catch((error) => reject(error));
 });
