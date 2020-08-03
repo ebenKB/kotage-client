@@ -25,7 +25,11 @@ import Axios from '../../utils/axios/axios';
 import { getToken } from '../../utils/app/index';
 import { setNotification } from './appActions';
 import {
-  serializeProposal, deserializeProposal, serializeRfpMessage, deserializeRfpMessage,
+  serializeProposal,
+  deserializeProposal,
+  serializeRfpMessage,
+  deserializeRfpMessage,
+  deserializeRfpBid,
 } from '../../serializers/rfp-serializer';
 import {
   setPublishRfpLoading,
@@ -306,10 +310,12 @@ export const getRfpSuppliers = () => async (dispatch, getState) => {
   }
 };
 
-export const getRfpSupplierDetails = () => async () => new
+// eslint-disable-next-line no-unused-vars
+export const getRfpSupplierDetails = (rfpID, supplierID) => async (dispatch, getState) => new
 Promise((resolve, reject) => {
   try {
-    const data = Axios(`/v1/1/rfp/${4}/suppliers/${1}/claim`);
+    const { tenant: { currentTenant } } = getState();
+    const data = Axios(`/v1/${currentTenant.id}/rfp/${rfpID}/suppliers/${supplierID}/claim`);
     // const data2 = Axios(`/v1/1/rfp/${4}/analytics`);
     resolve(data);
   } catch (error) {
@@ -317,10 +323,10 @@ Promise((resolve, reject) => {
   }
 });
 
-export const getRfpAnalytics = () => async () => new
+export const getRfpAnalytics = (rfpID) => async () => new
 Promise((resolve, reject) => {
   try {
-    const data = Axios(`/v1/1/rfp/${4}/analytics`);
+    const data = Axios(`/v1/1/rfp/${rfpID}/analytics`);
     resolve(data);
   } catch (error) {
     reject(error);
@@ -330,6 +336,11 @@ Promise((resolve, reject) => {
 export const getRfpBids = (rfpID) => async () => new
 Promise((resolve, reject) => {
   Axios.get(`/v1/1/rfp/${rfpID}/bids`)
-    .then((data) => resolve(data))
+    .then(({ data }) => {
+      console.log('This is the data ppp: ', data.rfp_bids);
+      const bids = data.rfp_bids;
+      const deserializedBids = bids.map((bid) => deserializeRfpBid(bid));
+      resolve(deserializedBids);
+    })
     .catch((error) => reject(error));
 });

@@ -10,14 +10,17 @@ import { getRfpSupplierDetails } from '../../../redux/actions/rfpActions';
 import KtLoader from '../../loader/loader';
 import RfpSupplierItemWrapper from '../../rfp-supplier-item-wrapper/rfp-supplier-item-wrapper';
 
-const SupplierDetailsCaption = ({ type, supplier, getSupplierProposalDetails }) => {
+const SupplierDetailsCaption = ({
+  type, supplier, getSupplierProposalDetails, currentProposalID,
+}) => {
   const [isLoadingBidDetails, setLoading] = useState(true);
   const [bidDetails, setBidDetails] = useState(null);
 
   useEffect(() => {
     if (!bidDetails) {
+      console.log('This is the supplier', supplier);
       // fetch details of the bid
-      getSupplierProposalDetails()
+      getSupplierProposalDetails(currentProposalID, supplier.supplier_id)
         .then(({ data: { rfp_claim } }) => {
           console.log('This is the data', rfp_claim);
           setLoading(false);
@@ -77,4 +80,8 @@ const mapDispatchToProps = {
   getSupplierProposalDetails: getRfpSupplierDetails,
 };
 
-export default connect(null, mapDispatchToProps)(SupplierDetailsCaption);
+const mapStateToProps = (state) => ({
+  currentProposalID: state.rfp.currentProposal.id,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(SupplierDetailsCaption);

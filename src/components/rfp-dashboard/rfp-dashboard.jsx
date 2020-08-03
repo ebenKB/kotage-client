@@ -45,7 +45,7 @@ const RfpDashboard = ({
 
   useEffect(() => {
     if (!analytics) {
-      getProposalAnalytics()
+      getProposalAnalytics(id)
         .then(({ data }) => {
           setAnalytics({ ...data.rfp_analytics[0] });
         });
@@ -100,6 +100,7 @@ const RfpDashboard = ({
     }
 
     if (proposal) {
+      console.log('return the proposal suppliers', proposal.suppliers);
       return proposal.suppliers;
     }
     return [];
@@ -192,8 +193,6 @@ const RfpDashboard = ({
 										<span className="bold">
 											{formatDistance(new Date(proposal.bid_deadline_date), new Date())}
 										</span>
-										{' '}
-										days
 									</div>
 								</div>
 								<div>

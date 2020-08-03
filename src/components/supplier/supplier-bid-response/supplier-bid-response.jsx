@@ -13,10 +13,12 @@ import Dropzone from '../../dropzone/dropzone';
 import { uploadFiles } from '../../../utils/app/index';
 import { RFP_FOLDER_NAME } from '../../../utils/app/definitions';
 import EmptyContentWrapper from '../../empty-content-wrapper/empty-content-wrapper';
+import RfpTitle from '../supplier-rfp-title/rfp-title';
 
 class EventResponse extends Component {
   constructor(props) {
     super(props);
+    const { currentProposal: { questions } } = this.props;
 
     this.state = {
       event_owner_id: null,
@@ -27,16 +29,7 @@ class EventResponse extends Component {
       rfpQuestionResponses: [],
       technicalRequirements: [],
       commercialRequirements: [],
-      questions: [
-        {
-          id: 1,
-          question: 'How many years have you been in operations?',
-        },
-        {
-          id: 2,
-          question: 'How many years have you been in operations?',
-        },
-      ],
+      questions,
     };
   }
 
@@ -122,12 +115,15 @@ formatCurrency = () => {
 }
 
 handleQuestionAnswer = (e, q) => {
-  const { rfpQuestionResponses } = this.state;
+  console.log('This is the question being anwsered', q);
+  // const { rfpQuestionResponses } = this.state;
+  const { currentProposal } = this.props;
   // const question = rfpQuestionResponses.find((ques) => ques.id === q.id);
-  const newAnswers = rfpQuestionResponses.map((ques) => {
+  const newAnswers = currentProposal.questions.map((ques) => {
+    console.log('This is the existing question', ques);
     if (ques.id === q.id) {
       return {
-        question_id: q.id,
+        proposal_question_id: q.id,
         answer: e.target.value,
       };
     } return ques;
@@ -135,7 +131,7 @@ handleQuestionAnswer = (e, q) => {
   this.setState((state) => ({
     ...state,
     rfpQuestionResponses: newAnswers,
-  }));
+  }), () => console.log(this.state));
 }
 
 render() {
@@ -145,6 +141,7 @@ render() {
 	<MainContent
 		help={Help}
 	>
+		<RfpTitle />
 		<KtWrapper
 			header="New Bid"
 			canPerform
@@ -168,7 +165,7 @@ render() {
 						/>
 					</div>
 					<Divider classes="m-t-40" title="Reaponse To Questions" type="thick" isNumbered number={2} />
-					{currentProposal.length > 0 && currentProposal.questions.map((q) => (
+					{currentProposal.questions.length > 0 && currentProposal.questions.map((q) => (
 						<div className="m-t-20" key={q.id}>
 							<FormGroup
 								inline={false}

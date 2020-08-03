@@ -202,3 +202,18 @@ export const deserializeRfpMessage = (message) => {
   };
   return newMessage;
 };
+
+export const deserializeRfpBid = (bid) => {
+  console.log('This is the bid', bid);
+  const { supplier, ...rest } = bid;
+  const { tenant_supplier: { id, tenant, ...rem } } = supplier;
+  return {
+    ...rest,
+    supplier: {
+      ...rem,
+      ...tenant,
+      id: supplier.id,
+      supplier_id: id,
+    },
+  };
+};
