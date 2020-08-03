@@ -145,7 +145,9 @@ const RfpDashboard = ({
 								&nbsp;
 								{ proposal.bid_deadline_time }
 								{' '}
-								UTC (in 6 days)
+								UTC (
+								{formatDistance(new Date(proposal.bid_deadline_date), new Date())}
+								)
 							</span>
 							<Divider type="faint" title="" classes="m-t-10 m-b-10" />
 						</div>
