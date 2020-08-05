@@ -8,7 +8,7 @@ import { withRouter } from 'react-router';
 import { Link, useHistory } from 'react-router-dom';
 import { format } from 'date-fns';
 import {
-  Button, Input, Form,
+  Button, Input, Form, Label,
 } from 'semantic-ui-react';
 // import PreviewBid from '../../../preview-bid/preview-bid';
 import { getSupplierRfpByID } from '../../redux/actions/supplierRfpActions';
@@ -57,6 +57,16 @@ const PreviewBid = ({
     setBidToDelete(value);
   };
 
+  const getColor = () => {
+    if (currentBid.status === 'accepted') {
+      return 'green';
+    }
+
+    if (currentBid.status === 'rejected') {
+      return 'red';
+    }
+    return '';
+  };
   return (
 	<div>
 		{loadingRfp && (
@@ -81,6 +91,10 @@ const PreviewBid = ({
 							&nbsp;
 							{format(new Date(currentBid.bid_date), 'iiii do LLLL, yyyy')}
 						</span>
+					</div>
+					<div className="m-t-10 m-b-10">
+						<span>Bid status</span>
+						<Label color={getColor()}>{currentBid.status}</Label>
 					</div>
 				</KtWrapperLite>
 				{loadingRfp && (
