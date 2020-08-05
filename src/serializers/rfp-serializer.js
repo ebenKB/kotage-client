@@ -204,11 +204,15 @@ export const deserializeRfpMessage = (message) => {
 };
 
 export const deserializeRfpBid = (bid) => {
-  console.log('This is the bid', bid);
-  const { supplier, ...rest } = bid;
+  const {
+    supplier, technical_requirements, commercial_requirements, rfp_answers, ...rest
+  } = bid;
   const { tenant_supplier: { id, tenant, ...rem } } = supplier;
   return {
     ...rest,
+    rfpAnswer: rfp_answers,
+    technicalRequirements: technical_requirements,
+    commercialRequirements: commercial_requirements,
     supplier: {
       ...rem,
       ...tenant,

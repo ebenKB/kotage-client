@@ -20,31 +20,6 @@ const Bids = ({ getBids, bids }) => {
 					bid={bid}
 				/>
 			))}
-			{bids && bids.map((bid) => (
-				<SupplierBidItem
-					bid={bid}
-				/>
-			))}
-			{bids && bids.map((bid) => (
-				<SupplierBidItem
-					bid={bid}
-				/>
-			))}
-			{bids && bids.map((bid) => (
-				<SupplierBidItem
-					bid={bid}
-				/>
-			))}
-			{bids && bids.map((bid) => (
-				<SupplierBidItem
-					bid={bid}
-				/>
-			))}
-			{bids && bids.map((bid) => (
-				<SupplierBidItem
-					bid={bid}
-				/>
-			))}
 		</KtWrapper>
 	</MainContent>
   );

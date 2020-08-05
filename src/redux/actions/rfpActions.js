@@ -20,6 +20,10 @@ import {
   GET_RFP_STAKEHOLDER,
   CLEAR_CURRENT_RFP,
   GET_RFP_SUPPLIERS,
+  GET_RFP_BIDS,
+  GET_RFP_BID_BY_ID,
+  ACCEPT_RFP_BID,
+  REJECT_RFP_BID,
 } from '../types/rfpTypes';
 import Axios from '../../utils/axios/axios';
 import { getToken } from '../../utils/app/index';
@@ -29,7 +33,6 @@ import {
   deserializeProposal,
   serializeRfpMessage,
   deserializeRfpMessage,
-  deserializeRfpBid,
 } from '../../serializers/rfp-serializer';
 import {
   setPublishRfpLoading,
@@ -39,6 +42,7 @@ import {
   setGetRfpStakeholderLoading,
   setGetRfpStakeholderDoneLoading,
 } from './ui';
+import { deserializeSupplierBid } from '../../serializers/supplier-serializers';
 
 // set default auth token
 Axios.defaults.headers.common['Authorization'] = `Bearer ${getToken()}`;
@@ -333,14 +337,72 @@ Promise((resolve, reject) => {
   }
 });
 
-export const getRfpBids = (rfpID) => async () => new
+export const getRfpBids = (rfpID) => async (dispatch, getState) => new
 Promise((resolve, reject) => {
-  Axios.get(`/v1/1/rfp/${rfpID}/bids`)
+  const { tenant: { currentTenant: { id } } } = getState();
+  Axios.get(`/v1/${id}/rfp/${rfpID}/bids`)
     .then(({ data }) => {
-      console.log('This is the data ppp: ', data.rfp_bids);
       const bids = data.rfp_bids;
-      const deserializedBids = bids.map((bid) => deserializeRfpBid(bid));
+      const deserializedBids = bids.map((bid) => deserializeSupplierBid(bid));
       resolve(deserializedBids);
+      dispatch({
+        type: GET_RFP_BIDS,
+        payload: deserializedBids,
+      });
     })
     .catch((error) => reject(error));
+});
+
+// make an api request to get the bid
+export const getBidByID = (rfpID, bidID) => async (dispatch, getState) => {
+  try {
+    const { tenant: { currentTenant: { id } } } = getState();
+    const { data } = await Axios.get(`/v1/${id}/rfp/${rfpID}/bids/${bidID}`);
+    dispatch({
+      type: GET_RFP_BID_BY_ID,
+      payload: data,
+    });
+  } catch (error) {
+    console.log('error');
+  }
+};
+
+// get bid from local state
+export const findBidByID = (bidID) => async (dispatch, getState) => new
+Promise((resolve, reject) => {
+  try {
+    const { rfp: { proposalBids } } = getState();
+    const bid = proposalBids.find((p) => p.id === parseInt(bidID, 10));
+    resolve(bid);
+  } catch (error) {
+    reject(error);
+  }
+});
+
+export const acceptRfpBid = (rfpID, bidID) => async (dispatch, getState) => new
+Promise((resolve, reject) => {
+  const { tenant: { currentTenant: { id } } } = getState();
+  Axios.post(`/v1/${id}/rfp/${rfpID}/bids/${bidID}/accept`)
+    .then(({ data }) => {
+      dispatch({
+        type: ACCEPT_RFP_BID,
+        payload: deserializeSupplierBid(data.rfp_bid),
+      });
+      resolve(data.rfp_bid);
+    })
+    .catch((error) => reject(error));
+});
+
+export const rejectRfpBid = (rfpID, bidID) => async (dispatch, getState) => new
+Promise((resolve, reject) => {
+  const { tenant: { currentTenant: { id } } } = getState();
+  Axios.post(`/v1/${id}/rfp/${rfpID}/bids/${bidID}/reject`)
+    .then(({ data }) => {
+      dispatch({
+        type: REJECT_RFP_BID,
+        payload: data.rfp_bid,
+      });
+      resolve(data.rfp_bid);
+    })
+    .catch((err) => reject(err));
 });

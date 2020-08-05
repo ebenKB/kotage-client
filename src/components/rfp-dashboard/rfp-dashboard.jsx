@@ -1,4 +1,3 @@
-/* eslint-disable no-shadow */
 /* eslint-disable react/forbid-prop-types */
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
@@ -9,7 +8,7 @@ import { Button, Checkbox } from 'semantic-ui-react';
 import { CircularProgressbar } from 'react-circular-progressbar';
 import { formatDistance } from 'date-fns';
 import {
-  getCurrentProposal, publishRfp, getRfpSuppliers, getRfpAnalytics,
+  getCurrentProposal, publishRfp, getRfpSuppliers, getRfpAnalytics, getRfpBids,
 } from '../../redux/actions/rfpActions';
 import Divider from '../kt-divider/divider';
 import 'react-circular-progressbar/dist/styles.css';
@@ -27,8 +26,10 @@ const RfpDashboard = ({
   match,
   getProposal,
   proposal,
+  // proposalBids,
   publishEvent,
   isPublishingRfp,
+  getProposalBids,
   getSuppliersForProposal,
   getProposalAnalytics,
 }) => {
@@ -37,6 +38,7 @@ const RfpDashboard = ({
   const [searchInput, setSearchInput] = useState('');
   const [analytics, setAnalytics] = useState(null);
   const [filteredSuppliers, setFilteredSuppliers] = useState([]);
+  const [rfpBidSuppliers, setRfpBidSuppliers] = useState(null);
 
   useEffect(() => {
     getProposal(id);
@@ -50,6 +52,25 @@ const RfpDashboard = ({
           setAnalytics({ ...data.rfp_analytics[0] });
         });
     }
+
+    let bidData = null;
+
+    // if (!proposalBids || proposalBids.length < 1) {
+    getProposalBids(id)
+      .then((data) => {
+        bidData = data;
+        const suppliers = bidData.map((d) => ({
+          ...d.supplier,
+          bidID: d.id,
+          buyerAccepted: d.buyerAccepted,
+          proposal_request_id: d.proposal_request_id,
+          status: d.status,
+        }));
+        setRfpBidSuppliers(suppliers);
+      });
+    // } else {
+    //   bidData = proposalBids;
+    // }
   }, []);
 
   // the total number of suppliers who have sent their RSVP
@@ -99,18 +120,17 @@ const RfpDashboard = ({
       return filteredSuppliers;
     }
 
-    if (proposal) {
-      console.log('return the proposal suppliers', proposal.suppliers);
-      return proposal.suppliers;
+    if (rfpBidSuppliers) {
+      return rfpBidSuppliers;
     }
     return [];
   };
 
   const handleSearch = (val) => {
-    const filteredSuppliers = proposal.suppliers
+    const filteredSupplierRecords = rfpBidSuppliers
       .filter((s) => s.company_name.toLocaleLowerCase()
         .match(new RegExp(val.trim().toLocaleLowerCase(), 'g')));
-    setFilteredSuppliers(filteredSuppliers);
+    setFilteredSuppliers(filteredSupplierRecords);
   };
 
   const handleSearchInputChange = (value) => {
@@ -300,10 +320,12 @@ RfpDashboard.propTypes = {
   match: PropTypes.object.isRequired,
   getProposal: PropTypes.func.isRequired,
   proposal: PropTypes.object,
+  // proposalBids: PropTypes.object.isRequired,
   publishEvent: PropTypes.func.isRequired,
   isPublishingRfp: PropTypes.bool.isRequired,
   getSuppliersForProposal: PropTypes.func.isRequired,
   getProposalAnalytics: PropTypes.func.isRequired,
+  getProposalBids: PropTypes.func.isRequired,
 };
 
 RfpDashboard.defaultProps = {
@@ -315,11 +337,13 @@ const mapDispatchToProps = {
   publishEvent: publishRfp,
   getSuppliersForProposal: getRfpSuppliers,
   getProposalAnalytics: getRfpAnalytics,
+  getProposalBids: getRfpBids,
 };
 
 const mapStateToProps = (state) => ({
   proposal: state.rfp.currentProposal,
   isPublishingRfp: state.ui.buyer.isPublishingRfp,
+  proposalBids: state.rfp.proposalBids,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(RfpDashboard));

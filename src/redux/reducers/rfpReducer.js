@@ -15,12 +15,16 @@ import {
   PUBLISH_RFP,
   GET_RFP_STAKEHOLDER,
   CLEAR_CURRENT_RFP,
+  GET_RFP_BIDS,
+  GET_RFP_BID_BY_ID,
+  ACCEPT_RFP_BID,
 } from '../types/rfpTypes';
 
 const initialState = {
   loading: false,
   proposals: [],
   proposalBids: [],
+  currentProposalBid: null,
   currentProposal: null,
   rfpInbox: null,
   rfpOutbox: null,
@@ -202,6 +206,34 @@ export default (state = initialState, action) => {
       return {
         ...state,
         proposals,
+      };
+    }
+
+    case GET_RFP_BIDS: {
+      return {
+        ...state,
+        proposalBids: action.payload,
+      };
+    }
+
+    case GET_RFP_BID_BY_ID: {
+      return {
+        ...state,
+        currentProposalBid: action.payload,
+      };
+    }
+
+    case ACCEPT_RFP_BID: {
+      // const bid = state.proposalBids.find((b) => b.id === action.payload.id);
+      const updatedBids = state.proposalBids.map((p) => {
+        if (p.id === action.payload.id) {
+          return { ...action.payload };
+        } return p;
+      });
+      return {
+        ...state,
+        proposalBids: updatedBids,
+        currentProposalBid: action.payload,
       };
     }
     default: return state;

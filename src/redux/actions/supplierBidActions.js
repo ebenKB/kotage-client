@@ -3,7 +3,7 @@ import Axios from '../../utils/axios/axios';
 import {
   VIEW_BIDS,
   CREATE_BID_RESPONSE,
-  FIND_BID_ID,
+  FIND_BID_BY_ID,
   CLEAR_CURRENT_BID,
   REVISE_EXISTING_BID,
   DELETE_BID,
@@ -123,7 +123,7 @@ export const findBidByID = (id) => async (dispatch, getState) => {
   const foundBid = bids.find((bid) => bid.id === parseInt(id, 10));
   if (foundBid) {
     dispatch({
-      type: FIND_BID_ID,
+      type: FIND_BID_BY_ID,
       payload: foundBid,
     });
   }

@@ -19,6 +19,7 @@ const InviteSupplier = lazy(() => import('../components/invite-supplier/invite-s
 const RFxNew = lazy(() => import('../components/rfx/rfx-new/rfx-new'));
 const CompareBids = lazy(() => import('../components/compare-bids/compare-bids'));
 const TenantSettings = lazy(() => import('../pages/buyer/settings/settings'));
+const ViewBid = lazy(() => import('../pages/buyer/view-bid/view-bid'));
 
 const routes = [
   {
@@ -83,6 +84,11 @@ const routes = [
     exact: true,
     path: '/rfx/proposal/dashboard/:id',
     main: () => <ProposalDashboard />,
+  },
+  {
+    exact: true,
+    path: '/rfx/proposal/dashboard/:id/bids/:bidID/view',
+    main: () => <ViewBid />,
   },
   {
     exact: true,

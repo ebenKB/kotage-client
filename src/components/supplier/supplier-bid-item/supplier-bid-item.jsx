@@ -7,7 +7,19 @@ import { format } from 'date-fns';
 import KtItem from '../../snippets/kt-list-item-wrapper/kt-item';
 import './supplier-bid-item.scss';
 
-const SupplierBidItem = ({ bid }) => (
+const SupplierBidItem = ({ bid }) => {
+  const getLabelColour = () => {
+    if (bid.status === 'accepted') {
+      return 'green';
+    }
+
+    if (bid.status === 'rejected') {
+      return 'red';
+    }
+    return '';
+  };
+
+  return (
 	<KtItem>
 		<div className="bid-item__wrapper">
 			<div>
@@ -33,12 +45,13 @@ const SupplierBidItem = ({ bid }) => (
 					</span>
 				</div>
 			</div>
-			<Label size="tiny">
-				<span className="kt-primary">{bid.status}</span>
+			<Label basic size="small" color={getLabelColour()}>
+				<span>{bid.status}</span>
 			</Label>
 		</div>
 	</KtItem>
-);
+  );
+};
 
 SupplierBidItem.propTypes = {
   bid: PropTypes.object.isRequired,

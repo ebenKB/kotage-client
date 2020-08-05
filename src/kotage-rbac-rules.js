@@ -46,11 +46,15 @@ const rules = {
     user: {
       static: [
         'supplier:view_navigation',
+        'supplier:view_rfp_bid_owner',
       ],
     },
     admin: {
       static: [
         'supplier:view_navigation',
+        'supplier:view_rfp_bid_owner',
+        'supplier:delete_rfp_bid',
+        'supplier:revise_rfp_bid',
       ],
     },
   },

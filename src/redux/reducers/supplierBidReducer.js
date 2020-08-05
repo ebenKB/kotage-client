@@ -2,7 +2,7 @@ import {
   CREATE_BID_RESPONSE,
   VIEW_BIDS,
   GET_BID_BY_ID,
-  FIND_BID_ID,
+  FIND_BID_BY_ID,
   CLEAR_CURRENT_BID,
   REVISE_EXISTING_BID,
   DELETE_BID,
@@ -38,10 +38,10 @@ export default (state = initialState, action) => {
       };
     }
 
-    case FIND_BID_ID: {
+    case FIND_BID_BY_ID: {
       return {
         ...state,
-        currentBid: action.payload,
+        currentBid: { ...action.payload },
       };
     }
 

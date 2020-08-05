@@ -32,34 +32,44 @@ export const serializeSupplierBid = (bid) => ({
   rfp_answers_attributes: bid.rfpQuestionResponses,
 });
 
-export const deserializeSupplierBid = (bid) => ({
-  id: bid.id,
-  event_owner_id: bid.event_owner_id,
-  proposal_request_id: bid.proposal_request_id,
-  ownerUID: bid.owner_uid,
-  status: bid.status,
-  currency: {
-    name: bid.bid_currency.split('_')[0].toUpperCase(),
-    symbol: bid.bid_currency.split('_')[1],
-  },
-  totalBidValue: bid.bid_amount,
-  bidValidity: bid.bid_validity,
-  buyerAccepted: bid.buyer_accepted,
-  revised: bid.revised,
-  rfpAnswers: bid.rfp_answers,
-  rfpID: bid.proposal_request_id,
-  supplier: {
-    id: bid.supplier.id,
-  },
-  technicalRequirements: bid.technical_requirements.map((t) => ({
-    id: t.id,
-    title: t.filename,
-    file: t.url,
-  })),
-  commercialRequirements: bid.commercial_requirements.map((c) => ({
-    id: c.id,
-    title: c.filename,
-    file: c.url,
-  })),
-  bid_date: bid.bid_at,
-});
+export const deserializeSupplierBid = (bid) => {
+  const { supplier } = bid;
+  const { tenant_supplier: { id, tenant, ...rem } } = supplier;
+  return {
+    id: bid.id,
+    event_owner_id: bid.event_owner_id,
+    proposal_request_id: bid.proposal_request_id,
+    ownerUID: bid.owner_uid,
+    status: bid.status,
+    currency: {
+      name: bid.bid_currency.split('_')[0].toUpperCase(),
+      symbol: bid.bid_currency.split('_')[1],
+    },
+    totalBidValue: bid.bid_amount,
+    bidValidity: bid.bid_validity,
+    buyerAccepted: bid.buyer_accepted,
+    revised: bid.revised,
+    rfpAnswers: bid.rfp_answers,
+    rfpID: bid.proposal_request_id,
+    supplier_old: {
+      id: bid.supplier.id,
+    },
+    supplier: {
+      ...rem,
+      ...tenant,
+      id: supplier.id,
+      supplier_id: id,
+    },
+    technicalRequirements: bid.technical_requirements.map((t) => ({
+      id: t.id,
+      title: t.filename,
+      file: t.url,
+    })),
+    commercialRequirements: bid.commercial_requirements.map((c) => ({
+      id: c.id,
+      title: c.filename,
+      file: c.url,
+    })),
+    bid_date: bid.bid_at,
+  };
+};
