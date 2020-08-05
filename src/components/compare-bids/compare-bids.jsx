@@ -85,9 +85,9 @@ const CompareBids = ({ getBidsForProposal, currentProposal }) => {
   useEffect(() => {
     let orderedBids = null;
     if (responseSortOrder === 'Date A-Z') {
-      orderedBids = _.orderBy(bids, 'bid_at', ['asc']);
+      orderedBids = _.orderBy(bids, 'bidAt', ['asc']);
     } else {
-      orderedBids = _.orderBy(bids, 'bid_at', ['desc']);
+      orderedBids = _.orderBy(bids, 'bidAt', ['desc']);
     }
     setBids(orderedBids);
   }, [responseSortOrder]);
@@ -142,12 +142,12 @@ const CompareBids = ({ getBidsForProposal, currentProposal }) => {
 						</div>
 						<div>
 							Submitted on
-							{format(new Date(bid.bid_at), 'iiii do LLLL, yyyy')}
+							{format(new Date(bid.bidAt), 'iiii do LLLL, yyyy')}
 						</div>
 						<div className="text-right bold">
-							<span>{bid.bid_currency.split('_')[0]}</span>
+							<span>{bid.currency.name.toUpperCase()}</span>
 							<span>{' '}</span>
-							{bid.bid_amount}
+							{bid.totalBidValue}
 						</div>
 					</RfpSupplierItemWrapper>
 				</div>

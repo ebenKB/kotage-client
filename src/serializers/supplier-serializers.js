@@ -70,6 +70,6 @@ export const deserializeSupplierBid = (bid) => {
       title: c.filename,
       file: c.url,
     })),
-    bid_date: bid.bid_at,
+    bidAt: bid.bid_at,
   };
 };
