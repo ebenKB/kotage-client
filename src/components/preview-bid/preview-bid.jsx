@@ -21,6 +21,7 @@ import KtLoader from '../loader/loader';
 import Modal from '../modal/modal';
 import FileHandlerContext from '../../context/file-handler.context';
 import Can from '../can/can';
+import BidQuestionResponseGroup from '../bid-question-response-group/bid-question-response-group';
 
 const PreviewBid = ({
   currentBid,
@@ -89,7 +90,7 @@ const PreviewBid = ({
 						Submitted on
 						<span className="bold">
 							&nbsp;
-							{format(new Date(currentBid.bid_date), 'iiii do LLLL, yyyy')}
+							{format(new Date(currentBid.bidAt), 'iiii do LLLL, yyyy')}
 						</span>
 					</div>
 					<div className="m-t-10 m-b-10">
@@ -128,6 +129,7 @@ const PreviewBid = ({
 						classes="m-t-20"
 					>
 						<Divider ishoverable type="thick" title="Response To Questions" />
+						<BidQuestionResponseGroup data={currentBid.rfpAnswers} />
 					</KtWrapperLite>
 				)}
 				<KtWrapperLite

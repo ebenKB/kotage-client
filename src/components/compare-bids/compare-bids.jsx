@@ -6,7 +6,7 @@ import React, { useEffect, useState } from 'react';
 // import { Form, Radio, Button } from 'semantic-ui-react';
 // import PopupDropdown from '../snippets/popup/popup';
 // import { ReactComponent as Sort } from '../../svg/sort.svg';
-import { Dropdown, Button } from 'semantic-ui-react';
+import { Dropdown, Table } from 'semantic-ui-react';
 // import AllInclusiveSharpIcon from '@material-ui/icons/AllInclusiveSharp';
 import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
@@ -46,7 +46,7 @@ const CompareBids = ({ getBidsForProposal, currentProposal }) => {
     let all_answers = [];
     if (bids) {
       for (const bid of bids) {
-        const bidAnswers = bid.rfp_answers;
+        const bidAnswers = bid.rfpAnswers;
         if (bidAnswers) {
           all_answers = [
             ...all_answers,
@@ -178,20 +178,40 @@ const CompareBids = ({ getBidsForProposal, currentProposal }) => {
 							{q.question}
 						</div>
 					</div>
-					{getQuestionAnswers(q.id).map((ans) => (
+					{/* {getQuestionAnswers(q.id).map((ans) => (
 						<div className="bid-response__headings m-t-20">
 							<div>{sentenceCase(ans.supplier_name)}</div>
 							<div>{ans.answer}</div>
 						</div>
-					))}
+					))} */}
+					<Table>
+						<Table.Header>
+							<Table.Row>
+								<Table.HeaderCell>Company Name</Table.HeaderCell>
+								<Table.HeaderCell>Answer</Table.HeaderCell>
+							</Table.Row>
+						</Table.Header>
+						<Table.Body>
+							{getQuestionAnswers(q.id).map((ans) => (
+								<Table.Row>
+									<Table.Cell>
+										{sentenceCase(ans.supplier_name)}
+									</Table.Cell>
+									<Table.Cell>
+										{ans.answer}
+									</Table.Cell>
+								</Table.Row>
+							))}
+						</Table.Body>
+					</Table>
 				</>
 			))}
-			<div className="m-t-20 text-right">
+			{/* <div className="m-t-20 text-right">
 				<Button
 					content="See more responses from suppliers"
 					className="kt-primary kt-transparent"
 				/>
-			</div>
+			</div> */}
 		</KtWrapperLite>
 	</MainContent>
   );
