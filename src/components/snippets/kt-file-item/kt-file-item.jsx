@@ -1,5 +1,5 @@
 /* eslint-disable react/forbid-prop-types */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 // import SaveAltRoundedIcon from '@material-ui/icons/SaveAltRounded';
 import { PropTypes } from 'prop-types';
 import { Button } from 'semantic-ui-react';
@@ -22,8 +22,11 @@ import {
 
 
 // eslint-disable-next-line react/prop-types
-const KtFileItem = ({ fileObject, details, user }) => {
+const KtFileItem = ({
+  fileObject, details, user,
+}) => {
   const [canPreview, setCanPreview] = useState(false);
+  useEffect(() => console.log('This is the file', fileObject));
 
   const getDownloadLink = () => (
 	<a
@@ -101,7 +104,10 @@ const KtFileItem = ({ fileObject, details, user }) => {
   const canShowPreview = () => getFileType() === 'pdf' || getFileType() === 'image';
 
   return (
-	<div className="m-b-20 flex-center file-item kt-bg-shadow">
+	<div
+
+		className="m-b-20 flex-center file-item kt-bg-shadow"
+	>
 		<div className="flex-center item">
 			{getFileLogo()}
 			<span>
@@ -127,7 +133,13 @@ const KtFileItem = ({ fileObject, details, user }) => {
 
 KtFileItem.propTypes = {
   fileObject: PropTypes.object.isRequired,
-  user: PropTypes.object.isRequired,
+  user: PropTypes.object,
+  details: PropTypes.object,
+};
+
+KtFileItem.defaultProps = {
+  user: null,
+  details: null,
 };
 
 export default KtFileItem;

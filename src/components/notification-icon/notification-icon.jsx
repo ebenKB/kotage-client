@@ -1,3 +1,4 @@
+/* eslint-disable react/boolean-prop-naming */
 import React from 'react';
 import NotificationsNoneIcon from '@material-ui/icons/Notifications';
 import './notification-icon.scss';
@@ -21,7 +22,7 @@ const NotificationIcon = ({ canShowNotification }) => (
 );
 
 NotificationIcon.propTypes = {
-  canShowNotification: PropTypes.string,
+  canShowNotification: PropTypes.bool,
 };
 NotificationIcon.defaultProps = {
   canShowNotification: true,

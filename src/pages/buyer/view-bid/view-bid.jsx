@@ -62,10 +62,16 @@ const mapDispatchToProps = {
 };
 
 ViewBid.propTypes = {
-  findRfpBidByID: PropTypes.func.isRequired,
-  currentRfp: PropTypes.object.isRequired,
-  tenantID: PropTypes.string.isRequired,
-  currentTenant: PropTypes.object.isRequired,
+  findRfpBidByID: PropTypes.func,
+  currentRfp: PropTypes.object,
+  tenantID: PropTypes.number.isRequired,
+  currentTenant: PropTypes.object,
+};
+
+ViewBid.defaultProps = {
+  currentRfp: null,
+  currentTenant: null,
+  findRfpBidByID: null,
 };
 
 const mapStateToProps = (state) => ({

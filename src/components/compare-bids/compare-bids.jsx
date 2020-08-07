@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable react/forbid-prop-types */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, Fragment } from 'react';
 // import SortIcon from '@material-ui/icons/Sort';
 // import { Form, Radio, Button } from 'semantic-ui-react';
 // import PopupDropdown from '../snippets/popup/popup';
@@ -133,7 +133,7 @@ const CompareBids = ({ getBidsForProposal, currentProposal }) => {
 				</div>
 			</div>
 			{bids && bids.map((bid) => (
-				<div className="m-t-20">
+				<div className="m-t-20" key={bid.id}>
 					<RfpSupplierItemWrapper
 						classes="m-b-10 m-t-10"
 					>
@@ -171,7 +171,7 @@ const CompareBids = ({ getBidsForProposal, currentProposal }) => {
 				</div>
 			</div>
 			{currentProposal && currentProposal.questions && currentProposal.questions.map((q) => (
-				<>
+				<Fragment key={q.id}>
 					<div className="bid-question__bullet m-t-20" key={q.id}>
 						<LinkIcon className="m-r-10 kt-success small logo" />
 						<div className="bold">
@@ -193,7 +193,7 @@ const CompareBids = ({ getBidsForProposal, currentProposal }) => {
 						</Table.Header>
 						<Table.Body>
 							{getQuestionAnswers(q.id).map((ans) => (
-								<Table.Row>
+								<Table.Row key={q.id}>
 									<Table.Cell>
 										{sentenceCase(ans.supplier_name)}
 									</Table.Cell>
@@ -204,7 +204,7 @@ const CompareBids = ({ getBidsForProposal, currentProposal }) => {
 							))}
 						</Table.Body>
 					</Table>
-				</>
+				</Fragment>
 			))}
 			{/* <div className="m-t-20 text-right">
 				<Button
@@ -223,7 +223,12 @@ const mapDispatchToProps = {
 
 CompareBids.propTypes = {
   getBidsForProposal: PropTypes.func.isRequired,
-  currentProposal: PropTypes.object.isRequired,
+  currentProposal: PropTypes.object,
+};
+
+
+CompareBids.defaultProps = {
+  currentProposal: null,
 };
 
 const mapStateToProps = (state) => ({

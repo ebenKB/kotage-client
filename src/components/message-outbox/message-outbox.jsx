@@ -63,10 +63,15 @@ const MessageOutbox = ({
 };
 
 MessageOutbox.propTypes = {
-  messages: PropTypes.object.isRequired,
+  messages: PropTypes.object,
   getSentMessages: PropTypes.func.isRequired,
   isLoading: PropTypes.bool.isRequired,
-  meta: PropTypes.object.isRequired,
+  meta: PropTypes.object,
+};
+
+MessageOutbox.defaultProps = {
+  meta: null,
+  messages: null,
 };
 
 const mapDispatchToProps = {

@@ -9,9 +9,13 @@ const RfpSupplierItemWrapper = ({ children, type, classes }) => (
 );
 
 RfpSupplierItemWrapper.propTypes = {
-  type: PropTypes.string.isRequired,
+  type: PropTypes.string,
   classes: PropTypes.string.isRequired,
-  children: PropTypes.object.isRequired,
+  children: PropTypes.array.isRequired,
+};
+
+RfpSupplierItemWrapper.defaultProps = {
+  type: '',
 };
 
 export default RfpSupplierItemWrapper;

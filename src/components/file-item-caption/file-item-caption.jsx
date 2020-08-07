@@ -22,7 +22,11 @@ const FileItemCaption = ({ file, handleDeleteFile }) => (
 
 FileItemCaption.propTypes = {
   file: PropTypes.object.isRequired,
-  handleDeleteFile: PropTypes.func.isRequired,
+  handleDeleteFile: PropTypes.func,
+};
+
+FileItemCaption.defaultProps = {
+  handleDeleteFile: null,
 };
 
 export default FileItemCaption;

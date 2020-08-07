@@ -1,10 +1,12 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable jsx-a11y/interactive-supports-focus */
 import React from 'react';
+import shortid from 'shortid';
 import AddItem from '../../snippets/add-item/add-item';
 import KtDoc from './kt-docs';
 
 import './kt-docs.scss';
+
 
 const KtDocs = ({
   className, documents, deleteDocument, addNewDocument, updateDocument,
@@ -23,7 +25,7 @@ const KtDocs = ({
 				</div>
 			)}
 			{documents && documents.map((doc, idx) => (
-				<>
+				<div key={shortid.generate()}>
 					<KtDoc
 						key={doc.id}
 						doc={doc}
@@ -32,7 +34,7 @@ const KtDocs = ({
 						id={doc.id}
 						updateDocument={(index, newDoc) => updateDocument(index, newDoc)}
 					/>
-				</>
+				</div>
 			))}
 			<div className="m-t-20">
 				<AddItem

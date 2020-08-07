@@ -212,7 +212,6 @@ const NewMessage = ({
 						onClick={goBack}
 					/>
 					<Button
-						as="submit"
 						small
 						content="Send"
 						color="green"

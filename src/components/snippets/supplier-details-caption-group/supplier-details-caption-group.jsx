@@ -11,7 +11,7 @@ const SupplierDetailsCaptionGroup = ({ suppliers }) => (
 		</div>
 		<Divider type="faint" title="" classes="m-t-4" />
 		{suppliers && suppliers.map((supplier) => (
-			<div>
+			<div key={supplier.id}>
 				<SupplierDetailsCaption
 					type={`${supplier.submission_date !== null ? 'active' : 'pending'}`}
 					supplier={supplier}
@@ -23,7 +23,7 @@ const SupplierDetailsCaptionGroup = ({ suppliers }) => (
 
 SupplierDetailsCaptionGroup.propTypes = {
   // eslint-disable-next-line react/forbid-prop-types
-  suppliers: PropTypes.object.isRequired,
+  suppliers: PropTypes.array.isRequired,
 };
 
 export default SupplierDetailsCaptionGroup;

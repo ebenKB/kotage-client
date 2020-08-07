@@ -74,11 +74,12 @@ SupplierListItem.propTypes = {
   supplier: PropTypes.object.isRequired,
   handleChange: PropTypes.func,
   isSelectAll: PropTypes.bool,
-  deleteSupplier: PropTypes.func.isRequired,
+  deleteSupplier: PropTypes.func,
 };
 
 SupplierListItem.default = {
   isSelected: false,
   handleChange: null,
+  deleteSupplier: null,
 };
 export default SupplierListItem;

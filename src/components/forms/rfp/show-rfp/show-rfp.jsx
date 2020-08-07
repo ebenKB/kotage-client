@@ -193,9 +193,13 @@ const ShowRfp = ({
 ShowRfp.propTypes = {
   match: PropTypes.object.isRequired,
   getProposal: PropTypes.func.isRequired,
-  proposal: PropTypes.object.isRequired,
+  proposal: PropTypes.object,
   history: PropTypes.object.isRequired,
   tenantID: PropTypes.number.isRequired,
+};
+
+ShowRfp.defaultProps = {
+  proposal: null,
 };
 
 const mapDispatchToProps = {

@@ -53,9 +53,13 @@ const MessageInbox = ({
 };
 
 MessageInbox.propTypes = {
-  messages: PropTypes.object.isRequired,
+  messages: PropTypes.object,
   getMessageInbox: PropTypes.func.isRequired,
   isLoading: PropTypes.bool.isRequired,
+};
+
+MessageInbox.defaultProps = {
+  messages: null,
 };
 
 const mapDispatchToProps = {

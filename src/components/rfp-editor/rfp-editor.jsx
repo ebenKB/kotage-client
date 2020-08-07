@@ -61,7 +61,6 @@ class RfpEditor extends React.Component {
       const { editProposal } = this.props;
       // handleSaveAction();
       if (type === 'edit') {
-        console.log('This is the proposal that we want to edit', newProposal);
         editProposal(newProposal.id, newProposal);
       } else if (type === 'create') {
         // save the proposal as draft
@@ -312,6 +311,7 @@ class RfpEditor extends React.Component {
 					<div className="form-item m-t-30">
 						{newProposal && newProposal.files.length > 0 && newProposal.files.map((f) => (
 							<Collapsible
+								key={f.id}
 								classes="m-b-20"
 								title={`${newProposal.files.length} existing file(s)`}
 							>

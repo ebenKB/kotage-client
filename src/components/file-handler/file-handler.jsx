@@ -3,7 +3,7 @@
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/forbid-prop-types */
 /* eslint-disable no-restricted-syntax */
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { PropTypes } from 'prop-types';
 import { Button } from 'semantic-ui-react';
 import AttachmentIcon from '@material-ui/icons/Attachment';
@@ -108,10 +108,15 @@ render() {
 				<KtLoader />
 			)}
 			{files.map((file) => (
-				<KtFileItem
-					fileObject={file}
-					details={details}
-				/>
+				<Fragment
+					key={file.fileName.replace(' ', '')}
+				>
+					<KtFileItem
+						key={file.id}
+						fileObject={file}
+						details={details}
+					/>
+				</Fragment>
 			))}
 		</div>
 		{files && files.length > 0 && (
@@ -140,10 +145,10 @@ render() {
 }
 
 FileHandler.propTypes = {
-  files: PropTypes.object.isRequired,
+  files: PropTypes.array.isRequired,
   shouldSignUrl: PropTypes.bool,
-  tenantID: PropTypes.string.isRequired,
-  objectOwnerID: PropTypes.string.isRequired,
+  tenantID: PropTypes.number.isRequired,
+  objectOwnerID: PropTypes.number.isRequired,
   history: PropTypes.object.isRequired,
   // saveFileAsCache: PropTypes.func.isRequired,
 };
@@ -156,7 +161,6 @@ const mapDispatchToProps = {
   downloadFileAsBlob: downloadFile,
   saveFileAsCache: cacheFileBlob,
 };
-
 
 // FileHandler.contextType = FileHandlerContext;
 export default connect(null, mapDispatchToProps)(withRouter(FileHandler));
