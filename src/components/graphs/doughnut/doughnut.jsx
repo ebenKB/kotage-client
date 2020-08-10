@@ -14,6 +14,7 @@ class Doughnut extends Component {
 
   componentDidMount() {
     const { data, colors } = this.props;
+    console.log('data we got', data);
     const total = data.map((d) => d.value).reduce((accum, value) => accum + value);
 
     this.myChart = new Chart(this.chartRef.current, {

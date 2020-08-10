@@ -172,10 +172,10 @@ export default (state = initialState, action) => {
       let { analytics } = state;
       if (analytics === null) {
         analytics = {
-          RSVPClosingSoon: action.payload,
+          RSVPClosingSoon: 0,
         };
       } else {
-        analytics.RSVPClosingSoon = action.payload;
+        analytics.RSVPClosingSoon = 0;
       }
       return {
         ...state,
