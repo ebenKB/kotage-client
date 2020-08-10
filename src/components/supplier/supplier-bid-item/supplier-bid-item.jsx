@@ -35,7 +35,7 @@ const SupplierBidItem = ({ bid }) => {
 				<div>
 					You sent this bid on
 					&nbsp;
-					{format(new Date(bid.bid_date), 'iiii do LLLL, yyyy')}
+					{format(new Date(bid.bidAt), 'iiii do LLLL, yyyy')}
 				</div>
 				<div className="xsm-caption flex-center">
 					<span>

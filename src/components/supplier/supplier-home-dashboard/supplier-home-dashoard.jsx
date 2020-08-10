@@ -69,7 +69,7 @@ const SupplierHomeDashoard = ({
       setCanShowRecentActivities(true);
     }
 
-    if (analytics && analytics.proposalsClosingSoon && analytics.RSVPClosingSoon) {
+    if ((analytics && analytics.proposalsClosingSoon) || (analytics && analytics.RSVPClosingSoon)) {
       setCanShowDeadlines(true);
     }
   }, [hasInit, analytics, recentActivities]);

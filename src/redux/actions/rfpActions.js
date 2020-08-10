@@ -406,3 +406,9 @@ Promise((resolve, reject) => {
     })
     .catch((err) => reject(err));
 });
+
+export const getProposalQuestionByID = (proposal_question_id) => async (_, getState) => {
+  const { rfp: { currentProposal: { questions } } } = getState();
+  const question = questions.find((q) => q.id === proposal_question_id);
+  return question;
+};

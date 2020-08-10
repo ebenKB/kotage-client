@@ -4,7 +4,7 @@ import { PropTypes } from 'prop-types';
 import { Table } from 'semantic-ui-react';
 import BidQuestionResponse from '../bid-question-response/bid-question-response';
 
-const BidQuestionResponseGroup = ({ data }) => (
+const BidQuestionResponseGroup = ({ data, accountType }) => (
 	<Table>
 		<Table.Header>
 			<Table.HeaderCell>Question</Table.HeaderCell>
@@ -12,7 +12,7 @@ const BidQuestionResponseGroup = ({ data }) => (
 		</Table.Header>
 		<Table.Body>
 			{data.map((r) => (
-				<BidQuestionResponse response={r} />
+				<BidQuestionResponse response={r} accountType={accountType} />
 			))}
 		</Table.Body>
 	</Table>
@@ -20,6 +20,7 @@ const BidQuestionResponseGroup = ({ data }) => (
 
 BidQuestionResponseGroup.propTypes = {
   data: PropTypes.object.isRequired,
+  accountType: PropTypes.string.isRequired,
 };
 
 export default BidQuestionResponseGroup;

@@ -272,3 +272,10 @@ export const getRSVPClosingSoon = (start_date, end_date) => async (dispatch, get
     dispatch(RSVPClosingDoneLoading());
   }
 };
+
+export const getSupplierProposalQuestionByID = (proposal_question_id) => async (_, getState) => {
+  const { supplierRfp: { currentProposal: { questions } } } = getState();
+  const question = questions.find((q) => q.id === proposal_question_id);
+  console.log('Tried searching a question and we got', question);
+  return question;
+};

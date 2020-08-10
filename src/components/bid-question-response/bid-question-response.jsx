@@ -1,17 +1,30 @@
 /* eslint-disable react/forbid-prop-types */
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { PropTypes } from 'prop-types';
 import { Table } from 'semantic-ui-react';
+import { connect } from 'react-redux';
+import { getProposalQuestionByID } from '../../redux/actions/rfpActions';
+import { getSupplierProposalQuestionByID } from '../../redux/actions/supplierRfpActions';
 
-const BidQuestionResponse = ({ response }) => {
+const BidQuestionResponse = ({
+  response, accountType, getQuestionDetials, getSupplierRfpQuestionDetials,
+}) => {
+  const [question, setQuestion] = useState('');
+
   useEffect(() => {
-    console.log('This is the effect');
+    if (accountType === 'buyer') {
+      getQuestionDetials(response.proposal_question_id)
+        .then((ques) => setQuestion(ques));
+    } else if (accountType === 'supplier') {
+      getSupplierRfpQuestionDetials(response.proposal_question_id)
+        .then((ques) => setQuestion(ques));
+    }
   }, []);
 
   return (
 	<Table.Row>
 		<Table.Cell>
-			<h3>Question</h3>
+			{question.question}
 		</Table.Cell>
 		<Table.Cell>
 			{response.answer}
@@ -22,6 +35,14 @@ const BidQuestionResponse = ({ response }) => {
 
 BidQuestionResponse.propTypes = {
   response: PropTypes.object.isRequired,
+  accountType: PropTypes.object.isRequired,
+  getQuestionDetials: PropTypes.func.isRequired,
+  getSupplierRfpQuestionDetials: PropTypes.func.isRequired,
 };
 
-export default BidQuestionResponse;
+const mapDispatchToProps = {
+  getQuestionDetials: getProposalQuestionByID,
+  getSupplierRfpQuestionDetials: getSupplierProposalQuestionByID,
+};
+
+export default connect(null, mapDispatchToProps)(BidQuestionResponse);

@@ -129,7 +129,7 @@ const PreviewBid = ({
 						classes="m-t-20"
 					>
 						<Divider ishoverable type="thick" title="Response To Questions" />
-						<BidQuestionResponseGroup data={currentBid.rfpAnswers} />
+						<BidQuestionResponseGroup accountType={accountType} data={currentBid.rfpAnswers} />
 					</KtWrapperLite>
 				)}
 				<KtWrapperLite

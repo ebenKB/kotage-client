@@ -10,7 +10,7 @@ const GraphItem = ({ children, title, subtitle }) => (
 			{title}
 			<LinkIcon className="caption-icon m-l-5 small logo" />
 		</div>
-    <p className="xsm-caption">{subtitle}</p>
+		<p className="xsm-caption">{subtitle}</p>
 		<div className="m-t-20">{children}</div>
 	</div>
 );
