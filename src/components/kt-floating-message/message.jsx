@@ -25,7 +25,7 @@ const Message = ({ isSendingFeedback, sendFeedback, notifyUser }) => {
     }
   };
 
-  const getClas = () => {
+  const getClass = () => {
     if (canShowMsg && hasInit) {
       return 'active';
     } if (hasInit) {
@@ -36,7 +36,9 @@ const Message = ({ isSendingFeedback, sendFeedback, notifyUser }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    sendFeedback(content);
+    if (content !== '') {
+      sendFeedback(content);
+    }
     if (!isSendingFeedback) {
       setCanShowMsg(false);
       notifyUser({ message: 'You message has been sent' }, 'success');
@@ -52,7 +54,7 @@ const Message = ({ isSendingFeedback, sendFeedback, notifyUser }) => {
 		onOutsideClick={toggle}
 	>
 		<div>
-			<div className={`kt-message_wrapper ${getClas()}`}>
+			<div className={`kt-message_wrapper ${getClass()}`}>
 				<div className="kt-message__header bold">
 					Please leave a comment
 				</div>
@@ -73,8 +75,9 @@ const Message = ({ isSendingFeedback, sendFeedback, notifyUser }) => {
 							className="tiny small"
 							onClick={handleSubmit}
 							loading={isSendingFeedback}
+							disabled={content === ''}
 						>
-							Send
+							Send Comment
 						</Button>
 					</div>
 				</div>
