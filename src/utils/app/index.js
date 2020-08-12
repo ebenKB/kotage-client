@@ -123,6 +123,9 @@ export const convertTimeToDisplay = (time) => {
 };
 /**
  * all time records will be formeatted to hh:mm using the 24 hour format
+ * The condition that checks if hrs < 10 or if mins < 10
+ * is only there to make sure that the time is always in 2 digits.
+ * It is not checking the actual hrs or minutes per se.
  * @param {*} timeObj the time to format
  */
 export const formatTime = (timeObj) => {
@@ -133,7 +136,7 @@ export const formatTime = (timeObj) => {
     }
     let mins = timeObj.getMinutes();
     if (mins < 10) {
-      mins = `0${mins}`;
+      mins = `0${mins}`; // append 0 to always return 2 digits
     }
     return `${hrs}:${mins}`;
   }
@@ -222,9 +225,7 @@ Promise(async (resolve, reject) => {
       // response = [...response, { title: file.title, url: data.location }];
     }
     const data = await Promise.all(promises);
-    console.log('DATA after promise', data);
     response = data.map((d, idx) => ({ title: files[idx].title, url: d.location }));
-    // console.log('after DOWNLOAD AND THIS IS THE DATA', data);
     resolve(response);
   } catch (error) {
     reject(error);

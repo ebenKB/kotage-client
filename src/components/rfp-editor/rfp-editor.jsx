@@ -164,7 +164,6 @@ class RfpEditor extends React.Component {
     };
 
     const addSuppliers = (suppliers) => {
-      console.log('We have added a supplier', suppliers);
       if (suppliers && suppliers.length > 0) {
         let filteredSuppliers = [];
         for (const supplier of suppliers) {

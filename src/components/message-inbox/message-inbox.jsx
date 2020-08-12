@@ -35,7 +35,7 @@ const MessageInbox = ({
 			</div>
 		)}
 		{messages && messages.map((m) => (
-			<Fragment>
+			<Fragment key={m.id}>
 				<div className="message-center__heading m-b-20">
 					<h4>Messages received from suppliers</h4>
 				</div>

@@ -33,7 +33,7 @@ const RfpDashboard = ({
   getSuppliersForProposal,
   getProposalAnalytics,
 }) => {
-  const { params } = match;
+  const { params, url } = match;
   const { id } = params;
   const [searchInput, setSearchInput] = useState('');
   const [analytics, setAnalytics] = useState(null);
@@ -46,6 +46,7 @@ const RfpDashboard = ({
   }, [id]);
 
   useEffect(() => {
+    console.log('This is the match', match);
     if (!analytics) {
       getProposalAnalytics(id)
         .then(({ data }) => {
@@ -228,7 +229,7 @@ const RfpDashboard = ({
 										</span>
 									</div>
 									<div className="m-t-20">
-										<Link to={`/rfx/proposal/${proposal.id}/message`}>
+										<Link to={`${url}/message`}>
 											<Button size="tiny" className="green" content="Message Center" />
 										</Link>
 									</div>

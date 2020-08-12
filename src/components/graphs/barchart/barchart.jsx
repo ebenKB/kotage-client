@@ -10,7 +10,6 @@ class BarChart extends Component {
   }
 
   componentDidMount() {
-    console.log('This is the data', this.props.data);
     this.myChart = new Chart(this.chartRef.current, {
       type: 'bar',
       data: {

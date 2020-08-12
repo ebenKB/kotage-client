@@ -17,7 +17,6 @@ const EditRFP = ({ proposal }) => {
   };
 
   const confirmUpdate = () => {
-    console.log('We want to update the changes');
   };
 
   return (

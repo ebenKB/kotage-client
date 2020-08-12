@@ -15,7 +15,7 @@ import KtTextArea from '../../form-fields/textarea/textarea';
 import KtWrapper from '../../kt-wrapper/kt-wrapper';
 import Help from '../../../utils/requisitions/new/help';
 // import Input from '../../form-fields/input/input';
-import { createRfpMessage } from '../../../redux/actions/rfpActions';
+// import { createRfpMessage } from '../../../redux/actions/rfpActions';
 import Dropzone from '../../dropzone/dropzone';
 import Divider from '../../kt-divider/divider';
 import { RFP_MESSAGE_FOLDERNAME } from '../../../utils/app/definitions';
@@ -106,18 +106,23 @@ const NewMessage = ({
   const handleSubmit = async (e) => {
     e.preventDefault();
     const validatorForm = ref.current;
-    validatorForm.validate();
+    // validatorForm.validate()
+    //   .catch(() => console.log('error while validating the form'));
     const isValid = await validatorForm.isFormValid();
     if (isValid) {
       if (selectedSuppliers && selectedSuppliers.length > 0) {
-        const files = await
-        uploadFiles(message.files, tenantUid, RFP_MESSAGE_FOLDERNAME);
-        message.files = files;
-        setMessage(message);
-        let supplier_ids = null;
-        supplier_ids = selectedSuppliers.map((s) => s.account_id);
-        createNewMessage(message, supplier_ids)
-          .then(() => history.goBack());
+        try {
+          const files = await
+          uploadFiles(message.files, tenantUid, RFP_MESSAGE_FOLDERNAME);
+          message.files = files;
+          setMessage(message);
+          let supplier_ids = null;
+          supplier_ids = selectedSuppliers.map((s) => s.account_id);
+          createNewMessage(message, supplier_ids)
+            .then(() => history.goBack());
+        } catch (error) {
+          console.log('error while uploading the files', error);
+        }
       } else {
         showNotification({
           message: 'Select at least one supplier to continue.',
@@ -144,7 +149,7 @@ const NewMessage = ({
 			)}
 			<ValidatorForm
 				ref={ref}
-				onSubmit={null}
+				onSubmit={() => {}}
 			>
 				<div>
 					<InputValidator
@@ -180,7 +185,7 @@ const NewMessage = ({
 							<span>to add suppliers</span>
 							<div className="m-t-20 flex-center wrap">
 								{selectedSuppliers && selectedSuppliers.map((s) => (
-									<Label>
+									<Label key={s.id}>
 										<Button
 											className="kt-transparent tiny m-r-5"
 											content={<Icon name="close" />}
@@ -212,7 +217,7 @@ const NewMessage = ({
 						onClick={goBack}
 					/>
 					<Button
-						small
+						size="small"
 						content="Send"
 						color="green"
 						onClick={handleSubmit}
@@ -226,14 +231,14 @@ const NewMessage = ({
 };
 
 const mapDispatchToProps = {
-  createNewMessage: createRfpMessage,
+  // createNewMessage: createRfpMessage,
   showNotification: setNotification,
 };
 
 const mapStateToProps = (state) => ({
   isLoading: state.rfp.loading,
-  currentProposal: state.rfp.currentProposal,
-  currentProposalId: state.rfp.currentProposal.id,
+  // currentProposal: state.rfp.currentProposal,
+  // currentProposalId: state.rfp.currentProposal.id,
   tenantUid: state.tenant.currentTenant.account_id,
   accountType: state.app.accountType,
   currentUser: state.user.currentUser,

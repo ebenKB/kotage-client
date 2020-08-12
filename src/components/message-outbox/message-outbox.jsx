@@ -33,7 +33,7 @@ const MessageOutbox = ({
 			</div>
 		)}
 		{messages && messages.map((m) => (
-			<div>
+			<div key={m.id}>
 				<MessageItem
 					key={m.id}
 					message={m}

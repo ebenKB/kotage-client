@@ -13,7 +13,8 @@ const EditProposal = lazy(() => import('../components/forms/rfp/edit-rfp/edit-rf
 const ProposalDashboard = lazy(() => import('../components/rfp-dashboard/rfp-dashboard'));
 const ShowProposal = lazy(() => import('../components/forms/rfp/show-rfp/show-rfp'));
 const ProposalMessage = lazy(() => import('../components/message-center/message-center'));
-const NewMessage = lazy(() => import('../components/message-center/new-message/new-message'));
+// const NewMessage = lazy(() => import('../components/message-center/new-message/new-message'));
+const NewMessage = lazy(() => import('../pages/buyer/new-message/new-message'));
 const PreviewMessage = lazy(() => import('../components/message-preview/message-preview'));
 const InviteSupplier = lazy(() => import('../components/invite-supplier/invite-supplier'));
 const RFxNew = lazy(() => import('../components/rfx/rfx-new/rfx-new'));
@@ -102,12 +103,12 @@ const routes = [
   },
   {
     exact: true,
-    path: '/rfx/proposal/:id/message',
+    path: '/rfx/proposal/dashboard/:id/message',
     main: () => <ProposalMessage />,
   },
   {
     exact: true,
-    path: '/rfx/proposal/:id/message/create/new',
+    path: '/rfx/proposal/dashboard/:id/message/new',
     main: () => <NewMessage />,
   },
   {

@@ -320,7 +320,6 @@ export const softDeleteInvitation = (invitation_id) => async (dispatch, getState
 };
 
 export const updateUserDetails = (user_id, tenantID, newUser) => async (dispatch) => {
-  console.log('We are updating the user deatils', newUser, user_id);
   dispatch(setUpdateAccountLoading());
   await Axios.put(`/v1/${tenantID}/users/${user_id}`, newUser);
   dispatch(setUpdateAccountDoneLoading());

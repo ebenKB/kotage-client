@@ -268,7 +268,6 @@ class RFP extends React.Component {
         createNewProposal(newProposal)
           .then(() => history.push('/rfx'))
           .catch(() => {
-            console.log('an error occured');
             // remove files from s3
           });
       });

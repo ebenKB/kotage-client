@@ -37,7 +37,7 @@ const MessageCenter = () => {
   };
 
   const handleClick = () => {
-    history.push(`${history.location.pathname}/create/new`);
+    history.push(`${history.location.pathname}/new`);
   };
 
   const goBack = () => {

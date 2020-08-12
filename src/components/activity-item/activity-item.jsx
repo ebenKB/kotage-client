@@ -1,6 +1,6 @@
 /* eslint-disable react/boolean-prop-naming */
 /* eslint-disable react/forbid-prop-types */
-import React, { useEffect } from 'react';
+import React from 'react';
 import './activity-item.scss';
 import { Table } from 'semantic-ui-react';
 import { PropTypes } from 'prop-types';
@@ -9,9 +9,6 @@ import { getPageRemainder } from '../../utils/app/index';
 import KtLoader from '../loader/loader';
 
 const ActivityItem = ({ recentActivities, loadMoreRecords, loading }) => {
-  useEffect(() => {
-    console.log('These are the activities', recentActivities);
-  }, []);
   const getRemainder = () => {
     const { meta, data } = recentActivities;
     return getPageRemainder(meta.count, data.length, 10);

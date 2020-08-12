@@ -12,7 +12,11 @@ const BidQuestionResponseGroup = ({ data, accountType }) => (
 		</Table.Header>
 		<Table.Body>
 			{data.map((r) => (
-				<BidQuestionResponse response={r} accountType={accountType} />
+				<BidQuestionResponse
+					response={r}
+					accountType={accountType}
+					key={r.id}
+				/>
 			))}
 		</Table.Body>
 	</Table>

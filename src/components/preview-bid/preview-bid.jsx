@@ -49,7 +49,7 @@ const PreviewBid = ({
         currentBid.event_owner_id);
       setCanShowModal(false);
       history.push('/supplier/bids');
-    } else console.log('wrong title', bidToDelete);
+    }
   };
 
   const handleBidToDeleteChange = (e) => {

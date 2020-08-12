@@ -50,7 +50,6 @@ class Requisitions extends React.Component {
     // create a new requisition
     const handleSubmit = (e) => {
       e.preventDefault();
-      // console.log('we want to create a requisition...', requisition)
       this.props.createRequisition(requisition);
       this.myRef.current.isFormValid(false).then((value) => console.log(value));
     };

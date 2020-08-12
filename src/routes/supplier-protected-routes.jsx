@@ -33,12 +33,12 @@ const routes = [
     main: () => <TermsConditions />,
   },
   {
-    path: '/supplier/rfx/:id/message',
+    path: '/supplier/rfp/dashboard/:id/:tenant_id/message',
     exact: true,
     main: () => <MessageCenter />,
   },
   {
-    path: '/supplier/rfx/:id/message/create/new',
+    path: '/supplier/rfp/dashboard/:id/:tenant_id/message/new',
     exact: true,
     main: () => <NewMessage />,
   },

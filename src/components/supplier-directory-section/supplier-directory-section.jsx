@@ -84,7 +84,7 @@ SupplierDirectorySection.propTypes = {
   proposal: PropTypes.object.isRequired,
   deleteSupplier: PropTypes.func.isRequired,
   addSupplier: PropTypes.func.isRequired,
-  existingSuppliers: PropTypes.object,
+  existingSuppliers: PropTypes.array,
 };
 
 SupplierDirectorySection.defaultProps = {

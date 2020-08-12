@@ -115,12 +115,10 @@ formatCurrency = () => {
 }
 
 handleQuestionAnswer = (e, q) => {
-  console.log('This is the question being anwsered', q);
   // const { rfpQuestionResponses } = this.state;
   const { currentProposal } = this.props;
   // const question = rfpQuestionResponses.find((ques) => ques.id === q.id);
   const newAnswers = currentProposal.questions.map((ques) => {
-    console.log('This is the existing question', ques);
     if (ques.id === q.id) {
       return {
         proposal_question_id: q.id,
@@ -131,7 +129,7 @@ handleQuestionAnswer = (e, q) => {
   this.setState((state) => ({
     ...state,
     rfpQuestionResponses: newAnswers,
-  }), () => console.log(this.state));
+  }));
 }
 
 render() {

@@ -3,6 +3,7 @@
 import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { Fragment } from 'react';
 import Divider from '../../kt-divider/divider';
 import MainContent from '../../kt-main-content/mainContent';
 import Help from '../../../utils/requisitions/new/help';
@@ -50,7 +51,6 @@ const supplier = ({
   };
 
   const loadMoreRecords = () => {
-    console.log('We want more records');
   };
 
   return (
@@ -81,13 +81,14 @@ const supplier = ({
 						<Divider type="faint" title={`All Events (${allEvents().length})`} classes="m-t-40" />
 
 						{allEvents().map((p) => (
-							<>
+							<Fragment key={p.id}>
 								<SupplierRfxItem
 									proposal={p}
 									type="RfP"
+									key={p.id}
 								/>
 								<Divider type="faint" />
-							</>
+							</Fragment>
 						))}
 					</div>
 				)}

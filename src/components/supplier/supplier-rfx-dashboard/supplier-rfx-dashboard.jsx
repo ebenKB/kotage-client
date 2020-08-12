@@ -14,6 +14,7 @@ import MessageIcon from '@material-ui/icons/MailOutline';
 import BookmarkBorderIcon from '@material-ui/icons/BookmarkBorder';
 import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
+import { withRouter } from 'react-router';
 import EmptyContentWrapper from '../../empty-content-wrapper/empty-content-wrapper';
 import MainContent from '../../kt-main-content/mainContent';
 import Help from '../../../utils/requisitions/new/help';
@@ -38,9 +39,11 @@ const SupplierRfxDashboard = ({
   currentProposal,
   findSupplierRfp,
   refreshSupplierRfp,
+  match,
   // checkSupplierStatus,
 }) => {
   const params = useParams();
+  const { url } = match;
   const history = useHistory();
   const [hasInit, setInit] = useState(false);
   const [willParticipate, setParticipation] = useState(null);
@@ -173,7 +176,7 @@ const SupplierRfxDashboard = ({
 							/>
 						</Link>
 					</div> */}
-					<Link to="/supplier/rfx/:id/message">
+					<Link to={`${url}/message`}>
 						<Button
 							icon={<MessageIcon className="m-r-4" />}
 							small
@@ -331,6 +334,7 @@ SupplierRfxDashboard.propTypes = {
   refreshSupplierRfp: PropTypes.func.isRequired,
   currentProposal: PropTypes.object.isRequired,
   respondToRSVP: PropTypes.func.isRequired,
+  match: PropTypes.object.isRequired,
   // checkSupplierStatus: PropTypes.func.isRequired,
 };
 
@@ -347,4 +351,4 @@ const mapStateToProps = (state) => ({
   currentProposal: state.supplierRfp.currentProposal,
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(SupplierRfxDashboard);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(SupplierRfxDashboard));

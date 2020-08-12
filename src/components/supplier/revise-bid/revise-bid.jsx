@@ -85,10 +85,8 @@ class ReviseBid extends Component {
     if (editedBid.commercialRequirements.length !== bid.commercialRequirements.length) {
       const deletedCommercialRequirement = [];
       for (const req of bid.commercialRequirements) {
-        console.log('CHECKING FILE', req);
         const isExisting = editedBid.commercialRequirements.find((c) => c.id === req.id);
         if (!isExisting) { // file has been deleted
-          console.log('Deleted file', req);
           deletedCommercialRequirement.push(req);
         }
       }
@@ -98,7 +96,6 @@ class ReviseBid extends Component {
           ...editedBid.commercialRequirements,
           ...deletedCommercialRequirement.map((d) => ({ ...d, destroy: true })),
         ];
-        console.log('This is the edited bid', editedBid);
       }
     }
     this.setState((state) => ({ ...state, isBlocking: false }),

@@ -26,7 +26,6 @@ const KtFileItem = ({
   fileObject, details, user,
 }) => {
   const [canPreview, setCanPreview] = useState(false);
-  useEffect(() => console.log('This is the file', fileObject));
 
   const getDownloadLink = () => (
 	<a

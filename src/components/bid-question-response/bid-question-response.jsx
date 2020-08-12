@@ -35,7 +35,7 @@ const BidQuestionResponse = ({
 
 BidQuestionResponse.propTypes = {
   response: PropTypes.object.isRequired,
-  accountType: PropTypes.object.isRequired,
+  accountType: PropTypes.string.isRequired,
   getQuestionDetials: PropTypes.func.isRequired,
   getSupplierRfpQuestionDetials: PropTypes.func.isRequired,
 };

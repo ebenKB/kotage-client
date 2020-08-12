@@ -183,7 +183,6 @@ export const acceptRfpTerms = () => async (dispatch, getState) => {
     });
     dispatch(setDoneLoading());
   } catch (error) {
-    console.log('An error ocurred while sending the rsvp', error);
     dispatch(setDoneLoading());
   }
 };
@@ -276,6 +275,9 @@ export const getRSVPClosingSoon = (start_date, end_date) => async (dispatch, get
 export const getSupplierProposalQuestionByID = (proposal_question_id) => async (_, getState) => {
   const { supplierRfp: { currentProposal: { questions } } } = getState();
   const question = questions.find((q) => q.id === proposal_question_id);
-  console.log('Tried searching a question and we got', question);
   return question;
+};
+
+export const createSupplierRfpMessage = () => async () => {
+  console.log('We want to send a supplier message here');
 };

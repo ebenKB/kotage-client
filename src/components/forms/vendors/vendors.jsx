@@ -16,7 +16,6 @@ class Vendors extends React.Component {
   }
 
   handleSubmit =() => {
-    console.log('We want to handle submit here...');
   }
 
   render() {
