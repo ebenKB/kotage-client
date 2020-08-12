@@ -1,9 +1,8 @@
 /* eslint-disable camelcase */
 /* eslint-disable react/prop-types */
-import React, { useEffect } from 'react';
+import React, { useEffect, Fragment } from 'react';
 import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { Fragment } from 'react';
 import Divider from '../../kt-divider/divider';
 import MainContent from '../../kt-main-content/mainContent';
 import Help from '../../../utils/requisitions/new/help';

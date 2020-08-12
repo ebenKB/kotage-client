@@ -1,6 +1,5 @@
 /* eslint-disable react/forbid-prop-types */
-import React, { useState, useEffect } from 'react';
-// import SaveAltRoundedIcon from '@material-ui/icons/SaveAltRounded';
+import React, { useState } from 'react';
 import { PropTypes } from 'prop-types';
 import { Button } from 'semantic-ui-react';
 import { ReactComponent as PDFIcon } from '../../../svg/pdf-alt.svg';
@@ -16,7 +15,6 @@ import { ReactComponent as Preview } from '../../../svg/preview.svg';
 import { getFileNameAndExtension, getFileExtension } from '../../../utils/app/file';
 import ImageReader from '../../image-reader/image-reader';
 import {
-// import PdfReader from '../../pdf-reader/pdf-reader';
   PDF, JPEG, WORD, PNG, EXCEL,
 } from '../../../utils/app/fileTypes';
 
