@@ -12,7 +12,7 @@ const NewProposal = lazy(() => import('../components/forms/rfp/rfp'));
 const EditProposal = lazy(() => import('../components/forms/rfp/edit-rfp/edit-rfp'));
 const ProposalDashboard = lazy(() => import('../components/rfp-dashboard/rfp-dashboard'));
 const ShowProposal = lazy(() => import('../components/forms/rfp/show-rfp/show-rfp'));
-const ProposalMessage = lazy(() => import('../components/message-center/message-center'));
+const BuyerMessageCenter = lazy(() => import('../pages/buyer/message-center/message-center'));
 // const NewMessage = lazy(() => import('../components/message-center/new-message/new-message'));
 const NewMessage = lazy(() => import('../pages/buyer/new-message/new-message'));
 const PreviewMessage = lazy(() => import('../components/message-preview/message-preview'));
@@ -104,7 +104,7 @@ const routes = [
   {
     exact: true,
     path: '/rfx/proposal/dashboard/:id/message',
-    main: () => <ProposalMessage />,
+    main: () => <BuyerMessageCenter />,
   },
   {
     exact: true,
@@ -113,7 +113,7 @@ const routes = [
   },
   {
     exact: true,
-    path: '/rfx/proposal/:id/message/:message_id',
+    path: '/rfx/proposal/dashboard/:id/message/:message_id/view',
     main: () => <PreviewMessage />,
   },
   {

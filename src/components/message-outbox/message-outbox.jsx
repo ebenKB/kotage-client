@@ -1,28 +1,15 @@
 /* eslint-disable react/boolean-prop-naming */
 /* eslint-disable react/forbid-prop-types */
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Button } from 'semantic-ui-react';
-import { useParams } from 'react-router-dom';
-import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
 import MessageItem from '../message-center/message-item/message-item';
-import { getRfpOutbox } from '../../redux/actions/rfpActions';
 import { getPageRemainder } from '../../utils/app/index';
 import { ReactComponent as File } from '../../svg/empty.svg';
 
 const MessageOutbox = ({
-  messages, getSentMessages, isLoading, meta,
+  messages, isLoading, meta, hasFetched,
 }) => {
-  const { id } = useParams();
-  const [hasFetched, setHasFetched] = useState(false);
-
-  useEffect(() => {
-    if (!isLoading && !hasFetched) {
-      getSentMessages(id);
-      setHasFetched(true);
-    }
-  }, [isLoading]);
-
   const remainder = () => getPageRemainder(meta.count, messages.length, 10);
 
   return (
@@ -64,7 +51,7 @@ const MessageOutbox = ({
 
 MessageOutbox.propTypes = {
   messages: PropTypes.object,
-  getSentMessages: PropTypes.func.isRequired,
+  hasFetched: PropTypes.bool.isRequired,
   isLoading: PropTypes.bool.isRequired,
   meta: PropTypes.object,
 };
@@ -74,14 +61,14 @@ MessageOutbox.defaultProps = {
   messages: null,
 };
 
-const mapDispatchToProps = {
-  getSentMessages: getRfpOutbox,
-};
+// const mapDispatchToProps = {
+//   getSentMessages: getRfpOutbox,
+// };
 
-const mapStateToProps = (state) => ({
-  isLoading: state.rfp.loading,
-  messages: state.rfp.rfpOutbox,
-  meta: state.rfp.rfpOutboxMeta,
-});
+// const mapStateToProps = (state) => ({
+//   isLoading: state.rfp.loading,
+//   messages: state.rfp.rfpOutbox,
+//   meta: state.rfp.rfpOutboxMeta,
+// });
 
-export default connect(mapStateToProps, mapDispatchToProps)(MessageOutbox);
+export default MessageOutbox;

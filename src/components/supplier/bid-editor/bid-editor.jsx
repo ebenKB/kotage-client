@@ -276,7 +276,7 @@ render() {
 								>
 									<div className="m-t-10">
 										{technicalRequirements && technicalRequirements.map((t) => (
-											<div className="">
+											<div className="" key={t.id}>
 												<FileItemCaption file={t} handleDeleteFile={() => this.deleteBidFile(t, 'technical_req')} />
 											</div>
 										))}
@@ -299,7 +299,7 @@ render() {
 								>
 									<div className="m-t-10">
 										{commercialRequirements && commercialRequirements.map((c) => (
-											<div className="">
+											<div className="" key={c.id}>
 												<FileItemCaption file={c} handleDeleteFile={() => this.deleteBidFile(c, 'commercial_req')} />
 											</div>
 										))}

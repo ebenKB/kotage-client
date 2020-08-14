@@ -18,6 +18,7 @@ const Bids = ({ getBids, bids }) => {
 			{bids && bids.map((bid) => (
 				<SupplierBidItem
 					bid={bid}
+					key={bid.id}
 				/>
 			))}
 		</KtWrapper>

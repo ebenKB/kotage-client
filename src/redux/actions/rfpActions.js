@@ -221,7 +221,6 @@ Promise((resolve, reject) => {
   try {
     const { rfp } = getState();
     const { rfpOutbox } = rfp;
-    // console.log('This is the entire outbox', rfpOutbox);
     const message = rfpOutbox.find((m) => parseInt(m.id, 10) === parseInt(message_id, 10));
     dispatch({
       type: FIND_RFP_MESSAGE,

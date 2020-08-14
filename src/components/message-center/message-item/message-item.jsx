@@ -10,14 +10,14 @@ const MessageItem = ({ message }) => {
   const history = useHistory();
   const { location } = history;
   return (
-	<Link to={`${location.pathname}/${message.id}`}>
+	<Link to={`${location.pathname}/${message.id}/view`}>
 		<div className="message-item m-t-10">
 			<div>
 				<MenuIcon className="very small logo" />
 			</div>
 			<p align="justify">{trimContent(message.message)}</p>
 			<div className="text-right">
-        02/22/2020
+				02/22/2020
 				{message.date}
 			</div>
 		</div>

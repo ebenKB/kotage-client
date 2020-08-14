@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable react/forbid-prop-types */
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
@@ -13,11 +14,9 @@ import './message-center.scss';
 import Divider from '../kt-divider/divider';
 import { ReactComponent as MessageIcon } from '../../svg/edit.svg';
 import { getRfpInbox, getRfpOutbox } from '../../redux/actions/rfpActions';
-import MessageOutbox from '../message-outbox/message-outbox';
-import MessageInbox from '../message-inbox/message-inbox';
 import RfpTitle from '../snippets/rfp-title/rfp-title';
 
-const MessageCenter = () => {
+const MessageCenter = ({ MessageInbox, MessageOutbox }) => {
   const [selectedOption, setSelectedOption] = useState({ text: 'Inbox', value: 1 });
   const history = useHistory();
   const options = [{
@@ -49,10 +48,6 @@ const MessageCenter = () => {
 	<MainContent
 		help={Help}
 	>
-		{/* <div className="m-t-20">
-			<div className="big-caption bold">{proposal && proposal.title}</div>
-			<Divider type="thick" title="" classes="m-b-10" />
-		</div> */}
 		<RfpTitle classes="m-t-20" />
 		<KtWrapperLite
 			classes="message-wrapper m-t-20"
@@ -89,9 +84,7 @@ const MessageCenter = () => {
 					)}
 					{(selectedOption.value === 2) && (
 						<div className="m-t-20">
-							<MessageOutbox
-								canFetch={selectedOption.value === 2}
-							/>
+							<MessageOutbox canFetch={selectedOption.value === 2} />
 						</div>
 					)}
 				</div>

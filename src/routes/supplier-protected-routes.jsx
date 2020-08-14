@@ -4,7 +4,7 @@ const SupplierHome = lazy(() => import('../components/supplier/supplier-rfx/supp
 const SupplierDashboard = lazy(() => import('../components/supplier/supplier-rfx-dashboard/supplier-rfx-dashboard'));
 const BidResponse = lazy(() => import('../components/supplier/supplier-bid-response/supplier-bid-response'));
 const MessageCenter = lazy(() => import('../components/message-center/message-center'));
-const NewMessage = lazy(() => import('../components/message-center/new-message/new-message'));
+const NewMessage = lazy(() => import('../pages/supplier/new-message/new-supplier-message'));
 const TermsConditions = lazy(() => import('../pages/supplier/rfp-tems-conditions'));
 const SupplierNotifications = lazy(() => import('../components/supplier/supplier-notification/supplier-notification'));
 const Bids = lazy(() => import('../components/supplier/bids/bids'));

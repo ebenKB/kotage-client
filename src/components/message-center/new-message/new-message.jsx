@@ -15,7 +15,7 @@ import KtTextArea from '../../form-fields/textarea/textarea';
 import KtWrapper from '../../kt-wrapper/kt-wrapper';
 import Help from '../../../utils/requisitions/new/help';
 // import Input from '../../form-fields/input/input';
-// import { createRfpMessage } from '../../../redux/actions/rfpActions';
+import { createRfpMessage } from '../../../redux/actions/rfpActions';
 import Dropzone from '../../dropzone/dropzone';
 import Divider from '../../kt-divider/divider';
 import { RFP_MESSAGE_FOLDERNAME } from '../../../utils/app/definitions';
@@ -23,9 +23,11 @@ import FloatingSupplierList from '../../floating-supplier-list/floating-supplier
 import { setNotification } from '../../../redux/actions/appActions';
 import Can from '../../can/can';
 import InputValidator from '../../form-fields/input-validator/input-validator';
+import { createSupplierRfpMessage } from '../../../redux/actions/supplierRfpActions';
 
 const NewMessage = ({
-  createNewMessage,
+  createBuyerNewMessage,
+  createSupplierNewMessage,
   isLoading,
   currentProposal,
   currentProposalId,
@@ -103,6 +105,18 @@ const NewMessage = ({
     }
   };
 
+  const prepareBuyerMessage = () => {
+    let supplier_ids = null;
+    supplier_ids = selectedSuppliers.map((s) => s.account_id);
+    createBuyerNewMessage(message, supplier_ids)
+      .then(() => history.goBack());
+  };
+
+  const prepareSupplierMessage = () => {
+    console.log('We want to prepare a supplier message here', message, currentProposalId);
+    createSupplierNewMessage(message, currentProposal.tenant.id);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const validatorForm = ref.current;
@@ -110,24 +124,34 @@ const NewMessage = ({
     //   .catch(() => console.log('error while validating the form'));
     const isValid = await validatorForm.isFormValid();
     if (isValid) {
-      if (selectedSuppliers && selectedSuppliers.length > 0) {
+      if ((selectedSuppliers && selectedSuppliers.length > 0) || accountType === 'supplier') {
         try {
-          const files = await
-          uploadFiles(message.files, tenantUid, RFP_MESSAGE_FOLDERNAME);
-          message.files = files;
-          setMessage(message);
-          let supplier_ids = null;
-          supplier_ids = selectedSuppliers.map((s) => s.account_id);
-          createNewMessage(message, supplier_ids)
-            .then(() => history.goBack());
+          if (message.files) {
+            const files = await
+            uploadFiles(message.files, tenantUid, RFP_MESSAGE_FOLDERNAME);
+            message.files = files;
+            setMessage(message);
+          }
+          if (accountType === 'buyer') {
+            prepareBuyerMessage();
+          } else if (accountType === 'supplier') {
+            prepareSupplierMessage();
+          }
         } catch (error) {
-          console.log('error while uploading the files', error);
+          console.log(error);
+          showNotification({
+            message: 'error while uploading the files.',
+          }, 'error');
         }
       } else {
         showNotification({
           message: 'Select at least one supplier to continue.',
         }, 'error');
       }
+    } else {
+      showNotification({
+        message: 'Please provide all required information',
+      }, 'error');
     }
   };
 
@@ -231,28 +255,33 @@ const NewMessage = ({
 };
 
 const mapDispatchToProps = {
-  // createNewMessage: createRfpMessage,
+  createBuyerNewMessage: createRfpMessage,
+  createSupplierNewMessage: createSupplierRfpMessage,
   showNotification: setNotification,
 };
 
 const mapStateToProps = (state) => ({
   isLoading: state.rfp.loading,
-  // currentProposal: state.rfp.currentProposal,
-  // currentProposalId: state.rfp.currentProposal.id,
   tenantUid: state.tenant.currentTenant.account_id,
   accountType: state.app.accountType,
   currentUser: state.user.currentUser,
 });
 
 NewMessage.propTypes = {
-  createNewMessage: PropTypes.func.isRequired,
+  createBuyerNewMessage: PropTypes.func.isRequired,
   isLoading: PropTypes.bool.isRequired,
-  currentProposalId: PropTypes.string.isRequired,
+  currentProposalId: PropTypes.string,
   tenantUid: PropTypes.string.isRequired,
-  currentProposal: PropTypes.object.isRequired,
+  currentProposal: PropTypes.object,
   showNotification: PropTypes.func.isRequired,
   accountType: PropTypes.string.isRequired,
   currentUser: PropTypes.object.isRequired,
+  createSupplierNewMessage: PropTypes.func.isRequired,
+};
+
+NewMessage.defaultProps = {
+  currentProposal: null,
+  currentProposalId: null,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(NewMessage);

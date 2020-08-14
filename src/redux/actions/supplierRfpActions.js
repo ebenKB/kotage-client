@@ -278,6 +278,13 @@ export const getSupplierProposalQuestionByID = (proposal_question_id) => async (
   return question;
 };
 
-export const createSupplierRfpMessage = () => async () => {
-  console.log('We want to send a supplier message here');
+export const createSupplierRfpMessage = (message, rfpOwnerId) => async () => {
+  console.log('We want to send a supplier message here', message, rfpOwnerId);
+};
+
+export const getSupplierRfpMessageInbox = () => async (_, getState) => {
+  console.log('We are getting the supplier message inbox');
+  const { tenant: { currentTenant: { id } } } = getState();
+  const { data } = Axios.get(`/v1/${id}/events/rfp/messages?path=inbox`);
+  console.log('This is the inbox data', data);
 };
