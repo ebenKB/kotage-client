@@ -12,7 +12,6 @@ const MessageOutbox = ({ messages, meta, getSentMessages }) => {
     if (!messages && !hasFetched) {
       getSentMessages();
       setHasFetched(true);
-      console.log('MESSAGES', messages);
     }
   }, []);
 
