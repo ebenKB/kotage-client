@@ -13,7 +13,7 @@ import MessageHeaderCaption from '../snippets/message-header-caption/message-hea
 import { ReactComponent as BackArrow } from '../../svg/return.svg';
 import { ReactComponent as ResendIcon } from '../../svg/forward.svg';
 import { ReactComponent as ReplyIcon } from '../../svg/backward.svg';
-import { findRfpMessageById, setCurrenMessageBlob } from '../../redux/actions/rfpActions';
+import { setCurrenMessageBlob } from '../../redux/actions/rfpActions';
 import Help from '../../utils/requisitions/new/help';
 import RfpTitle from '../snippets/rfp-title/rfp-title';
 import { getUser } from '../../redux/actions/userActions';
@@ -65,7 +65,7 @@ class MessagePreview extends React.Component {
     const { params } = match;
     const { message_id } = params;
 
-    if (!message || message.id !== message_id) {
+    if (findRfpMessage && (!message || message.id !== message_id)) {
       findRfpMessage(message_id)
         .then((msg) => {
           if (!user) {
@@ -184,14 +184,14 @@ MessagePreview.defaultProps = {
 };
 
 const mapDispatchToProps = {
-  findRfpMessage: findRfpMessageById,
+  // findRfpMessage: findRfpMessageById,
   setMessageBlob: setCurrenMessageBlob,
 };
 
 const mapStateToProps = (state) => ({
-  message: state.rfp.currentOutbox,
+  // message: state.rfp.currentOutbox,
   tenant_id: state.user.currentUser.tenant_id,
-  currentRfpID: state.rfp.currentProposal.id,
+  // currentRfpID: state.rfp.currentProposal.id,
 });
 
 MessagePreview.contextType = FileHandlerContext;

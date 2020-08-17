@@ -1,3 +1,4 @@
+
 /* eslint-disable camelcase */
 export const deserializeSupplier = (supplier) => {
   const { tenant_supplier, id } = supplier;
@@ -71,5 +72,23 @@ export const deserializeSupplierBid = (bid) => {
       file: c.url,
     })),
     bidAt: bid.bid_at,
+  };
+};
+
+
+export const serializeRfpSupplierMessage = (data) => {
+  const { rfp_message } = data;
+  return {
+    supplierRfpMessageID: data.id,
+    read: data.read,
+    reatAt: data.read_at,
+    id: rfp_message.id,
+    from: rfp_message.from,
+    message: rfp_message.message,
+    proposalRequestID: rfp_message.proposal_request_id,
+    subject: rfp_message.subject,
+    attachments: rfp_message.rfp_message_attachments,
+    to: rfp_message.to,
+    user_id: rfp_message.user_id,
   };
 };

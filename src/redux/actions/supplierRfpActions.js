@@ -1,10 +1,11 @@
 /* eslint-disable camelcase */
+import Axios from '../../utils/axios/axios';
+import { serializeRfpSupplierMessage } from '../../serializers/supplier-serializers';
 import {
   transformBidRecentActivity,
   transformSupplierRfpAnalytics,
 } from '../../transform/supplier-transforms';
 import { deserializeProposal } from '../../serializers/supplier-rfp-serializer';
-import Axios from '../../utils/axios/axios';
 import {
   GET_SUPPLIER_RFP,
   SET_CURRENT_SUPPLIER_RFP,
@@ -21,6 +22,9 @@ import {
   GET_SUPPLIER_RFP_ANALYTICS,
   GET_PROPOSALS_CLOSING_SOON,
   GET_RSVP_CLOSING_SOON,
+  GET_SUPPLIER_RFP_INBOX,
+  FIND_SUPPLIER_RFP_MESSAGE_BY_ID,
+  GET_SUPPLIER_SENT_MESSAGES,
 } from '../types/supplierTypes';
 import {
   setAnalyticsLoading,
@@ -43,7 +47,7 @@ export const setDoneLoading = () => async (dispatch) => dispatch({
  * Get events that a supplier has been invited to
  * @param {*} page the current page that is being fetched
  */
-// eslint-disable-next-line import/prefer-default-export
+// eslint-disable-next-line
 export const getSupplierRfp = (page = 1) => async (dispatch, getState) => new
 Promise((resolve, reject) => {
   dispatch(setLoading());
@@ -282,9 +286,47 @@ export const createSupplierRfpMessage = (message, rfpOwnerId) => async () => {
   console.log('We want to send a supplier message here', message, rfpOwnerId);
 };
 
-export const getSupplierRfpMessageInbox = () => async (_, getState) => {
-  console.log('We are getting the supplier message inbox');
+export const getSupplierRfpMessageInbox = () => async (dispatch, getState) => {
   const { tenant: { currentTenant: { id } } } = getState();
-  const { data } = Axios.get(`/v1/${id}/events/rfp/messages?path=inbox`);
-  console.log('This is the inbox data', data);
+  const { data } = await Axios.get(`/v1/${id}/events/rfp/messages?path=inbox`);
+  if (data) {
+    const { supplier_rfp_messages } = data;
+    dispatch({
+      type: GET_SUPPLIER_RFP_INBOX,
+      payload: supplier_rfp_messages.map((message) => serializeRfpSupplierMessage(message)),
+    });
+  }
+};
+
+
+export const findSupplierRfpMessageByID = (message_id) => async (dispatch, getState) => new
+Promise((resolve, reject) => {
+  try {
+    const { supplierRfp: { rfpInbox } } = getState();
+    const existingMessage = rfpInbox.find((f) => f.id === parseInt(message_id, 10));
+    if (existingMessage) {
+      dispatch({
+        type: FIND_SUPPLIER_RFP_MESSAGE_BY_ID,
+        payload: existingMessage,
+      });
+      resolve(existingMessage);
+    }
+  } catch (error) {
+    reject((error));
+  }
+});
+
+export const getSupplierSendMessages = () => async (dispatch, getState) => {
+  const { tenant: { currentTenant: id } } = getState();
+  const { data } = await Axios.get(`/v1/${id}/events/rfp/messages?path=outbox`);
+  if (data) {
+    console.log('We got some data from the api', data);
+    dispatch({
+      type: GET_SUPPLIER_SENT_MESSAGES,
+      payload: {
+        data: {},
+        meta: null,
+      },
+    });
+  }
 };

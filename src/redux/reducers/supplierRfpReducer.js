@@ -14,6 +14,9 @@ import {
   GET_SUPPLIER_RFP_ANALYTICS,
   GET_PROPOSALS_CLOSING_SOON,
   GET_RSVP_CLOSING_SOON,
+  GET_SUPPLIER_RFP_INBOX,
+  FIND_SUPPLIER_RFP_MESSAGE_BY_ID,
+  GET_SUPPLIER_SENT_MESSAGES,
 } from '../types/supplierTypes';
 
 const initialState = {
@@ -153,6 +156,7 @@ export default (state = initialState, action) => {
         analytics: action.payload,
       };
     }
+
     case GET_PROPOSALS_CLOSING_SOON: {
       let { analytics } = state;
       if (analytics === null) {
@@ -182,9 +186,36 @@ export default (state = initialState, action) => {
         analytics: { ...analytics },
       };
     }
+
     case VIEW_BIDS: {
       return {
         ...state,
+      };
+    }
+
+    case GET_SUPPLIER_RFP_INBOX: {
+      const messages = action.payload;
+      if (messages) {
+        return {
+          ...state,
+          rfpInbox: [...messages],
+        };
+      } return { ...state };
+    }
+
+    case FIND_SUPPLIER_RFP_MESSAGE_BY_ID: {
+      return {
+        ...state,
+        currentInbox: action.payload,
+      };
+    }
+
+    case GET_SUPPLIER_SENT_MESSAGES: {
+      const { data, meta } = action.payload;
+      return {
+        ...state,
+        rfpOutbox: [...data],
+        meta,
       };
     }
 

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/jsx-fragments */
 /* eslint-disable react/boolean-prop-naming */
 /* eslint-disable react/forbid-prop-types */
@@ -16,12 +17,14 @@ const MessageInbox = ({
 				<KtLoader />
 			</div>
 		)}
+
 		{!messages && !isLoading && hasFetched && (
 			<div className="text-center">
 				<File className="medium dark logo" />
 				<p>You don&apos;t have any message from your supplers.</p>
 			</div>
 		)}
+
 		{messages && messages.map((m) => (
 			<Fragment key={m.id}>
 				<div className="message-center__heading m-b-20">
