@@ -317,7 +317,7 @@ Promise((resolve, reject) => {
   }
 });
 
-export const getSupplierSendMessages = () => async (dispatch, getState) => {
+export const getSupplierSentMessages = () => async (dispatch, getState) => {
   const { tenant: { currentTenant: id } } = getState();
   const { data } = await Axios.get(`/v1/${id}/events/rfp/messages?path=outbox`);
   if (data) {

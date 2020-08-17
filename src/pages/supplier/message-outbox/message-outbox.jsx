@@ -3,9 +3,9 @@ import React, { useEffect, useState } from 'react';
 import { PropTypes } from 'prop-types';
 import { connect } from 'react-redux';
 import MessageOutboxComponent from '../../../components/message-outbox/message-outbox';
-import { getSupplierSendMessages } from '../../../redux/actions/supplierRfpActions';
+import { getSupplierSentMessages } from '../../../redux/actions/supplierRfpActions';
 
-const MessageOutbox = ({ messages, getSentMessages, meta }) => {
+const MessageOutbox = ({ messages, meta, getSentMessages }) => {
   const [hasFetched, setHasFetched] = useState(false);
 
   useEffect(() => {
@@ -28,7 +28,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
-  getSentMessages: getSupplierSendMessages,
+  getSentMessages: getSupplierSentMessages,
 };
 
 MessageOutbox.propTypes = {
