@@ -1,5 +1,5 @@
 /* eslint-disable react/forbid-prop-types */
-import React, { useEffect } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
 import CreateMessage from '../../../components/message-center/new-message/new-message';
@@ -11,19 +11,14 @@ const NewMessage = ({
   currentProposal,
   createNewMessage,
   currentProposalId,
-}) => {
-  useEffect(() => {
-    console.log('These are the props', currentProposal, currentProposalId);
-  });
-  return (
+}) => (
 	<CreateMessage
 		createNewMessage={createNewMessage}
 		isLoading={isLoading}
 		currentProposal={currentProposal}
 		currentProposalId={currentProposalId}
 	/>
-  );
-};
+);
 
 const mapDispatchToProps = {
   createNewMessage: createSupplierRfpMessage,

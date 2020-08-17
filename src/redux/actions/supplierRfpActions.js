@@ -318,13 +318,15 @@ Promise((resolve, reject) => {
 });
 
 export const getSupplierSentMessages = () => async (dispatch, getState) => {
-  const { tenant: { currentTenant: id } } = getState();
+  console.log('GETTING OUTBOX');
+  const { tenant: { currentTenant: { id } } } = getState();
   const { data } = await Axios.get(`/v1/${id}/events/rfp/messages?path=outbox`);
   if (data) {
+    const { supplier_rfp_message_responses } = data;
     dispatch({
       type: GET_SUPPLIER_SENT_MESSAGES,
       payload: {
-        data: {},
+        data: supplier_rfp_message_responses,
         meta: null,
       },
     });

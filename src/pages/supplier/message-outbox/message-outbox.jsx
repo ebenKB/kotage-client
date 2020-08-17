@@ -9,9 +9,10 @@ const MessageOutbox = ({ messages, meta, getSentMessages }) => {
   const [hasFetched, setHasFetched] = useState(false);
 
   useEffect(() => {
-    if (messages && !hasFetched) {
+    if (!messages && !hasFetched) {
       getSentMessages();
       setHasFetched(true);
+      console.log('MESSAGES', messages);
     }
   }, []);
 
