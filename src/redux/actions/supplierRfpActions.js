@@ -1,11 +1,11 @@
 /* eslint-disable camelcase */
 import Axios from '../../utils/axios/axios';
 import { serializeRfpSupplierMessage } from '../../serializers/supplier-serializers';
+import { deserializeProposal } from '../../serializers/supplier-rfp-serializer';
 import {
   transformBidRecentActivity,
   transformSupplierRfpAnalytics,
 } from '../../transform/supplier-transforms';
-import { deserializeProposal } from '../../serializers/supplier-rfp-serializer';
 import {
   GET_SUPPLIER_RFP,
   SET_CURRENT_SUPPLIER_RFP,
@@ -26,6 +26,7 @@ import {
   FIND_SUPPLIER_RFP_MESSAGE_BY_ID,
   GET_SUPPLIER_SENT_MESSAGES,
 } from '../types/supplierTypes';
+
 import {
   setAnalyticsLoading,
   setAnalyticsDoneLoading,
@@ -320,7 +321,6 @@ export const getSupplierSendMessages = () => async (dispatch, getState) => {
   const { tenant: { currentTenant: id } } = getState();
   const { data } = await Axios.get(`/v1/${id}/events/rfp/messages?path=outbox`);
   if (data) {
-    console.log('We got some data from the api', data);
     dispatch({
       type: GET_SUPPLIER_SENT_MESSAGES,
       payload: {
