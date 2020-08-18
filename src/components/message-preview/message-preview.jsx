@@ -63,10 +63,10 @@ class MessagePreview extends React.Component {
     const { findRfpMessage, message, tenant_id } = this.props;
     const { match } = this.props;
     const { params } = match;
-    const { message_id } = params;
+    const { message_id, type } = params;
 
     if (findRfpMessage && (!message || message.id !== message_id)) {
-      findRfpMessage(message_id)
+      findRfpMessage(message_id, type)
         .then((msg) => {
           if (!user) {
             getUser(msg.user_id, tenant_id) // get details of the user who created the message

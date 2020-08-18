@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 import Axios from '../../utils/axios/axios';
-import { serializeRfpSupplierMessage } from '../../serializers/supplier-serializers';
+import { deSerializeRfpSupplierInbox } from '../../serializers/supplier-serializers';
 import { deserializeProposal } from '../../serializers/supplier-rfp-serializer';
 import {
   transformBidRecentActivity,
@@ -25,6 +25,9 @@ import {
   GET_SUPPLIER_RFP_INBOX,
   FIND_SUPPLIER_RFP_MESSAGE_BY_ID,
   GET_SUPPLIER_SENT_MESSAGES,
+  CREATE_SUPPLIER_RFP_MESSAGE,
+  // SET_CURRENT_SUPPLIER_INBOX,
+  // SET_CURRENT_SUPPLIER_OUTBOX,
 } from '../types/supplierTypes';
 
 import {
@@ -283,8 +286,20 @@ export const getSupplierProposalQuestionByID = (proposal_question_id) => async (
   return question;
 };
 
-export const createSupplierRfpMessage = (message, rfpOwnerId) => async () => {
+export const createSupplierRfpMessage = (
+  message, rfpOwnerId, rfpID,
+) => async (dispatch, getState) => {
   console.log('We want to send a supplier message here', message, rfpOwnerId);
+  const { tenant: { currentTenant: { id } } } = getState();
+  const { data } = await Axios.post(`/v1/${id}/events/rfp/messages?event_id=${rfpID}&event_owner_id=${rfpOwnerId}`, message);
+  if (data) {
+    const { supplier_rfp_message_response } = data;
+    console.log('This is the data we got', supplier_rfp_message_response);
+    dispatch({
+      type: CREATE_SUPPLIER_RFP_MESSAGE,
+      payload: supplier_rfp_message_response,
+    });
+  }
 };
 
 export const getSupplierRfpMessageInbox = () => async (dispatch, getState) => {
@@ -294,31 +309,33 @@ export const getSupplierRfpMessageInbox = () => async (dispatch, getState) => {
     const { supplier_rfp_messages } = data;
     dispatch({
       type: GET_SUPPLIER_RFP_INBOX,
-      payload: supplier_rfp_messages.map((message) => serializeRfpSupplierMessage(message)),
+      payload: supplier_rfp_messages.map((message) => deSerializeRfpSupplierInbox(message)),
     });
   }
 };
 
-
-export const findSupplierRfpMessageByID = (message_id) => async (dispatch, getState) => new
+export const findSupplierRfpMessageByID = (message_id, type) => async (dispatch, getState) => new
 Promise((resolve, reject) => {
   try {
-    const { supplierRfp: { rfpInbox } } = getState();
-    const existingMessage = rfpInbox.find((f) => f.id === parseInt(message_id, 10));
-    if (existingMessage) {
-      dispatch({
-        type: FIND_SUPPLIER_RFP_MESSAGE_BY_ID,
-        payload: existingMessage,
-      });
-      resolve(existingMessage);
+    let existingMessage = null;
+    if (type === 'inbox') {
+      const { supplierRfp: { rfpInbox } } = getState();
+      existingMessage = rfpInbox.find((f) => f.id === parseInt(message_id, 10));
+    } else if (type === 'outbox') {
+      const { supplierRfp: { rfpOutbox } } = getState();
+      existingMessage = rfpOutbox.find((f) => f.id === parseInt(message_id, 10));
     }
+    dispatch({
+      type: FIND_SUPPLIER_RFP_MESSAGE_BY_ID,
+      payload: existingMessage,
+    });
+    resolve(existingMessage);
   } catch (error) {
     reject((error));
   }
 });
 
 export const getSupplierSentMessages = () => async (dispatch, getState) => {
-  console.log('GETTING OUTBOX');
   const { tenant: { currentTenant: { id } } } = getState();
   const { data } = await Axios.get(`/v1/${id}/events/rfp/messages?path=outbox`);
   if (data) {
@@ -332,3 +349,18 @@ export const getSupplierSentMessages = () => async (dispatch, getState) => {
     });
   }
 };
+
+// export const setCurrentSupplierInbox = (message) => async (dispatch) => {
+//   dispatch({
+//     type: SET_CURRENT_SUPPLIER_INBOX,
+//     payload: message,
+//   });
+// };
+
+
+// export const setCurrentSupplierOutbox = (message) => async (dispatch) => {
+//   dispatch({
+//     type: SET_CURRENT_SUPPLIER_OUTBOX,
+//     payload: message,
+//   });
+// };

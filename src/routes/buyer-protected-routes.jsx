@@ -113,7 +113,7 @@ const routes = [
   },
   {
     exact: true,
-    path: '/rfx/proposal/dashboard/:id/message/:message_id/view',
+    path: '/rfx/proposal/dashboard/:id/message/:type/:message_id',
     main: () => <PreviewMessage />,
   },
   {

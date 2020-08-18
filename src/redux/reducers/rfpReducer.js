@@ -28,8 +28,7 @@ const initialState = {
   currentProposal: null,
   rfpInbox: null,
   rfpOutbox: null,
-  currentOutbox: null,
-  currentInbox: null,
+  currentMessage: null,
   rfpOutboxMeta: null,
   rfpInboxMeta: null,
   meta: null,
@@ -151,10 +150,10 @@ export default (state = initialState, action) => {
     }
 
     case FIND_RFP_MESSAGE: {
-      if (!state.currentOutbox || action.payload.id !== state.currentOutbox.id) {
+      if (!state.currentMessage || action.payload.id !== state.currentMessage.id) {
         return {
           ...state,
-          currentOutbox: action.payload,
+          currentMessage: action.payload,
         };
       }
       return state;
@@ -162,14 +161,14 @@ export default (state = initialState, action) => {
 
     case SET_CURRENT_MESSAGE_BLOB: {
       let newWBlobs = [];
-      if (state.currentOutbox.files) {
-        newWBlobs = [...state.currentOutbox.files, action.payload];
+      if (state.currentMessage.files) {
+        newWBlobs = [...state.currentMessage.files, action.payload];
       } else {
         newWBlobs = [action.payload];
       }
       return {
         ...state,
-        currentOutbox: { ...state.currentOutbox, files: newWBlobs },
+        currentMessage: { ...state.currentMessage, files: newWBlobs },
       };
     }
 

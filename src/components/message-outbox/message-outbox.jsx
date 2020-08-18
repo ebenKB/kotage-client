@@ -24,6 +24,7 @@ const MessageOutbox = ({
 				<MessageItem
 					key={m.id}
 					message={m}
+					type="outbox"
 				/>
 			</div>
 		))}

@@ -32,7 +32,7 @@ MessagePreview.propTypes = {
 // });
 
 const mapStateToProps = (state) => ({
-  message: state.rfp.currentOutbox,
+  message: state.rfp.currentMessage,
   currentRfpID: state.rfp.currentProposal.id,
 });
 

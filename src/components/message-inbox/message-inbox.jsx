@@ -33,6 +33,7 @@ const MessageInbox = ({
 				<MessageItem
 					key={m.id}
 					message={m}
+					type="inbox"
 				/>
 			</Fragment>
 		))}

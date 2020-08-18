@@ -216,17 +216,23 @@ export const setLoading = () => async (dispatch) => dispatch({
   type: SET_RFP_LOADING,
 });
 
-export const findRfpMessageById = (message_id) => async (dispatch, getState) => new
+export const findRfpMessageById = (message_id, type) => async (dispatch, getState) => new
 Promise((resolve, reject) => {
   try {
-    const { rfp } = getState();
-    const { rfpOutbox } = rfp;
-    const message = rfpOutbox.find((m) => parseInt(m.id, 10) === parseInt(message_id, 10));
+    let existingMessage = null;
+    if (type === 'inbox') {
+      const { rfp: { rfpInbox } } = getState();
+      existingMessage = rfpInbox.find((m) => parseInt(m.id, 10) === parseInt(message_id, 10));
+    } else if (type === 'outbox') {
+      const { rfp } = getState();
+      const { rfpOutbox } = rfp;
+      existingMessage = rfpOutbox.find((m) => parseInt(m.id, 10) === parseInt(message_id, 10));
+    }
     dispatch({
       type: FIND_RFP_MESSAGE,
-      payload: message,
+      payload: existingMessage,
     });
-    resolve(message);
+    resolve(existingMessage);
   } catch (error) {
     reject(error);
   }

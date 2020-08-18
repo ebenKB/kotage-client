@@ -76,12 +76,13 @@ export const deserializeSupplierBid = (bid) => {
 };
 
 
-export const serializeRfpSupplierMessage = (data) => {
+export const deSerializeRfpSupplierInbox = (data) => {
   const { rfp_message } = data;
   return {
     supplierRfpMessageID: data.id,
     read: data.read,
     reatAt: data.read_at,
+    // message_id: rfp_message.id,
     id: rfp_message.id,
     from: rfp_message.from,
     message: rfp_message.message,
@@ -90,5 +91,34 @@ export const serializeRfpSupplierMessage = (data) => {
     attachments: rfp_message.rfp_message_attachments,
     to: rfp_message.to,
     user_id: rfp_message.user_id,
+  };
+};
+
+export const deserializeSupplierMessage = (data) => {
+  const {
+    id,
+    user_id,
+    proposal_request_id,
+    from,
+    to,
+    subject,
+    supplier_rfp_message_id,
+    supplier_id,
+    read,
+    read_at,
+    message,
+  } = data;
+  return {
+    message_id: supplier_rfp_message_id,
+    user_id,
+    proposalOwner: proposal_request_id,
+    from,
+    to,
+    subject,
+    supplierRfpMessageID: id,
+    supplierID: supplier_id,
+    read,
+    readAt: read_at,
+    message,
   };
 };

@@ -6,18 +6,15 @@ import MessagePreviewComponent from '../../../components/message-preview/message
 import { findSupplierRfpMessageByID } from '../../../redux/actions/supplierRfpActions';
 
 const MessagePreview = ({ message, currentRfpID, findRfpMessage }) => (
-	<div>
-		This is the supplier message preivew
-		<MessagePreviewComponent
-			message={message}
-			currentRfpID={currentRfpID}
-			findRfpMessage={findRfpMessage}
-		/>
-	</div>
+	<MessagePreviewComponent
+		message={message}
+		currentRfpID={currentRfpID}
+		findRfpMessage={findRfpMessage}
+	/>
 );
 
 const mapStateToProps = (state) => ({
-  message: state.supplierRfp.currentInbox,
+  message: state.supplierRfp.currentMessage,
   currentRfpID: state.supplierRfp.currentProposal.id,
 });
 

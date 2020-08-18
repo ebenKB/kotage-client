@@ -20,7 +20,7 @@ const MessageHeaderCaption = ({ user = null }) => (
 					)}
 				</div>
 				<span className="xsm-caption">Monday 22nd March 2020</span>
-				<div>4 suppliers received this message</div>
+				{/* <div>4 suppliers received this message</div> */}
 			</div>
 		</div>
 	</div>

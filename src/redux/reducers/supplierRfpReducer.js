@@ -17,6 +17,10 @@ import {
   GET_SUPPLIER_RFP_INBOX,
   FIND_SUPPLIER_RFP_MESSAGE_BY_ID,
   GET_SUPPLIER_SENT_MESSAGES,
+  CREATE_SUPPLIER_RFP_MESSAGE,
+  SET_CURRENT_SUPPLIER_INBOX,
+  SET_CURRENT_SUPPLIER_OUTBOX,
+  FIND_SUPPLIER_OUTBOX_BY_ID,
 } from '../types/supplierTypes';
 
 const initialState = {
@@ -25,8 +29,8 @@ const initialState = {
   currentProposal: null,
   rfpInbox: null,
   rfpOutbox: null,
-  currentOutbox: null,
-  currentInbox: null,
+  currentMessage: null,
+  currentMessageType: 'inbox',
   rfpOutboxMeta: null,
   rfpInboxMeta: null,
   meta: null,
@@ -41,13 +45,6 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    // case CREATE_BID_RESPONSE: {
-    //   return {
-    //     ...state,
-    //     bids: [action.payload, ...state.bids],
-    //   };
-    // }
-
     case GET_SUPPLIER_RFP: {
       return {
         ...state,
@@ -206,7 +203,14 @@ export default (state = initialState, action) => {
     case FIND_SUPPLIER_RFP_MESSAGE_BY_ID: {
       return {
         ...state,
-        currentInbox: action.payload,
+        currentMessage: action.payload,
+      };
+    }
+
+    case FIND_SUPPLIER_OUTBOX_BY_ID: {
+      return {
+        ...state,
+        currentMessage: action.payload,
       };
     }
 
@@ -216,6 +220,34 @@ export default (state = initialState, action) => {
         ...state,
         rfpOutbox: [...data],
         meta,
+      };
+    }
+
+    case CREATE_SUPPLIER_RFP_MESSAGE: {
+      const { rfpOutbox } = state;
+      let updateBox = null;
+      if (rfpOutbox === null) {
+        updateBox = action.payload;
+      } else {
+        updateBox = [action.payload, ...rfpOutbox];
+      }
+      return {
+        ...state,
+        rfpOutbox: updateBox,
+      };
+    }
+
+    case SET_CURRENT_SUPPLIER_INBOX: {
+      return {
+        ...state,
+        currentMessage: action.payload,
+      };
+    }
+
+    case SET_CURRENT_SUPPLIER_OUTBOX: {
+      return {
+        ...state,
+        currentMessage: action.payload,
       };
     }
 

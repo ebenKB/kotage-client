@@ -6,11 +6,11 @@ import Divider from '../../kt-divider/divider';
 import { ReactComponent as MenuIcon } from '../../../svg/menu.svg';
 import { trimContent } from '../../../utils/app/index';
 
-const MessageItem = ({ message }) => {
+const MessageItem = ({ message, type }) => {
   const history = useHistory();
   const { location } = history;
   return (
-	<Link to={`${location.pathname}/${message.id}/view`}>
+	<Link to={`${location.pathname}/${type}/${message.id}`}>
 		<div className="message-item m-t-10">
 			<div>
 				<MenuIcon className="very small logo" />
@@ -28,6 +28,7 @@ const MessageItem = ({ message }) => {
 
 MessageItem.propTypes = {
   message: PropTypes.object.isRequired,
+  type: PropTypes.string.isRequired,
 };
 
 export default MessageItem;

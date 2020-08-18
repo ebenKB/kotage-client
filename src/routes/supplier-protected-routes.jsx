@@ -65,7 +65,7 @@ const routes = [
   },
   {
     exact: true,
-    path: '/supplier/rfp/dashboard/:id/:tenant_id/message/:message_id/view',
+    path: '/supplier/rfp/dashboard/:id/:tenant_id/message/:type/:message_id',
     main: () => <PreviewSupplierMessage />,
   },
 ];

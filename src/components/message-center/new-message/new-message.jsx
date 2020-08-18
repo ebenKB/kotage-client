@@ -113,8 +113,7 @@ const NewMessage = ({
   };
 
   const prepareSupplierMessage = () => {
-    console.log('We want to prepare a supplier message here', message, currentProposalId);
-    createSupplierNewMessage(message, currentProposal.tenant.id);
+    createSupplierNewMessage(message, currentProposal.tenant.id, currentProposal.id);
   };
 
   const handleSubmit = async (e) => {
