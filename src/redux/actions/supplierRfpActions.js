@@ -133,11 +133,11 @@ export const findSupplierEventByID = (id, event_owner_id) => async (dispatch, ge
           type: FIND_SUPPLIER_EVENT_BY_ID,
           payload: foundProposal,
         });
+        dispatch(setDoneLoading());
         resolve(foundProposal);
       } else {
         // if the rfp is not found in the cache, query from the api
-        getSupplierRfpByID(id, event_owner_id)
-          .then((rfp) => resolve(rfp));
+        dispatch(getSupplierRfpByID(id, event_owner_id));
         dispatch(setDoneLoading());
       }
     } catch (error) {
@@ -318,12 +318,16 @@ export const findSupplierRfpMessageByID = (message_id, type) => async (dispatch,
 Promise((resolve, reject) => {
   try {
     let existingMessage = null;
-    if (type === 'inbox') {
+    if (type === 'inbox' && message_id) {
       const { supplierRfp: { rfpInbox } } = getState();
-      existingMessage = rfpInbox.find((f) => f.id === parseInt(message_id, 10));
-    } else if (type === 'outbox') {
+      if (rfpInbox) {
+        existingMessage = rfpInbox.find((f) => f.id === parseInt(message_id, 10));
+      }
+    } else if (type === 'outbox' && message_id) {
       const { supplierRfp: { rfpOutbox } } = getState();
-      existingMessage = rfpOutbox.find((f) => f.id === parseInt(message_id, 10));
+      if (rfpOutbox) {
+        existingMessage = rfpOutbox.find((f) => f.id === parseInt(message_id, 10));
+      }
     }
     dispatch({
       type: FIND_SUPPLIER_RFP_MESSAGE_BY_ID,

@@ -51,7 +51,7 @@ const MessageOutbox = ({
 };
 
 MessageOutbox.propTypes = {
-  messages: PropTypes.object,
+  messages: PropTypes.array,
   hasFetched: PropTypes.bool,
   isLoading: PropTypes.bool.isRequired,
   meta: PropTypes.object,

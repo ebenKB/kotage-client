@@ -5,17 +5,18 @@ import { connect } from 'react-redux';
 import MessagePreviewComponent from '../../../components/message-preview/message-preview';
 import { findSupplierRfpMessageByID } from '../../../redux/actions/supplierRfpActions';
 
-const MessagePreview = ({ message, currentRfpID, findRfpMessage }) => (
+const MessagePreview = ({ message, currentRfp, findRfpMessage }) => (
 	<MessagePreviewComponent
 		message={message}
-		currentRfpID={currentRfpID}
+		currentRfpID={currentRfp && currentRfp.currentProposal && currentRfp.currentProposal.id}
 		findRfpMessage={findRfpMessage}
 	/>
 );
 
 const mapStateToProps = (state) => ({
   message: state.supplierRfp.currentMessage,
-  currentRfpID: state.supplierRfp.currentProposal.id,
+  // currentRfpID: state.supplierRfp.currentProposal.id,
+  currentRfp: state.supplierRfp.currentProposal,
 });
 
 const mapDispatchToProps = {
@@ -24,7 +25,8 @@ const mapDispatchToProps = {
 
 MessagePreview.propTypes = {
   message: PropTypes.object.isRequired,
-  currentRfpID: PropTypes.number.isRequired,
+  currentRfp: PropTypes.object.isRequired,
+  // currentRfpID: PropTypes.number.isRequired,
   findRfpMessage: PropTypes.func.isRequired,
 };
 

@@ -34,7 +34,7 @@ const mapStateToProps = (state) => ({
 
 MessageInbox.propTypes = {
   getMessageInbox: PropTypes.func.isRequired,
-  messages: PropTypes.object,
+  messages: PropTypes.array,
 };
 
 MessageInbox.defaultProps = {

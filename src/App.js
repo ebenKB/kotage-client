@@ -3,6 +3,7 @@
 import React, { Suspense } from 'react';
 import './App.css';
 import { Switch, Route } from 'react-router-dom';
+import shortid from 'shortid';
 import Layout from './components/Layout/layout';
 import SignIn from './components/auth/sign-in/sign-in';
 import PageNotFound from './pages/_404';
@@ -42,9 +43,9 @@ function App() {
 		)}
 		>
 			<Layout>
-				{routes.map((route, index) => (
+				{routes.map((route) => (
 					<ProtectedRoute
-						key={index}
+						key={shortid.generate()}
 						path={route.path}
 						exact={route.exact}
 					>
@@ -52,9 +53,9 @@ function App() {
 					</ProtectedRoute>
 				))}
 
-				{buyerRoutes.map((route, index) => (
+				{buyerRoutes.map((route) => (
 					<BuyerProtectedRoute
-						key={index}
+						key={shortid.generate()}
 						path={route.path}
 						exact={route.exact}
 					>
@@ -62,9 +63,9 @@ function App() {
 					</BuyerProtectedRoute>
 				))}
 
-				{supplierRoutes.map((route, index) => (
+				{supplierRoutes.map((route) => (
 					<SupplierProtectedRoutes
-						key={index}
+						key={shortid.generate()}
 						path={route.path}
 						exact={route.exact}
 					>

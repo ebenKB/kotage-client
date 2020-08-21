@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button } from 'semantic-ui-react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { PropTypes } from 'prop-types';
 import MainContent from '../kt-main-content/mainContent';
 import KtWrapperLite from '../kt-wrapper-lite/kt-wrapper-lite';
@@ -10,8 +10,12 @@ const TermsConditions = ({
   terms,
   handleAction,
   forwardUrl,
-  cancelUrl,
-}) => (
+}) => {
+  const history = useHistory();
+  const goBack = () => {
+    history.goBack();
+  };
+  return (
 	<MainContent>
 		<KtWrapperLite
 			classes="m-t-20"
@@ -21,12 +25,11 @@ const TermsConditions = ({
 				{terms}
 			</div>
 			<div className="m-t-20 flex-center">
-				<Link to={cancelUrl}>
-					<Button
-						size="tiny"
-						content="Cancel"
-					/>
-				</Link>
+				<Button
+					size="tiny"
+					content="Cancel"
+					onClick={goBack}
+				/>
 				<Link to={forwardUrl}>
 					<Button
 						size="tiny"
@@ -38,13 +41,13 @@ const TermsConditions = ({
 			</div>
 		</KtWrapperLite>
 	</MainContent>
-);
+  );
+};
 
 TermsConditions.propTypes = {
   terms: PropTypes.string.isRequired,
   handleAction: PropTypes.func.isRequired,
   forwardUrl: PropTypes.string.isRequired,
-  cancelUrl: PropTypes.string.isRequired,
 };
 
 export default TermsConditions;

@@ -10,13 +10,12 @@ const NewMessage = ({
   isLoading,
   currentProposal,
   createNewMessage,
-  currentProposalId,
 }) => (
 	<CreateMessage
 		createNewMessage={createNewMessage}
 		isLoading={isLoading}
 		currentProposal={currentProposal}
-		currentProposalId={currentProposalId}
+		currentProposalId={currentProposal && currentProposal.id}
 	/>
 );
 
@@ -28,7 +27,6 @@ const mapDispatchToProps = {
 const mapStateToProps = (state) => ({
   isLoading: state.rfp.loading,
   currentProposal: state.supplierRfp.currentProposal,
-  currentProposalId: state.supplierRfp.currentProposal.id,
   tenantUid: state.tenant.currentTenant.account_id,
   accountType: state.app.accountType,
   currentUser: state.user.currentUser,
@@ -38,7 +36,6 @@ NewMessage.propTypes = {
   createNewMessage: PropTypes.func.isRequired,
   isLoading: PropTypes.bool.isRequired,
   currentProposal: PropTypes.object.isRequired,
-  currentProposalId: PropTypes.number.isRequired,
 };
 
 

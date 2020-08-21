@@ -1,3 +1,4 @@
+/* eslint-disable react/forbid-prop-types */
 import React from 'react';
 import Proptypes from 'prop-types';
 
@@ -8,9 +9,8 @@ const KtDetailsCaption = ({ description, classes }) => (
 );
 
 KtDetailsCaption.propTypes = {
-  description: Proptypes.string.isRequired,
+  description: Proptypes.object.isRequired,
   classes: Proptypes.string.isRequired,
 };
 
 export default KtDetailsCaption;
-// "m-t-20 m-b-20  kt-move-left"

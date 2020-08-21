@@ -40,7 +40,6 @@ const SupplierRfxDashboard = ({
   findSupplierRfp,
   refreshSupplierRfp,
   match,
-  // checkSupplierStatus,
 }) => {
   const params = useParams();
   const { url } = match;
@@ -50,13 +49,14 @@ const SupplierRfxDashboard = ({
 
   const findSupplierRfpByID = async () => {
     const proposal = await findSupplierRfp(params.id, params.tenant_id);
-    setParticipation(proposal.hasConfirmedRSVP);
+    if (proposal) {
+      setParticipation(proposal.hasConfirmedRSVP);
+    }
   };
 
   const refresh = async () => {
     try {
       await refreshSupplierRfp(params.id, params.tenant.id);
-      // await checkSupplierStatus();
     } catch (error) {
       if (error.response) {
         const { response: { data: { invalid_token } } } = error;
@@ -74,7 +74,7 @@ const SupplierRfxDashboard = ({
       findSupplierRfpByID();
       refresh();
       setInit(true);
-    } else {
+    } else if (currentProposal) {
       setParticipation(currentProposal.hasConfirmedRSVP);
     }
   }, [params, currentProposal]);
@@ -89,13 +89,17 @@ const SupplierRfxDashboard = ({
   };
 
   const confirmParticipation = () => {
-    if (canRSVP && willParticipate !== currentProposal.hasConfirmedRSVP) {
-      respondToRSVP(willParticipate);
+    if (currentProposal) {
+      if (canRSVP && willParticipate !== currentProposal.hasConfirmedRSVP) {
+        respondToRSVP(willParticipate);
+      }
     }
   };
 
   const revertChange = () => {
-    setParticipation(currentProposal.hasConfirmedRSVP);
+    if (currentProposal) {
+      setParticipation(currentProposal.hasConfirmedRSVP);
+    }
   };
 
   return (
@@ -113,7 +117,7 @@ const SupplierRfxDashboard = ({
 							trigger={(
 								<Button
 									icon={<BookmarkBorderIcon className="kt-primary logo" />}
-									small
+									size="small"
 									content="Acknowledge participation"
 									className="kt-sucess kt-transparent kt-primary tiny flex flex-center"
 								/>
@@ -179,7 +183,7 @@ const SupplierRfxDashboard = ({
 					<Link to={`${url}/message`}>
 						<Button
 							icon={<MessageIcon className="m-r-4" />}
-							small
+							size="tiny"
 							content="Message center"
 							className="kt-sucess kt-transparent kt-primary tiny flex flex-center"
 						/>
@@ -244,7 +248,7 @@ const SupplierRfxDashboard = ({
 								</Table.Header>
 								<Table.Body>
 									{currentProposal.documents.map((d) => (
-										<Table.Row>
+										<Table.Row key={d.id}>
 											<Table.Cell collapsing>
 												{d.name}
 											</Table.Cell>
@@ -264,7 +268,7 @@ const SupplierRfxDashboard = ({
 					>
 						<Divider type="thick" title="Rfp Questions" />
 						{currentProposal.questions.map((q) => (
-							<div className="flex-center m-t-20">
+							<div className="flex-center m-t-20" key={q.id}>
 								<Bullet className="small logo m-r-5" />
 								<p>{q.question}</p>
 							</div>
@@ -305,7 +309,7 @@ const SupplierRfxDashboard = ({
 					<Link to="/supplier/rfx">
 						<Button
 							basic
-							small
+							size="tiny"
 							default
 							content="Go Back"
 							className="tiny"
@@ -314,7 +318,7 @@ const SupplierRfxDashboard = ({
 					{!currentProposal.hasResponded && (
 						<Link to={`/supplier/rfp/${currentProposal.id}/terms-and-conditions`}>
 							<Button
-								small
+								size="tiny"
 								content="Create Bid Response"
 								className="kt-sucess green tiny"
 							/>
@@ -332,17 +336,19 @@ SupplierRfxDashboard.propTypes = {
   findSupplierRfp: PropTypes.func.isRequired,
   currentTenant: PropTypes.object.isRequired,
   refreshSupplierRfp: PropTypes.func.isRequired,
-  currentProposal: PropTypes.object.isRequired,
+  currentProposal: PropTypes.object,
   respondToRSVP: PropTypes.func.isRequired,
   match: PropTypes.object.isRequired,
-  // checkSupplierStatus: PropTypes.func.isRequired,
+};
+
+SupplierRfxDashboard.defaultProps = {
+  currentProposal: null,
 };
 
 const mapDispatchToProps = {
   findSupplierRfp: findSupplierEventByID,
   refreshSupplierRfp: getSupplierRfpByID,
   respondToRSVP: confirmRSVP,
-  // checkSupplierStatus: checkSupplierRfpClaims,
 };
 
 const mapStateToProps = (state) => ({

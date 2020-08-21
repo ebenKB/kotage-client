@@ -33,28 +33,6 @@ class MessagePreview extends React.Component {
       hasSignedUrls: false,
       error: null,
       signedAttachments: [],
-      inbox: [
-        {
-          id: 1,
-          subject: 'Deadline review',
-          message: 'Please consider reviewing the deadline for the final proposal submission',
-        },
-        {
-          id: 1,
-          subject: 'Deadline review',
-          message: 'Please consider reviewing the deadline for the final proposal submission',
-        },
-        {
-          id: 1,
-          subject: 'Deadline review',
-          message: 'Please consider reviewing the deadline for the final proposal submission. This is because the current rise in prices has affected our discounts with our partners and we are looking for a extension to do new bargians.',
-        },
-        {
-          id: 1,
-          subject: 'Deadline review',
-          message: 'Please consider reviewing the deadline for the final proposal submission',
-        },
-      ],
     };
   }
 
@@ -68,7 +46,7 @@ class MessagePreview extends React.Component {
     if (findRfpMessage && (!message || message.id !== message_id)) {
       findRfpMessage(message_id, type)
         .then((msg) => {
-          if (!user) {
+          if (!user && msg) {
             getUser(msg.user_id, tenant_id) // get details of the user who created the message
               .then((data) => {
                 this.setState((state) => ({ ...state, user: data }));

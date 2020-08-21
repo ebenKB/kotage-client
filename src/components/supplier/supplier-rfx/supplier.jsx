@@ -65,13 +65,13 @@ const supplier = ({
 					<div>
 						<Divider type="thick" title={`Active Events (${activeEvents().length})`} classes="kt-success" />
 						{activeEvents().map((p) => (
-							<>
+							<Fragment key={p.id}>
 								<SupplierRfxItem
 									proposal={p}
 									type="RfP"
 								/>
 								<Divider type="faint" />
-							</>
+							</Fragment>
 						))}
 					</div>
 				)}

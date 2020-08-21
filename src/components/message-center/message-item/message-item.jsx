@@ -17,8 +17,7 @@ const MessageItem = ({ message, type }) => {
 			</div>
 			<p align="justify">{trimContent(message.message)}</p>
 			<div className="text-right">
-				02/22/2020
-				{message.date}
+				{/* {message.date} */}
 			</div>
 		</div>
 		<Divider type="faint" />

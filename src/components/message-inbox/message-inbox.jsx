@@ -37,31 +37,21 @@ const MessageInbox = ({
 				/>
 			</Fragment>
 		))}
-		{messages && (
+		{/* {messages && (
 			<p className="kt-primary m-t-40">View 9 more sent messages</p>
-		)}
+		)} */}
 	</div>
 );
 
 MessageInbox.propTypes = {
-  messages: PropTypes.object,
-  isLoading: PropTypes.bool.isRequired,
+  messages: PropTypes.array,
+  isLoading: PropTypes.bool,
   hasFetched: PropTypes.bool.isRequired,
 };
 
 MessageInbox.defaultProps = {
   messages: null,
+  isLoading: undefined,
 };
-
-// const mapDispatchToProps = {
-//   getMessageInbox: getRfpInbox,
-//   getSupplierInbox: getSupplierRfpMessageInbox,
-// };
-
-// const mapStateToProps = (state) => ({
-//   isLoading: state.rfp.loading,
-//   messages: state.rfp.rfpInbox,
-//   accountType: state.app.accountType,
-// });
 
 export default MessageInbox;

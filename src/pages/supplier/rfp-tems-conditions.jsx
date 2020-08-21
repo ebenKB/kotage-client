@@ -16,7 +16,6 @@ const RfpTermsConditions = ({ acceptTerms }) => {
 		terms="put all the terms and conditions here"
 		handleAction={handleAcceptRfpTerms}
 		forwardUrl={`/supplier/rfp/${id}/response`}
-		cancelUrl={`/supplier/rfp/dashboard/${id}`}
 	/>
   );
 };
