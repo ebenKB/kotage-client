@@ -116,6 +116,7 @@ export const clearCurrentRfp = () => async (dispatch) => {
 };
 
 export const getCurrentProposal = (id) => async (dispatch) => {
+  console.log('This is the id: ', id);
   dispatch(clearCurrentRfp());
   dispatch(
     {

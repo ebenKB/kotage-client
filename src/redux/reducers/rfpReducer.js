@@ -103,11 +103,14 @@ export default (state = initialState, action) => {
     case GET_PROPOSAL_BY_ID: {
       const proposal = state.proposals.find((p) => parseInt(p.id, 10)
         === parseInt(action.payload, 10));
-      return {
-        ...state,
-        currentProposal: proposal,
-        loading: false,
-      };
+      if (proposal) {
+        return {
+          ...state,
+          currentProposal: proposal,
+          loading: false,
+        };
+      }
+      return { ...state };
     }
 
     case CREATE_MESSAGE: {
