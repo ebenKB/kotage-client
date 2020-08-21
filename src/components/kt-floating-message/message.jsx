@@ -62,7 +62,7 @@ const Message = ({ isSendingFeedback, sendFeedback, notifyUser }) => {
 					<div className="ui form m-b-10">
 						<Form>
 							<TextArea
-								placeholder="Tell us more"
+								placeholder="We are happy to hear your feedback."
 								value={content}
 								style={{ minHeight: 160 }}
 								onChange={handleContentChange}
