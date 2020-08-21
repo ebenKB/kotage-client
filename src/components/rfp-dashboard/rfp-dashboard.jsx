@@ -46,7 +46,6 @@ const RfpDashboard = ({
   }, [id]);
 
   useEffect(() => {
-    console.log('This is the match', match);
     if (!analytics) {
       getProposalAnalytics(id)
         .then(({ data }) => {

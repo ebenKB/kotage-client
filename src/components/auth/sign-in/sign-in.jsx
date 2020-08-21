@@ -98,22 +98,15 @@ const SignIn = ({
         checkUserTenant(user.email);
       }
       const data = await userLogin(user.email, user.password);
-      if (data.error) {
-        alert(data.data.error);
-      } else {
+      if (!data.error) {
         setUserAccountType(loginType.toLowerCase());
         getCurrentTenant(currentUser.tenant_id);
         clearAppNotifications().then(() => {
           history.push('/');
-          // if (loginType.toLowerCase() === 'buyer') {
-          //   history.push('/');
-          // } else if (loginType.toLowerCase() === 'supplier') {
-          //   history.push('/supplier/rfx');
-          // }
         });
       }
     } catch (error) {
-      console.log('ERROR AR LOGIN', error.message);
+      // console.log('ERROR AR LOGIN', error.message);
     }
   };
 

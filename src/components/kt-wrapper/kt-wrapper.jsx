@@ -59,10 +59,6 @@ class KtWrapper extends React.Component {
       },
     ];
 
-    const handleChange = (e, data) => {
-      console.log('The selection has chnaged', data);
-    };
-
     return (
 	<div className="kt-wrapper">
 		{!isLite && (
@@ -72,7 +68,7 @@ class KtWrapper extends React.Component {
 				<div>
 					<div>
 						{canFilter && (
-							<Dropdown placeholder="Filter records" selection options={options} onChange={handleChange} className="m-r-20 " />
+							<Dropdown placeholder="Filter records" selection options={options} className="m-r-20 " />
 						)}
 						{linkName.length > 0 && (
 							<Link to={link} className="action-link green ui button">

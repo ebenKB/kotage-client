@@ -66,7 +66,7 @@ const PreviewBid = ({
     if (currentBid.status === 'rejected') {
       return 'red';
     }
-    return '';
+    return 'grey';
   };
   return (
 	<div>

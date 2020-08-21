@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-use-before-define */
 
 import { GET_REQUISITIONS, SET_LOADING } from '../types/requisitionTypes';
@@ -19,7 +20,7 @@ export const getRequisitions = () => async (dispatch) => {
       payload: data,
     });
   } catch (error) {
-    console.log('an error occured...');
+    // show errors here
   }
 };
 
@@ -31,10 +32,9 @@ export const createRequisition = (requisition) => async () => {
   try {
     Axios.post('/1', requisition)
       .then((data) => {
-        console.log('We reached the server', data);
       });
   } catch (error) {
-    console.log('an error occured while creating a new requisition...');
+    // show the error here
   }
 };
 
@@ -43,5 +43,4 @@ export const setLoading = (dispatch) => dispatch({
 });
 
 export const setFiles = (requisition, files) => {
-  console.log('setting the files to the requisition', requisition, files);
 };

@@ -19,7 +19,6 @@ const ApproverList = ({ labelName, label, ...rest }) => {
   ];
 
   const handleClick = () => {
-    console.log('we want to add a new approver');
   };
 
   return (

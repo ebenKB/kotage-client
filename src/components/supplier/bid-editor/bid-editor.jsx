@@ -4,10 +4,8 @@
 import React, { Component } from 'react';
 import { ValidatorForm } from 'react-form-validator-core';
 import { connect } from 'react-redux';
-// import { Button } from 'semantic-ui-react';
 import { withRouter } from 'react-router';
 import { PropTypes } from 'prop-types';
-// import deepEqual from '../../../utils/app/deep-equal';
 import { createBid, reviseExistingBid } from '../../../redux/actions/supplierBidActions';
 import KtWrapper from '../../kt-wrapper/kt-wrapper';
 import MainContent from '../../kt-main-content/mainContent';
@@ -17,7 +15,6 @@ import Divider from '../../kt-divider/divider';
 import Dropzone from '../../dropzone/dropzone';
 import { uploadFiles } from '../../../utils/app/index';
 import { RFP_FOLDER_NAME } from '../../../utils/app/definitions';
-// import { ReactComponent as CloseIcon } from '../../../svg/close.svg';
 import Collapsible from '../../snippets/collapsible/collapsible';
 import FileItemCaption from '../../file-item-caption/file-item-caption';
 import EmptyContentWrapper from '../../empty-content-wrapper/empty-content-wrapper';
@@ -32,17 +29,7 @@ class EventResponse extends Component {
     };
   }
 
-  // componentDidUpdate(prevProps, prevState) {
-  //   console.log('The component has updated', prevState);
-  //   const { checkIfDirty } = this.props;
-  //   if (!deepEqual(prevProps.bid, prevState)) {
-  //     console.log('it is dirty');
-  //     checkIfDirty(this.state);
-  //   }
-  // }
-
 setBidCurrency = (selectedOption) => {
-  // const { checkIfDirty } = this.props;
   this.setState((state) => ({
     ...state,
     currency: `${selectedOption.text}_${selectedOption.key}`,
@@ -168,15 +155,6 @@ handleSubmit = async () => {
 
     respondToRfp(this.state, currentProposal.tenant.id);
   }
-
-  // if (actionType.toLowerCase() === 'save') {
-  //   respondToRfp(this.state, currentProposal.tenant.id);
-  // } else if (actionType.toLowerCase() === 'edit') {
-  //   reviseBid(this.state, currentProposal.tenant.id);
-  // }
-
-  // const { history } = this.props;
-  // history.push('/supplier/bids');
 };
 
 handleInputChange = ({ inputValue, selectedOption }) => {
@@ -201,7 +179,6 @@ formatCurrency = () => {
 
 handleQuestionAnswer = (e, q) => {
   const { rfpQuestionResponses } = this.state;
-  // const question = rfpQuestionResponses.find((ques) => ques.id === q.id);
   const newAnswers = rfpQuestionResponses.map((ques) => {
     if (ques.id === q.id) {
       return {
@@ -284,7 +261,6 @@ render() {
 								</Collapsible>
 							)}
 							<Dropzone
-								/* handleUpdateFiles={this.updateTecnicalProposals} */
 								onFilesChange={(files) => this.addTechnicalProposal(files)}
 							/>
 						</div>
@@ -307,7 +283,6 @@ render() {
 								</Collapsible>
 							)}
 							<Dropzone
-								/* handleUpdateFiles={this.updateCommercialProposals} */
 								onFilesChange={(files) => this.addCommercialProposal(files)}
 							/>
 						</div>
@@ -333,17 +308,14 @@ const mapDispatchToProps = {
 
 EventResponse.propTypes = {
   respondToRfp: PropTypes.func.isRequired,
-  // reviseBid: PropTypes.func.isRequired,
   tenantUID: PropTypes.bool.isRequired,
   currentProposal: PropTypes.object.isRequired,
   actionType: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   actionName: PropTypes.string.isRequired,
   isRevisingBid: PropTypes.bool.isRequired,
-  // history: PropTypes.object.isRequired,
   bid: PropTypes.object.isRequired,
   handleAction: PropTypes.func.isRequired,
-  // checkIfDirty: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateProps, mapDispatchToProps)(withRouter(EventResponse));

@@ -137,7 +137,6 @@ const NewMessage = ({
             prepareSupplierMessage();
           }
         } catch (error) {
-          console.log(error);
           showNotification({
             message: 'error while uploading the files.',
           }, 'error');
@@ -269,7 +268,7 @@ const mapStateToProps = (state) => ({
 NewMessage.propTypes = {
   createBuyerNewMessage: PropTypes.func.isRequired,
   isLoading: PropTypes.bool.isRequired,
-  currentProposalId: PropTypes.string,
+  currentProposalId: PropTypes.number,
   tenantUid: PropTypes.string.isRequired,
   currentProposal: PropTypes.object,
   showNotification: PropTypes.func.isRequired,

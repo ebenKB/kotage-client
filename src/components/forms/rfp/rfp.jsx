@@ -97,7 +97,7 @@ class RFP extends React.Component {
         createNewProposal(newProposal)
           .then(() => history.push('/rfx'))
           .catch(() => {
-            console.log('an error occured');
+            // show error
             // remove files from s3
           });
       });
@@ -126,7 +126,7 @@ class RFP extends React.Component {
 		<RfpEditor
 			proposal={newProposal}
 			options={{ type: 'create', heading: 'New Proposal' }}
-			handleSaveAction={console.log('saving ...')}
+			/* handleSaveAction={() => null} */
 			publishAction={handlePublish}
 		/>
 	</div>

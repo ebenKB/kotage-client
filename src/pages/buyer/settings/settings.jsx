@@ -75,7 +75,6 @@ class Settings extends Component {
   }
 
   handleSubmit = () => {
-    console.log('We want to submit the update', this.state);
     const { tenant, user } = this.state;
     const {
       updateTenant,
@@ -90,9 +89,6 @@ class Settings extends Component {
   render() {
     const {
       isUpdatingAccount,
-      // user: {
-      //   firstname, lastname, phone, email,
-      // },
     } = this.props;
     const {
       countries, timezones, loading,

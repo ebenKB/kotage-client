@@ -37,9 +37,13 @@ const mapStateToProps = (state) => ({
 });
 
 MessageInbox.propTypes = {
-  messages: PropTypes.array.isRequired,
+  messages: PropTypes.array,
   getMessageInbox: PropTypes.func.isRequired,
   isLoading: PropTypes.bool.isRequired,
+};
+
+MessageInbox.defaultProps = {
+  messages: null,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(MessageInbox);

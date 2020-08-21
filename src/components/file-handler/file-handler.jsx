@@ -13,7 +13,6 @@ import { getFileSignedUrl, downloadMultipleZip } from '../../utils/app/file';
 import KtFileItem from '../snippets/kt-file-item/kt-file-item';
 import KtLoader from '../loader/loader';
 import { setNotification, downloadFile, cacheFileBlob } from '../../redux/actions/appActions';
-// import FileHandlerContext from '../../context/file-handler.context';
 
 class FileHandler extends Component {
   constructor(props) {
@@ -43,7 +42,6 @@ signUrl = async () => {
   }
 
   try {
-    // const results = await Promise.all(promises);
     const results = await Promise.allSettled(promises);
     for (const result of results) {
       if (result.status === 'fulfilled') {
@@ -71,7 +69,6 @@ signUrl = async () => {
 downloadFiles = async (urls) => {
   let promises = [];
   for (const url of urls) {
-    // const file = prepareFileForDownload(url);
     // eslint-disable-next-line react/prop-types
     const file = this.props.downloadFileAsBlob(url);
     file.file_url = url;
@@ -85,7 +82,6 @@ downloadFiles = async (urls) => {
           ...state,
           files: [...state.files, file],
         }));
-        // this.props.saveFileAsCache(file);
       })
       .catch(() => console.log('err'));
   }
@@ -100,7 +96,6 @@ render() {
   const details = this.context;
   // eslint-disable-next-line react/prop-types
 
-  // const { details } = this.props;
   return (
 	<>
 		<div className="flex-center">
@@ -150,7 +145,6 @@ FileHandler.propTypes = {
   tenantID: PropTypes.number.isRequired,
   objectOwnerID: PropTypes.number.isRequired,
   history: PropTypes.object.isRequired,
-  // saveFileAsCache: PropTypes.func.isRequired,
 };
 
 FileHandler.defaultProps = {

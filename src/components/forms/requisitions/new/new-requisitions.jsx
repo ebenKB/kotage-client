@@ -122,8 +122,7 @@ class Requisitions extends React.Component {
      * Remove an item detail from a requisition
      * @param {*} item the item detail to be removed
      */
-    const deleteItem = (item) => {
-      console.log('deleting the item', item);
+    const deleteItem = () => {
     };
 
     return (

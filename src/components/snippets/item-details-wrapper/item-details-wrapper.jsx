@@ -14,23 +14,6 @@ import Dropzone from '../../dropzone/dropzone';
 
 // eslint-disable-next-line react/prop-types
 const ItemDetailsWrapper = ({ item_details, handleAction, handleChange, deleteItem }) => {
-
-  // const [items, setItems] = useState([
-  //   {
-  //     key: new Date().getDate(),
-  //     code: 'SKU000-1',
-  //     description: 'React 16',
-  //     qyt: '100',
-  //   },
-  //   {
-  //     key: new Date().getDate(),
-  //   },
-  // ]);
-
-  // const handleClick =() => {
-  //   console.log('you want to add an item');
-  // }
-
   return (
 	<div className="itd-wrapper">
 		<div className="itd-wrapper__header bold m-b-12 bold light-caption">

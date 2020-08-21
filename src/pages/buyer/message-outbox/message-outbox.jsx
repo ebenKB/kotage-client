@@ -41,9 +41,14 @@ const mapDispatchToProps = {
 
 MessageOutbox.propTypes = {
   getSentMessages: PropTypes.func.isRequired,
-  meta: PropTypes.object.isRequired,
-  messages: PropTypes.object.isRequired,
+  meta: PropTypes.object,
+  messages: PropTypes.object,
   isLoading: PropTypes.bool.isRequired,
+};
+
+MessageOutbox.defaultProps = {
+  messages: null,
+  meta: null,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(MessageOutbox);

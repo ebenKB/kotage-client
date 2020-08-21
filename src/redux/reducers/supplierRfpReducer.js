@@ -30,7 +30,6 @@ const initialState = {
   rfpInbox: null,
   rfpOutbox: null,
   currentMessage: null,
-  currentMessageType: 'inbox',
   rfpOutboxMeta: null,
   rfpInboxMeta: null,
   meta: null,

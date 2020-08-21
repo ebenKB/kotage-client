@@ -58,7 +58,6 @@ Promise((resolve, reject) => {
         type: CREATE_PROPOSAL,
         payload: data,
       });
-      // dispatch({ type: SET_RFP_DONE_LOADING });
       dispatch(setNotification({ message: 'New Rfp has been created' }, 'success'));
       resolve(data);
     })
@@ -88,7 +87,6 @@ export const getRequestForProposals = (page) => async (dispatch, getState) => ne
 Promise((resolve, reject) => {
   dispatch({ type: SET_RFP_LOADING });
   const { user } = getState();
-  // const { data } = await Axios.get(`/v1/${user.currentUser.tenant_id}/rfp?page=${page}`);
   const req = Axios.get(`/v1/${user.currentUser.tenant_id}/rfp?page=${page}`);
   Promise.resolve(req)
     .then((response) => {
@@ -245,7 +243,7 @@ export const setCurrenMessageBlob = (blob) => async (dispatch) => {
       payload: blob,
     });
   } catch (error) {
-    console.log(error);
+    // show error
   }
 };
 
@@ -305,17 +303,15 @@ export const updateExistingRfp = (rfpID, newRfp) => async (dispatch, getState) =
   }
 };
 
-export const getRfpSuppliers = () => async (dispatch, getState) => {
+export const getRfpSuppliers = () => async (dispatch) => {
   try {
-    console.log('We want  get the suppliers for the proposal', getState);
-    const suppliers = await Axios(`/v1/1/rfp/${4}/suppliers`);
-    console.log('These are the suppliers', suppliers);
+    await Axios(`/v1/1/rfp/${4}/suppliers`);
     dispatch({
       type: GET_RFP_SUPPLIERS,
       payload: {},
     });
   } catch (error) {
-    console.log('There is an error', error);
+    // show errors here
   }
 };
 
@@ -325,7 +321,6 @@ Promise((resolve, reject) => {
   try {
     const { tenant: { currentTenant } } = getState();
     const data = Axios(`/v1/${currentTenant.id}/rfp/${rfpID}/suppliers/${supplierID}/claim`);
-    // const data2 = Axios(`/v1/1/rfp/${4}/analytics`);
     resolve(data);
   } catch (error) {
     reject(error);
@@ -368,7 +363,7 @@ export const getBidByID = (rfpID, bidID) => async (dispatch, getState) => {
       payload: data,
     });
   } catch (error) {
-    console.log('error');
+    // show error
   }
 };
 

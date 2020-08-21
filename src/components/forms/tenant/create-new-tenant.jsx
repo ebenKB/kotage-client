@@ -85,7 +85,7 @@ const CreateNewTenant = ({
       await createTenant(tenant);
       history.push('/auth/signin');
     } catch (error) {
-      console.log('an error occurred');
+      // show error
     }
   };
 

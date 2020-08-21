@@ -24,5 +24,11 @@ const mapStateToProps = (state) => ({
 ProtectedRoute.propTypes = {
   children: PropTypes.element.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
+  accountType: PropTypes.string,
 };
+
+ProtectedRoute.defaultProps = {
+  accountType: null,
+};
+
 export default connect(mapStateToProps, null)(ProtectedRoute);

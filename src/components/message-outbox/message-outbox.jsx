@@ -52,7 +52,7 @@ const MessageOutbox = ({
 
 MessageOutbox.propTypes = {
   messages: PropTypes.object,
-  hasFetched: PropTypes.bool.isRequired,
+  hasFetched: PropTypes.bool,
   isLoading: PropTypes.bool.isRequired,
   meta: PropTypes.object,
 };
@@ -60,16 +60,7 @@ MessageOutbox.propTypes = {
 MessageOutbox.defaultProps = {
   meta: null,
   messages: null,
+  hasFetched: false,
 };
-
-// const mapDispatchToProps = {
-//   getSentMessages: getRfpOutbox,
-// };
-
-// const mapStateToProps = (state) => ({
-//   isLoading: state.rfp.loading,
-//   messages: state.rfp.rfpOutbox,
-//   meta: state.rfp.rfpOutboxMeta,
-// });
 
 export default MessageOutbox;
