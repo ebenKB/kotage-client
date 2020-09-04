@@ -1,4 +1,31 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+## Demo
+https://kotage.netlify.com/
+
+## Login Page
+![Login Page](login.png)
+
+## Rfp Events
+![Rfp Events](rfps.png)
+
+
+## Rfp Details
+![Rfp Details](rfp-details.png)
+
+## Edit Proposal
+![Edit Proposal](edit-rfp.png)
+
+## Rfp options
+![Rfp options](rfp-options.png)
+
+## Create New Proposal
+![Create new Proposal](new-rfp.png)
+
+## View users
+![Users](users.png)
+
+## Invite users
+![Invite](invite-users.png)
 
 ## Available Scripts
 
