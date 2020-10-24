@@ -33,9 +33,19 @@ const SignIn = ({
     if (loginType === 'Buyer') {
       setLoginType('Supplier');
       setAltLoginType('Buyer');
+
+      // remove this in production
+      setUser({
+        email: 'ebenezer.adjei@apotica.net', password: '1111',
+      });
     } else {
       setLoginType('Buyer');
       setAltLoginType('Supplier');
+
+      // remove this in production
+      setUser({
+        email: 'eakbo23@gmail.com', password: '1111',
+      });
     }
   };
 
