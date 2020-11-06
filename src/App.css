@@ -330,8 +330,20 @@ svg.faint {
   padding: 0 15px;
 }
 
+.home-graph__items {
+  display: grid;
+  grid-template-columns:  1fr 1fr;
+  margin: auto;
+  column-gap: 40px;
+}
+
+.home-graph__items .graph-item {
+  height: 100%;
+  padding: 20px;
+}
+
 /* media queries  */
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 640px) {
   .small-form__wrapper {
     width: 90%;
   }
